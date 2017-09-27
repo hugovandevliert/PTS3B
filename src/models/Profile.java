@@ -45,7 +45,7 @@ public class Profile {
 
     }
 
-    public void addFeedback(Feedback feedback, Profile author) {
+    public void addFeedback(Profile author, boolean isPositive, String message) {
 
     }
 
