@@ -24,18 +24,12 @@ public class User {
         this.email = email;
     }
 
-<<<<<<< Updated upstream
-    public boolean changePassword(String newPassword) {
-        return false;
-    }
-=======
     /**
      * Method for changing the password of an User, it requires a String value that holds the new password and will return a boolean value back
      * @param password: The new password that the User's password should be changed to. Password must have atleast: 6 characters and max. 32, 1 lowercase, 1 uppercase, 1 symbol, 1 integer
      * @return: Depending on whether the new password is allowed and the outcome of the check, the method will return true when password is succesfully changed
      */
     public boolean changePassword(String password) { return false; }
->>>>>>> Stashed changes
 
     /**
      * Method for getting the Username of this User-object
