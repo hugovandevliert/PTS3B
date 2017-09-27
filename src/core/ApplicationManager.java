@@ -12,7 +12,7 @@ public class ApplicationManager {
     private Profile loadedProfile;
     private User currentUser;
 
-    ApplicationManager() {
+    public ApplicationManager() {
         loadedAuctions = new ArrayList<>();
     }
 

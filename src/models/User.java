@@ -16,7 +16,7 @@ public class User {
      * Constructor of the User-object which is used for creating an instance, it requires the following input parameters: Username, Name en Email
      * @param username: The Username of an User-object, Username is an unique String value
      * @param name: The Name of the User
-     * @param email: The Email of the User, this value should be unique
+     * @param email: The Email of the User, this value should be unique. It should always end with @[Valid domain name]
      */
     User(String username, String name, String email) {
         this.username = username;
@@ -26,7 +26,7 @@ public class User {
 
     /**
      * Method for changing the password of an User, it requires a String value that holds the new password and will return a boolean value back
-     * @param password: The new password that the User's password should be changed to. Password must have atleast: 6 characters and max. 32, 1 lowercase, 1 uppercase, 1 symbol, 1 integer
+     * @param password: The new password that the User's password should be changed to. Password must have atleast: 6 characters, 1 lowercase, 1 uppercase, 1 symbol, 1 integer
      * @return: Depending on whether the new password is allowed and the outcome of the check, the method will return true when password is succesfully changed
      */
     public boolean changePassword(String password) { return false; }
