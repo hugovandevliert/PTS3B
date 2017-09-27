@@ -4,9 +4,6 @@ import core.ApplicationManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -21,13 +18,12 @@ class FeedbackTest {
     @BeforeAll
     void setUp() {
         applicationManager = new ApplicationManager();
-        User user = applicationManager.login("testusername", "AbC*1f");
-        Profile profile = new ApplicationManager().login("testusername", "AbC*1f").getProfile();
     }
 
     @Test
     void getDate() {
         Feedback f = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), false, "Testfeedback");
+        f.getDate();
         //Can't really test this getter since the value is unknown.
     }
 
