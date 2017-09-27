@@ -8,15 +8,17 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserTest{
+class UserTest {
     private static User user;
+
+    /**
+     * ASSUMPTION: There is a user in the database with username="testusername", password="AbC*1f", name="Test User" and email="testuser@gmail.com".
+     * If this is not true, all tests will fail.
+     */
 
     @BeforeAll
     static void setUp() {
         ApplicationManager am = new ApplicationManager();
-
-        //ASSUMPTION: There is a user in the database with username="testusername", password="AbC*1f", name="Test User" and email="testuser@gmail.com".
-        //If this is not true, all tests will fail.
         user = am.login("testusername", "AbC*1f");
     }
 
