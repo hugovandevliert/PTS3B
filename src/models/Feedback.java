@@ -3,6 +3,7 @@ package models;
 import java.time.LocalDateTime;
 
 public class Feedback {
+
     /**
      * LocalDateTime value that holds the datum value of when the feedback is given
      */
@@ -23,13 +24,12 @@ public class Feedback {
     /**
      * Constructor for making a new Feedback-object, it requires the following parameter input: Author, Date, isPositive, Message.
      * @param author: The author of the Feedback
-     * @param date: The date that the Feedback was made
      * @param isPositive: Whether the given Feedback was true
      * @param message: The String message that belongs to the Feedback
      */
-    Feedback(Profile author, LocalDateTime date, boolean isPositive, String message) {
+    Feedback(Profile author, boolean isPositive, String message) {
         this.author = author;
-        this.date = date;
+        //LocalDateTime date,  --> Deze moet nog opgehaald worden in de constructor
         this.isPositive = isPositive;
         this.message = message;
     }
