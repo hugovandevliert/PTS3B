@@ -65,7 +65,7 @@ public class Auction {
         this.status = status;
     }
 
-    public void addBid(LocalDateTime date, double amount) { }
+    public void addBid(double amount, Profile profile) { }
 
     public boolean endAuction() {
         return false;

@@ -8,7 +8,8 @@ public class Bid {
     private Profile profile;
     private double amount;
 
-    Bid(Profile profile, LocalDateTime date, double amount) {
+    Bid(Profile profile, double amount) {
+        //time hier implementeren
         this.profile = profile;
         this.date = date;
         this.amount = amount;

@@ -13,7 +13,7 @@ public class User {
         this.email = email;
     }
 
-    public boolean changePassword(String password) {
+    public boolean changePassword(String newPassword) {
         return false;
     }
 
