@@ -1,4 +1,4 @@
-package core;
+package core.javaFX;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -6,11 +6,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 import java.util.Objects;
 
-public class loginController {
+public abstract class MenuController {
 
     @FXML public Pane paneMenu;
     @FXML public Pane paneContent;
@@ -21,28 +20,19 @@ public class loginController {
     @FXML public ImageView imgviewFavorites;
     @FXML public ImageView imgviewAddAuction;
 
-    private Image profileIcon;
-    private Image auctionsIcon;
-    private Image favoritesIcon;
-    private Image addAuctionIcon;
+    protected ImageView selectedMenu;
 
-    private Image profileIconHovered;
-    private Image auctionsIconHovered;
-    private Image favoritesIconHovered;
-    private Image addAuctionIconHovered;
+    protected Image profileIcon;
+    protected Image auctionsIcon;
+    protected Image favoritesIcon;
+    protected Image addAuctionIcon;
 
-    private ImageView selectedMenu;
+    protected Image profileIconHovered;
+    protected Image auctionsIconHovered;
+    protected Image favoritesIconHovered;
+    protected Image addAuctionIconHovered;
 
-    @FXML
-    void initialize() {
-        setIcons();
-
-        //After login start at auctions menu.
-        selectedMenu = imgviewAuctions;
-        imgviewAuctions.setImage(auctionsIconHovered);
-    }
-
-    private void setIcons() {
+    protected void setIcons() {
         profileIcon = new Image("utilities/images/menu/profile.png");
         auctionsIcon = new Image("utilities/images/menu/auction.png");
         favoritesIcon = new Image("utilities/images/menu/favorites.png");
@@ -78,16 +68,16 @@ public class loginController {
         if (Objects.equals(selectedMenu.getId(), icon.getId())) return;
         switch(icon.getId()) {
             case "imgviewProfile":
-            imgviewProfile.setImage(profileIconHovered);
+                imgviewProfile.setImage(profileIconHovered);
                 break;
             case "imgviewAuctions":
-            imgviewAuctions.setImage(auctionsIconHovered);
+                imgviewAuctions.setImage(auctionsIconHovered);
                 break;
             case "imgviewFavorites":
-            imgviewFavorites.setImage(favoritesIconHovered);
+                imgviewFavorites.setImage(favoritesIconHovered);
                 break;
             case "imgviewAddAuction":
-            imgviewAddAuction.setImage(addAuctionIconHovered);
+                imgviewAddAuction.setImage(addAuctionIconHovered);
                 break;
         }
     }
@@ -97,16 +87,16 @@ public class loginController {
         if (Objects.equals(selectedMenu.getId(), icon.getId())) return;
         switch(icon.getId()) {
             case "imgviewProfile":
-            imgviewProfile.setImage(profileIcon);
+                imgviewProfile.setImage(profileIcon);
                 break;
             case "imgviewAuctions":
-            imgviewAuctions.setImage(auctionsIcon);
+                imgviewAuctions.setImage(auctionsIcon);
                 break;
             case "imgviewFavorites":
-            imgviewFavorites.setImage(favoritesIcon);
+                imgviewFavorites.setImage(favoritesIcon);
                 break;
             case "imgviewAddAuction":
-            imgviewAddAuction.setImage(addAuctionIcon);
+                imgviewAddAuction.setImage(addAuctionIcon);
                 break;
         }
     }

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.profile.ProfileController">
+    <columnConstraints>
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+    </rowConstraints>
+    <children>
+        <AnchorPane prefHeight="750.0" prefWidth="1250.0">
+            <children>
+                <Pane fx:id="paneMenu" prefHeight="750.0" prefWidth="250.0" style="-fx-background-color: #242e3b;">
+                    <children>
+                        <ImageView fx:id="imgviewProfile" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="200.0"
+                                   onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true"
+                                   onMouseClicked="#selectMenuItem" preserveRatio="true"/>
+                        <ImageView fx:id="imgviewAuctions" fitHeight="36.0" fitWidth="36.0" layoutX="109.0" layoutY="300.0"
+                                   onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true"
+                                   onMouseClicked="#selectMenuItem" preserveRatio="true"/>
+                        <ImageView fx:id="imgviewFavorites" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="400.0"
+                                   onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true"
+                                   onMouseClicked="#selectMenuItem" preserveRatio="true"/>
+                        <ImageView fx:id="imgviewAddAuction" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="500.0"
+                                   onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true"
+                                   onMouseClicked="#selectMenuItem" preserveRatio="true"/>
+                    </children></Pane>
+                <Pane fx:id="paneContent" layoutX="250.0" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;">
+                    <children>
+                        <Label fx:id="lblClose" layoutX="974.0" layoutY="-2.0" onMouseClicked="#closeApplication" prefHeight="33.0" prefWidth="14.0" style="-fx-text-fill: #747e8c" text="x">
+                            <font>
+                                <Font size="30.0" />
+                            </font>
+                        </Label>
+                    </children></Pane>
+            </children>
+        </AnchorPane>
+    </children>
+</GridPane>
