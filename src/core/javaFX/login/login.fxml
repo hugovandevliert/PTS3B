@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -22,18 +23,10 @@
          <children>
             <Pane fx:id="paneMenu" prefHeight="750.0" prefWidth="250.0" style="-fx-background-color: #242e3b;">
                <children>
-                   <ImageView fx:id="imgviewProfile" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="200.0"
-                              onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true"
-                              onMouseClicked="#selectMenuItem" preserveRatio="true"/>
-                   <ImageView fx:id="imgviewAuctions" fitHeight="36.0" fitWidth="36.0" layoutX="109.0" layoutY="300.0"
-                              onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true"
-                              onMouseClicked="#selectMenuItem" preserveRatio="true"/>
-                   <ImageView fx:id="imgviewFavorites" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="400.0"
-                              onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true"
-                              onMouseClicked="#selectMenuItem" preserveRatio="true"/>
-                   <ImageView fx:id="imgviewAddAuction" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="500.0"
-                              onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true"
-                              onMouseClicked="#selectMenuItem" preserveRatio="true"/>
+                   <ImageView fx:id="imgviewProfile" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="200.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" />
+                   <ImageView fx:id="imgviewAuctions" fitHeight="36.0" fitWidth="36.0" layoutX="109.0" layoutY="300.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" />
+                   <ImageView fx:id="imgviewFavorites" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="400.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" />
+                   <ImageView fx:id="imgviewAddAuction" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="500.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" />
                </children></Pane>
             <Pane fx:id="paneContent" layoutX="250.0" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;">
                <children>
@@ -41,7 +34,20 @@
                      <font>
                         <Font size="30.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
                   </Label>
+                  <JFXTextField fx:id="txtUsername" alignment="BOTTOM_CENTER" focusColor="#a6b5c9" layoutX="350.0" layoutY="269.0" mouseTransparent="true" prefHeight="25.0" prefWidth="300.0" promptText="username" unFocusColor="#747e8c">
+                     <font>
+                        <Font name="Segoe UI Light" size="18.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXTextField fx:id="txtPassword" alignment="BOTTOM_CENTER" focusColor="#a6b5c9" layoutX="350.0" layoutY="358.0" mouseTransparent="true" prefHeight="25.0" prefWidth="300.0" promptText="password" unFocusColor="#747e8c">
+                     <font>
+                        <Font name="Segoe UI Light" size="18.0" />
+                     </font>
+                  </JFXTextField>
                </children></Pane>
          </children>
       </AnchorPane>
