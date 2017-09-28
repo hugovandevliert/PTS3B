@@ -6,13 +6,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.util.Objects;
 
 public class loginController {
-
-    public loginController() {
-    }
 
     @FXML public Pane paneMenu;
     @FXML public Pane paneContent;
@@ -42,6 +40,23 @@ public class loginController {
         //After login start at auctions menu.
         selectedMenu = imgviewAuctions;
         imgviewAuctions.setImage(auctionsIconHovered);
+    }
+
+    private void setIcons() {
+        profileIcon = new Image("utilities/images/menu/profile.png");
+        auctionsIcon = new Image("utilities/images/menu/auction.png");
+        favoritesIcon = new Image("utilities/images/menu/favorites.png");
+        addAuctionIcon = new Image("utilities/images/menu/addauction.png");
+
+        profileIconHovered = new Image("utilities/images/menu/profile_hovered.png");
+        auctionsIconHovered = new Image("utilities/images/menu/auction_hovered.png");
+        favoritesIconHovered = new Image("utilities/images/menu/favorites_hovered.png");
+        addAuctionIconHovered = new Image("utilities/images/menu/addauction_hovered.png");
+
+        imgviewProfile.setImage(profileIcon);
+        imgviewAuctions.setImage(auctionsIcon);
+        imgviewFavorites.setImage(favoritesIcon);
+        imgviewAddAuction.setImage(addAuctionIcon);
     }
 
     public void closeApplication(MouseEvent mouseEvent) {
@@ -94,22 +109,5 @@ public class loginController {
             imgviewAddAuction.setImage(addAuctionIcon);
                 break;
         }
-    }
-
-    private void setIcons() {
-        profileIcon = new Image("utilities/images/menu/profile.png");
-        auctionsIcon = new Image("utilities/images/menu/auction.png");
-        favoritesIcon = new Image("utilities/images/menu/favorites.png");
-        addAuctionIcon = new Image("utilities/images/menu/addauction.png");
-
-        profileIconHovered = new Image("utilities/images/menu/profile_hovered.png");
-        auctionsIconHovered = new Image("utilities/images/menu/auction_hovered.png");
-        favoritesIconHovered = new Image("utilities/images/menu/favorites_hovered.png");
-        addAuctionIconHovered = new Image("utilities/images/menu/addauction_hovered.png");
-
-        imgviewProfile.setImage(profileIcon);
-        imgviewAuctions.setImage(auctionsIcon);
-        imgviewFavorites.setImage(favoritesIcon);
-        imgviewAddAuction.setImage(addAuctionIcon);
     }
 }
