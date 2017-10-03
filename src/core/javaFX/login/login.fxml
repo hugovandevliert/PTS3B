@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -50,11 +49,7 @@
                         <Font name="Segoe UI Light" size="18.0" />
                      </font>
                   </JFXTextField>
-                  <Button fx:id="btnLogin" layoutX="350.0" layoutY="443.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="300.0" style="-fx-background-color: f2aa78;" text="Login" textFill="#824923">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </Button>
+                  <JFXButton fx:id="btnLogin" layoutX="350.0" layoutY="441.0" prefHeight="45.0" prefWidth="300.0" style="-fx-background-color: f2aa78;" text="Login" textFill="#824923" />
                </children></Pane>
          </children>
       </AnchorPane>
