@@ -4,8 +4,6 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
@@ -20,38 +18,28 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <AnchorPane prefHeight="750.0" prefWidth="1250.0">
+      <Pane fx:id="paneContent" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;">
          <children>
-            <Pane fx:id="paneMenu" prefHeight="750.0" prefWidth="250.0" style="-fx-background-color: #242e3b;">
-               <children>
-                   <ImageView fx:id="imgviewProfile" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="200.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" />
-                   <ImageView fx:id="imgviewAuctions" fitHeight="36.0" fitWidth="36.0" layoutX="109.0" layoutY="300.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" />
-                   <ImageView fx:id="imgviewFavorites" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="400.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" />
-                   <ImageView fx:id="imgviewAddAuction" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="500.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" />
-               </children></Pane>
-            <Pane fx:id="paneContent" layoutX="250.0" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;">
-               <children>
-                  <Label fx:id="lblClose" layoutX="974.0" layoutY="-2.0" onMouseClicked="#closeApplication" prefHeight="33.0" prefWidth="14.0" style="-fx-text-fill: #747e8c" text="x">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="OPEN_HAND" />
-                     </cursor>
-                  </Label>
-                  <JFXTextField fx:id="txtUsername" alignment="BOTTOM_CENTER" focusColor="#747e8c" layoutX="350.0" layoutY="269.0" mouseTransparent="true" prefHeight="25.0" prefWidth="300.0" promptText="username" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #a6b5c9;" unFocusColor="#242e3b">
-                     <font>
-                        <Font name="Segoe UI Light" size="18.0" />
-                     </font>
-                  </JFXTextField>
-                  <JFXTextField fx:id="txtPassword" alignment="BOTTOM_CENTER" focusColor="#747e8c" layoutX="350.0" layoutY="357.0" mouseTransparent="true" prefHeight="25.0" prefWidth="300.0" promptText="password" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #a6b5c9;" unFocusColor="#242e3b">
-                     <font>
-                        <Font name="Segoe UI Light" size="18.0" />
-                     </font>
-                  </JFXTextField>
-                  <JFXButton fx:id="btnLogin" layoutX="350.0" layoutY="441.0" onAction="#login" prefHeight="45.0" prefWidth="300.0" style="-fx-background-color: f2aa78;" text="Login" textFill="#824923" />
-               </children></Pane>
+            <Label fx:id="lblClose" layoutX="974.0" layoutY="-2.0" onMouseClicked="#closeApplication" prefHeight="33.0" prefWidth="14.0" style="-fx-text-fill: #747e8c" text="x">
+               <font>
+                  <Font size="30.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
+            </Label>
+            <JFXTextField fx:id="txtUsername" alignment="BOTTOM_CENTER" focusColor="#747e8c" layoutX="350.0" layoutY="269.0" mouseTransparent="true" prefHeight="25.0" prefWidth="300.0" promptText="username" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #a6b5c9;" unFocusColor="#242e3b">
+               <font>
+                  <Font name="Segoe UI Light" size="18.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="txtPassword" alignment="BOTTOM_CENTER" focusColor="#747e8c" layoutX="350.0" layoutY="357.0" mouseTransparent="true" prefHeight="25.0" prefWidth="300.0" promptText="password" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #a6b5c9;" unFocusColor="#242e3b">
+               <font>
+                  <Font name="Segoe UI Light" size="18.0" />
+               </font>
+            </JFXTextField>
+            <JFXButton fx:id="btnLogin" layoutX="350.0" layoutY="441.0" onAction="#login" prefHeight="45.0" prefWidth="300.0" style="-fx-background-color: f2aa78;" text="Login" textFill="#824923" />
          </children>
-      </AnchorPane>
+      </Pane>
    </children>
 </GridPane>

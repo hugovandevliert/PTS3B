@@ -1,28 +1,24 @@
 package core.javaFX.login;
 
-import core.javaFX.MenuController;
+import core.javaFX.menu.MenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 
-import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class LoginController extends MenuController {
+public class LoginController extends MenuController{
 
-    @FXML
-    void initialize() {
-        setIcons();
-
-        //After login display auctions menu.
-        selectedMenu = imgviewAuctions;
-        imgviewAuctions.setImage(auctionsIconHovered);
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
     }
 
     public void login() throws IOException {
-        File resourcesDirectory = new File("src/core/javaFX/login/login.fxml");
-
-
-        Pane pane = FXMLLoader.load(getClass().getResource(String.valueOf(resourcesDirectory.toURI().toURL())));
+        paneContent.getChildren().clear();
+        Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/profile/profile.fxml"));
+        paneContent.getChildren().add(newLoadedPane);
     }
 }

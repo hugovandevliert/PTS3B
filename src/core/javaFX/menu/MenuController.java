@@ -1,18 +1,26 @@
-package core.javaFX;
+package core.javaFX.menu;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
+import javax.activation.MimetypesFileTypeMap;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
-public abstract class MenuController {
+public class MenuController implements Initializable {
 
     @FXML public Pane paneMenu;
     @FXML public Pane paneContent;
+    @FXML public Pane paneBackground;
     @FXML public Label lblClose;
 
     @FXML public ImageView imgviewProfile;
@@ -32,16 +40,34 @@ public abstract class MenuController {
     protected Image favoritesIconHovered;
     protected Image addAuctionIconHovered;
 
-    protected void setIcons() {
-        profileIcon = new Image("utilities/images/menu/profile.png");
-        auctionsIcon = new Image("utilities/images/menu/auction.png");
-        favoritesIcon = new Image("utilities/images/menu/favorites.png");
-        addAuctionIcon = new Image("utilities/images/menu/addauction.png");
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        setIcons();
 
-        profileIconHovered = new Image("utilities/images/menu/profile_hovered.png");
-        auctionsIconHovered = new Image("utilities/images/menu/auction_hovered.png");
-        favoritesIconHovered = new Image("utilities/images/menu/favorites_hovered.png");
-        addAuctionIconHovered = new Image("utilities/images/menu/addauction_hovered.png");
+        selectedMenu = imgviewProfile;
+        imgviewProfile.setImage(profileIconHovered);
+
+        try {
+            paneContent.getChildren().clear();
+            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/login/login.fxml"));
+            paneContent.getChildren().add(newLoadedPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    protected void setIcons() {
+        profileIcon = new Image( "/utilities/images/menu/profile.png");
+        auctionsIcon = new Image("/utilities/images/menu/auction.png");
+        favoritesIcon = new Image("/utilities/images/menu/favorites.png");
+        addAuctionIcon = new Image("/utilities/images/menu/addauction.png");
+
+        profileIconHovered = new Image("/utilities/images/menu/profile_hovered.png");
+        auctionsIconHovered = new Image("/utilities/images/menu/auction_hovered.png");
+        favoritesIconHovered = new Image("/utilities/images/menu/favorites_hovered.png");
+        addAuctionIconHovered = new Image("/utilities/images/menu/addauction_hovered.png");
 
         imgviewProfile.setImage(profileIcon);
         imgviewAuctions.setImage(auctionsIcon);
@@ -100,4 +126,7 @@ public abstract class MenuController {
                 break;
         }
     }
+
+
 }
+

@@ -1,6 +1,16 @@
 package core.javaFX.favorites;
 
-import core.javaFX.MenuController;
 
-public class FavoritesController extends MenuController{
+import core.javaFX.menu.MenuController;
+import javafx.fxml.FXML;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class FavoritesController extends MenuController {
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+    }
+
 }

@@ -14,7 +14,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         //Open login
-        Parent root = FXMLLoader.load(getClass().getResource("javaFX/login/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("javaFX/menu/menu.fxml"));
         primaryStage.initStyle(StageStyle.UNDECORATED);
         Scene scene = new Scene(root);
 
@@ -22,6 +22,8 @@ public class Main extends Application {
         primaryStage.show();
 
         enableGUIMoving(root, primaryStage);
+
+
     }
 
     private void enableGUIMoving(Parent parent, Stage stage) {
