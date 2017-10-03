@@ -34,6 +34,7 @@ public class MenuController implements Initializable {
     protected Image auctionsIcon;
     protected Image favoritesIcon;
     protected Image addAuctionIcon;
+    protected Image closeIcon;
 
     protected Image profileIconHovered;
     protected Image auctionsIconHovered;
@@ -54,8 +55,6 @@ public class MenuController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     protected void setIcons() {
@@ -79,14 +78,39 @@ public class MenuController implements Initializable {
         System.exit(0);
     }
 
-    public void selectMenuItem(MouseEvent mouseEvent) {
+    public void selectMenuItem(MouseEvent mouseEvent) throws IOException {
+        ImageView source = (ImageView) mouseEvent.getSource();
         imgviewProfile.setImage(profileIcon);
         imgviewAuctions.setImage(auctionsIcon);
         imgviewFavorites.setImage(favoritesIcon);
         imgviewAddAuction.setImage(addAuctionIcon);
         highlightIconColor(mouseEvent);
-        ImageView icon = (ImageView) mouseEvent.getSource();
+        ImageView icon = source;
         selectedMenu = icon;
+
+        paneContent.getChildren().clear();
+        Pane newLoadedPane;
+
+        if (mouseEvent.getSource() == imgviewProfile){
+            System.out.println("Profile");
+            newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/profile/profile.fxml"));
+        }
+        else if(source == imgviewAuctions){
+            System.out.println("Auctions");
+            newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/auctions/auctions.fxml"));
+        }
+        else if(source == imgviewAddAuction){
+            System.out.println("AddAuction");
+            newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/addAuction/addauction.fxml"));
+        }
+        else if(source == imgviewFavorites){
+            System.out.println("Favorites");
+            newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/favorites/favorites.fxml"));
+        }
+        else{
+            newLoadedPane = new Pane();
+        }
+        paneContent.getChildren().add(newLoadedPane);
     }
 
     public void highlightIconColor(MouseEvent mouseEvent) {
