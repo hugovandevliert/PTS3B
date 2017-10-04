@@ -92,19 +92,15 @@ public class MenuController implements Initializable {
         Pane newLoadedPane;
 
         if (mouseEvent.getSource() == imgviewProfile){
-            System.out.println("Profile");
             newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/profile/profile.fxml"));
         }
         else if(source == imgviewAuctions){
-            System.out.println("Auctions");
             newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/auctions/auctions.fxml"));
         }
         else if(source == imgviewAddAuction){
-            System.out.println("AddAuction");
             newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/addAuction/addauction.fxml"));
         }
         else if(source == imgviewFavorites){
-            System.out.println("Favorites");
             newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/favorites/favorites.fxml"));
         }
         else{
