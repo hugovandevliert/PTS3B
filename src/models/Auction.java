@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Auction {
 
+    private int ID;
     private double startBid, minimum;
     private boolean isPremium;
     private LocalDateTime expirationDate, openingDate, creationDate;
@@ -23,6 +24,8 @@ public class Auction {
         images = new ArrayList<>();
         bids = new ArrayList<>();
     }
+
+    public double getID() { return ID; }
 
     public double getStartBid() {
         return startBid;
@@ -52,10 +55,13 @@ public class Auction {
         return title;
     }
 
-    public List<Image> getImages() { return Collections.unmodifiableList(images);
+    public List<Image> getImages() {
+        return Collections.unmodifiableList(images);
     }
 
-    public List<Bid> getBids() { return Collections.unmodifiableList(bids); }
+    public List<Bid> getBids() {
+        return Collections.unmodifiableList(bids);
+    }
 
     public Status getStatus() {
         return status;
@@ -65,11 +71,14 @@ public class Auction {
         this.status = status;
     }
 
-    public void addBid(double amount, Profile profile) { }
+    public void addBid(double amount, Profile profile) {
+    }
 
     public boolean endAuction() {
         return false;
     }
 
-    public Profile getCreator() { return creator; }
+    public Profile getCreator() {
+        return creator;
+    }
 }
