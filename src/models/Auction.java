@@ -8,10 +8,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Class for keeping information about an auction.
- * */
 public class Auction {
+
+    private int ID;
     private double startBid, minimum;
     private boolean isPremium;
     private LocalDateTime expirationDate, openingDate, creationDate;
@@ -21,48 +20,12 @@ public class Auction {
     private ArrayList<Bid> bids;
     private Profile creator;
 
-    /**
-     * Constructor for an auction.
-     * @param startBid: Minimum value of the first bid.
-     * @param minimum: Minimum bid the auction must have reached before the seller actually sells the item.
-     * @param isPremium: Indicates if a user paid to boost his auction.
-     * @param expirationDate: Date/time when the auction is planned to close.
-     * @param openingDate: Date/time when the auction is planned to open.
-     * @param title: Title of the auction.
-     * @param status: Status of the auction. Currently: CLOSED or OPEN.
-     * @param images: All images added to the auction.
-     * @param bids: All bids on this auction.
-     * @param creator: The user's profile that created this auction.
-     * */
-    Auction(double startBid, double minimum, boolean isPremium, LocalDateTime expirationDate, LocalDateTime openingDate, String title, Status status, ArrayList<Image> images, ArrayList<Bid> bids, Profile creator) {
-        this.startBid = startBid;
-        this.minimum = minimum;
-        this.isPremium = isPremium;
-        this.expirationDate = expirationDate;
-        this.openingDate = openingDate;
-        this.creationDate = LocalDateTime.now(); //todo: Is this smart? When loading a bid from the database it's date will reset.
-        this.title = title;
-        this.status = status;
-        this.images = images;
-        this.bids = bids;
-        this.creator = creator;
+    Auction() {
+        images = new ArrayList<>();
+        bids = new ArrayList<>();
     }
 
-    /**
-     * Method to add a bid to an auction.
-     * @param amount: Amount that was bid.
-     * @param profile: profile that placed the bid.
-     * */
-    public void addBid(double amount, Profile profile) {
-    }
-
-    /**
-     * Method to end the auction
-     * @return: Return true if succeeded, false if failed to close.
-     * */
-    public boolean endAuction() {
-        return false;
-    }
+    public double getID() { return ID; }
 
     public double getStartBid() {
         return startBid;
@@ -92,10 +55,13 @@ public class Auction {
         return title;
     }
 
-    public List<Image> getImages() { return Collections.unmodifiableList(images);
+    public List<Image> getImages() {
+        return Collections.unmodifiableList(images);
     }
 
-    public List<Bid> getBids() { return Collections.unmodifiableList(bids); }
+    public List<Bid> getBids() {
+        return Collections.unmodifiableList(bids);
+    }
 
     public Status getStatus() {
         return status;
@@ -105,5 +71,14 @@ public class Auction {
         this.status = status;
     }
 
-    public Profile getCreator() { return creator; }
+    public void addBid(double amount, Profile profile) {
+    }
+
+    public boolean endAuction() {
+        return false;
+    }
+
+    public Profile getCreator() {
+        return creator;
+    }
 }

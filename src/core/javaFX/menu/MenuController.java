@@ -11,11 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import sun.security.krb5.internal.APOptions;
 import utilities.enums.AlertType;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -36,7 +32,7 @@ public class MenuController implements Initializable {
     @FXML public Pane paneAlert;
     @FXML public Label lblAlertMessage;
 
-    protected ApplicationManager applicationManager = new ApplicationManager();
+    protected static ApplicationManager applicationManager = new ApplicationManager();
     protected ImageView selectedMenu;
 
     private Image profileIcon;
@@ -90,6 +86,8 @@ public class MenuController implements Initializable {
     }
 
     public void selectMenuItem(MouseEvent mouseEvent) throws IOException {
+        if (!applicationManager.isLoggedIn()) return;
+
         ImageView source = (ImageView) mouseEvent.getSource();
         imgviewProfile.setImage(profileIcon);
         imgviewAuctions.setImage(auctionsIcon);
