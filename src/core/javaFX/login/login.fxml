@@ -24,7 +24,7 @@
                   <Font name="Segoe UI Light" size="18.0" />
                </font>
             </JFXTextField>
-            <JFXPasswordField alignment="CENTER" focusColor="#747e8c" layoutX="350.0" layoutY="358.0" prefHeight="29.0" prefWidth="300.0" promptText="password" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #a6b5c9; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
+            <JFXPasswordField fx:id="txtPassword" alignment="CENTER" focusColor="#747e8c" layoutX="350.0" layoutY="358.0" onAction="#login" prefHeight="29.0" prefWidth="300.0" promptText="password" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #a6b5c9; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
                 <font>
                     <Font name="Segoe UI Light" size="18.0" />
                 </font>

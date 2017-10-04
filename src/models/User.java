@@ -15,7 +15,7 @@ public class User {
      * @param name: The Name of the User
      * @param email: The Email of the User, this value should be unique. It should always end with @[Valid domain name]
      */
-    User(String username, String name, String email) {
+    public User(String username, String name, String email) {
         this.username = username;
         this.name = name;
         this.email = email;
