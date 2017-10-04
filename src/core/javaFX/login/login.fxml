@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.login.LoginController">
+<GridPane hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.login.LoginController">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
@@ -17,7 +17,7 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <Pane fx:id="paneContent" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;">
+      <Pane fx:id="paneContent" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;" GridPane.valignment="TOP">
          <children>
             <JFXTextField fx:id="txtUsername" alignment="BOTTOM_CENTER" focusColor="#747e8c" layoutX="350.0" layoutY="269.0" mouseTransparent="true" prefHeight="25.0" prefWidth="300.0" promptText="username" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #a6b5c9;" unFocusColor="#242e3b">
                <font>

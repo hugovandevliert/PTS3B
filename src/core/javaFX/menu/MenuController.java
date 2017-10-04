@@ -1,6 +1,8 @@
 package core.javaFX.menu;
 
 import core.ApplicationManager;
+import core.UserAlert;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,11 +12,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import sun.security.krb5.internal.APOptions;
+import utilities.enums.AlertType;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Timer;
 
 public class MenuController implements Initializable {
 
@@ -27,6 +33,8 @@ public class MenuController implements Initializable {
     @FXML public ImageView imgviewAuctions;
     @FXML public ImageView imgviewFavorites;
     @FXML public ImageView imgviewAddAuction;
+    @FXML public Pane paneAlert;
+    @FXML public Label lblAlertMessage;
 
     protected ApplicationManager applicationManager = new ApplicationManager();
     protected ImageView selectedMenu;
@@ -51,7 +59,11 @@ public class MenuController implements Initializable {
             paneContent.getChildren().clear();
             Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/login/login.fxml"));
             paneContent.getChildren().add(newLoadedPane);
+            UserAlert userAlert = new UserAlert();
+            userAlert.ShowMessage("Logged in!", AlertType.Message, paneAlert, lblAlertMessage, this);
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -104,6 +116,8 @@ public class MenuController implements Initializable {
         else{
             newLoadedPane = new Pane();
         }
+
+
         paneContent.getChildren().add(newLoadedPane);
     }
 
@@ -143,6 +157,15 @@ public class MenuController implements Initializable {
                 imgviewAddAuction.setImage(addAuctionIcon);
                 break;
         }
+    }
+
+    public void ClearAlert(){
+        Platform.runLater(this::run);
+    }
+
+    private void run() {
+        paneAlert.setStyle("fx-background-color: rgba(61, 72, 87, 1); -fx-background-radius: 2");
+        lblAlertMessage.setText("");
     }
 }
 
