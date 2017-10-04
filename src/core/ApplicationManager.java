@@ -17,13 +17,15 @@ public class ApplicationManager {
     public Profile loadedProfile;
     public User currentUser;
 
+    private UserRepository userRepository;
+
     public ApplicationManager() {
         loadedAuctions = new ArrayList<>();
+        userRepository = new UserRepository(new UserMySqlContext());
     }
 
     public User login(String username, String password) {
-        /*UserRepository userRepository = new UserRepository(new UserMySqlContext());
-        String[] saltAndHash = userRepository.getSaltAndHash(username);
+        /*String[] saltAndHash = userRepository.getSaltAndHash(username);
 
         if(saltAndHash == null){
             //Username not found or SQLException was caught
@@ -46,8 +48,10 @@ public class ApplicationManager {
             }
             //Passwords didn't match or exception was caught
             return null;
-        }*/
-        return currentUser = new User("", "", "");
+        }
+        //return currentUser = new User("", "", "");*/
+
+        return currentUser = userRepository.getUserByUsername(username);
     }
 
     public boolean registerUser(String username, String password, String email, String name) {

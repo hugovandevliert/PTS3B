@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
  * User class, used for authenticating users in the application.
  * */
 public class User {
+
     private String username, name, email;
     private Profile profile;
 

@@ -22,7 +22,7 @@ public class LoginController extends MenuController {
 
     public void login() throws IOException {
         if (txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
-            System.out.println("VOER FF ALLES IN PIK");
+            System.out.println("Please enter both the username and password!");
             return;
         }
 
@@ -34,7 +34,7 @@ public class LoginController extends MenuController {
             paneContent.getChildren().add(newLoadedPane);
         }
         else {
-            System.out.println("CAN NOT LOG IN");
+            System.out.println("Incorrect login credentials!");
         }
     }
 }

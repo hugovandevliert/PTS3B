@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
  * Class used for keeping information about a bid on an auction.
  * */
 public class Bid {
+
     private LocalDateTime date;
     private Profile profile;
     private double amount;
