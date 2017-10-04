@@ -28,7 +28,7 @@
                         <ImageView fx:id="imgviewAddAuction" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="500.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" />
                     </children>
             </Pane>
-                <Label fx:id="lblClose" layoutX="1211.0" layoutY="-2.0" onMouseClicked="#closeApplication" prefHeight="33.0" prefWidth="14.0" style="-fx-text-fill: #747e8c" text="x">
+                <Label fx:id="lblClose" layoutX="1220.0" layoutY="-2.0" onMouseClicked="#closeApplication" prefHeight="33.0" prefWidth="14.0" style="-fx-text-fill: #747e8c" text="x">
                     <font>
                         <Font size="30.0" />
                     </font>
