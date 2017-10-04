@@ -17,7 +17,8 @@ public class ApplicationManager {
     }
 
     public User login(String username, String password) {
-        return null;
+        currentUser = new User(username, username, username);
+        return currentUser;
     }
 
     public boolean registerUser(String username, String password, String email, String name) {
@@ -26,5 +27,9 @@ public class ApplicationManager {
 
     public boolean logout() {
         return false;
+    }
+
+    public boolean isLoggedIn() {
+        return currentUser != null;
     }
 }
