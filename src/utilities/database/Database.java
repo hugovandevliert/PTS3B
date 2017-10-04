@@ -1,7 +1,8 @@
 package utilities.database;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+import javafx.scene.image.Image;
+
+import java.io.*;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -38,9 +39,9 @@ public class Database {
         return null;
     }
 
-    public static ResultSet getData(String query, String[] values) {
+    public static ResultSet getData(final String query, final String[] values) {
         try {
-            Connection connection = Database.getConnection();
+            final Connection connection = Database.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
 
             if (values != null && values.length > 0){
@@ -64,13 +65,109 @@ public class Database {
                 }
             }
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            final ResultSet resultSet = preparedStatement.executeQuery();
             return resultSet;
         }
         catch (Exception ex) {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    public static int setData(final String query, final String[] values, final boolean isUpdateQuery) {
+        int updateCount = -1;
+
+        try {
+            final Connection connection = Database.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            if (values != null && values.length > 0){
+                for (int i = 0; i < values.length; i++){
+                    final int index = i + 1;
+
+                    if (isDouble(values[i])){
+                        preparedStatement.setDouble(index, Double.parseDouble(values[i]));
+                    }
+                    else if (isInteger(values[i])){
+                        preparedStatement.setInt(index, Integer.parseInt(values[i]));
+                    }
+                    else if (isBoolean(values[i])){
+                        preparedStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
+                    }
+                    else if (isDate(values[i])){
+                        preparedStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
+                    }else{
+                        preparedStatement.setString(index, values[i]);
+                    }
+                }
+            }
+
+            if (isUpdateQuery) preparedStatement.executeUpdate();
+            else preparedStatement.executeQuery();
+
+            updateCount = preparedStatement.getUpdateCount();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return updateCount;
+    }
+
+    /**
+     * @param query     This is the query to execute. Make sure to write it in such a way that all the normal values can be parsed first, then afterwards the
+     *                  images will be parsed, all happening in the order that the arrays are in.
+     * @param values    This is the array of normal values, like the the getData() method
+     * @param images    This is an array of images
+     */
+    public static int setDataWithImages(final String query, final String[] values, final Image[] images, final boolean isUpdateQuery) {
+        int updateCount = -1;
+
+        try {
+            final Connection connection = Database.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            int index = 0;
+
+            if (values != null && values.length > 0){
+                for (int i = 0; i < values.length; i++){
+                    index += 1;
+
+                    if (isDouble(values[i])){
+                        preparedStatement.setDouble(index, Double.parseDouble(values[i]));
+                    }
+                    else if (isInteger(values[i])){
+                        preparedStatement.setInt(index, Integer.parseInt(values[i]));
+                    }
+                    else if (isBoolean(values[i])){
+                        preparedStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
+                    }
+                    else if (isDate(values[i])){
+                        preparedStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
+                    }else{
+                        preparedStatement.setString(index, values[i]);
+                    }
+                }
+            }
+
+            if (images != null && images.length > 0){
+                for (int i = 0; i < values.length; i++){
+                    index += 1;
+
+                    final byte[] serializedImage = getSerializedObject(images[i]);
+                    final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(serializedImage);
+
+                    preparedStatement.setBinaryStream(index, byteArrayInputStream, serializedImage.length);
+                }
+            }
+
+            if (isUpdateQuery) preparedStatement.executeUpdate();
+            else preparedStatement.executeQuery();
+
+            updateCount = preparedStatement.getUpdateCount();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return updateCount;
     }
 
     /**
@@ -111,6 +208,13 @@ public class Database {
             e.printStackTrace();
         }
         return updateCount;
+    }
+
+    private static byte[] getSerializedObject(Object object) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+        objectOutputStream.writeObject(object);
+        return byteArrayOutputStream.toByteArray();
     }
 
     private static boolean isDouble(String value) {
