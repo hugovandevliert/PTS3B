@@ -19,7 +19,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class AuctionMySqlContext implements IAuctionContext {
-    PreparedStatement preparedStatement;
 
     @Override
     public ArrayList<Auction> getAuctions(String searchTerm) {

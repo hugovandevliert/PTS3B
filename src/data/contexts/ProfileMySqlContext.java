@@ -9,7 +9,6 @@ import utilities.database.Database;
 import java.sql.PreparedStatement;
 
 public class ProfileMySqlContext implements IProfileContext {
-    PreparedStatement preparedStatement;
 
     @Override
     public boolean addVisitedAuction(Profile profile, Auction auction) {

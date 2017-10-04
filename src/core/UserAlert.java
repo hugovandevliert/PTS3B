@@ -23,7 +23,7 @@ public class UserAlert {
     private String message;
     private AlertType alertType;
 
-    public Pane ShowMessage(String message, AlertType alertType, Pane pane, Label label, MenuController menuController) throws InterruptedException {
+    public Pane showMessage(String message, AlertType alertType, Pane pane, Label label, MenuController menuController) throws InterruptedException {
         switch (alertType){
             case Message:
                 pane.setStyle("-fx-background-color: rgba(93, 116, 78, 1); -fx-background-radius: 2;");
@@ -43,8 +43,6 @@ public class UserAlert {
 
         Timer timer = new Timer();
         timer.schedule(clearUserAlert, 5000);
-
-
 
         return pane;
     }

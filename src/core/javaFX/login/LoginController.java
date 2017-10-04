@@ -22,7 +22,7 @@ public class LoginController extends MenuController {
 
     public void login() throws IOException {
         if (txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
-            System.out.println("Please enter both the username and password!");
+            System.out.println("Please fill in both a username and a password!");
             return;
         }
 

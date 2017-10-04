@@ -23,7 +23,7 @@
                     <Font name="Segoe UI Light" size="18.0" />
                 </font>
             </TextField>
-             <ScrollPane layoutX="14.0" layoutY="99.0" prefHeight="642.0" prefWidth="976.0" style="-fx-background: #3d4857; -fx-border-color: #3d4857;" />
+             <ScrollPane layoutX="14.0" layoutY="99.0" prefHeight="642.0" prefWidth="976.0" style="-fx-background: #3d4857; -fx-border-color: #3d4857; -fx-background-color: transparent;" />
          </children>
       </Pane>
     </children>

@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class FeedbackMySqlContext implements IFeedbackContext {
-    PreparedStatement preparedStatement;
 
     @Override
     public ArrayList<Feedback> getFeedbacks(int profileId) {

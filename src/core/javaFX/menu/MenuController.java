@@ -55,8 +55,9 @@ public class MenuController implements Initializable {
             paneContent.getChildren().clear();
             Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/login/login.fxml"));
             paneContent.getChildren().add(newLoadedPane);
+
             UserAlert userAlert = new UserAlert();
-            userAlert.ShowMessage("Logged in!", AlertType.Message, paneAlert, lblAlertMessage, this);
+            userAlert.showMessage("Logged in!", AlertType.Message, paneAlert, lblAlertMessage, this);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

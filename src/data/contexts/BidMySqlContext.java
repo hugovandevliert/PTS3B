@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class BidMySqlContext implements IBidContext {
-    PreparedStatement preparedStatement;
 
     @Override
     public ArrayList<Bid> getBids(int auctionId) {
