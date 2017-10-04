@@ -6,6 +6,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import utilities.database.Database;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class BidMySqlContext implements IBidContext {
@@ -13,7 +14,7 @@ public class BidMySqlContext implements IBidContext {
 
     @Override
     public ArrayList<Bid> getBids(int auctionId) {
-        preparedStatement =  Database.getConnection().prepareStatement("SELECT * FROM Bid WHERE Auction_ID = ?");
-        preparedStatement.setInt(1, auctionId);
+        Database.getData("SELECT * FROM Bid WHERE Auction_ID = ?", new String[]{ Integer.toString(auctionId)});
+        return null;
     }
 }

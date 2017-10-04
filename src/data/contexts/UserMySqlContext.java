@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserMySqlContext implements IUserContext {
-    PreparedStatement preparedStatement;
+//    PreparedStatement preparedStatement;
 
     @Override
     public String[] getSaltAndHash(String username){
@@ -34,8 +34,9 @@ public class UserMySqlContext implements IUserContext {
 
     @Override
     public boolean setPhoto(Profile profile, Image photo) {
-        preparedStatement =  Database.getConnection().prepareStatement("UPDATE Account SET Image = ?");
-        preparedStatement.setObject(1, photo);
+//        preparedStatement =  Database.getConnection().prepareStatement("UPDATE Account SET Image = ?");
+//        preparedStatement.setObject(1, photo);
+        return false;
     }
 
     @Override
