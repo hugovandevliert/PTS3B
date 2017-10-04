@@ -23,11 +23,7 @@ public class AuctionMySqlContext implements IAuctionContext {
 
     @Override
     public ArrayList<Auction> getAuctions(String searchTerm) {
-        try {
-            Database.getData("SELECT * FROM Auction WHERE `STATUS` = 'OPEN' AND EndDate > curdate()", null);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Database.getData("SELECT * FROM Auction WHERE `STATUS` = 'OPEN' AND EndDate > curdate()", null);
         return null;
     }
 

@@ -42,19 +42,21 @@ public class Database {
 
             preparedStatement = connection.prepareStatement(query);
 
-            for (int i = 0; i < values.length; i++){
-                final int index = i + 1;
+            if (values != null && values.length > 0){
+                for (int i = 0; i < values.length; i++){
+                    final int index = i + 1;
 
-                if (isDouble(values[i])){
-                    preparedStatement.setDouble(index, Double.parseDouble(values[i]));
-                }
-                else if (isInteger(values[i])){
-                    preparedStatement.setInt(index, Integer.parseInt(values[i]));
-                }
-                else if (isBoolean(values[i])){
-                    preparedStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
-                }else{
-                    preparedStatement.setString(index, values[i]);
+                    if (isDouble(values[i])){
+                        preparedStatement.setDouble(index, Double.parseDouble(values[i]));
+                    }
+                    else if (isInteger(values[i])){
+                        preparedStatement.setInt(index, Integer.parseInt(values[i]));
+                    }
+                    else if (isBoolean(values[i])){
+                        preparedStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
+                    }else{
+                        preparedStatement.setString(index, values[i]);
+                    }
                 }
             }
 
@@ -67,11 +69,11 @@ public class Database {
         finally {
             try {
                 if (resultSet != null) {
-                    resultSet.close();
+                    //resultSet.close();
                 }
 
                 if (preparedStatement != null) {
-                    preparedStatement.close();
+                    //preparedStatement.close();
                 }
 
                 if (connection != null) {

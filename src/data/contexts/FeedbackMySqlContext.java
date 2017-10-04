@@ -14,11 +14,7 @@ public class FeedbackMySqlContext implements IFeedbackContext {
 
     @Override
     public ArrayList<Feedback> getFeedbacks(int profileId) {
-        try {
-            Database.getData("SELECT * FROM Feedback WHERE Account_ID = ?", new String[]{ Integer.toString(profileId)});
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Database.getData("SELECT * FROM Feedback WHERE Account_ID = ?", new String[]{ Integer.toString(profileId)});
         return null;
     }
 }

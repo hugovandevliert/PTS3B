@@ -14,11 +14,7 @@ public class BidMySqlContext implements IBidContext {
 
     @Override
     public ArrayList<Bid> getBids(int auctionId) {
-        try {
-            Database.getData("SELECT * FROM Bid WHERE Auction_ID = ?", new String[]{ Integer.toString(auctionId)});
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Database.getData("SELECT * FROM Bid WHERE Auction_ID = ?", new String[]{ Integer.toString(auctionId)});
         return null;
     }
 }

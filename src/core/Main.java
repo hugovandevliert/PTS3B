@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import utilities.database.Database;
 
+import java.sql.ResultSet;
+
 public class Main extends Application {
 
     private double xOffset, yOffset;
@@ -24,7 +26,11 @@ public class Main extends Application {
 
         enableGUIMoving(root, primaryStage);
 
-        Database.getConnection();
+        ResultSet rs = Database.getData("SELECT * FROM Auction WHERE `STATUS` = 'OPEN' AND EndDate > curdate()", null);
+
+        //while (rs.next()) {
+
+        //}
     }
 
     private void enableGUIMoving(Parent parent, Stage stage) {
