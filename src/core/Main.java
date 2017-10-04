@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import utilities.database.Database;
 
 public class Main extends Application {
 
@@ -22,6 +23,8 @@ public class Main extends Application {
         primaryStage.show();
 
         enableGUIMoving(root, primaryStage);
+
+        Database.getConnection();
     }
 
     private void enableGUIMoving(Parent parent, Stage stage) {

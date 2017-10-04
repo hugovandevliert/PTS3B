@@ -1,17 +1,38 @@
 package utilities.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.sql.*;
+import java.util.Properties;
 
 public class Database {
 
+    private static String server, username, password;
+
     public static Connection getConnection() {
+        try {
+            if (server == null || username == null || password == null){
+                FileInputStream fileInput = new FileInputStream("src/utilities/database/DatabaseCredentials.properties");
+
+                Properties properties = new Properties();
+                properties.load(fileInput);
+                fileInput.close();
+
+                server = properties.getProperty("server");
+                username = properties.getProperty("username");
+                password = properties.getProperty("password");
+            }
+
+            return DriverManager.getConnection("jdbc:mysql://" + server + ":3306/MyAuctions", username, password);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        }
         return null;
     }
 
-    public static ResultSet getData(String query, String[] values) throws SQLException {
+    public static ResultSet getData(String query, String[] values) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -44,16 +65,20 @@ public class Database {
             ex.printStackTrace();
         }
         finally {
-            if (resultSet != null) {
-                resultSet.close();
-            }
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
 
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
 
-            if (connection != null) {
-                connection.close();
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException ex){
+                ex.printStackTrace();
             }
         }
         return null;
