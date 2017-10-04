@@ -2,14 +2,11 @@ package models;
 
 import javafx.scene.image.Image;
 
+/**
+ * User class, used for authenticating users in the application.
+ * */
 public class User {
-    /**
-     * Variabeles for saving the Username, Name and Email of a User-Object
-     */
     private String username, name, email;
-    /**
-     * Profile object that belongs to an User-object
-     */
     private Profile profile;
 
     /**
@@ -26,8 +23,8 @@ public class User {
 
     /**
      * Method for changing the password of an User, it requires a String value that holds the new password and will return a boolean value back
-     * @param password: The new password that the User's password should be changed to. Password must have atleast: 6 characters, 1 lowercase, 1 uppercase, 1 symbol, 1 integer
-     * @return: Depending on whether the new password is allowed and the outcome of the check, the method will return true when password is succesfully changed
+     * @param password: The new password that the User's password should be changed to. Password must have at least: 6 characters, 1 lowercase, 1 uppercase, 1 symbol, 1 integer
+     * @return: Depending on whether the new password is allowed and the outcome of the check, the method will return true when password is successfully changed
      */
     public boolean changePassword(String password) { return false; }
 
