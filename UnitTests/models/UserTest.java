@@ -13,7 +13,7 @@ class UserTest {
 
     /**
      * ASSUMPTION: There is a user in the database with username="testusername", password="AbC*1f", name="Test User" and email="testuser@gmail.com".
-     * If this is not true, all tests will fail.
+     * If this is not true, all tests will fail..
      */
 
     @BeforeAll

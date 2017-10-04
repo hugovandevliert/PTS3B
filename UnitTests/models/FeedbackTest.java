@@ -9,8 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * ASSUMPTION: There is a user in the database with username="testusername", password="AbC*1f", name="Test User" and email="testuser@gmail.com".
  * ASSUMPTION: There is a user in the database with username="testusername2" and password="AbC*1f"
- * If these are not true, all tests will fail.
- */
+ * If these are not true, all tests will fail.. */
 class FeedbackTest {
     static private ApplicationManager applicationManager;
 
