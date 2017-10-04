@@ -33,14 +33,9 @@ public class Database {
     }
 
     public static ResultSet getData(String query, String[] values) {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
         try {
-            connection = Database.getConnection();
-
-            preparedStatement = connection.prepareStatement(query);
+            Connection connection = Database.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
 
             if (values != null && values.length > 0){
                 for (int i = 0; i < values.length; i++){
@@ -60,28 +55,11 @@ public class Database {
                 }
             }
 
-            resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
             return resultSet;
         }
         catch (Exception ex) {
             ex.printStackTrace();
-        }
-        finally {
-            try {
-                if (resultSet != null) {
-                    //resultSet.close();
-                }
-
-                if (preparedStatement != null) {
-                    //preparedStatement.close();
-                }
-
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException ex){
-                ex.printStackTrace();
-            }
         }
         return null;
     }
