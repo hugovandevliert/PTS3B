@@ -3,11 +3,17 @@ package utilities.database;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
+@SuppressWarnings("Duplicates")
 public class Database {
 
     private static String server, username, password;
+    private static SimpleDateFormat  dateFormatter = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");
 
     public static Connection getConnection() {
         try {
@@ -49,6 +55,9 @@ public class Database {
                     }
                     else if (isBoolean(values[i])){
                         preparedStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
+                    }
+                    else if (isDate(values[i])){
+                        preparedStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
                     }else{
                         preparedStatement.setString(index, values[i]);
                     }
@@ -64,8 +73,44 @@ public class Database {
         return null;
     }
 
-    public static int setData(PreparedStatement statement) {
-        return -1;
+    /**
+     * @param query Usage for query --> {call increase_salaries_for_department(?, ?)}
+     */
+    public static int executeStoredProcedure(String query, String[] values) {
+        int updateCount = -1;
+
+        try {
+            CallableStatement callableStatement = Database.getConnection().prepareCall(query);
+
+            if (values != null && values.length > 0){
+                for (int i = 0; i < values.length; i++){
+                    final int index = i + 1;
+
+                    if (isDouble(values[i])){
+                        callableStatement.setDouble(index, Double.parseDouble(values[i]));
+                    }
+                    else if (isInteger(values[i])){
+                        callableStatement.setInt(index, Integer.parseInt(values[i]));
+                    }
+                    else if (isBoolean(values[i])){
+                        callableStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
+                    }
+                    else if (isDate(values[i])){
+                        callableStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
+                    }else{
+                        callableStatement.setString(index, values[i]);
+                    }
+                }
+            }
+
+            callableStatement.execute();
+            updateCount = callableStatement.getUpdateCount();
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return updateCount;
     }
 
     private static boolean isDouble(String value) {
@@ -90,7 +135,16 @@ public class Database {
         try {
             Boolean.parseBoolean(value);
             return true;
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    private static boolean isDate(String value) {
+        try {
+            dateFormatter.parse(value);
+            return true;
+        } catch (ParseException e) {
             return false;
         }
     }
