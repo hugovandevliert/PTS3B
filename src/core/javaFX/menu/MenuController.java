@@ -1,5 +1,6 @@
 package core.javaFX.menu;
 
+import core.ApplicationManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -8,9 +9,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import sun.security.krb5.internal.APOptions;
 
-import javax.activation.MimetypesFileTypeMap;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -28,23 +28,22 @@ public class MenuController implements Initializable {
     @FXML public ImageView imgviewFavorites;
     @FXML public ImageView imgviewAddAuction;
 
+    protected ApplicationManager applicationManager = new ApplicationManager();
     protected ImageView selectedMenu;
 
-    protected Image profileIcon;
-    protected Image auctionsIcon;
-    protected Image favoritesIcon;
-    protected Image addAuctionIcon;
-    protected Image closeIcon;
+    private Image profileIcon;
+    private Image auctionsIcon;
+    private Image favoritesIcon;
+    private Image addAuctionIcon;
 
-    protected Image profileIconHovered;
-    protected Image auctionsIconHovered;
-    protected Image favoritesIconHovered;
-    protected Image addAuctionIconHovered;
+    private Image profileIconHovered;
+    private Image auctionsIconHovered;
+    private Image favoritesIconHovered;
+    private Image addAuctionIconHovered;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setIcons();
-
         selectedMenu = imgviewProfile;
         imgviewProfile.setImage(profileIconHovered);
 
@@ -57,7 +56,7 @@ public class MenuController implements Initializable {
         }
     }
 
-    protected void setIcons() {
+    private void setIcons() {
         profileIcon = new Image( "/utilities/images/menu/profile.png");
         auctionsIcon = new Image("/utilities/images/menu/auction.png");
         favoritesIcon = new Image("/utilities/images/menu/favorites.png");
@@ -85,26 +84,21 @@ public class MenuController implements Initializable {
         imgviewFavorites.setImage(favoritesIcon);
         imgviewAddAuction.setImage(addAuctionIcon);
         highlightIconColor(mouseEvent);
-        ImageView icon = source;
-        selectedMenu = icon;
+        selectedMenu = source;
 
         paneContent.getChildren().clear();
         Pane newLoadedPane;
 
         if (mouseEvent.getSource() == imgviewProfile){
-            System.out.println("Profile");
             newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/profile/profile.fxml"));
         }
         else if(source == imgviewAuctions){
-            System.out.println("Auctions");
             newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/auctions/auctions.fxml"));
         }
         else if(source == imgviewAddAuction){
-            System.out.println("AddAuction");
             newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/addAuction/addauction.fxml"));
         }
         else if(source == imgviewFavorites){
-            System.out.println("Favorites");
             newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/favorites/favorites.fxml"));
         }
         else{
@@ -150,7 +144,5 @@ public class MenuController implements Initializable {
                 break;
         }
     }
-
-
 }
 

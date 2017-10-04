@@ -2,7 +2,6 @@ package core.javaFX.favorites;
 
 
 import core.javaFX.menu.MenuController;
-import javafx.fxml.FXML;
 
 import java.net.URL;
 import java.util.ResourceBundle;

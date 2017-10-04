@@ -22,8 +22,6 @@ public class Main extends Application {
         primaryStage.show();
 
         enableGUIMoving(root, primaryStage);
-
-
     }
 
     private void enableGUIMoving(Parent parent, Stage stage) {

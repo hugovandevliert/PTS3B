@@ -2,16 +2,22 @@ package models;
 
 import java.time.LocalDateTime;
 
+/**
+ * Class used for keeping information about a bid on an auction.
+ * */
 public class Bid {
-
     private LocalDateTime date;
     private Profile profile;
     private double amount;
 
+    /**
+     * Constructor for Bid.
+     * @param profile: The user's profile that placed the bid.
+     * @param amount: The amount of money.
+     * */
     Bid(Profile profile, double amount) {
-        //time hier implementeren
         this.profile = profile;
-        this.date = date;
+        this.date = LocalDateTime.now(); //todo: Is this smart? When loading a bid from the database it's date will reset. :thinking:
         this.amount = amount;
     }
 
