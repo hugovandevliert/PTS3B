@@ -21,8 +21,8 @@ class FeedbackTest {
 
     @Test
     void testGetDate() {
-        Feedback f = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), false, "Testfeedback");
-        assertNotNull(f.getDate());
+        Feedback feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), false, "Testfeedback");
+        assertNotNull(feedback.getDate());
         //Can't really test the value of this getter since the value is unknown.
         //Todo: Look into delta's
     }
@@ -36,17 +36,17 @@ class FeedbackTest {
 
     @Test
     void testGetMessage() {
-        Feedback f = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), false, "Testfeedback");
-        assertEquals("Testfeedback", f.getMessage());
+        Feedback feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), false, "Testfeedback");
+        assertEquals("Testfeedback", feedback.getMessage());
     }
 
     @Test
     void testIsPositive() {
-        Feedback f = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), false, "Testfeedback");
-        assertFalse(f.isPositive(), "Positivity getter is not working properly for negative value.");
+        Feedback feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), false, "Testfeedback");
+        assertFalse(feedback.isPositive(), "Positivity getter is not working properly for negative value.");
 
-        f = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), true, "Testfeedback");
-        assertTrue(f.isPositive(), "Positivity getter is not working properly for positive value.");
+        feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), true, "Testfeedback");
+        assertTrue(feedback.isPositive(), "Positivity getter is not working properly for positive value.");
     }
 
 }
