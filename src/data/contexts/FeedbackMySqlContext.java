@@ -6,6 +6,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import utilities.database.Database;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class FeedbackMySqlContext implements IFeedbackContext {
@@ -13,7 +14,11 @@ public class FeedbackMySqlContext implements IFeedbackContext {
 
     @Override
     public ArrayList<Feedback> getFeedbacks(int profileId) {
-        preparedStatement =  Database.getConnection().prepareStatement("SELECT * FROM Feedback WHERE Account_ID = ?");
-        preparedStatement.setInt(1, profileId);
+        try {
+            Database.getData("SELECT * FROM Feedback WHERE Account_ID = ?", new String[]{ Integer.toString(profileId)});
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
