@@ -172,6 +172,7 @@ public class Database {
 
     /**
      * @param query Usage for query --> {call increase_salaries_for_department(?, ?)}
+     *              increase_salaries_for_department being the name of the stored procedure
      */
     public static int executeStoredProcedure(String query, String[] values) {
         int updateCount = -1;

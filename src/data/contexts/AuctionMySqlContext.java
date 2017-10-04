@@ -1,6 +1,8 @@
 package data.contexts;
 
 import data.interfaces.IAuctionContext;
+import javafx.scene.image.Image;
+import logic.algorithms.ImageConverter;
 import models.Auction;
 import models.Profile;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -19,6 +21,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class AuctionMySqlContext implements IAuctionContext {
+
+    private ImageConverter imageConverter;
+
+    public AuctionMySqlContext() {
+        imageConverter = new ImageConverter();
+    }
 
     @Override
     public ArrayList<Auction> getAuctions(String searchTerm) {
@@ -56,5 +64,20 @@ public class AuctionMySqlContext implements IAuctionContext {
 //        preparedStatement.setInt(1, auctionId);
         return false;
 
+    }
+
+    public Auction getAuctionFromResultSet(ResultSet resultSet) {
+        /*To grab the image, please do the following:
+        get the resultset from any getData method in the Database Class
+        in this resultset, grab the byte array as an object, which goes as follows;
+        byte[] byteArray = (byte[]) resultSet.getObject(1)
+        to make sure we have efficient code, we would then convert our image like so;
+
+        try {
+            final Image image = imageConverter.byteArrayToImage((byte[])resultSet.getObject(1));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
+        return null;
     }
 }
