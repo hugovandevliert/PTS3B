@@ -13,9 +13,9 @@ import java.util.ArrayList;
 
 public class ApplicationManager {
 
-    private ArrayList<Auction> loadedAuctions;
-    private Profile loadedProfile;
-    private User currentUser;
+    public ArrayList<Auction> loadedAuctions;
+    public Profile loadedProfile;
+    public User currentUser;
 
     public ApplicationManager() {
         loadedAuctions = new ArrayList<>();

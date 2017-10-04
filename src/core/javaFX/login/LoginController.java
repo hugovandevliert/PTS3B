@@ -25,7 +25,7 @@ public class LoginController extends MenuController {
 
     public void login() throws IOException {
         if (txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
-            System.out.println("VOER FF ALLES IN JONGE");
+            System.out.println("VOER FF ALLES IN PIK");
             return;
         }
 
