@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<Pane fx:id="paneListedAuctionContent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="970.0" style="-fx-background-color: #242e3b;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="imgviewImage" fitHeight="200.0" fitWidth="200.0" layoutX="29.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
+      <VBox fx:id="vboxTextArea" alignment="TOP_CENTER" layoutX="256.0" layoutY="25.0" prefHeight="200.0" prefWidth="685.0" spacing="30.0">
+         <children>
+            <Label fx:id="lblAuctionTitle" text="Samsung Galaxy S7 Edge" textFill="#556070">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Text fx:id="textAuctionDescription" fill="#747e8c" strokeType="OUTSIDE" strokeWidth="0.0" text="Dit is de beschrijving van het product Dit is de beschrijving van het product Dit is de beschrijving van het product Dit is de beschrijving van het product Dit is de beschrijving van het product Dit is de beschrijving van het product Dit is de beschrijving van het product Dit is de beschrijving van het product Dit is de beschrijving van het product Dit is de beschrijving van het product Dit is de beschrijving van het product Dit is de beschrijving van het product " textAlignment="CENTER" wrappingWidth="642.2255859375" VBox.vgrow="NEVER" />
+         </children>
+      </VBox>
+   </children>
+</Pane>

@@ -28,7 +28,7 @@
                <content>
                   <VBox prefHeight="636.0" prefWidth="971.0">
                      <children>
-                        <Pane prefHeight="200.0" prefWidth="200.0" />
+                        <Pane prefHeight="200.0" prefWidth="971.0" />
                      </children></VBox>
                </content></ScrollPane>
          </children>
