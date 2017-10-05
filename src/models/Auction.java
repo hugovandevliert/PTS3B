@@ -29,6 +29,15 @@ public class Auction {
         images = new ArrayList<>();
     }
 
+    public Auction(int id, String title, String description, double startBid) {
+        this.id = id;
+        this.startBid = startBid;
+        this.title = title;
+        this.description = description;
+
+        images = new ArrayList<>();
+    }
+
     public double getId() { return id; }
 
     public double getStartBid() {

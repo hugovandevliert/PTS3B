@@ -5,6 +5,7 @@ import models.Auction;
 import models.Profile;
 import utilities.enums.Status;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class AuctionRepository {
@@ -15,8 +16,8 @@ public class AuctionRepository {
         this.context = context;
     }
 
-    public ArrayList<Auction> getAuctions(String searchTerm) {
-        return context.getAuctions(searchTerm);
+    public ArrayList<Auction> getAuctionsForSearchTerm(String searchTerm) throws SQLException {
+        return context.getAuctionsForSearchTerm(searchTerm);
     }
 
     public boolean addAuction(Profile profile, Auction auction) {

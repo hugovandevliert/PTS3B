@@ -29,9 +29,18 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     @Override
-    public ArrayList<Auction> getAuctions(String searchTerm) {
-        Database.getData("SELECT * FROM Auction WHERE `STATUS` = 'OPEN' AND EndDate > curdate()", null);
-        return null;
+    public ArrayList<Auction> getAuctionsForSearchTerm(String searchTerm) throws SQLException {
+        final String query = "SELECT * FROM MyAuctions.Auction WHERE Auction.status = 'OPEN' " +
+                       "AND Auction.endDate > curdate() AND Auction.title = '%' + ? + '%';";
+        final ResultSet resultSet = Database.getData(query, new String[]{ searchTerm });
+        final ArrayList<Auction> auctions = new ArrayList<>();
+
+        if (resultSet != null){
+            while (resultSet.next()){
+                auctions.add(getAuctionFromResultSet(resultSet));
+            }
+        }
+        return auctions;
     }
 
     @Override
@@ -66,7 +75,7 @@ public class AuctionMySqlContext implements IAuctionContext {
 
     }
 
-    public Auction getAuctionFromResultSet(ResultSet resultSet) {
+    public Auction getAuctionFromResultSet(ResultSet resultSet) throws SQLException {
         /*To grab the image, please do the following:
         get the resultset from any getData method in the Database Class
         in this resultset, grab the byte array as an object, which goes as follows;
@@ -78,6 +87,12 @@ public class AuctionMySqlContext implements IAuctionContext {
         } catch (SQLException e) {
             e.printStackTrace();
         }*/
-        return null;
+        return new Auction
+                (
+                        resultSet.getInt("id"),
+                        resultSet.getString("title"),
+                        "",
+                        resultSet.getDouble("startingBid")
+                );
     }
 }
