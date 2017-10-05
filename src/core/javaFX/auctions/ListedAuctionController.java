@@ -6,14 +6,14 @@ import javafx.scene.text.Text;
 
 public class ListedAuctionController {
 
-    @FXML private Label lblAuctionTitle;
+    @FXML private Label lblAuctionTitle, lblCurrentOffer;
     @FXML private Text textAuctionDescription;
-
-    public void setDescription(String description) {
-        textAuctionDescription.setText(description);
-    }
 
     public void setTitle(String title) {
         lblAuctionTitle.setText(title);
     }
+
+    public void setDescription(String description) { textAuctionDescription.setText(description); }
+
+    public void setCurrentOffer(double offer) { lblCurrentOffer.setText(String.valueOf(offer)); }
 }

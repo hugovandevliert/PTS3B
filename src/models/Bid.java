@@ -22,6 +22,10 @@ public class Bid {
         this.amount = amount;
     }
 
+    public Bid(double amount) {
+        this.amount = amount;
+    }
+
     public LocalDateTime getDate() {
         return date;
     }

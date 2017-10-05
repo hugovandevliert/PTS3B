@@ -10,15 +10,20 @@
 <Pane fx:id="paneListedAuctionContent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="970.0" style="-fx-background-color: #242e3b;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.auctions.ListedAuctionController">
    <children>
       <ImageView fx:id="imgviewImage" fitHeight="200.0" fitWidth="200.0" layoutX="29.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
-      <VBox fx:id="vboxTextArea" alignment="TOP_CENTER" layoutX="256.0" layoutY="25.0" prefHeight="200.0" prefWidth="685.0" spacing="30.0">
+      <VBox fx:id="vboxTextArea" alignment="TOP_CENTER" layoutX="256.0" layoutY="25.0" prefHeight="200.0" prefWidth="474.0" spacing="30.0">
          <children>
-            <Label fx:id="lblAuctionTitle" textFill="#556070">
+            <Label fx:id="lblAuctionTitle" alignment="CENTER" prefHeight="21.0" prefWidth="421.0" textAlignment="CENTER" textFill="#556070">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Text fx:id="textAuctionDescription" fill="#747e8c" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="642.2255859375" VBox.vgrow="NEVER" />
+            <Text fx:id="textAuctionDescription" fill="#747e8c" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="454.2255859375" VBox.vgrow="NEVER" />
          </children>
       </VBox>
+      <Label fx:id="lblCurrentOffer" alignment="CENTER" layoutX="805.0" layoutY="60.0" prefHeight="113.0" prefWidth="136.0" textAlignment="CENTER" textFill="#b4b481">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
    </children>
 </Pane>
