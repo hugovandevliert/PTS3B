@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import com.jfoenix.controls.JFXTextField?>
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.auctions.AuctionsController">
     <columnConstraints>
         <ColumnConstraints />
@@ -19,11 +20,11 @@
     <children>
           <Pane fx:id="paneContent" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;">
          <children>
-            <TextField id="txtSearchBar" layoutX="14.0" layoutY="50.0" onAction="#searchAuction" prefHeight="25.0" prefWidth="976.0" promptText="Tell us what you're looking for" style="-fx-background-color: #747e8c;">
+            <JFXTextField fx:id="txtSearchBar" layoutX="14.0" layoutY="50.0" onAction="#searchAuction" prefHeight="25.0" prefWidth="976.0" promptText="Tell us what you're looking for" style="-fx-background-color: #747e8c;">
                 <font>
                     <Font name="Segoe UI Light" size="18.0" />
                 </font>
-            </TextField>
+            </JFXTextField>
              <ScrollPane fx:id="scrollPaneListedAuctions" hbarPolicy="NEVER" layoutX="14.0" layoutY="120.0" prefHeight="642.0" prefWidth="976.0" style="-fx-background: #3d4857;  -fx-border-color: #3d4857; -fx-background-color: transparent;" vbarPolicy="NEVER">
                <content>
                   <VBox fx:id="vboxListedAuctions" prefHeight="636.0" prefWidth="971.0" spacing="30.0" />

@@ -54,9 +54,6 @@ public class Database {
                     else if (isInteger(values[i])){
                         preparedStatement.setInt(index, Integer.parseInt(values[i]));
                     }
-                    else if (isBoolean(values[i])){
-                        preparedStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
-                    }
                     else if (isDate(values[i])){
                         preparedStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
                     }else{
@@ -64,6 +61,22 @@ public class Database {
                     }
                 }
             }
+
+            final ResultSet resultSet = preparedStatement.executeQuery();
+            return resultSet;
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    public static ResultSet getDataForSearchTerm(final String query, final String searchTerm) {
+        try {
+            final Connection connection = Database.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setString(1, "%" + searchTerm + "%");
 
             final ResultSet resultSet = preparedStatement.executeQuery();
             return resultSet;
@@ -90,9 +103,6 @@ public class Database {
                     }
                     else if (isInteger(values[i])){
                         preparedStatement.setInt(index, Integer.parseInt(values[i]));
-                    }
-                    else if (isBoolean(values[i])){
-                        preparedStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
                     }
                     else if (isDate(values[i])){
                         preparedStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
@@ -136,9 +146,6 @@ public class Database {
                     }
                     else if (isInteger(values[i])){
                         preparedStatement.setInt(index, Integer.parseInt(values[i]));
-                    }
-                    else if (isBoolean(values[i])){
-                        preparedStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
                     }
                     else if (isDate(values[i])){
                         preparedStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
@@ -190,9 +197,6 @@ public class Database {
                     else if (isInteger(values[i])){
                         callableStatement.setInt(index, Integer.parseInt(values[i]));
                     }
-                    else if (isBoolean(values[i])){
-                        callableStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
-                    }
                     else if (isDate(values[i])){
                         callableStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
                     }else{
@@ -232,15 +236,6 @@ public class Database {
             Integer.parseInt(value);
             return true;
         } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
-    private static boolean isBoolean(String value) {
-        try {
-            Boolean.parseBoolean(value);
-            return true;
-        } catch (Exception e) {
             return false;
         }
     }

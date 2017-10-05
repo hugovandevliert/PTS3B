@@ -31,8 +31,8 @@ public class AuctionMySqlContext implements IAuctionContext {
     @Override
     public ArrayList<Auction> getAuctionsForSearchTerm(String searchTerm) throws SQLException {
         final String query = "SELECT * FROM MyAuctions.Auction WHERE Auction.status = 'OPEN' " +
-                       "AND Auction.endDate > curdate() AND Auction.title = '%' + ? + '%';";
-        final ResultSet resultSet = Database.getData(query, new String[]{ searchTerm });
+                       "AND Auction.endDate > curdate() AND Auction.title LIKE ?;";
+        final ResultSet resultSet = Database.getDataForSearchTerm(query, searchTerm);
         final ArrayList<Auction> auctions = new ArrayList<>();
 
         if (resultSet != null){
@@ -91,7 +91,7 @@ public class AuctionMySqlContext implements IAuctionContext {
                 (
                         resultSet.getInt("id"),
                         resultSet.getString("title"),
-                        "",
+                        "asddddddddddddd",
                         resultSet.getDouble("startingBid")
                 );
     }

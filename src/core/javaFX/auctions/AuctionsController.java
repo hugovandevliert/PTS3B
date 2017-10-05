@@ -35,8 +35,9 @@ public class AuctionsController extends MenuController {
     }
 
     public void searchAuction() throws IOException {
-        //if (txtSearchBar.getText() != null){
-            //String searchTerm = txtSearchBar.getText();
+        String searchTerm = txtSearchBar.getText().trim();
+
+        if (searchTerm != null && searchTerm.length() > 0 && !searchTerm.isEmpty()){
             vboxListedAuctions.getChildren().clear();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/core/javaFX/auctions/listedAuction.fxml"));
@@ -45,10 +46,16 @@ public class AuctionsController extends MenuController {
 
             if (controller != null){
                 try {
-                    for (final Auction auction : auctionRepository.getAuctionsForSearchTerm("Speed")){
-                        controller.setTitle(auction.getTitle());
-                        controller.setDescription(auction.getDescription());
-                        controller.setCurrentOffer(auction.getStartBid());
+                    final ArrayList<Auction> auctions = auctionRepository.getAuctionsForSearchTerm(searchTerm);
+
+                    if (auctions.size() > 0){
+                        for (final Auction auction : auctions){
+                            controller.setTitle(auction.getTitle());
+                            controller.setDescription(auction.getDescription());
+                            controller.setCurrentOffer(auction.getStartBid());
+                        }
+                    }else{
+                        controller.setTitle("No items met your search criteria!");
                     }
                 } catch (SQLException e) {
                     e.printStackTrace(); //TODO: proper error handling
@@ -56,9 +63,9 @@ public class AuctionsController extends MenuController {
             }
 
             vboxListedAuctions.getChildren().add(pane);
-        /*}else{
+        }else{
             //TODO: Proper message handling
             System.out.println("Please write an actual searchterm!");
-        }*/
+        }
     }
 }
