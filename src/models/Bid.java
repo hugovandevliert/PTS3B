@@ -16,7 +16,7 @@ public class Bid {
      * @param profile: The user's profile that placed the bid.
      * @param amount: The amount of money.
      * */
-    Bid(Profile profile, double amount) {
+    public Bid(Profile profile, double amount) {
         this.profile = profile;
         this.date = LocalDateTime.now(); //todo: Is this smart? When loading a bid from the database it's date will reset. :thinking:
         this.amount = amount;

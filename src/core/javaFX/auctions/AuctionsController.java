@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import models.Auction;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,7 +30,7 @@ public class AuctionsController extends MenuController {
         Pane pane = loader.load();
         ListedAuctionController controller = loader.getController();
 
-        controller.setTitle(String.valueOf("Title of item"));
+        controller.setTitle("Title of item");
         controller.setDescription("Description of item");
 
         vboxListedAuctions.getChildren().add(pane);

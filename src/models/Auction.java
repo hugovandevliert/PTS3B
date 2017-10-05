@@ -20,7 +20,7 @@ public class Auction {
     private ArrayList<Bid> bids;
     private Profile creator;
 
-    Auction() {
+    public Auction() {
         images = new ArrayList<>();
         bids = new ArrayList<>();
     }
@@ -71,8 +71,7 @@ public class Auction {
         this.status = status;
     }
 
-    public void addBid(double amount, Profile profile) {
-    }
+    public void addBid(double amount, Profile profile) { }
 
     public boolean endAuction() {
         return false;

@@ -27,7 +27,7 @@ public class Profile {
      * @param email: User's email address.
      * @param profileId: The ID of this profile.
      * */
-    Profile(Image photo, String username, String name, String email, int profileId) {
+    public Profile(Image photo, String username, String name, String email, int profileId) {
         auctions = new ArrayList<>();
         visitedAuctions = new ArrayList<>();
         favoriteAuctions = new ArrayList<>();
