@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import com.jfoenix.controls.JFXTextField?>
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.auctions.AuctionsController">
     <columnConstraints>
         <ColumnConstraints />
@@ -20,7 +19,7 @@
     <children>
           <Pane fx:id="paneContent" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;">
          <children>
-            <JFXTextField fx:id="txtSearchBar" layoutX="14.0" layoutY="50.0" onAction="#searchAuction" prefHeight="25.0" prefWidth="976.0" promptText="Tell us what you're looking for" style="-fx-background-color: #747e8c;">
+            <JFXTextField fx:id="txtSearchBar" focusColor="#4d4d4d" layoutX="14.0" layoutY="50.0" onAction="#searchAuction" prefHeight="25.0" prefWidth="976.0" promptText="Tell us what you're looking for" style="-fx-background-color: #747e8c;">
                 <font>
                     <Font name="Segoe UI Light" size="18.0" />
                 </font>
