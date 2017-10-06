@@ -7,8 +7,11 @@ import data.contexts.AuctionMySqlContext;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import logic.repositories.AuctionRepository;
 import models.Auction;
 import models.Bid;
@@ -25,14 +28,14 @@ public class AuctionsController extends MenuController {
     @FXML private VBox vboxListedAuctions;
 
     private AuctionRepository auctionRepository;
+    private FXMLLoader fxmlLoader;
+    private Pane listedAuctionPane;
+    private ListedAuctionController listedAuctionController;
 
-    public AuctionsController() {
-        auctionRepository = new AuctionRepository(new AuctionMySqlContext());
-    }
+    public AuctionsController() { auctionRepository = new AuctionRepository(new AuctionMySqlContext()); }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-    }
+    public void initialize(URL location, ResourceBundle resources) { }
 
     public void searchAuction() throws IOException {
         String searchTerm = txtSearchBar.getText().trim();
@@ -40,29 +43,32 @@ public class AuctionsController extends MenuController {
         if (searchTerm != null && searchTerm.length() > 0 && !searchTerm.isEmpty()){
             vboxListedAuctions.getChildren().clear();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/core/javaFX/auctions/listedAuction.fxml"));
-            Pane pane = loader.load();
-            ListedAuctionController controller = loader.getController();
+            try {
+                final ArrayList<Auction> auctions = auctionRepository.getAuctionsForSearchTerm(searchTerm);
 
-            if (controller != null){
-                try {
-                    final ArrayList<Auction> auctions = auctionRepository.getAuctionsForSearchTerm(searchTerm);
+                if (auctions.size() > 0){
+                    for (final Auction auction : auctions){
+                        fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/auctions/listedAuction.fxml"));
+                        listedAuctionPane = fxmlLoader.load();
+                        listedAuctionController = fxmlLoader.getController();
 
-                    if (auctions.size() > 0){
-                        for (final Auction auction : auctions){
-                            controller.setTitle(auction.getTitle());
-                            controller.setDescription(auction.getDescription());
-                            controller.setCurrentOffer(auction.getStartBid());
-                        }
-                    }else{
-                        controller.setTitle("No items met your search criteria!");
+                        listedAuctionController.setTitle(auction.getTitle());
+                        listedAuctionController.setDescription(auction.getDescription());
+                        listedAuctionController.setCurrentOffer(auction.getStartBid());
+
+                        vboxListedAuctions.getChildren().add(listedAuctionPane);
                     }
-                } catch (SQLException e) {
-                    e.printStackTrace(); //TODO: proper error handling
-                }
-            }
+                }else{
+                    final Label lblNoItemsForSearch = new Label();
+                    lblNoItemsForSearch.setText("No items met your search criteria!");
+                    lblNoItemsForSearch.setTextFill(Color.web("#747e8c"));
+                    lblNoItemsForSearch.setFont(new Font("System", 17));
 
-            vboxListedAuctions.getChildren().add(pane);
+                    vboxListedAuctions.getChildren().add(lblNoItemsForSearch);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace(); //TODO: proper error handling
+            }
         }else{
             //TODO: Proper message handling
             System.out.println("Please write an actual searchterm!");
