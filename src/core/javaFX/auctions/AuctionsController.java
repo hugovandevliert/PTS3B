@@ -4,7 +4,6 @@ package core.javaFX.auctions;
 import com.jfoenix.controls.JFXTextField;
 import core.javaFX.menu.MenuController;
 import data.contexts.AuctionMySqlContext;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -14,7 +13,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import logic.repositories.AuctionRepository;
 import models.Auction;
-import models.Bid;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,7 +36,7 @@ public class AuctionsController extends MenuController {
     public void initialize(URL location, ResourceBundle resources) { }
 
     public void searchAuction() throws IOException {
-        String searchTerm = txtSearchBar.getText().trim();
+        final String searchTerm = txtSearchBar.getText().trim();
 
         if (searchTerm != null && searchTerm.length() > 0 && !searchTerm.isEmpty()){
             vboxListedAuctions.getChildren().clear();
@@ -55,6 +53,8 @@ public class AuctionsController extends MenuController {
                         listedAuctionController.setTitle(auction.getTitle());
                         listedAuctionController.setDescription(auction.getDescription());
                         listedAuctionController.setCurrentOffer(auction.getStartBid());
+                        listedAuctionController.setId((int) auction.getId());
+                        listedAuctionController.hideIdLabel();
 
                         vboxListedAuctions.getChildren().add(listedAuctionPane);
                     }
