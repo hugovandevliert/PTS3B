@@ -7,6 +7,7 @@ import data.contexts.AuctionMySqlContext;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -14,6 +15,7 @@ import javafx.scene.text.Font;
 import logic.repositories.AuctionRepository;
 import models.Auction;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -53,6 +55,16 @@ public class AuctionsController extends MenuController {
                         listedAuctionController.setTitle(auction.getTitle());
                         listedAuctionController.setDescription(auction.getDescription());
                         listedAuctionController.setCurrentOffer(auction.getStartBid());
+
+                        Image image = new Image("file:" +  new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath());
+
+                        if (auction.getImages().size() > 0){
+                            Image img = auction.getImages().get(0);
+
+                            if (img != null)image = img;
+                        }
+                        listedAuctionController.setImage(image);
+
                         listedAuctionController.setId((int) auction.getId());
                         listedAuctionController.hideAuctionIdLabel();
 
