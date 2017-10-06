@@ -1,24 +1,19 @@
 package logic.algorithms;
 
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 
 public class ImageConverter {
 
-    public Image byteArrayToImage(final byte[] byteArray) {
-        Image image = null;
+    public Image byteArrayToImage(final byte[] byteArray) throws IOException, ClassNotFoundException {
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
+        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+        File file = (File)objectInputStream.readObject();
 
-        try {
-            final BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(byteArray));
-            image = SwingFXUtils.toFXImage(bufferedImage, null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return image;
+        return new Image("file:" +  file.getAbsolutePath());
     }
 }

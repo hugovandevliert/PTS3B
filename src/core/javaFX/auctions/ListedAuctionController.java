@@ -20,7 +20,7 @@ public class ListedAuctionController {
 
     public void setId(final int id) { lblListedAuctionId.setText(String.valueOf(id)); }
 
-    public void hideIdLabel() { lblListedAuctionId.setVisible(false); }
+    public void hideAuctionIdLabel() { lblListedAuctionId.setVisible(false); }
 
     public void loadAuctionPage() {
         System.out.println("We should now load the auction's page with Id: " + getAuctionId());

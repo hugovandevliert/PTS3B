@@ -54,7 +54,7 @@ public class AuctionsController extends MenuController {
                         listedAuctionController.setDescription(auction.getDescription());
                         listedAuctionController.setCurrentOffer(auction.getStartBid());
                         listedAuctionController.setId((int) auction.getId());
-                        listedAuctionController.hideIdLabel();
+                        listedAuctionController.hideAuctionIdLabel();
 
                         vboxListedAuctions.getChildren().add(listedAuctionPane);
                     }

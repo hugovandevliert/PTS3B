@@ -91,7 +91,7 @@ public class AuctionMySqlContext implements IAuctionContext {
                 (
                         resultSet.getInt("id"),
                         resultSet.getString("title"),
-                        "asddddddddddddd",
+                        resultSet.getString("description"),
                         resultSet.getDouble("startingBid")
                 );
     }
