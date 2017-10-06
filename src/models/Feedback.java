@@ -15,7 +15,7 @@ public class Feedback {
      * @param isPositive: Whether the given Feedback was positive
      * @param message: The String message that belongs to the Feedback
      */
-    public Feedback(Profile author, boolean isPositive, String message) {
+    public Feedback(final Profile author, final boolean isPositive, final String message) {
         this.author = author;
         //LocalDateTime date,  --> Deze moet nog opgehaald worden in de constructor
         this.isPositive = isPositive;

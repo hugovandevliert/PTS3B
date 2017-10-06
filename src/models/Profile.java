@@ -27,7 +27,7 @@ public class Profile {
      * @param email: User's email address.
      * @param profileId: The ID of this profile.
      * */
-    public Profile(Image photo, String username, String name, String email, int profileId) {
+    public Profile(final Image photo, final String username, final String name, final String email, final int profileId) {
         auctions = new ArrayList<>();
         visitedAuctions = new ArrayList<>();
         favoriteAuctions = new ArrayList<>();
@@ -50,7 +50,7 @@ public class Profile {
      * @param title: Title of the auction. Can't contain more then 64 characters.
      * @param images: All images added to the auction.
      * */
-    public void addAuction(double startBid, double minimum, LocalDateTime expirationDate, LocalDateTime openingDate, boolean isPremium, String title, ArrayList<Image> images) {
+    public void addAuction(final double startBid, final double minimum, final LocalDateTime expirationDate, final LocalDateTime openingDate, final boolean isPremium, final String title, final ArrayList<Image> images) {
 
     }
 
@@ -59,7 +59,7 @@ public class Profile {
      * Method for adding an auction to a profile's visited auctions.
      * @param auction: The auction to add.
      * */
-    public void addVisitedAuction(Auction auction) {
+    public void addVisitedAuction(final Auction auction) {
 
     }
 
@@ -67,7 +67,7 @@ public class Profile {
      * Method for adding an auction to a profile's favorite auctions.
      * @param auction: The auction to add.
      * */
-    public void addFavoriteAuction(Auction auction) {
+    public void addFavoriteAuction(final Auction auction) {
 
     }
 
@@ -75,7 +75,7 @@ public class Profile {
      * Method for removing an auction to a profile's favorite auctions.
      * @param auction: The auction to remove.
      * */
-    public void removeFavoriteAuction(Auction auction) {
+    public void removeFavoriteAuction(final Auction auction) {
 
     }
 
@@ -85,7 +85,7 @@ public class Profile {
      * @param isPositive: Feedback can be positive (true), or negative (false)
      * @param message: Message added to the feedback.
      * */
-    public void addFeedback(Profile author, boolean isPositive, String message) {
+    public void addFeedback(final Profile author, final boolean isPositive, final String message) {
 
     }
 

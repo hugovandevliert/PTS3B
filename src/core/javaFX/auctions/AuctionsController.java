@@ -59,9 +59,9 @@ public class AuctionsController extends MenuController {
                         Image image = new Image("file:" +  new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath());
 
                         if (auction.getImages().size() > 0){
-                            Image img = auction.getImages().get(0);
+                            final Image img = auction.getImages().get(0);
 
-                            if (img != null)image = img;
+                            if (img != null) image = img;
                         }
                         listedAuctionController.setImage(image);
 
@@ -79,6 +79,8 @@ public class AuctionsController extends MenuController {
                     vboxListedAuctions.getChildren().add(lblNoItemsForSearch);
                 }
             } catch (SQLException e) {
+                e.printStackTrace(); //TODO: proper error handling
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace(); //TODO: proper error handling
             }
         }else{

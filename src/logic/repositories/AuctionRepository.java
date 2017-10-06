@@ -5,6 +5,7 @@ import models.Auction;
 import models.Profile;
 import utilities.enums.Status;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class AuctionRepository {
         this.context = context;
     }
 
-    public ArrayList<Auction> getAuctionsForSearchTerm(String searchTerm) throws SQLException {
+    public ArrayList<Auction> getAuctionsForSearchTerm(String searchTerm) throws SQLException, IOException, ClassNotFoundException {
         return context.getAuctionsForSearchTerm(searchTerm);
     }
 

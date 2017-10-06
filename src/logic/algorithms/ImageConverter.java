@@ -2,18 +2,17 @@ package logic.algorithms;
 
 import javafx.scene.image.Image;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 
 public class ImageConverter {
 
-    public Image byteArrayToImage(final byte[] byteArray) throws IOException, ClassNotFoundException {
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
+    public Image getImageFromByteArray(final byte[] byteArray) throws IOException, ClassNotFoundException {
+        /*ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
         ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-        File file = (File)objectInputStream.readObject();
+        final File file = (File)objectInputStream.readObject();
+        final Image image = new Image(new BufferedInputStream(new FileInputStream(file)));
 
-        return new Image("file:" +  file.getAbsolutePath());
+        return image;*/
+        return null;
     }
 }

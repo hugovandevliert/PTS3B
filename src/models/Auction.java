@@ -20,22 +20,12 @@ public class Auction {
     private ArrayList<Bid> bids;
     private Profile creator;
 
-    public Auction(int id, String title, String description, ArrayList<Bid> bids) {
-        this.id = id;
-        this.bids = bids;
-        this.title = title;
-        this.description = description;
-
-        images = new ArrayList<>();
-    }
-
-    public Auction(int id, String title, String description, double startBid) {
+    public Auction(final int id, final String title, final String description, final double startBid, final ArrayList<Image> images) {
         this.id = id;
         this.startBid = startBid;
         this.title = title;
         this.description = description;
-
-        images = new ArrayList<>();
+        this.images = images;
     }
 
     public double getId() { return id; }
@@ -82,11 +72,11 @@ public class Auction {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(final Status status) {
         this.status = status;
     }
 
-    public void addBid(double amount, Profile profile) { }
+    public void addBid(final double amount, final Profile profile) { }
 
     public boolean endAuction() {
         return false;

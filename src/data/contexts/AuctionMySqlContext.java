@@ -7,6 +7,7 @@ import models.Auction;
 import models.Profile;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import utilities.database.Database;
+import utilities.enums.AuctionLoadingType;
 import utilities.enums.Status;
 
 import javax.print.attribute.standard.DateTimeAtCompleted;
@@ -29,7 +30,7 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     @Override
-    public ArrayList<Auction> getAuctionsForSearchTerm(String searchTerm) throws SQLException {
+    public ArrayList<Auction> getAuctionsForSearchTerm(final String searchTerm) throws SQLException, IOException, ClassNotFoundException {
         final String query = "SELECT * FROM MyAuctions.Auction WHERE Auction.status = 'OPEN' " +
                        "AND Auction.endDate > curdate() AND Auction.title LIKE ?;";
         final ResultSet resultSet = Database.getDataForSearchTerm(query, searchTerm);
@@ -37,14 +38,14 @@ public class AuctionMySqlContext implements IAuctionContext {
 
         if (resultSet != null){
             while (resultSet.next()){
-                auctions.add(getAuctionFromResultSet(resultSet));
+                auctions.add(getAuctionFromResultSet(resultSet, AuctionLoadingType.FOR_LISTED_AUCTIONS));
             }
         }
         return auctions;
     }
 
     @Override
-    public boolean addAuction(Profile profile, Auction auction) {
+    public boolean addAuction(final Profile profile, final Auction auction) {
 //        preparedStatement =  Database.getConnection().prepareStatement("INSERT INTO Auction (Title, StartingBid, Minimum, CreationDate, OpeningDate, EndDate, `Status`, isPremium, Creator_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 //        preparedStatement.setString(1, auction.getTitle());
 //        preparedStatement.setDouble(2, auction.getStartBid());
@@ -59,7 +60,7 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     @Override
-    public boolean setStatus(Status status, int auctionId) {
+    public boolean setStatus(final Status status, final int auctionId) {
 //        preparedStatement =  Database.getConnection().prepareStatement("UPDATE Auctions SET `Status` = ? WHERE ID = ?");
 //        preparedStatement.setString(1, status);
 //        preparedStatement.setInt(2, auctionId);
@@ -68,31 +69,38 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     @Override
-    public boolean endAuction(int auctionId) {
+    public boolean endAuction(final int auctionId) {
 //        preparedStatement =  Database.getConnection().prepareStatement("UPDATE Auctions SET `Status` = 'CLOSED' WHERE ID = ?");
 //        preparedStatement.setInt(1, auctionId);
         return false;
 
     }
 
-    public Auction getAuctionFromResultSet(ResultSet resultSet) throws SQLException {
-        /*To grab the image, please do the following:
-        get the resultset from any getData method in the Database Class
-        in this resultset, grab the byte array as an object, which goes as follows;
-        byte[] byteArray = (byte[]) resultSet.getObject(1)
-        to make sure we have efficient code, we would then convert our image like so;
-
-        try {
-            final Image image = imageConverter.byteArrayToImage((byte[])resultSet.getObject(1));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
+    public Auction getAuctionFromResultSet(final ResultSet resultSet, final AuctionLoadingType auctionLoadingType) throws SQLException, IOException, ClassNotFoundException {
         return new Auction
                 (
                         resultSet.getInt("id"),
                         resultSet.getString("title"),
                         resultSet.getString("description"),
-                        resultSet.getDouble("startingBid")
+                        resultSet.getDouble("startingBid"),
+                        getImagesForAuctionWithId(auctionLoadingType, resultSet.getInt("id"))
                 );
+    }
+
+    private ArrayList<Image> getImagesForAuctionWithId(final AuctionLoadingType auctionLoadingType, final int auctionId) throws SQLException, IOException, ClassNotFoundException {
+        ArrayList<Image> images = new ArrayList<>();
+        String query = "SELECT image FROM MyAuctions.Image i INNER JOIN MyAuctions.Auction a ON " +
+                       "a.id = i.auction_id WHERE i.auction_id = ?";
+
+        if (auctionLoadingType.equals(AuctionLoadingType.FOR_LISTED_AUCTIONS)) query += "LIMIT 1";
+
+        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
+
+        while (resultSet.next()){
+            final byte[] byteArray = (byte[]) resultSet.getObject(1);
+            final Image image = imageConverter.getImageFromByteArray(byteArray);
+            images.add(image);
+        }
+        return images;
     }
 }

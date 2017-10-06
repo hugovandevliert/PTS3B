@@ -16,7 +16,7 @@ public class User {
      * @param name: The Name of the User
      * @param email: The Email of the User, this value should be unique. It should always end with @[Valid domain name]
      */
-    public User(String username, String name, String email) {
+    public User(final String username, final String name, final String email) {
         this.username = username;
         this.name = name;
         this.email = email;
@@ -27,7 +27,7 @@ public class User {
      * @param password: The new password that the User's password should be changed to. Password must have at least: 6 characters, 1 lowercase, 1 uppercase, 1 symbol, 1 integer
      * @return: Depending on whether the new password is allowed and the outcome of the check, the method will return true when password is successfully changed
      */
-    public boolean changePassword(String password) { return false; }
+    public boolean changePassword(final String password) { return false; }
 
     /**
      * Method for getting the Username of this User-object
@@ -49,7 +49,7 @@ public class User {
      * Method for changing the Name of this User-object, this requires a String parameter Name that consist of the new Name it should be changed to
      * @param name: String value of the new Name this User-object should hold
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -66,7 +66,7 @@ public class User {
      * @param email: The new Email value that this User-object should hold. Requirements: Max. 255 characters, '@', '.' and a legitimate domain (ex.: .NL)
      * @return: Depending on whether the new Email is allowed and accepted it will return a boolean value. The method will return true when it is succesfully changed
      */
-    public boolean setEmail(String email) {
+    public boolean setEmail(final String email) {
         this.email = email;
         return false;
     }
@@ -76,7 +76,7 @@ public class User {
      * @param photo: The new Image value that this User-object should hold as photo. Value may not be null or return value will be false
      * @return: Depending on whether the Image is accepted it will reutrn a boolean value. The method will return true when it s succesfully changed
      */
-    public boolean setPhoto(Image photo) {
+    public boolean setPhoto(final Image photo) {
         return false;
     }
 
