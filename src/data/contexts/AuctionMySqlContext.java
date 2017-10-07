@@ -11,10 +11,7 @@ import utilities.enums.AuctionLoadingType;
 import utilities.enums.Status;
 
 import javax.print.attribute.standard.DateTimeAtCompleted;
-import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -97,9 +94,8 @@ public class AuctionMySqlContext implements IAuctionContext {
         final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
 
         while (resultSet.next()){
-            final byte[] byteArray = (byte[]) resultSet.getObject(1);
-            final Image image = imageConverter.getImageFromByteArray(byteArray);
-            images.add(image);
+            final InputStream inputStream = resultSet.getBinaryStream("image");
+            images.add(imageConverter.getImageFromInputStream(inputStream));
         }
         return images;
     }
