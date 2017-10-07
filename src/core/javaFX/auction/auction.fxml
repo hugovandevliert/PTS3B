@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.auction.AuctionController">
+    <columnConstraints>
+        <ColumnConstraints />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints />
+    </rowConstraints>
+    <children>
+          <Pane fx:id="paneContent" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;">
+         <children>
+            <ImageView fx:id="imgviewSelectedPicture" fitHeight="277.0" fitWidth="429.0" layoutX="21.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
+            <VBox fx:id="vboxPictures" layoutX="467.0" layoutY="23.0" prefHeight="270.0" prefWidth="149.0" spacing="5.0">
+               <children>
+                  <ImageView fx:id="imgviewPicture1" fitHeight="89.0" fitWidth="149.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgviewPicture2" fitHeight="89.0" fitWidth="149.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgviewPicture3" fitHeight="89.0" fitWidth="149.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </VBox>
+            <Label fx:id="lblAuctionTitle" alignment="CENTER" layoutX="642.0" layoutY="23.0" prefHeight="21.0" prefWidth="346.0" text="Speedfighter 3 Splinter nieuw!" textFill="#556070">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblAuctionSeller" alignment="CENTER" layoutX="642.0" layoutY="246.0" prefHeight="21.0" prefWidth="330.0" text="Timo Fudala" textFill="#556070" />
+            <ScrollPane fx:id="scrollpaneAuctionDescription" hbarPolicy="NEVER" layoutX="642.0" layoutY="53.0" prefHeight="175.0" prefWidth="346.0" style="-fx-background: #3d4857;  -fx-border-color: #3d4857; -fx-background-color: transparent;" vbarPolicy="NEVER">
+               <content>
+                  <Text fx:id="textAuctionDescription" fill="#747e8c" strokeType="OUTSIDE" strokeWidth="0.0" text="asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd" textAlignment="CENTER" wrappingWidth="341.99999821186066" />
+               </content>
+            </ScrollPane>
+            <ScrollPane fx:id="scrollpaneBids" hbarPolicy="NEVER" layoutX="21.0" layoutY="337.0" prefHeight="392.0" prefWidth="429.0" style="-fx-background: #3d4857;  -fx-border-color: #3d4857; -fx-background-color: transparent;" vbarPolicy="NEVER">
+               <content>
+                  <VBox fx:id="vboxBids" alignment="TOP_CENTER" prefHeight="389.0" prefWidth="426.0" spacing="15.0" />
+               </content>
+            </ScrollPane>
+            <Label fx:id="lblTimer" alignment="CENTER" layoutX="642.0" layoutY="337.0" prefHeight="40.0" prefWidth="346.0" text="12H 31M 9S" textAlignment="CENTER" textFill="#b4b481">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <JFXTextField fx:id="txtBid" alignment="BOTTOM_CENTER" focusColor="#747e8c" layoutX="634.0" layoutY="485.0" mouseTransparent="true" prefHeight="48.0" prefWidth="346.0" promptText="Your bid" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #a6b5c9;" unFocusColor="#242e3b">
+               <font>
+                  <Font name="Segoe UI Light" size="24.0" />
+               </font>
+            </JFXTextField>
+            <JFXButton fx:id="btnPlaceBid" layoutX="634.0" layoutY="553.0" prefHeight="48.0" prefWidth="346.0" style="-fx-background-color: f2aa78;" text="Place bet" textFill="#824923" />
+         </children></Pane>
+    </children>
+</GridPane>

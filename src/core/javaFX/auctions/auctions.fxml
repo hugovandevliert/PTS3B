@@ -24,7 +24,7 @@
                     <Font name="Segoe UI Light" size="18.0" />
                 </font>
             </JFXTextField>
-             <ScrollPane fx:id="scrollPaneListedAuctions" hbarPolicy="NEVER" layoutX="14.0" layoutY="120.0" prefHeight="642.0" prefWidth="976.0" style="-fx-background: #3d4857;  -fx-border-color: #3d4857; -fx-background-color: transparent;" vbarPolicy="NEVER">
+             <ScrollPane fx:id="scrollpaneListedAuctions" hbarPolicy="NEVER" layoutX="14.0" layoutY="120.0" prefHeight="642.0" prefWidth="976.0" style="-fx-background: #3d4857;  -fx-border-color: #3d4857; -fx-background-color: transparent;" vbarPolicy="NEVER">
                <content>
                   <VBox fx:id="vboxListedAuctions" alignment="TOP_CENTER" prefHeight="636.0" prefWidth="971.0" spacing="30.0" />
                </content></ScrollPane>
