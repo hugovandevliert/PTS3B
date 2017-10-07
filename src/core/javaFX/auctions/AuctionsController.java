@@ -52,6 +52,7 @@ public class AuctionsController extends MenuController {
                         listedAuctionPane = fxmlLoader.load();
                         listedAuctionController = fxmlLoader.getController();
 
+                        listedAuctionController.setMenuController(this);
                         listedAuctionController.setTitle(auction.getTitle());
                         listedAuctionController.setDescription(auction.getDescription());
                         listedAuctionController.setCurrentOffer(auction.getStartBid());
