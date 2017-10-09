@@ -26,6 +26,19 @@ public class Auction {
         this.title = title;
         this.description = description;
         this.images = images;
+
+        bids = new ArrayList<Bid>();
+    }
+
+    public Auction(final int id, final String title, final String description, final double startBid, final ArrayList<Image> images, Profile creator) {
+        this.id = id;
+        this.startBid = startBid;
+        this.title = title;
+        this.description = description;
+        this.images = images;
+        this.creator = creator;
+
+        bids = new ArrayList<Bid>();
     }
 
     public double getId() { return id; }

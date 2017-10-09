@@ -31,15 +31,15 @@
                   <ImageView fx:id="imgviewPicture3" fitHeight="89.0" fitWidth="149.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </VBox>
-            <Label fx:id="lblAuctionTitle" alignment="CENTER" layoutX="642.0" layoutY="23.0" prefHeight="21.0" prefWidth="346.0" text="Speedfighter 3 Splinter nieuw!" textFill="#556070">
+            <Label fx:id="lblAuctionTitle" alignment="CENTER" layoutX="642.0" layoutY="23.0" prefHeight="21.0" prefWidth="346.0" textFill="#556070">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label fx:id="lblAuctionSeller" alignment="CENTER" layoutX="642.0" layoutY="246.0" prefHeight="21.0" prefWidth="330.0" text="Timo Fudala" textFill="#556070" />
+            <Label fx:id="lblAuctionSeller" alignment="CENTER" layoutX="642.0" layoutY="246.0" prefHeight="21.0" prefWidth="330.0" textFill="#556070" />
             <ScrollPane fx:id="scrollpaneAuctionDescription" hbarPolicy="NEVER" layoutX="642.0" layoutY="53.0" prefHeight="175.0" prefWidth="346.0" style="-fx-background: #3d4857;  -fx-border-color: #3d4857; -fx-background-color: transparent;" vbarPolicy="NEVER">
                <content>
-                  <Text fx:id="textAuctionDescription" fill="#747e8c" strokeType="OUTSIDE" strokeWidth="0.0" text="asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd" textAlignment="CENTER" wrappingWidth="341.99999821186066" />
+                  <Text fx:id="textAuctionDescription" fill="#747e8c" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="341.99999821186066" />
                </content>
             </ScrollPane>
             <ScrollPane fx:id="scrollpaneBids" hbarPolicy="NEVER" layoutX="21.0" layoutY="337.0" prefHeight="392.0" prefWidth="429.0" style="-fx-background: #3d4857;  -fx-border-color: #3d4857; -fx-background-color: transparent;" vbarPolicy="NEVER">
@@ -47,7 +47,7 @@
                   <VBox fx:id="vboxBids" alignment="TOP_CENTER" prefHeight="389.0" prefWidth="426.0" spacing="15.0" />
                </content>
             </ScrollPane>
-            <Label fx:id="lblTimer" alignment="CENTER" layoutX="642.0" layoutY="337.0" prefHeight="40.0" prefWidth="346.0" text="12H 31M 9S" textAlignment="CENTER" textFill="#b4b481">
+            <Label fx:id="lblTimer" alignment="CENTER" layoutX="642.0" layoutY="337.0" prefHeight="40.0" prefWidth="346.0" textAlignment="CENTER" textFill="#b4b481">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>

@@ -10,8 +10,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import logic.repositories.AuctionRepository;
+import models.Auction;
+import models.Profile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ListedAuctionController {
 
@@ -49,7 +52,14 @@ public class ListedAuctionController {
             auctionPane = fxmlLoader.load();
             auctionController = fxmlLoader.getController();
 
-
+            Auction auction = new Auction(1, "Speedfighter 3", "This should be the description", 500, new ArrayList<Image>(), new Profile(null, "Timo", "Timo Fudala", "@", 1));
+            auctionController.setTitle(auction.getTitle());
+            auctionController.setDescription(auction.getDescription());
+            auctionController.setSeller(auction.getCreator().getUsername());
+            auctionController.setImages(auction.getImages());
+            auctionController.setBids(auction.getBids(), auction.getStartBid());
+            auctionController.initializeCountdownTimer();
+            //auctionController.setTimer("12H 31M 9S");
 
             menuController.paneContent.getChildren().add(auctionPane);
             System.out.println("We should now load the auction's page with Id: " + getAuctionId());
