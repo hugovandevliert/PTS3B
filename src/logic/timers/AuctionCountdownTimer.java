@@ -3,25 +3,36 @@ package logic.timers;
 import core.javaFX.auction.AuctionController;
 import javafx.application.Platform;
 
+import java.util.Date;
+import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 public class AuctionCountdownTimer extends TimerTask {
 
     private AuctionController auctionController;
-    private long differenceInMs = 14000000;
+    private Date expirationDate;
 
-    public AuctionCountdownTimer(AuctionController auctionController) {
+    public AuctionCountdownTimer(Date expirationDate, AuctionController auctionController) {
+        this.expirationDate = expirationDate;
         this.auctionController = auctionController;
     }
 
     @Override
     public void run() {
-        differenceInMs -= 1000;
-        //TODO: zorgen dat dit echte tijdsverschil wordt --> differenceinMS moet niet zo opgeslagen worden; was alleen als test!
-        //TODO: ook zorgen dat deze thread netjes gestopt wordt als deze pagina verwijdert wordt!
+        Date currentDate = new Date();
+        final long differenceInMs = expirationDate.getTime() - currentDate.getTime();
+        String timerStringValue = "";
 
-        Platform.runLater(() -> auctionController.setTimer(getDurationFromMilliseconds(differenceInMs)));
+        if (differenceInMs > 0){
+            timerStringValue = getDurationFromMilliseconds(differenceInMs);
+        }else{
+            timerStringValue = "This auction has ended!";
+        }
+
+        //TODO: ook zorgen dat deze thread netjes gestopt wordt als deze pagina verwijdert wordt!
+        final String finalTimerStringValue = timerStringValue;
+        Platform.runLater(() -> auctionController.setTimer(finalTimerStringValue));
     }
 
     public String getDurationFromMilliseconds(final long milliSeconds) {

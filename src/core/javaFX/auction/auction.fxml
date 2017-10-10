@@ -44,7 +44,7 @@
             </ScrollPane>
             <ScrollPane fx:id="scrollpaneBids" hbarPolicy="NEVER" layoutX="21.0" layoutY="337.0" prefHeight="392.0" prefWidth="429.0" style="-fx-background: #3d4857;  -fx-border-color: #3d4857; -fx-background-color: transparent;" vbarPolicy="NEVER">
                <content>
-                  <VBox fx:id="vboxBids" alignment="TOP_CENTER" prefHeight="389.0" prefWidth="426.0" spacing="15.0" />
+                  <VBox fx:id="vboxBids" alignment="TOP_CENTER" prefHeight="389.0" prefWidth="426.0" spacing="10.0" />
                </content>
             </ScrollPane>
             <Label fx:id="lblTimer" alignment="CENTER" layoutX="642.0" layoutY="337.0" prefHeight="40.0" prefWidth="346.0" textAlignment="CENTER" textFill="#b4b481">

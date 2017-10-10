@@ -12,6 +12,7 @@ import logic.timers.AuctionCountdownTimer;
 import models.Bid;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Timer;
@@ -41,7 +42,7 @@ public class AuctionController extends MenuController {
     public void setBids(final List<Bid> bids, final double startBid) {
         if (bids != null && bids.size() > 0){
             for (final Bid bid : bids){
-                final Label lblBid = new Label(bid.getAmount() + " - " + bid.getProfile().getUsername() + " - " + bid.getDate());
+                final Label lblBid = new Label("€" + bid.getAmount() + " - " + bid.getProfile().getUsername() + " - " + bid.getDate());
                 vboxBids.getChildren().add(lblBid);
             }
         }else{
@@ -52,9 +53,16 @@ public class AuctionController extends MenuController {
         }
     }
 
-    public void initializeCountdownTimer() {
-        auctionCountdown = new Timer();
-        auctionCountdown.schedule(new AuctionCountdownTimer(this), 0, 1000);
+    public void initializeCountdownTimer(final Date expirationDate) {
+        final Date currentDate = new Date();
+        final long countdownInMilliseconds = expirationDate.getTime() - currentDate.getTime();
+
+        if (countdownInMilliseconds > 0){
+            auctionCountdown = new Timer();
+            auctionCountdown.schedule(new AuctionCountdownTimer(expirationDate, this), 0, 1000);
+        }else{
+            setTimer("This auction has ended!");
+        }
     }
 
     public void setTimer(final String timer) { lblTimer.setText(timer); }
