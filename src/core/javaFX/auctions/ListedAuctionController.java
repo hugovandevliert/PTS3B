@@ -68,6 +68,7 @@ public class ListedAuctionController {
                 auctionController.setImages(auction.getImages());
                 auctionController.setBids(auction.getBids(), auction.getStartBid());
                 auctionController.initializeCountdownTimer(auction.getExpirationDate());
+                auctionController.initializeBidsLoadingTimer(auction.getBids(), getAuctionId(), auction.getStartBid());
 
                 menuController.paneContent.getChildren().add(auctionPane);
             }else{

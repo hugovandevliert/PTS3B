@@ -8,14 +8,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import logic.timers.AuctionBidsLoadingTimer;
 import logic.timers.AuctionCountdownTimer;
 import models.Bid;
 
 import java.net.URL;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Timer;
+import java.util.*;
 
 public class AuctionController extends MenuController {
 
@@ -25,6 +23,7 @@ public class AuctionController extends MenuController {
     @FXML private VBox vboxBids;
 
     private Timer auctionCountdown;
+    private Timer bidsLoadingTimer;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) { }
@@ -40,6 +39,8 @@ public class AuctionController extends MenuController {
     }
 
     public void setBids(final List<Bid> bids, final double startBid) {
+        vboxBids.getChildren().clear();
+
         if (bids != null && bids.size() > 0){
             for (final Bid bid : bids){
                 final Label lblBid = new Label("€" + bid.getAmount() + " - " + bid.getProfile().getUsername() + " - " + bid.getDate());
@@ -66,4 +67,9 @@ public class AuctionController extends MenuController {
     }
 
     public void setTimer(final String timer) { lblTimer.setText(timer); }
+
+    public void initializeBidsLoadingTimer(final List<Bid> bids, final int auctionId, final double startBid) {
+        auctionCountdown = new Timer();
+        auctionCountdown.schedule(new AuctionBidsLoadingTimer(this, bids, auctionId, startBid), 1000, 500);
+    }
 }
