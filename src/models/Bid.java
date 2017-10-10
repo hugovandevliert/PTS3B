@@ -1,13 +1,13 @@
 package models;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Class used for keeping information about a bid on an auction.
  * */
 public class Bid {
 
-    private LocalDateTime date;
+    private Date date;
     private Profile profile;
     private double amount;
 
@@ -16,17 +16,13 @@ public class Bid {
      * @param profile: The user's profile that placed the bid.
      * @param amount: The amount of money.
      * */
-    public Bid(final Profile profile, final double amount) {
+    public Bid(final Profile profile, final double amount, final Date date) {
         this.profile = profile;
-        this.date = LocalDateTime.now(); //todo: Is this smart? When loading a bid from the database it's date will reset. :thinking:
+        this.date = date;
         this.amount = amount;
     }
 
-    public Bid(final double amount) {
-        this.amount = amount;
-    }
-
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 

@@ -3,6 +3,7 @@ package logic.repositories;
 import data.interfaces.IBidContext;
 import models.Bid;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class BidRepository {
@@ -13,7 +14,7 @@ public class BidRepository {
         this.context = context;
     }
 
-    public ArrayList<Bid> getBids(int auctionId) {
+    public ArrayList<Bid> getBids(int auctionId) throws SQLException {
         return context.getBids(auctionId);
     }
 }

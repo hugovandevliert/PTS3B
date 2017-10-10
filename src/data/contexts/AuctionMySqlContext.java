@@ -3,6 +3,8 @@ package data.contexts;
 import data.interfaces.IAuctionContext;
 import javafx.scene.image.Image;
 import logic.algorithms.ImageConverter;
+import logic.repositories.BidRepository;
+import logic.repositories.ProfileRepository;
 import models.Auction;
 import models.Profile;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
@@ -22,8 +24,13 @@ public class AuctionMySqlContext implements IAuctionContext {
 
     private ImageConverter imageConverter;
 
+    private ProfileRepository profileRepository;
+    private BidRepository bidRepository;
+
     public AuctionMySqlContext() {
         imageConverter = new ImageConverter();
+        profileRepository = new ProfileRepository(new ProfileMySqlContext());
+        bidRepository = new BidRepository(new BidMySqlContext());
     }
 
     @Override
@@ -39,6 +46,19 @@ public class AuctionMySqlContext implements IAuctionContext {
             }
         }
         return auctions;
+    }
+
+    @Override
+    public Auction getAuctionForId(int auctionId) throws SQLException, IOException, ClassNotFoundException {
+        final String query = "SELECT * FROM MyAuctions.Auction WHERE id = ?;";
+        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
+
+        if (resultSet != null){
+            if (resultSet.next()){
+                return getAuctionFromResultSet(resultSet, AuctionLoadingType.FOR_AUCTION_PAGE);
+            }
+        }
+        return null;
     }
 
     @Override
@@ -74,14 +94,31 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     public Auction getAuctionFromResultSet(final ResultSet resultSet, final AuctionLoadingType auctionLoadingType) throws SQLException, IOException, ClassNotFoundException {
-        return new Auction
-                (
-                        resultSet.getInt("id"),
-                        resultSet.getString("title"),
-                        resultSet.getString("description"),
-                        resultSet.getDouble("startingBid"),
-                        getImagesForAuctionWithId(auctionLoadingType, resultSet.getInt("id"))
-                );
+        switch(auctionLoadingType){
+            case FOR_LISTED_AUCTIONS:
+                return new Auction
+                        (
+                                resultSet.getInt("id"),
+                                resultSet.getString("title"),
+                                resultSet.getString("description"),
+                                resultSet.getDouble("startingBid"),
+                                getImagesForAuctionWithId(auctionLoadingType, resultSet.getInt("id"))
+                        );
+            case FOR_AUCTION_PAGE:
+                return new Auction
+                        (
+                                resultSet.getInt("id"),
+                                resultSet.getString("title"),
+                                resultSet.getString("description"),
+                                resultSet.getDouble("startingBid"),
+                                resultSet.getDate("endDate"),
+                                profileRepository.getProfileForId(resultSet.getInt("creator_id")),
+                                getImagesForAuctionWithId(auctionLoadingType, resultSet.getInt("id")),
+                                bidRepository.getBids(resultSet.getInt("id"))
+                        );
+            default:
+                return null;
+        }
     }
 
     private ArrayList<Image> getImagesForAuctionWithId(final AuctionLoadingType auctionLoadingType, final int auctionId) throws SQLException, IOException, ClassNotFoundException {

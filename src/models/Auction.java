@@ -3,9 +3,9 @@ package models;
 import javafx.scene.image.Image;
 import utilities.enums.Status;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class Auction {
@@ -13,7 +13,7 @@ public class Auction {
     private int id;
     private double startBid, minimum;
     private boolean isPremium;
-    private LocalDateTime expirationDate, openingDate, creationDate;
+    private Date expirationDate, openingDate, creationDate;
     private String title, description;
     private Status status;
     private ArrayList<Image> images;
@@ -30,15 +30,15 @@ public class Auction {
         bids = new ArrayList<Bid>();
     }
 
-    public Auction(final int id, final String title, final String description, final double startBid, final ArrayList<Image> images, Profile creator) {
+    public Auction(final int id, final String title, final String description, final double startBid, final Date expirationDate, final Profile creator, final ArrayList<Image> images, final ArrayList<Bid> bids) {
         this.id = id;
-        this.startBid = startBid;
         this.title = title;
         this.description = description;
-        this.images = images;
+        this.startBid = startBid;
+        this.expirationDate = expirationDate;
         this.creator = creator;
-
-        bids = new ArrayList<Bid>();
+        this.images = images;
+        this.bids = bids;
     }
 
     public double getId() { return id; }
@@ -55,15 +55,15 @@ public class Auction {
         return isPremium;
     }
 
-    public LocalDateTime getExpirationDate() {
+    public Date getExpirationDate() {
         return expirationDate;
     }
 
-    public LocalDateTime getOpeningDate() {
+    public Date getOpeningDate() {
         return openingDate;
     }
 
-    public LocalDateTime getCreationDate() {
+    public Date getCreationDate() {
         return creationDate;
     }
 

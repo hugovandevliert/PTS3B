@@ -1,10 +1,10 @@
 package models;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Feedback {
 
-    private LocalDateTime date;
+    private Date date;
     private Profile author;
     private String message;
     private boolean isPositive;
@@ -26,7 +26,7 @@ public class Feedback {
      * Method that gets the Date of when the Feedback was given
      * @return: Returns the Date of when the Feedback was made
      */
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 

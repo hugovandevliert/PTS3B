@@ -4,12 +4,18 @@ import data.interfaces.IProfileContext;
 import models.Auction;
 import models.Profile;
 
+import java.sql.SQLException;
+
 public class ProfileRepository {
 
     private IProfileContext context;
 
     public ProfileRepository(IProfileContext context) {
         this.context = context;
+    }
+
+    public Profile getProfileForId(int userId) throws SQLException {
+        return context.getProfileForId(userId);
     }
 
     public boolean addVisitedAuction(Profile profile, Auction auction) {

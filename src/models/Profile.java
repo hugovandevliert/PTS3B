@@ -40,6 +40,15 @@ public class Profile {
         this.profileId = profileId;
     }
 
+    public Profile(final String username) {
+        auctions = new ArrayList<>();
+        visitedAuctions = new ArrayList<>();
+        favoriteAuctions = new ArrayList<>();
+        feedbacks = new ArrayList<>();
+
+        this.username = username;
+    }
+
     /**
      * Method for creating a new auction.
      * @param startBid: Minimum value of the first bid. Must be >0.

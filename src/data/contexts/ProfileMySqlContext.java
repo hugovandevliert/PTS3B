@@ -5,10 +5,26 @@ import models.Auction;
 import models.Profile;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import utilities.database.Database;
+import utilities.enums.ProfileLoadingType;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class ProfileMySqlContext implements IProfileContext {
+
+    @Override
+    public Profile getProfileForId(int userId) throws SQLException {
+        final String query = "SELECT username FROM Account WHERE id = ?";
+        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(userId) });
+
+        if (resultSet != null){
+            if (resultSet.next()){
+                return getProfileFromResultSet(resultSet, ProfileLoadingType.FOR_AUCTION_PAGE);
+            }
+        }
+        return null;
+    }
 
     @Override
     public boolean addVisitedAuction(Profile profile, Auction auction) {
@@ -32,5 +48,14 @@ public class ProfileMySqlContext implements IProfileContext {
 //        preparedStatement.setInt(1, profile.getProfileId());
 //        preparedStatement.setInt(2, auction.getID());
         return false;
+    }
+
+    private Profile getProfileFromResultSet(final ResultSet resultSet, final ProfileLoadingType profileLoadingType) throws SQLException {
+        switch(profileLoadingType){
+            case FOR_AUCTION_PAGE:
+                return new Profile(resultSet.getString("username"));
+            default:
+                return null;
+        }
     }
 }

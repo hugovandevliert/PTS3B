@@ -2,6 +2,7 @@ package core.javaFX.auctions;
 
 import core.javaFX.auction.AuctionController;
 import core.javaFX.menu.MenuController;
+import data.contexts.AuctionMySqlContext;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -14,6 +15,7 @@ import models.Auction;
 import models.Profile;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ListedAuctionController {
@@ -25,8 +27,13 @@ public class ListedAuctionController {
 
     private MenuController menuController;
     private AuctionController auctionController;
+
     private FXMLLoader fxmlLoader;
     private Pane auctionPane;
+
+    private AuctionRepository auctionRepository;
+
+    public ListedAuctionController() { auctionRepository = new AuctionRepository(new AuctionMySqlContext()); }
 
     public void setMenuController(MenuController menuController) { this.menuController = menuController; }
 
@@ -52,18 +59,25 @@ public class ListedAuctionController {
             auctionPane = fxmlLoader.load();
             auctionController = fxmlLoader.getController();
 
-            Auction auction = new Auction(1, "Speedfighter 3", "This should be the description", 500, new ArrayList<Image>(), new Profile(null, "Timo", "Timo Fudala", "@", 1));
-            auctionController.setTitle(auction.getTitle());
-            auctionController.setDescription(auction.getDescription());
-            auctionController.setSeller(auction.getCreator().getUsername());
-            auctionController.setImages(auction.getImages());
-            auctionController.setBids(auction.getBids(), auction.getStartBid());
-            auctionController.initializeCountdownTimer();
-            //auctionController.setTimer("12H 31M 9S");
+            final Auction auction = auctionRepository.getAuctionForId(getAuctionId());
 
-            menuController.paneContent.getChildren().add(auctionPane);
-            System.out.println("We should now load the auction's page with Id: " + getAuctionId());
+            if (auction != null){
+                auctionController.setTitle(auction.getTitle());
+                auctionController.setDescription(auction.getDescription());
+                auctionController.setSeller(auction.getCreator().getUsername());
+                auctionController.setImages(auction.getImages());
+                auctionController.setBids(auction.getBids(), auction.getStartBid());
+                auctionController.initializeCountdownTimer();
+
+                menuController.paneContent.getChildren().add(auctionPane);
+            }else{
+                System.out.println("Something went wrong - Couldn't load auction page"); //TODO: proper error handling
+            }
         } catch (IOException e){
+            e.printStackTrace(); //TODO: proper error handling
+        } catch (SQLException e) {
+            e.printStackTrace(); //TODO: proper error handling
+        } catch (ClassNotFoundException e) {
             e.printStackTrace(); //TODO: proper error handling
         }
     }
