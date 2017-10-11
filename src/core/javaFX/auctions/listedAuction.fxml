@@ -25,10 +25,5 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="lblListedAuctionId" alignment="CENTER" layoutX="805.0" layoutY="182.0" prefHeight="0.0" prefWidth="136.0" textAlignment="CENTER" textFill="#b4b481">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Label>
    </children>
 </Pane>

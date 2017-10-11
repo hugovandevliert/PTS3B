@@ -26,7 +26,6 @@ public class ListedAuctionController extends MenuController {
 
     @FXML private Label lblAuctionTitle, lblCurrentOffer;
     @FXML private Text textAuctionDescription;
-    @FXML private Label lblListedAuctionId;
     @FXML private ImageView imgviewImage;
 
     private MenuController menuController;
@@ -36,6 +35,8 @@ public class ListedAuctionController extends MenuController {
     private Pane auctionPane;
 
     private AuctionRepository auctionRepository;
+
+    private int auctionId;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) { }
@@ -52,11 +53,11 @@ public class ListedAuctionController extends MenuController {
 
     public void setCurrentOffer(final double offer) { lblCurrentOffer.setText(String.valueOf(offer)); }
 
-    public void setId(final int id) { lblListedAuctionId.setText(String.valueOf(id)); }
-
     public void setImage(final Image image) { imgviewImage.setImage(image); }
 
-    public void hideAuctionIdLabel() { lblListedAuctionId.setVisible(false); }
+    public void setAuctionId(final int auctionId) {
+        this.auctionId = auctionId;
+    }
 
     public void loadAuctionPage() {
         try {
@@ -66,7 +67,7 @@ public class ListedAuctionController extends MenuController {
             auctionPane = fxmlLoader.load();
             auctionController = fxmlLoader.getController();
 
-            final Auction auction = auctionRepository.getAuctionForId(getAuctionId(), AuctionLoadingType.FOR_AUCTION_PAGE);
+            final Auction auction = auctionRepository.getAuctionForId(this.auctionId, AuctionLoadingType.FOR_AUCTION_PAGE);
 
             if (auction != null){
                 auctionController.setTitle(auction.getTitle());
@@ -76,7 +77,7 @@ public class ListedAuctionController extends MenuController {
                 auctionController.setBids(auction.getBids(), auction.getStartBid());
                 auctionController.setAuctionId(auction.getId());
                 auctionController.initializeCountdownTimer(auction.getExpirationDate());
-                auctionController.initializeBidsLoadingTimer(auction.getBids(), getAuctionId(), auction.getStartBid());
+                auctionController.initializeBidsLoadingTimer(auction.getBids(), this.auctionId, auction.getStartBid());
                 auctionController.initializeAuctionRepository();
 
                 if (currentUserIsCreatorOfThisAuction(auction)){
@@ -97,8 +98,6 @@ public class ListedAuctionController extends MenuController {
             e.printStackTrace(); //TODO: proper error handling
         }
     }
-
-    private int getAuctionId() { return Integer.parseInt(lblListedAuctionId.getText()); }
 
     private boolean currentUserIsCreatorOfThisAuction(final Auction auction) {
         return applicationManager.getCurrentUser().getId() == auction.getCreator().getProfileId();
