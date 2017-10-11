@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 public class User {
 
     private String username, name, email;
+    private int id;
     private Profile profile;
 
     /**
@@ -16,7 +17,8 @@ public class User {
      * @param name: The Name of the User
      * @param email: The Email of the User, this value should be unique. It should always end with @[Valid domain name]
      */
-    public User(final String username, final String name, final String email) {
+    public User(final int id, final String username, final String name, final String email) {
+        this.id = id;
         this.username = username;
         this.name = name;
         this.email = email;
@@ -86,5 +88,9 @@ public class User {
      */
     public Profile getProfile() {
         return null;
+    }
+
+    public int getId() {
+        return id;
     }
 }

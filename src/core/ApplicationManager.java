@@ -37,37 +37,44 @@ public class ApplicationManager {
         return null;
     }
 
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
     public boolean registerUser(final String username, final String password, final String email, final String name) {
         final Pattern validEmailAddressRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
-        if(username == null || username.length() == 0){
+        if (username == null || username.length() == 0){
             throw new IllegalArgumentException("Username can not be empty.");
         }
-        else if(username.length() > 16){
+        else if (username.length() > 16){
             throw new IllegalArgumentException("Username can not be longer than 16 characters.");
         }
-        else if(password == null || password.length() <= 5){
+        else if (password == null || password.length() <= 5){
             throw new IllegalArgumentException("Password must be at least 6 characters.");
         }
-        else if(email == null || email.length() == 0){
+        else if (email == null || email.length() == 0){
             throw new IllegalArgumentException("Email can not be empty.");
         }
-        else if(email.length() > 255){
+        else if (email.length() > 255){
             throw new IllegalArgumentException("Email can not be longer than 255 characters.");
         }
-        else if(validEmailAddressRegex.matcher(email).find()){
+        else if (validEmailAddressRegex.matcher(email).find()){
             throw new IllegalArgumentException("Email should be a valid email address.");
         }
-        else if(name == null || name.length() == 0){
+        else if (name == null || name.length() == 0){
             throw new IllegalArgumentException("Name can not be empty.");
         }
 
-        final Character[] characters = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'W', 'V', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
+        final Character[] characters = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+                                        'Q', 'R', 'S', 'T', 'U', 'W', 'V', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
+                                        'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+                                        'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
 
         final SecureRandom secureRandom = new SecureRandom();
         final StringBuilder saltStringBuilder = new StringBuilder();
 
-        for(int i = 0; i < 16; i++){
+        for (int i = 0; i < 16; i++){
             saltStringBuilder.append(characters[secureRandom.nextInt(characters.length)]);
         }
 
@@ -76,8 +83,8 @@ public class ApplicationManager {
     }
 
     public String hashString(final String password, final String salt){
-        if(password != null && password.length() >= 6 && salt != null && salt.length() == 16){
-            try{
+        if (password != null && password.length() >= 6 && salt != null && salt.length() == 16){
+            try {
                 MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
                 String passwordToHash = "592" + password + salt;
                 messageDigest.update(passwordToHash.getBytes("UTF-8"));

@@ -20,8 +20,8 @@ import java.util.concurrent.TimeUnit;
 
 public class UserAlert {
 
-    private String message;
-    private AlertType alertType;
+//    private String message;
+//    private AlertType alertType;
 
     public Pane showMessage(String message, AlertType alertType, Pane pane, Label label, MenuController menuController) throws InterruptedException {
         switch (alertType){

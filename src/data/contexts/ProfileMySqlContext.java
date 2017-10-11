@@ -13,6 +13,7 @@ public class ProfileMySqlContext implements IProfileContext {
     @Override
     public Profile getProfileForId(final int userId) throws SQLException {
         final String query = "SELECT username FROM Account WHERE id = ?";
+
         final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(userId) });
 
         if (resultSet != null){
@@ -47,7 +48,11 @@ public class ProfileMySqlContext implements IProfileContext {
     private Profile getProfileFromResultSet(final ResultSet resultSet, final ProfileLoadingType profileLoadingType) throws SQLException {
         switch(profileLoadingType){
             case FOR_AUCTION_PAGE:
-                return new Profile(resultSet.getString("username"));
+                return new Profile
+                        (
+                                resultSet.getInt("id"),
+                                resultSet.getString("username")
+                        );
             default:
                 return null;
         }

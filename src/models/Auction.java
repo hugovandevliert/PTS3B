@@ -21,7 +21,20 @@ public class Auction {
     private Profile creator;
 
 
-    //public Auction(String title, String description, double startBid, double minimum, LocalDateTime)
+    //Constructor used for creating a new Auction.
+    public Auction(String title, String description, double startBid, double minimum, LocalDateTime openingDate, LocalDateTime expirationDate, boolean isPremium, Profile creator, ArrayList<Image> images) {
+        this.title = title;
+        this.description = description;
+        this.startBid = startBid;
+        this.minimum = minimum;
+        this.creationDate = LocalDateTime.now();
+        this.openingDate = openingDate;
+        this.expirationDate = expirationDate;
+        this.isPremium = isPremium;
+        this.creator = creator;
+        this.images = images;
+        this.status = Status.OPEN;
+    }
 
     //Constructor used for listed auctions
     public Auction(final int id, final String title, final String description, final double startBid, final ArrayList<Image> images) {

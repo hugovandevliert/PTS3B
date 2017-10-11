@@ -57,13 +57,14 @@ public class MenuController implements Initializable {
             Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/login/login.fxml"));
             paneContent.getChildren().add(newLoadedPane);
 
-            UserAlert userAlert = new UserAlert();
-            userAlert.showMessage("Logged in!", AlertType.Message, paneAlert, lblAlertMessage, this);
+//            UserAlert userAlert = new UserAlert();
+//            userAlert.showMessage("Logged in!", AlertType.Message, paneAlert, lblAlertMessage, this);
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
+//            catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void setIcons() {
@@ -117,7 +118,6 @@ public class MenuController implements Initializable {
         else{
             newLoadedPane = new Pane();
         }
-
 
         paneContent.getChildren().add(newLoadedPane);
     }

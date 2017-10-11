@@ -1,7 +1,10 @@
 package models;
 
+import data.contexts.AuctionMySqlContext;
 import javafx.scene.image.Image;
+import logic.repositories.AuctionRepository;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,13 +44,14 @@ public class Profile {
         this.profileId = profileId;
     }
 
-    public Profile(final String username) {
+    public Profile(final int profileId, final String username) {
         auctions = new ArrayList<>();
         visitedAuctions = new ArrayList<>();
         favoriteAuctions = new ArrayList<>();
         feedbacks = new ArrayList<>();
 
         this.username = username;
+        this.profileId = profileId;
     }
 
     /**
@@ -61,8 +65,11 @@ public class Profile {
      * @param title:          Title of the auction. Can't contain more then 64 characters.
      * @param images:         All images added to the auction.
      */
-    public void addAuction(final double startBid, final double minimum, final LocalDateTime expirationDate, final LocalDateTime openingDate, final boolean isPremium, final String title, final String description, final ArrayList<Image> images) {
-        Auction auction = new Auction(0, title, description, startBid, images);
+    public void addAuction(final double startBid, final double minimum, final LocalDateTime expirationDate, final LocalDateTime openingDate, final boolean isPremium, final String title, final String description, final ArrayList<Image> images) throws SQLException {
+        Auction auction = new Auction(title, description, startBid, minimum, openingDate, expirationDate, isPremium, this, images);
+        auctions.add(auction);
+        AuctionRepository auctionRepository = new AuctionRepository(new AuctionMySqlContext());
+        auctionRepository.addAuction(auction);
     }
 
 

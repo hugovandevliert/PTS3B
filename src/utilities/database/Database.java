@@ -7,7 +7,10 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Properties;
 
 @SuppressWarnings("Duplicates")
@@ -59,6 +62,7 @@ public class Database {
                         preparedStatement.setInt(index, Integer.parseInt(values[i]));
                     }
                     else if (isDate(values[i])){
+                        //Todo: callableStatement.setTimeStamp instead of setDate. If this even works it will only set the date not the time. -Thomas
                         preparedStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
                     }else{
                         preparedStatement.setString(index, values[i]);
@@ -110,6 +114,9 @@ public class Database {
                     }
                     else if (isDate(values[i])){
                         preparedStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
+                    }
+                    else if (isBoolean(values[i])){
+                        preparedStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
                     }else{
                         preparedStatement.setString(index, values[i]);
                     }
@@ -153,6 +160,9 @@ public class Database {
                     }
                     else if (isDate(values[i])){
                         preparedStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
+                    }
+                    else if (isBoolean(values[i])){
+                        preparedStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
                     }else{
                         preparedStatement.setString(index, values[i]);
                     }
@@ -185,7 +195,7 @@ public class Database {
      * @param query Usage for query --> {call increase_salaries_for_department(?, ?)}
      *              increase_salaries_for_department being the name of the stored procedure
      */
-    public static int executeStoredProcedure(String query, String[] values) {
+    public static int executeStoredProcedure(final String query, final String[] values) {
         int updateCount = -1;
 
         try {
@@ -202,7 +212,11 @@ public class Database {
                         callableStatement.setInt(index, Integer.parseInt(values[i]));
                     }
                     else if (isDate(values[i])){
+                        //Todo: callableStatement.setTimeStamp instead of setDate. If this even works it will only set the date not the time. -Thomas
                         callableStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
+                    }
+                    else if (isBoolean(values[i])){
+                        callableStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
                     }else{
                         callableStatement.setString(index, values[i]);
                     }
@@ -229,14 +243,20 @@ public class Database {
         }
     }
 
-    private static byte[] getSerializedObject(Object object) throws IOException {
+    private static byte[] getSerializedObject(final Object object) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
         objectOutputStream.writeObject(object);
         return byteArrayOutputStream.toByteArray();
     }
 
-    private static boolean isDouble(String value) {
+    private static boolean isBoolean(String value) {
+        value = value.toLowerCase();
+
+        return value.equals("true") || value.equals("false");
+    }
+
+    private static boolean isDouble(final String value) {
         try {
             Double.parseDouble(value);
             return true;
@@ -245,7 +265,7 @@ public class Database {
         }
     }
 
-    private static boolean isInteger(String value) {
+    private static boolean isInteger(final String value) {
         try {
             Integer.parseInt(value);
             return true;
@@ -254,11 +274,11 @@ public class Database {
         }
     }
 
-    private static boolean isDate(String value) {
+    private static boolean isDate(final String value) {
         try {
-            dateFormatter.parse(value);
+            LocalDateTime.parse(value);
             return true;
-        } catch (ParseException e) {
+        } catch (DateTimeParseException e) {
             return false;
         }
     }
