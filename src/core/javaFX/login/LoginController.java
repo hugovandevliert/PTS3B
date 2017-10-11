@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class LoginController extends MenuController {
@@ -24,20 +25,25 @@ public class LoginController extends MenuController {
 
     public void login() throws IOException {
         if (txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
-            //TODO: Actual client side validation
+            //TODO: Actual client side feedback
             System.out.println("Please fill in both a username and a password!");
             return;
         }
 
-        applicationManager.login(txtUsername.getText(), txtPassword.getText());
+        try {
+            applicationManager.login(txtUsername.getText(), txtPassword.getText());
+        } catch (SQLException e) {
+            //TODO: Actual client side feedback
+            System.out.println("Incorrect login credentials!");
+        }
 
         if (applicationManager.isLoggedIn()) {
             paneContent.getChildren().clear();
             Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/profile/profile.fxml"));
             paneContent.getChildren().add(newLoadedPane);
         } else {
-            //TODO: Actual client side validation
-            System.out.println("Incorrect login credentials!");
+            //TODO: Actual client side feedback
+            System.out.println("Something went wrong, please try again.");
         }
     }
 
