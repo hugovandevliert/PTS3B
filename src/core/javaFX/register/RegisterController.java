@@ -4,13 +4,11 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import core.UserAlert;
 import core.javaFX.menu.MenuController;
-import data.contexts.UserMySqlContext;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
-import logic.repositories.UserRepository;
 import utilities.enums.AlertType;
 
 import java.io.IOException;
@@ -63,16 +61,18 @@ public class RegisterController extends MenuController {
 //            UserAlert userAlert = new UserAlert();
 //            userAlert.showMessage("Something went wrong, please try again", AlertType.Error, paneAlert, lblAlertMessage, this);
             }
-        }
-        catch (IllegalArgumentException ex){
+        } catch (IllegalArgumentException e){
+            //TODO: Actual client side validation feedback
+            System.out.println(e.getMessage());
+
+//            UserAlert userAlert = new UserAlert();
+//            userAlert.showMessage(ex.getMessage(), AlertType.Error, paneAlert, lblAlertMessage, this);
+        } catch (SQLException ex) {
             //TODO: Actual client side validation feedback
             System.out.println(ex.getMessage());
 
 //            UserAlert userAlert = new UserAlert();
 //            userAlert.showMessage(ex.getMessage(), AlertType.Error, paneAlert, lblAlertMessage, this);
-        } catch (SQLException e) {
-            //TODO: Actual client side validation feedback
-            e.printStackTrace();
         }
     }
 
