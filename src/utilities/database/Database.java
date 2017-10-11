@@ -62,6 +62,7 @@ public class Database {
                         preparedStatement.setInt(index, Integer.parseInt(values[i]));
                     }
                     else if (isDate(values[i])){
+                        //Todo: callableStatement.setTimeStamp instead of setDate. If this even works it will only set the date not the time. -Thomas
                         preparedStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
                     }else{
                         preparedStatement.setString(index, values[i]);
@@ -213,6 +214,7 @@ public class Database {
                         callableStatement.setInt(index, Integer.parseInt(values[i]));
                     }
                     else if (isDate(values[i])){
+                        //Todo: callableStatement.setTimeStamp instead of setDate. If this even works it will only set the date not the time. -Thomas
                         callableStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
                     }
                     else if (isBoolean(values[i])){
