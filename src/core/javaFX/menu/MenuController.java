@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,7 +31,7 @@ public class MenuController implements Initializable {
     @FXML public ImageView imgviewAuctions;
     @FXML public ImageView imgviewFavorites;
     @FXML public ImageView imgviewAddAuction;
-    @FXML public Pane paneAlert;
+    @FXML protected Pane paneAlert;
     @FXML public Label lblAlertMessage;
 
     protected static ApplicationManager applicationManager = new ApplicationManager();
@@ -57,14 +58,10 @@ public class MenuController implements Initializable {
             Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/login/login.fxml"));
             paneContent.getChildren().add(newLoadedPane);
 
-//            UserAlert userAlert = new UserAlert();
-//            userAlert.showMessage("Logged in!", AlertType.Message, paneAlert, lblAlertMessage, this);
-        } catch (IOException e) {
+            ShowMessage("Please login", AlertType.Message);
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-//            catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
     }
 
     private void setIcons() {
@@ -119,6 +116,7 @@ public class MenuController implements Initializable {
             newLoadedPane = new Pane();
         }
 
+
         paneContent.getChildren().add(newLoadedPane);
     }
 
@@ -160,13 +158,13 @@ public class MenuController implements Initializable {
         }
     }
 
-    public void ClearAlert(){
-        Platform.runLater(this::run);
+    protected void ShowMessage(String message, AlertType type) throws InterruptedException {
+        UserAlert userAlert = new UserAlert();
+        userAlert.showMessage(message, type, paneAlert, lblAlertMessage, this);
     }
 
-    private void run() {
-        paneAlert.setStyle("fx-background-color: rgba(61, 72, 87, 1); -fx-background-radius: 2");
-        lblAlertMessage.setText("");
+    public void ClearAlert(){
+        Platform.runLater(() -> paneAlert.getChildren().clear());
     }
 }
 
