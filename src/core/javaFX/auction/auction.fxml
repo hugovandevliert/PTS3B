@@ -52,16 +52,25 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <JFXTextField fx:id="txtBid" alignment="BOTTOM_CENTER" focusColor="#747e8c" layoutX="634.0" layoutY="485.0" mouseTransparent="true" prefHeight="48.0" prefWidth="346.0" promptText="Your bid" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #a6b5c9;" unFocusColor="#242e3b">
-               <font>
-                  <Font name="Segoe UI Light" size="24.0" />
-               </font>
-            </JFXTextField>
-            <JFXButton fx:id="btnPlaceBid" layoutX="634.0" layoutY="553.0" prefHeight="48.0" prefWidth="346.0" style="-fx-background-color: f2aa78;" text="Place bet" textFill="#824923" >
-                <font>
-                    <Font name="Segoe UI Light" size="14.0" />
-                </font>
-            </JFXButton>
+            <Pane fx:id="panePlaceBid" layoutX="626.0" layoutY="450.0" prefHeight="128.0" prefWidth="346.0">
+               <children>
+                  <JFXButton fx:id="btnPlaceBid" layoutY="66.0" prefHeight="48.0" prefWidth="346.0" style="-fx-background-color: f2aa78;" text="Place bid" textFill="#824923" >
+                      <font>
+                          <Font name="Segoe UI Light" size="14.0" />
+                      </font>
+                  </JFXButton>
+                  <JFXTextField fx:id="txtBid" alignment="BOTTOM_CENTER" focusColor="#747e8c" mouseTransparent="true" prefHeight="48.0" prefWidth="346.0" promptText="Your bid" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #a6b5c9;" unFocusColor="#242e3b">
+                     <font>
+                        <Font name="Segoe UI Light" size="24.0" />
+                     </font>
+                  </JFXTextField>
+               </children>
+            </Pane>
+            <Pane fx:id="paneEndAuction" layoutX="626.0" layoutY="450.0" prefHeight="128.0" prefWidth="346.0">
+               <children>
+                  <JFXButton fx:id="btnEndAuction" layoutY="66.0" prefHeight="48.0" prefWidth="346.0" style="-fx-background-color: f2aa78;" text="End Auction" textFill="#824923" />
+               </children>
+            </Pane>
          </children></Pane>
     </children>
 </GridPane>

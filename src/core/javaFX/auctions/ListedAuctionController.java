@@ -77,7 +77,9 @@ public class ListedAuctionController extends MenuController {
                 auctionController.initializeBidsLoadingTimer(auction.getBids(), getAuctionId(), auction.getStartBid());
 
                 if (currentUserIsCreatorOfThisAuction(auction)){
-                    System.out.println("yes");
+                    auctionController.disablePlaceBidPane();
+                }else{
+                    auctionController.disableEndAuctionPane();
                 }
 
                 menuController.paneContent.getChildren().add(auctionPane);

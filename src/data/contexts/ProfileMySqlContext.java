@@ -12,7 +12,7 @@ public class ProfileMySqlContext implements IProfileContext {
 
     @Override
     public Profile getProfileForId(final int userId) throws SQLException {
-        final String query = "SELECT username FROM Account WHERE id = ?";
+        final String query = "SELECT id, username FROM Account WHERE id = ?";
 
         final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(userId) });
 

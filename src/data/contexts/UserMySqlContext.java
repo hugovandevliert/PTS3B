@@ -39,7 +39,7 @@ public class UserMySqlContext implements IUserContext {
 
     @Override
     public User getUserByUsername(final String username) throws SQLException {
-        final String query = "SELECT username, name, email FROM MyAuctions.Account WHERE username = ?";
+        final String query = "SELECT id, username, name, email FROM MyAuctions.Account WHERE username = ?";
         User currentUser = null;
         final ResultSet resultSet = Database.getData(query, new String[]{username});
 
