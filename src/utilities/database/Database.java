@@ -256,7 +256,7 @@ public class Database {
         return value.equals("true") || value.equals("false");
     }
 
-    private static boolean isDouble(final String value) {
+    public static boolean isDouble(final String value) {
         try {
             Double.parseDouble(value);
             return true;

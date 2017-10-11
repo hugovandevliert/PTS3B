@@ -65,7 +65,7 @@ public class AuctionMySqlContext implements IAuctionContext {
 
     @Override
     public boolean addAuction(final Auction auction) throws SQLException {
-        final String query = "INSERT INTO Auction (Title, Description, StartingBid, Minimum, CreationDate, OpeningDate, EndDate, `Status`, isPremium, Creator_ID, minIncrementation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        final String query = "INSERT INTO Auction (Title, Description, StartingBid, Minimum, CreationDate, OpeningDate, EndDate, `Status`, isPremium, Creator_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         final int result = Database.setData(query, new String[]{
                 auction.getTitle(),
@@ -77,8 +77,7 @@ public class AuctionMySqlContext implements IAuctionContext {
                 auction.getExpirationDate().toString(),
                 auction.getStatus().toString(),
                 String.valueOf(auction.isPremium()),
-                String.valueOf(auction.getCreator().getProfileId()),
-                String.valueOf(auction.getIncrementation())
+                String.valueOf(auction.getCreator().getProfileId())
         }, false);
 
         //TODO: Title is not unique, so we need to retrieve the ID in a different way.

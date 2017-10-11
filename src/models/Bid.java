@@ -13,13 +13,21 @@ public class Bid implements Comparable<Bid> {
     private double amount;
 
     /**
-     * Constructor for Bid.
+     * Constructor for Bid. This constructor is being used for auctions
      * @param profile: The user's profile that placed the bid.
      * @param amount: The amount of money.
      * */
     public Bid(final Profile profile, final double amount, final LocalDateTime date) {
         this.profile = profile;
         this.date = date;
+        this.amount = amount;
+    }
+
+    /**
+     * Constructor for Bid. This constructor is being used for using the most recent bid
+     * @param amount: the amount of money.
+     */
+    public Bid(final double amount) {
         this.amount = amount;
     }
 
