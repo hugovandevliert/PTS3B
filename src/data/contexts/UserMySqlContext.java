@@ -45,11 +45,12 @@ public class UserMySqlContext implements IUserContext {
         User currentUser = null;
 
         try {
-            ResultSet resultSet = Database.getData("SELECT username, name, email FROM MyAuctions.Account WHERE username = ?", new String[]{ username });
+            ResultSet resultSet = Database.getData("SELECT id, username, name, email FROM MyAuctions.Account WHERE username = ?", new String[]{ username });
 
             if (resultSet.next()){
                 currentUser = new User
                         (
+                                resultSet.getInt("id"),
                                 resultSet.getString("username"),
                                 resultSet.getString("name"),
                                 resultSet.getString("email")

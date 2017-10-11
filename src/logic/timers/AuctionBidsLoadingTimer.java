@@ -8,6 +8,7 @@ import models.Bid;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.TimerTask;
 
@@ -35,6 +36,7 @@ public class AuctionBidsLoadingTimer extends TimerTask {
             final ArrayList<Bid> newLoadedBids = bidRepository.getBids(this.auctionId);
 
             if (bidsHaveChanged(newLoadedBids)){
+                Collections.sort(newLoadedBids);
                 Platform.runLater(() -> auctionController.setBids(newLoadedBids, startBid));
             }
         } catch (SQLException e) {

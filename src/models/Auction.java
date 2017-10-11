@@ -6,6 +6,7 @@ import utilities.enums.Status;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class Auction {
@@ -18,6 +19,7 @@ public class Auction {
     private ArrayList<Image> images;
     private ArrayList<Bid> bids;
     private Profile creator;
+
 
     //Constructor used for creating a new Auction.
     public Auction(String title, String description, double startBid, double minimum, LocalDateTime openingDate, LocalDateTime expirationDate, boolean isPremium, Profile creator, ArrayList<Image> images) {
@@ -57,9 +59,7 @@ public class Auction {
         this.bids = bids;
     }
 
-    public int getId() {
-        return id;
-    }
+    public double getId() { return id; }
 
     public double getStartBid() {
         return startBid;
@@ -89,9 +89,7 @@ public class Auction {
         return title;
     }
 
-    public String getDescription() {
-        return description;
-    }
+    public String getDescription() { return description; }
 
     public List<Image> getImages() {
         return Collections.unmodifiableList(images);
@@ -110,8 +108,7 @@ public class Auction {
         this.status = status;
     }
 
-    public void addBid(final double amount, final Profile profile) {
-    }
+    public void addBid(final double amount, final Profile profile) { }
 
     public boolean endAuction() {
         return false;

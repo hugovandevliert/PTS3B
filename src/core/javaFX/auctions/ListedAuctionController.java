@@ -13,12 +13,15 @@ import javafx.scene.text.Text;
 import logic.repositories.AuctionRepository;
 import models.Auction;
 import models.Profile;
+import models.User;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class ListedAuctionController {
+public class ListedAuctionController extends MenuController {
 
     @FXML private Label lblAuctionTitle, lblCurrentOffer;
     @FXML private Text textAuctionDescription;
@@ -32,6 +35,9 @@ public class ListedAuctionController {
     private Pane auctionPane;
 
     private AuctionRepository auctionRepository;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) { }
 
     public ListedAuctionController() { auctionRepository = new AuctionRepository(new AuctionMySqlContext()); }
 
@@ -70,6 +76,10 @@ public class ListedAuctionController {
                 auctionController.initializeCountdownTimer(auction.getExpirationDate());
                 auctionController.initializeBidsLoadingTimer(auction.getBids(), getAuctionId(), auction.getStartBid());
 
+                if (currentUserIsCreatorOfThisAuction(auction)){
+                    System.out.println("yes");
+                }
+
                 menuController.paneContent.getChildren().add(auctionPane);
             }else{
                 System.out.println("Something went wrong - Couldn't load auction page"); //TODO: proper error handling
@@ -84,4 +94,8 @@ public class ListedAuctionController {
     }
 
     private int getAuctionId() { return Integer.parseInt(lblListedAuctionId.getText()); }
+
+    private boolean currentUserIsCreatorOfThisAuction(final Auction auction) {
+        return applicationManager.getCurrentUser().getId() == auction.getCreator().getProfileId();
+    }
 }

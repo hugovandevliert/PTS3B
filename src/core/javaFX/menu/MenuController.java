@@ -119,7 +119,6 @@ public class MenuController implements Initializable {
             newLoadedPane = new Pane();
         }
 
-
         paneContent.getChildren().add(newLoadedPane);
     }
 
