@@ -55,9 +55,7 @@ public class MenuController implements Initializable {
 
         try {
             paneContent.getChildren().clear();
-//            Pane newLoadedPane =
-            FXMLLoader fxmlLoader = FXMLLoader.load(getClass().getResource("/core/javafx/login/login.fxml"));
-            fxmlLoader;
+            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/login/login.fxml"));
             paneContent.getChildren().add(newLoadedPane);
 
             ShowMessage("Please login", AlertType.Message);
@@ -117,6 +115,7 @@ public class MenuController implements Initializable {
         else{
             newLoadedPane = new Pane();
         }
+
 
         paneContent.getChildren().add(newLoadedPane);
     }
