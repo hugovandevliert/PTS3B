@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Auction {
+
     private int id;
     private double startBid, minimum;
     private boolean isPremium;
@@ -109,10 +110,6 @@ public class Auction {
     }
 
     public void addBid(final double amount, final Profile profile) { }
-
-    public boolean endAuction() {
-        return false;
-    }
 
     public Profile getCreator() {
         return creator;

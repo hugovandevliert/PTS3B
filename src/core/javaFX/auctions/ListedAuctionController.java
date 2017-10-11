@@ -73,8 +73,10 @@ public class ListedAuctionController extends MenuController {
                 auctionController.setSeller(auction.getCreator().getUsername());
                 auctionController.setImages(auction.getImages());
                 auctionController.setBids(auction.getBids(), auction.getStartBid());
+                auctionController.setAuctionId(auction.getId());
                 auctionController.initializeCountdownTimer(auction.getExpirationDate());
                 auctionController.initializeBidsLoadingTimer(auction.getBids(), getAuctionId(), auction.getStartBid());
+                auctionController.initializeAuctionRepository();
 
                 if (currentUserIsCreatorOfThisAuction(auction)){
                     auctionController.disablePlaceBidPane();
