@@ -45,7 +45,7 @@ public class AuctionController extends MenuController {
 
         if (bids != null && bids.size() > 0){
             for (final Bid bid : bids){
-                final Label lblBid = new Label("€" + bid.getAmount() + " - " + bid.getProfile().getUsername() + " - " + bid.getDate());
+                final Label lblBid = new Label("€" + bid.getAmount() + " - " + bid.getProfile().getUsername() + " - " + bid.getDate().toLocalDate() + " " + bid.getDate().toLocalTime());
                 vboxBids.getChildren().add(lblBid);
             }
         }else{

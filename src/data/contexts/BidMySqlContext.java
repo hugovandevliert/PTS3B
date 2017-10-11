@@ -36,7 +36,7 @@ public class BidMySqlContext implements IBidContext {
                 (
                         profileRepository.getProfileForId(resultSet.getInt("account_id")),
                         resultSet.getDouble("amount"),
-                        new Date(resultSet.getDate("date").getTime())
+                        resultSet.getTimestamp("date").toLocalDateTime()
                 );
     }
 }

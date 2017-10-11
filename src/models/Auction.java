@@ -83,6 +83,7 @@ public class Auction {
     }
 
     public List<Bid> getBids() {
+        Collections.sort(bids);
         return Collections.unmodifiableList(bids);
     }
 
