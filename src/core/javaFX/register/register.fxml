@@ -57,9 +57,17 @@
                 </font>
             </JFXPasswordField>
 
-            <JFXButton fx:id="btnLogin" layoutX="350.0" layoutY="475.0" onAction="#login" prefHeight="45.0" prefWidth="300.0" style="-fx-background-color: f2aa78;" text="Login" textFill="#824923" />
+            <JFXButton fx:id="btnLogin" layoutX="350.0" layoutY="475.0" onAction="#login" prefHeight="45.0" prefWidth="300.0" style="-fx-background-color: f2aa78;" text="Login" textFill="#824923" >
+                <font>
+                    <Font name="Segoe UI Light" size="14.0" />
+                </font>
+            </JFXButton>
 
-            <JFXButton fx:id="btnRegister" layoutX="350.0" layoutY="550.0" onAction="#register" prefHeight="45.0" prefWidth="300.0" style="-fx-background-color: f2aa78;" text="Register" textFill="#824923" />
+            <JFXButton fx:id="btnRegister" layoutX="350.0" layoutY="550.0" onAction="#register" prefHeight="45.0" prefWidth="300.0" style="-fx-background-color: f2aa78;" text="Register" textFill="#824923" >
+                <font>
+                    <Font name="Segoe UI Light" size="14.0" />
+                </font>
+            </JFXButton>
 
             <Label layoutX="364.0" layoutY="76.0" style="-fx-text-fill: #a6b5c9" text="Create your account">
                 <font>

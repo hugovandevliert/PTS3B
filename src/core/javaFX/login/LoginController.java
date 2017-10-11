@@ -35,6 +35,8 @@ public class LoginController extends MenuController {
         } catch (SQLException e) {
             //TODO: Actual client side feedback
             System.out.println("Incorrect login credentials!");
+            System.out.println("Error: " + e.getMessage());
+            return;
         }
 
         if (applicationManager.isLoggedIn()) {

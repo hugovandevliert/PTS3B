@@ -57,7 +57,11 @@
                   <Font name="Segoe UI Light" size="24.0" />
                </font>
             </JFXTextField>
-            <JFXButton fx:id="btnPlaceBid" layoutX="634.0" layoutY="553.0" prefHeight="48.0" prefWidth="346.0" style="-fx-background-color: f2aa78;" text="Place bet" textFill="#824923" />
+            <JFXButton fx:id="btnPlaceBid" layoutX="634.0" layoutY="553.0" prefHeight="48.0" prefWidth="346.0" style="-fx-background-color: f2aa78;" text="Place bet" textFill="#824923" >
+                <font>
+                    <Font name="Segoe UI Light" size="14.0" />
+                </font>
+            </JFXButton>
          </children></Pane>
     </children>
 </GridPane>
