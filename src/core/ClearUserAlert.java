@@ -8,13 +8,9 @@ import java.util.TimerTask;
 
 public class ClearUserAlert extends TimerTask {
 
-    private Label label;
-    private Pane pane;
     private MenuController menuController;
 
-    public ClearUserAlert(Label label, Pane pane, MenuController menuController) {
-        this.label = label;
-        this.pane = pane;
+    public ClearUserAlert(MenuController menuController) {
         this.menuController = menuController;
     }
 
