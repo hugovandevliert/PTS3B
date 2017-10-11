@@ -52,7 +52,6 @@ class UserTest {
     void testSetName() {
         user.setName("Barnaby Marmaduke Aloysius Benjy Cobweb Dartagnan Egbert Felix G");
         assertEquals("Barnaby Marmaduke Aloysius Benjy Cobweb Dartagnan Egbert Felix G", user.getUsername(), "Username should be able to contain 64 chars");
-        //Todo: DAL implementation to check if username actually changed.
         assertThrows(IllegalArgumentException.class, () -> user.setName("Barnaby Marmaduke Aloysius Benjy Cobweb Dartagnan Egbert Felix Gaspar"), "Full name should not be able to exceed 64 chars. Currently: 69");
         assertThrows(IllegalArgumentException.class, () -> user.setName("T3st User"), "Full name should not be able to contain numbers");
         assertThrows(IllegalArgumentException.class, () -> user.setName("T&st User"), "Full name should not be able to contain special characters");
@@ -75,20 +74,6 @@ class UserTest {
         assertThrows(IllegalArgumentException.class, () -> user.setEmail("testuserwithoutatemail.com"), "Email should always contain an '@'.");
         assertThrows(IllegalArgumentException.class, () -> user.setEmail("testuserwith@gmailcom"), "Email should always end with a valid domain name.");
         assertThrows(IllegalArgumentException.class, () -> user.setEmail("testuserwith@bladieduiaaf.aiusdhfuias"), "Email should always end with a valid domain name.");
-    }
-
-    @Deprecated
-    void testSetPhoto() {
-        //Todo: Fix it. Pls. Help :(        (Iets met een mockingframework)
-        Image image = new Image("/testavatarCorrect.jpg");
-        user.setPhoto(image);
-        assertSame(image, user.getProfile().getPhoto(), "Photo is not properly set.");
-
-        Image badImage = new Image("/testavatarIncorrect.jpg");
-        assertThrows(IllegalArgumentException.class, () -> user.setPhoto(badImage), "Photo should not be larger then 300x300. (Currently");
-
-        Image badImage2 = new Image("/testavatarIncorrect2.jpg");
-        assertThrows(IllegalArgumentException.class, () -> user.setPhoto(badImage2), "Photo should not be smaller then 50x50. (Currently: 49x49)");
     }
 
     @AfterAll
