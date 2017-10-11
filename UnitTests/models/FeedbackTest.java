@@ -22,8 +22,6 @@ class FeedbackTest {
     void testGetDate() {
         Feedback feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), false, "Testfeedback");
         assertNotNull(feedback.getDate());
-        //Can't really test the value of this getter since the value is unknown.
-        //Todo: Look into delta's
     }
 
     @Test
