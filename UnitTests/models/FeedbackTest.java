@@ -4,6 +4,8 @@ import core.ApplicationManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.Date;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -20,29 +22,29 @@ class FeedbackTest {
 
     @Test
     void testGetDate() {
-        Feedback feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), false, "Testfeedback");
+        Feedback feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), new Date(), false, "Testfeedback");
         assertNotNull(feedback.getDate());
     }
 
     @Test
     void testGetAuthor() {
         Profile author = applicationManager.login("testusername2", "AbC*2f").getProfile();
-        Feedback f = new Feedback(author, false, "Testfeedback");
+        Feedback f = new Feedback(author, new Date(), false, "Testfeedback");
         assertSame(author, f.getAuthor(), "Author getter is not working properly.");
     }
 
     @Test
     void testGetMessage() {
-        Feedback feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), false, "Testfeedback");
+        Feedback feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), new Date(), false, "Testfeedback");
         assertEquals("Testfeedback", feedback.getMessage());
     }
 
     @Test
     void testIsPositive() {
-        Feedback feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), false, "Testfeedback");
+        Feedback feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), new Date(), false, "Testfeedback");
         assertFalse(feedback.isPositive(), "Positivity getter is not working properly for negative value.");
 
-        feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), true, "Testfeedback");
+        feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), new Date(), true, "Testfeedback");
         assertTrue(feedback.isPositive(), "Positivity getter is not working properly for positive value.");
     }
 

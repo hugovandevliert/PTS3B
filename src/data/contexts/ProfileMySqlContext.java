@@ -3,18 +3,15 @@ package data.contexts;
 import data.interfaces.IProfileContext;
 import models.Auction;
 import models.Profile;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import utilities.database.Database;
 import utilities.enums.ProfileLoadingType;
-
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ProfileMySqlContext implements IProfileContext {
 
     @Override
-    public Profile getProfileForId(int userId) throws SQLException {
+    public Profile getProfileForId(final int userId) throws SQLException {
         final String query = "SELECT username FROM Account WHERE id = ?";
         final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(userId) });
 
@@ -27,27 +24,24 @@ public class ProfileMySqlContext implements IProfileContext {
     }
 
     @Override
-    public boolean addVisitedAuction(Profile profile, Auction auction) {
-//        preparedStatement =  Database.getConnection().prepareStatement("INSERT INTO VisitedAuction (Account_ID, Auction_ID) VALUES (?, ?)");
-//        preparedStatement.setInt(1, profile.getProfileId());
-//        preparedStatement.setInt(2, auction.getID());
-        return false;
+    public boolean addVisitedAuction(final Profile profile, final Auction auction) {
+        final String query = "INSERT INTO VisitedAuction (`account_id`, `auction_id`) VALUES (?, ?)";
+
+        return 1 == Database.setData(query, new String[] { Integer.toString(profile.getProfileId()), Integer.toString(auction.getId()) }, false);
     }
 
     @Override
-    public boolean addFavoriteAuction(Profile profile, Auction auction) {
-//        preparedStatement =  Database.getConnection().prepareStatement("INSERT INTO FavoriteAuction (Account_ID, Auction_ID) VALUES (?, ?)");
-//        preparedStatement.setInt(1, profile.getProfileId());
-//        preparedStatement.setInt(2, auction.getID());
-        return false;
+    public boolean addFavoriteAuction(final Profile profile, final Auction auction) {
+        final String query = "INSERT INTO FavoriteAuction (`account_id`, `auction_id`) VALUES (?, ?)";
+
+        return 1 == Database.setData(query, new String[] { Integer.toString(profile.getProfileId()), Integer.toString(auction.getId()) }, false);
     }
 
     @Override
-    public boolean removeFavoriteAuction(Profile profile, Auction auction) {
-//        preparedStatement =  Database.getConnection().prepareStatement("DELETE FROM FavoriteAuction WHERE Account_ID = ? AND Auction_ID = ?");
-//        preparedStatement.setInt(1, profile.getProfileId());
-//        preparedStatement.setInt(2, auction.getID());
-        return false;
+    public boolean removeFavoriteAuction(final Profile profile, final Auction auction) {
+        final String query = "DELETE FROM FavoriteAuction WHERE `account_id` = ? AND `auction_id` = ?";
+
+        return 1 == Database.setData(query, new String[] { Integer.toString(profile.getProfileId()), Integer.toString(auction.getId()) }, false);
     }
 
     private Profile getProfileFromResultSet(final ResultSet resultSet, final ProfileLoadingType profileLoadingType) throws SQLException {

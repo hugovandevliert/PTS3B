@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -24,7 +25,7 @@ public class ApplicationManager {
         userRepository = new UserRepository(new UserMySqlContext());
     }
 
-    public User login(final String username, final String password) {
+    public User login(final String username, final String password) throws SQLException {
         String[] saltAndHash = userRepository.getSaltAndHash(username);
 
         if (saltAndHash != null){

@@ -4,15 +4,13 @@ import data.interfaces.IBidContext;
 import logic.repositories.ProfileRepository;
 import models.Bid;
 import utilities.database.Database;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class BidMySqlContext implements IBidContext {
 
-    private ProfileRepository profileRepository;
+    final private ProfileRepository profileRepository;
 
     public BidMySqlContext() { profileRepository = new ProfileRepository(new ProfileMySqlContext()); }
 
