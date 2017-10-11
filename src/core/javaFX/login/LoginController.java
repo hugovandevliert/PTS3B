@@ -13,8 +13,10 @@ import java.util.ResourceBundle;
 
 public class LoginController extends MenuController {
 
-    @FXML private JFXTextField txtUsername;
-    @FXML private JFXPasswordField txtPassword;
+    @FXML
+    private JFXTextField txtUsername;
+    @FXML
+    private JFXPasswordField txtPassword;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -32,13 +34,14 @@ public class LoginController extends MenuController {
             paneContent.getChildren().clear();
             Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/profile/profile.fxml"));
             paneContent.getChildren().add(newLoadedPane);
-        }
-        else {
+        } else {
             System.out.println("Incorrect login credentials!");
         }
     }
 
-    public void register() {
-
+    public void register() throws IOException {
+        paneContent.getChildren().clear();
+        Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/register/register.fxml"));
+        paneContent.getChildren().add(newLoadedPane);
     }
 }
