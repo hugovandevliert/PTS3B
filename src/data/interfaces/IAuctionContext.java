@@ -11,4 +11,5 @@ public interface IAuctionContext {
     Auction getAuctionForId(final int auctionId) throws SQLException, IOException, ClassNotFoundException;
     boolean addAuction(final Auction auction) throws SQLException;
     boolean manuallyEndAuction(final int auctionId);
+    boolean auctionIsClosed(final int auctionId) throws SQLException;
 }

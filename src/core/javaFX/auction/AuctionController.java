@@ -2,6 +2,7 @@ package core.javaFX.auction;
 
 
 import core.javaFX.menu.MenuController;
+import data.contexts.AuctionMySqlContext;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -9,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import logic.repositories.AuctionRepository;
 import logic.timers.AuctionBidsLoadingTimer;
 import logic.timers.AuctionCountdownTimer;
 import models.Bid;
@@ -28,6 +30,10 @@ public class AuctionController extends MenuController {
 
     private Timer auctionCountdown;
     private Timer bidsLoadingTimer;
+
+    private AuctionRepository auctionRepository;
+
+    private int auctionId;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) { }
@@ -58,19 +64,27 @@ public class AuctionController extends MenuController {
         }
     }
 
+    public void setTimer(final String timer) { lblTimer.setText(timer); }
+
+    public void setAuctionId(final int auctionId) {
+        this.auctionId = auctionId;
+    }
+
+    public void initializeAuctionRepository() {
+        auctionRepository = new AuctionRepository(new AuctionMySqlContext());
+    }
+
     public void initializeCountdownTimer(final LocalDateTime expirationDate) {
         final Date currentDate = new Date();
         final long countdownInMilliseconds = expirationDate.toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli() - currentDate.getTime();
 
         if (countdownInMilliseconds > 0){
             auctionCountdown = new Timer();
-            auctionCountdown.schedule(new AuctionCountdownTimer(expirationDate, this), 0, 1000);
+            auctionCountdown.schedule(new AuctionCountdownTimer(expirationDate, this, this.auctionId), 0, 1000);
         }else{
             setTimer("This auction has ended!");
         }
     }
-
-    public void setTimer(final String timer) { lblTimer.setText(timer); }
 
     public void initializeBidsLoadingTimer(final List<Bid> bids, final int auctionId, final double startBid) {
         bidsLoadingTimer = new Timer();
@@ -83,5 +97,18 @@ public class AuctionController extends MenuController {
 
     public void disableEndAuctionPane() {
         paneContent.getChildren().remove(paneEndAuction);
+    }
+
+    public void manuallyEndAuction() {
+        if (auctionRepository.manuallyEndAuction(this.auctionId)){
+            System.out.println("Auction successfully ended!");
+        }else{
+            System.out.println("Auction has not successfully been ended!");
+        }
+        //TODO: Use UserAlert here instead of System prints
+    }
+
+    public String getTimerString() {
+        return lblTimer.getText();
     }
 }
