@@ -3,6 +3,8 @@ package logic.timers;
 import core.javaFX.auction.AuctionController;
 import javafx.application.Platform;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -11,9 +13,9 @@ import java.util.concurrent.TimeUnit;
 public class AuctionCountdownTimer extends TimerTask {
 
     private AuctionController auctionController;
-    private Date expirationDate;
+    private LocalDateTime expirationDate;
 
-    public AuctionCountdownTimer(Date expirationDate, AuctionController auctionController) {
+    public AuctionCountdownTimer(LocalDateTime expirationDate, AuctionController auctionController) {
         this.expirationDate = expirationDate;
         this.auctionController = auctionController;
     }
@@ -21,7 +23,7 @@ public class AuctionCountdownTimer extends TimerTask {
     @Override
     public void run() {
         Date currentDate = new Date();
-        final long differenceInMs = expirationDate.getTime() - currentDate.getTime();
+        final long differenceInMs = expirationDate.toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli() - currentDate.getTime();
         String timerStringValue = "";
 
         if (differenceInMs > 0){

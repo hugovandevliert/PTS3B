@@ -13,6 +13,8 @@ import logic.timers.AuctionCountdownTimer;
 import models.Bid;
 
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.*;
 
 public class AuctionController extends MenuController {
@@ -54,9 +56,9 @@ public class AuctionController extends MenuController {
         }
     }
 
-    public void initializeCountdownTimer(final Date expirationDate) {
+    public void initializeCountdownTimer(final LocalDateTime expirationDate) {
         final Date currentDate = new Date();
-        final long countdownInMilliseconds = expirationDate.getTime() - currentDate.getTime();
+        final long countdownInMilliseconds = expirationDate.toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli() - currentDate.getTime();
 
         if (countdownInMilliseconds > 0){
             auctionCountdown = new Timer();

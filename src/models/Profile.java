@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Profile class, used for interaction between users.
- * */
+ */
 public class Profile {
 
     private Image photo;
@@ -21,12 +21,13 @@ public class Profile {
 
     /**
      * Constructor for a profile.
-     * @param photo: User's profile picture.
-     * @param username: User's username.
-     * @param name: User's full name.
-     * @param email: User's email address.
+     *
+     * @param photo:     User's profile picture.
+     * @param username:  User's username.
+     * @param name:      User's full name.
+     * @param email:     User's email address.
      * @param profileId: The ID of this profile.
-     * */
+     */
     public Profile(final Image photo, final String username, final String name, final String email, final int profileId) {
         auctions = new ArrayList<>();
         visitedAuctions = new ArrayList<>();
@@ -51,56 +52,61 @@ public class Profile {
 
     /**
      * Method for creating a new auction.
-     * @param startBid: Minimum value of the first bid. Must be >0.
-     * @param minimum: Minimum bid the auction must have reached before the seller actually sells the item. Must be >0.
+     *
+     * @param startBid:       Minimum value of the first bid. Must be >0.
+     * @param minimum:        Minimum bid the auction must have reached before the seller actually sells the item. Must be >0.
      * @param expirationDate: Date/time when the auction is planned to close. Should be later then the current date.
-     * @param openingDate: Date/time when the auction is planned to open. Should be earlier then the the expirationdate, and can't be earlier then today.
-     * @param isPremium: Indicates if a user paid to boost his auction.
-     * @param title: Title of the auction. Can't contain more then 64 characters.
-     * @param images: All images added to the auction.
-     * */
-    public void addAuction(final double startBid, final double minimum, final LocalDateTime expirationDate, final LocalDateTime openingDate, final boolean isPremium, final String title, final ArrayList<Image> images) {
-
+     * @param openingDate:    Date/time when the auction is planned to open. Should be earlier then the the expirationdate, and can't be earlier then today.
+     * @param isPremium:      Indicates if a user paid to boost his auction.
+     * @param title:          Title of the auction. Can't contain more then 64 characters.
+     * @param images:         All images added to the auction.
+     */
+    public void addAuction(final double startBid, final double minimum, final LocalDateTime expirationDate, final LocalDateTime openingDate, final boolean isPremium, final String title, final String description, final ArrayList<Image> images) {
+        Auction auction = new Auction(0, title, description, startBid, images);
     }
 
 
     /**
      * Method for adding an auction to a profile's visited auctions.
+     *
      * @param auction: The auction to add.
-     * */
+     */
     public void addVisitedAuction(final Auction auction) {
 
     }
 
     /**
      * Method for adding an auction to a profile's favorite auctions.
+     *
      * @param auction: The auction to add.
-     * */
+     */
     public void addFavoriteAuction(final Auction auction) {
 
     }
 
     /**
      * Method for removing an auction to a profile's favorite auctions.
+     *
      * @param auction: The auction to remove.
-     * */
+     */
     public void removeFavoriteAuction(final Auction auction) {
 
     }
 
     /**
      * Method for adding feedback to this profile
-     * @param author: Profile that gave the feedback.
+     *
+     * @param author:     Profile that gave the feedback.
      * @param isPositive: Feedback can be positive (true), or negative (false)
-     * @param message: Message added to the feedback.
-     * */
+     * @param message:    Message added to the feedback.
+     */
     public void addFeedback(final Profile author, final boolean isPositive, final String message) {
 
     }
 
     /**
      * Method for notifying the user. //Todo: How does this method know what to notify the user of?
-     * */
+     */
     public void notifyUser() {
 
     }

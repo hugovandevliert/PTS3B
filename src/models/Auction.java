@@ -3,23 +3,27 @@ package models;
 import javafx.scene.image.Image;
 import utilities.enums.Status;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 public class Auction {
-
     private int id;
     private double startBid, minimum;
     private boolean isPremium;
-    private Date expirationDate, openingDate, creationDate;
+    private LocalDateTime expirationDate, openingDate, creationDate;
     private String title, description;
     private Status status;
     private ArrayList<Image> images;
     private ArrayList<Bid> bids;
     private Profile creator;
 
+
+    //public Auction(String title, String description, double startBid, double minimum, LocalDateTime)
+
+    //Constructor used for listed auctions
     public Auction(final int id, final String title, final String description, final double startBid, final ArrayList<Image> images) {
         this.id = id;
         this.startBid = startBid;
@@ -30,7 +34,8 @@ public class Auction {
         bids = new ArrayList<Bid>();
     }
 
-    public Auction(final int id, final String title, final String description, final double startBid, final Date expirationDate, final Profile creator, final ArrayList<Image> images, final ArrayList<Bid> bids) {
+    //Constructor used for auction page
+    public Auction(final int id, final String title, final String description, final double startBid, final LocalDateTime expirationDate, final Profile creator, final ArrayList<Image> images, final ArrayList<Bid> bids) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -55,15 +60,15 @@ public class Auction {
         return isPremium;
     }
 
-    public Date getExpirationDate() {
+    public LocalDateTime getExpirationDate() {
         return expirationDate;
     }
 
-    public Date getOpeningDate() {
+    public LocalDateTime getOpeningDate() {
         return openingDate;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 

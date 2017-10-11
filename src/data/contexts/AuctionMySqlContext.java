@@ -111,7 +111,7 @@ public class AuctionMySqlContext implements IAuctionContext {
                                 resultSet.getString("title"),
                                 resultSet.getString("description"),
                                 resultSet.getDouble("startingBid"),
-                                resultSet.getDate("endDate"),
+                                resultSet.getTimestamp("endDate").toLocalDateTime(),
                                 profileRepository.getProfileForId(resultSet.getInt("creator_id")),
                                 getImagesForAuctionWithId(auctionLoadingType, resultSet.getInt("id")),
                                 bidRepository.getBids(resultSet.getInt("id"))
