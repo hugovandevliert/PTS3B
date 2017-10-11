@@ -145,7 +145,9 @@ public class AuctionMySqlContext implements IAuctionContext {
                                 resultSet.getTimestamp("endDate").toLocalDateTime(),
                                 profileRepository.getProfileForId(resultSet.getInt("creator_id")),
                                 getImagesForAuctionWithId(auctionLoadingType, resultSet.getInt("id")),
-                                bidRepository.getBids(resultSet.getInt("id"))
+                                bidRepository.getBids(resultSet.getInt("id")),
+                                resultSet.getDouble("minimum"),
+                                resultSet.getDouble("incrementation")
                         );
             case FOR_COUNTDOWN_TIMER:
                 return new Auction
