@@ -33,15 +33,25 @@ public class AuctionBidsLoadingTimer extends TimerTask {
     @Override
     public void run() {
         try {
-            final ArrayList<Bid> newLoadedBids = bidRepository.getBids(this.auctionId);
+            if (!auctionHasEnded()){
+                final ArrayList<Bid> newLoadedBids = bidRepository.getBids(this.auctionId);
 
-            if (bidsHaveChanged(newLoadedBids)){
-                Collections.sort(newLoadedBids);
-                Platform.runLater(() -> auctionController.setBids(newLoadedBids, startBid));
+                if (bidsHaveChanged(newLoadedBids)){
+                    Collections.sort(newLoadedBids);
+                    Platform.runLater(() -> auctionController.setBids(newLoadedBids, startBid));
+                }
+            }else{
+                // There is no need to keep this TimerTask running as the auction has been ended
+                // We will therefore cancel the TimerTask
+                this.cancel();
             }
         } catch (SQLException e) {
             e.printStackTrace(); //TODO proper error handling
         }
+    }
+
+    private boolean auctionHasEnded() {
+        return auctionController.getTimerString().toLowerCase().contains("end");
     }
 
     private boolean bidsHaveChanged(final ArrayList<Bid> newLoadedBids) {

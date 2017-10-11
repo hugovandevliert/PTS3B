@@ -29,4 +29,6 @@ public class AuctionRepository {
     public boolean manuallyEndAuction(final int auctionId) {
         return context.manuallyEndAuction(auctionId);
     }
+
+    public boolean auctionIsClosed(final int auctionId) throws SQLException { return context.auctionIsClosed(auctionId); }
 }

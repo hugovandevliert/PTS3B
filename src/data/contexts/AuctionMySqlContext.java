@@ -103,6 +103,19 @@ public class AuctionMySqlContext implements IAuctionContext {
         return 1 == Database.setData(query, new String[] { Integer.toString(auctionId) }, true);
     }
 
+    @Override
+    public boolean auctionIsClosed(int auctionId) throws SQLException {
+        final String query = "SELECT status FROM MyAuctions.Auction WHERE id = ?;";
+        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
+
+        if (resultSet != null){
+            if (resultSet.next()){
+                return resultSet.getString("status").trim().equals("CLOSED");
+            }
+        }
+        return false;
+    }
+
     public Auction getAuctionFromResultSet(final ResultSet resultSet, final AuctionLoadingType auctionLoadingType) throws SQLException, IOException, ClassNotFoundException {
         switch (auctionLoadingType) {
             case FOR_LISTED_AUCTIONS:

@@ -80,7 +80,7 @@ public class AuctionController extends MenuController {
 
         if (countdownInMilliseconds > 0){
             auctionCountdown = new Timer();
-            auctionCountdown.schedule(new AuctionCountdownTimer(expirationDate, this), 0, 1000);
+            auctionCountdown.schedule(new AuctionCountdownTimer(expirationDate, this, this.auctionId), 0, 1000);
         }else{
             setTimer("This auction has ended!");
         }
@@ -106,5 +106,9 @@ public class AuctionController extends MenuController {
             System.out.println("Auction has not successfully been ended!");
         }
         //TODO: Use UserAlert here instead of System prints
+    }
+
+    public String getTimerString() {
+        return lblTimer.getText();
     }
 }
