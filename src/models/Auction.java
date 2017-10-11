@@ -6,7 +6,6 @@ import utilities.enums.Status;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 public class Auction {
@@ -58,7 +57,7 @@ public class Auction {
         this.bids = bids;
     }
 
-    public double getId() {
+    public int getId() {
         return id;
     }
 

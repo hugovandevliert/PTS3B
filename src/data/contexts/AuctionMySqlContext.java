@@ -13,6 +13,7 @@ import utilities.enums.Status;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AuctionMySqlContext implements IAuctionContext {
 
@@ -56,7 +57,7 @@ public class AuctionMySqlContext implements IAuctionContext {
 
     @Override
     public boolean addAuction(final Auction auction) throws SQLException {
-        Database.setData("INSERT INTO Auction (Title, Description, StartingBid, Minimum, CreationDate, OpeningDate, EndDate, `Status`, isPremium, Creator_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", new String[] {
+        Database.setData("INSERT INTO Auction (Title, Description, StartingBid, Minimum, CreationDate, OpeningDate, EndDate, `Status`, isPremium, Creator_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", new String[]{
                 auction.getTitle(),
                 auction.getDescription(),
                 String.valueOf(auction.getStartBid()),
@@ -68,6 +69,21 @@ public class AuctionMySqlContext implements IAuctionContext {
                 String.valueOf(auction.isPremium()),
                 String.valueOf(auction.getCreator().getProfileId())
         }, false);
+        ResultSet r = Database.getData("SELECT id FROM Auction WHERE title = '?'", new String[]{
+                auction.getTitle()
+        });
+        addAuctionImages(auction.getImages(), r.getInt("id"));
+        return true;
+    }
+
+    public boolean addAuctionImages(List<Image> images, int auctionID) {
+        for (Image image : images) {
+            Database.setDataWithImages("INSERT INTO Image (`image`, `auction_id`) (?, ?)", new String[]{
+                    String.valueOf(auctionID)
+            }, new Image[]{
+                    image
+            }, false);
+        }
         return true;
     }
 

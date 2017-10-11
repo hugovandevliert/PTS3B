@@ -241,6 +241,11 @@ public class Database {
         return byteArrayOutputStream.toByteArray();
     }
 
+    private static boolean isBoolean(String value)
+    {
+        return false;
+    }
+
     private static boolean isDouble(String value) {
         try {
             Double.parseDouble(value);
