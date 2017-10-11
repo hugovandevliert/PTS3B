@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import logic.timers.AuctionBidsLoadingTimer;
@@ -23,6 +24,7 @@ public class AuctionController extends MenuController {
     @FXML private Text textAuctionDescription;
     @FXML private ImageView imgviewSelectedPicture, imgviewPicture1, imgviewPicture2, imgviewPicture3;
     @FXML private VBox vboxBids;
+    @FXML private Pane panePlaceBid, paneEndAuction;
 
     private Timer auctionCountdown;
     private Timer bidsLoadingTimer;
@@ -73,5 +75,13 @@ public class AuctionController extends MenuController {
     public void initializeBidsLoadingTimer(final List<Bid> bids, final int auctionId, final double startBid) {
         bidsLoadingTimer = new Timer();
         bidsLoadingTimer.schedule(new AuctionBidsLoadingTimer(this, bids, auctionId, startBid), 1000, 500);
+    }
+
+    public void disablePlaceBidPane() {
+        paneContent.getChildren().remove(panePlaceBid);
+    }
+
+    public void disableEndAuctionPane() {
+        paneContent.getChildren().remove(paneEndAuction);
     }
 }

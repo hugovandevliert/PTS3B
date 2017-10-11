@@ -6,6 +6,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
@@ -17,7 +19,7 @@ class UserTest {
      */
 
     @BeforeAll
-    static void setUp() {
+    static void setUp() throws SQLException {
         ApplicationManager am = new ApplicationManager();
         user = am.login("testusername", "AbC*1f");
     }

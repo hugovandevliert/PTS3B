@@ -44,13 +44,14 @@ public class Profile {
         this.profileId = profileId;
     }
 
-    public Profile(final String username) {
+    public Profile(final int profileId, final String username) {
         auctions = new ArrayList<>();
         visitedAuctions = new ArrayList<>();
         favoriteAuctions = new ArrayList<>();
         feedbacks = new ArrayList<>();
 
         this.username = username;
+        this.profileId = profileId;
     }
 
     /**

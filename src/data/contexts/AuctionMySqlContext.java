@@ -8,11 +8,12 @@ import logic.repositories.ProfileRepository;
 import models.Auction;
 import utilities.database.Database;
 import utilities.enums.AuctionLoadingType;
-import utilities.enums.Status;
-
-import java.io.*;
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AuctionMySqlContext implements IAuctionContext {
 
@@ -56,7 +57,9 @@ public class AuctionMySqlContext implements IAuctionContext {
 
     @Override
     public boolean addAuction(final Auction auction) throws SQLException {
-        Database.setData("INSERT INTO Auction (Title, Description, StartingBid, Minimum, CreationDate, OpeningDate, EndDate, `Status`, isPremium, Creator_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", new String[] {
+        final String query = "INSERT INTO Auction (Title, Description, StartingBid, Minimum, CreationDate, OpeningDate, EndDate, `Status`, isPremium, Creator_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        final int result = Database.setData(query, new String[]{
                 auction.getTitle(),
                 auction.getDescription(),
                 String.valueOf(auction.getStartBid()),
@@ -68,24 +71,36 @@ public class AuctionMySqlContext implements IAuctionContext {
                 String.valueOf(auction.isPremium()),
                 String.valueOf(auction.getCreator().getProfileId())
         }, false);
-        return true;
+
+        //TODO: Title is not unique, so we need to retrieve the ID in a different way.
+        final ResultSet resultSet = Database.getData(
+                "SELECT id FROM Auction WHERE title = '?'",
+                new String[]{ auction.getTitle() }
+        );
+
+        return result == 1 && addAuctionImages(auction.getImages(), resultSet.getInt("id"));
+    }
+
+    public boolean addAuctionImages(final List<Image> images, final int auctionID) {
+        final String query = "INSERT INTO Image (`image`, `auction_id`) (?, ?)";
+        int resultCorrect = 0;
+
+        for (Image image : images) {
+            resultCorrect += Database.setDataWithImages(
+                    query,
+                    new String[]{ String.valueOf(auctionID) },
+                    new Image[]{ image },
+                    false
+            );
+        }
+        return resultCorrect == images.size();
     }
 
     @Override
-    public boolean setStatus(final Status status, final int auctionId) {
-//        preparedStatement =  Database.getConnection().prepareStatement("UPDATE Auctions SET `Status` = ? WHERE ID = ?");
-//        preparedStatement.setString(1, status);
-//        preparedStatement.setInt(2, auctionId);
-        return false;
+    public boolean manuallyEndAuction(final int auctionId) {
+        final String query = "UPDATE Auction SET `status` = 'CLOSED' WHERE `ID` = ?";
 
-    }
-
-    @Override
-    public boolean endAuction(final int auctionId) {
-//        preparedStatement =  Database.getConnection().prepareStatement("UPDATE Auctions SET `Status` = 'CLOSED' WHERE ID = ?");
-//        preparedStatement.setInt(1, auctionId);
-        return false;
-
+        return 1 == Database.setData(query, new String[] { Integer.toString(auctionId) }, false);
     }
 
     public Auction getAuctionFromResultSet(final ResultSet resultSet, final AuctionLoadingType auctionLoadingType) throws SQLException, IOException, ClassNotFoundException {
@@ -117,7 +132,7 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     private ArrayList<Image> getImagesForAuctionWithId(final AuctionLoadingType auctionLoadingType, final int auctionId) throws SQLException, IOException, ClassNotFoundException {
-        ArrayList<Image> images = new ArrayList<>();
+        final ArrayList<Image> images = new ArrayList<>();
         String query = "SELECT image FROM MyAuctions.Image i INNER JOIN MyAuctions.Auction a ON " +
                 "a.id = i.auction_id WHERE i.auction_id = ?";
 
