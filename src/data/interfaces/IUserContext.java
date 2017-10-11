@@ -6,7 +6,8 @@ import models.User;
 
 public interface IUserContext {
 
-    String[] getSaltAndHash(String username);
-    boolean setPhoto(Profile profile, Image photo);
-    User getUserByUsername(String username);
+    boolean registerUser(final String username, final String password, final String salt, final String email, final String name);
+    String[] getSaltAndHash(final String username);
+    boolean setPhoto(final Profile profile, final Image photo);
+    User getUserByUsername(final String username);
 }

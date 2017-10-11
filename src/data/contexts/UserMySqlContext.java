@@ -6,14 +6,18 @@ import models.Profile;
 import models.User;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import utilities.database.Database;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserMySqlContext implements IUserContext {
 
     @Override
-    public String[] getSaltAndHash(String username) {
+    public boolean registerUser(final String username, final String password, final String salt, final String email, final String name){
+        return 1 == Database.setData("INSERT INTO Account (`Username`, `Password`, `Salt`, `Email`, `Name`) values (?, ?, ?, ?, ?)", new String[] { username, password, salt, email, name }, false);
+    }
+
+    @Override
+    public String[] getSaltAndHash(final String username) {
         ResultSet resultSet = Database.getData("SELECT salt, password FROM Account WHERE username = ?", new String[] { username });
 
         try{
@@ -32,12 +36,12 @@ public class UserMySqlContext implements IUserContext {
     }
 
     @Override
-    public boolean setPhoto(Profile profile, Image photo) {
+    public boolean setPhoto(final Profile profile, final Image photo) {
         throw new NotImplementedException();
     }
 
     @Override
-    public User getUserByUsername(String username) {
+    public User getUserByUsername(final String username) {
         User currentUser = null;
 
         try {
