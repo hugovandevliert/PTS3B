@@ -106,7 +106,6 @@ public class Database {
                 for (int i = 0; i < values.length; i++){
                     final int index = i + 1;
 
-                    //Todo: Check if it's a boolean.
                     if (isDouble(values[i])){
                         preparedStatement.setDouble(index, Double.parseDouble(values[i]));
                     }
@@ -153,7 +152,6 @@ public class Database {
                 for (int i = 0; i < values.length; i++){
                     index += 1;
 
-                    //Todo: Check if it's a boolean.
                     if (isDouble(values[i])){
                         preparedStatement.setDouble(index, Double.parseDouble(values[i]));
                     }
