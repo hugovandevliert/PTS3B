@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import utilities.database.Database;
 import utilities.enums.AlertType;
 import java.io.IOException;
 import java.net.URL;
@@ -83,6 +84,7 @@ public class MenuController implements Initializable {
     }
 
     public void closeApplication(MouseEvent mouseEvent) {
+        Database.closeConnection();
         System.exit(0);
     }
 

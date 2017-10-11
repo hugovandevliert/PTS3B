@@ -15,6 +15,7 @@ public class Database {
 
     private static String server, username, password;
     private static SimpleDateFormat  dateFormatter = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");
+    private static Connection connection;
 
     public static Connection getConnection() {
         try {
@@ -30,7 +31,10 @@ public class Database {
                 password = properties.getProperty("password");
             }
 
-            return DriverManager.getConnection("jdbc:mysql://" + server + ":3306/MyAuctions", username, password);
+            if (connection == null){
+                connection = DriverManager.getConnection("jdbc:mysql://" + server + ":3306/MyAuctions", username, password);
+            }
+            return connection;
         } catch (IOException ex) {
             ex.printStackTrace();
         } catch (SQLException ex){
@@ -208,11 +212,19 @@ public class Database {
             callableStatement.execute();
             updateCount = callableStatement.getUpdateCount();
         } catch (SQLException ex){
-            ex.printStackTrace();
+            ex.printStackTrace(); //TODO: proper exception handling
         } catch (ParseException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //TODO: proper exception handling
         }
         return updateCount;
+    }
+
+    public static void closeConnection() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace(); //TODO: proper exception handling
+        }
     }
 
     private static byte[] getSerializedObject(Object object) throws IOException {
