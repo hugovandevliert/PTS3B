@@ -41,7 +41,7 @@ public class Database {
 
     public static ResultSet getData(final String query, final String[] values) {
         try {
-            final Connection connection = Database.getConnection();
+            Connection connection = Database.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
 
             if (values != null && values.length > 0){

@@ -30,6 +30,7 @@
                 </font>
             </JFXPasswordField>
              <JFXButton fx:id="btnLogin" layoutX="350.0" layoutY="441.0" onAction="#login" prefHeight="45.0" prefWidth="300.0" style="-fx-background-color: f2aa78;" text="Login" textFill="#824923" />
+            <JFXButton fx:id="btnRegister" layoutX="350.0" layoutY="492.0" onAction="#register" prefHeight="45.0" prefWidth="300.0" style="-fx-background-color: f2aa78;" text="Register" textFill="#824923" />
          </children>
       </Pane>
    </children>

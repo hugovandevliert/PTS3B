@@ -37,4 +37,8 @@ public class LoginController extends MenuController {
             System.out.println("Incorrect login credentials!");
         }
     }
+
+    public void register() {
+
+    }
 }

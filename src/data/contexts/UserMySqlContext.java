@@ -14,7 +14,7 @@ public class UserMySqlContext implements IUserContext {
 
     @Override
     public String[] getSaltAndHash(String username) {
-        ResultSet resultSet = Database.getData("SELECT salt, password FROM Account WHERE username = ?", new String[] {username});
+        ResultSet resultSet = Database.getData("SELECT salt, password FROM Account WHERE username = ?", new String[] { username });
 
         try{
             if (resultSet.next()){
@@ -25,6 +25,7 @@ public class UserMySqlContext implements IUserContext {
             return null;
         }
         catch (SQLException ex){
+            ex.printStackTrace();
             //TODO: Proper error handling
             return null;
         }
