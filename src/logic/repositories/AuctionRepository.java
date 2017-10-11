@@ -28,6 +28,10 @@ public class AuctionRepository {
         return context.addAuction(auction);
     }
 
+    public boolean addBid(double amount, int accountId, int auctionId) {
+        return context.addBid(amount, accountId, auctionId);
+    }
+
     public boolean manuallyEndAuction(final int auctionId) {
         return context.manuallyEndAuction(auctionId);
     }

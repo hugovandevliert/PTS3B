@@ -139,6 +139,7 @@ public class AuctionController extends MenuController {
         try {
             if (!auctionRepository.auctionIsClosed(this.auctionId)){
                 final String bidPriceString = txtBid.getText();
+                txtBid.setText("");
 
                 if (bidPriceString != null && bidPriceString.length() > 0 && !bidPriceString.isEmpty() && Database.isDouble(bidPriceString)){
                     final double bidAmount = Double.parseDouble(bidPriceString);
@@ -152,12 +153,14 @@ public class AuctionController extends MenuController {
                     }
 
                     if (amountIsHighEnough(bidAmount, minimumNeededAmount)){
-                        System.out.println("yes");
+                        if (auctionRepository.addBid(bidAmount, currenteUserId, auctionId)){
+                            System.out.println("Successfully placed bid!"); //TODO: show this with a User Alert
+                        }else{
+                            System.out.println("Placing the bid wasn't successfull!"); //TODO: show this with a User Alert
+                        }
                     }else{
                         System.out.println("Your bid is not high enough, it should atleast be €" + minimumNeededAmount); //TODO: show htis with a User Alert
                     }
-
-                    //TODO: bid ook echt toevoegen --> context hier ook nog voor toeveogen --> maak gebruik van this.currentUserId in deze klasse
                 }else{
                     System.out.println("Please fill in a valid bid!"); //TODO: show this with a User Alert
                 }

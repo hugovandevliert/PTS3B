@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,6 +90,19 @@ public class AuctionMySqlContext implements IAuctionContext {
         return result == 1 && addAuctionImages(auction.getImages(), resultSet.getInt("id"));
     }
 
+    @Override
+    public boolean addBid(double amount, int accountId, int auctionId) {
+        final String query = "INSERT INTO MyAuctions.Bid (amount, date, account_id, auction_id) " +
+                             "VALUES (?, ?, ?, ?);";
+
+        return 1 == Database.setData(query, new String[]
+                {
+                    String.valueOf(amount),
+                    String.valueOf(LocalDateTime.now().toLocalDate() + " " + LocalDateTime.now().toLocalTime()),
+                    String.valueOf(accountId), String.valueOf(auctionId)
+                }, true);
+    }
+
     public boolean addAuctionImages(final List<Image> images, final int auctionID) {
         final String query = "INSERT INTO Image (`image`, `auction_id`) (?, ?)";
         int resultCorrect = 0;
@@ -147,7 +161,7 @@ public class AuctionMySqlContext implements IAuctionContext {
                                 getImagesForAuctionWithId(auctionLoadingType, resultSet.getInt("id")),
                                 bidRepository.getBids(resultSet.getInt("id")),
                                 resultSet.getDouble("minimum"),
-                                resultSet.getDouble("incrementation")
+                                resultSet.getDouble("minIncrementation")
                         );
             case FOR_COUNTDOWN_TIMER:
                 return new Auction

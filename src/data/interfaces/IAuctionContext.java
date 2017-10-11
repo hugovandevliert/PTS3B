@@ -12,6 +12,7 @@ public interface IAuctionContext {
     ArrayList<Auction> getAuctionsForSearchTerm(final String searchTerm) throws SQLException, IOException, ClassNotFoundException;
     Auction getAuctionForId(final int auctionId, final AuctionLoadingType auctionLoadingType) throws SQLException, IOException, ClassNotFoundException;
     boolean addAuction(final Auction auction) throws SQLException;
+    boolean addBid(final double amount, final int accountId, final int auctionId);
     boolean manuallyEndAuction(final int auctionId);
     boolean auctionIsClosed(final int auctionId) throws SQLException;
 }

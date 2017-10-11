@@ -33,7 +33,7 @@ public class BidMySqlContext implements IBidContext {
 
     @Override
     public Bid getMostRecentBidForAuctionWithId(int auctionId) throws SQLException {
-        final String query = "SELECT amount FROM MyAuctions.Bid WHERE auction_id = ? LIMIT 1";
+        final String query = "SELECT amount FROM MyAuctions.Bid WHERE auction_id = ? ORDER BY amount DESC LIMIT 1";
         final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
 
         if (resultSet != null){

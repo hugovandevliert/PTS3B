@@ -59,7 +59,7 @@
                           <Font name="Segoe UI Light" size="14.0" />
                       </font>
                   </JFXButton>
-                  <JFXTextField fx:id="txtBid" alignment="BOTTOM_CENTER" focusColor="#747e8c" prefHeight="48.0" prefWidth="346.0" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #a6b5c9;" unFocusColor="#242e3b">
+                  <JFXTextField fx:id="txtBid" alignment="BOTTOM_CENTER" focusColor="#747e8c" onAction="#placeNewBid" prefHeight="48.0" prefWidth="346.0" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #a6b5c9;" unFocusColor="#242e3b">
                      <font>
                         <Font name="Segoe UI Light" size="24.0" />
                      </font>
