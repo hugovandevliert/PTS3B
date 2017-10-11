@@ -71,7 +71,7 @@ public class AuctionController extends MenuController {
     public void setTimer(final String timer) { lblTimer.setText(timer); }
 
     public void initializeBidsLoadingTimer(final List<Bid> bids, final int auctionId, final double startBid) {
-        auctionCountdown = new Timer();
-        auctionCountdown.schedule(new AuctionBidsLoadingTimer(this, bids, auctionId, startBid), 1000, 500);
+        bidsLoadingTimer = new Timer();
+        bidsLoadingTimer.schedule(new AuctionBidsLoadingTimer(this, bids, auctionId, startBid), 1000, 500);
     }
 }

@@ -220,10 +220,12 @@ public class Database {
     }
 
     public static void closeConnection() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace(); //TODO: proper exception handling
+        if (connection != null){
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace(); //TODO: proper exception handling
+            }
         }
     }
 
