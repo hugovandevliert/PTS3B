@@ -7,7 +7,10 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Properties;
 
 @SuppressWarnings("Duplicates")
@@ -102,6 +105,7 @@ public class Database {
                 for (int i = 0; i < values.length; i++){
                     final int index = i + 1;
 
+                    //Todo: Check if it's a boolean.
                     if (isDouble(values[i])){
                         preparedStatement.setDouble(index, Double.parseDouble(values[i]));
                     }
@@ -145,6 +149,7 @@ public class Database {
                 for (int i = 0; i < values.length; i++){
                     index += 1;
 
+                    //Todo: Check if it's a boolean.
                     if (isDouble(values[i])){
                         preparedStatement.setDouble(index, Double.parseDouble(values[i]));
                     }
@@ -256,9 +261,9 @@ public class Database {
 
     private static boolean isDate(String value) {
         try {
-            dateFormatter.parse(value);
+            LocalDateTime.parse(value);
             return true;
-        } catch (ParseException e) {
+        } catch (DateTimeParseException e) {
             return false;
         }
     }

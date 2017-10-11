@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 public interface IAuctionContext {
 
-    ArrayList<Auction> getAuctionsForSearchTerm(String searchTerm) throws SQLException, IOException, ClassNotFoundException;
-    Auction getAuctionForId(int auctionId) throws SQLException, IOException, ClassNotFoundException;
-    boolean addAuction(Profile profile, Auction auction);
-    boolean setStatus(Status status, int auctionId);
-    boolean endAuction(int auctionId);
+    ArrayList<Auction> getAuctionsForSearchTerm(final String searchTerm) throws SQLException, IOException, ClassNotFoundException;
+    Auction getAuctionForId(final int auctionId) throws SQLException, IOException, ClassNotFoundException;
+    boolean addAuction(final Auction auction) throws SQLException;
+    boolean setStatus(final Status status, int auctionId);
+    boolean endAuction(final int auctionId);
 }

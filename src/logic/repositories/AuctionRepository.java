@@ -11,29 +11,29 @@ import java.util.ArrayList;
 
 public class AuctionRepository {
 
-    private IAuctionContext context;
+    final private IAuctionContext context;
 
-    public AuctionRepository(IAuctionContext context) {
+    public AuctionRepository(final IAuctionContext context) {
         this.context = context;
     }
 
-    public ArrayList<Auction> getAuctionsForSearchTerm(String searchTerm) throws SQLException, IOException, ClassNotFoundException {
+    public ArrayList<Auction> getAuctionsForSearchTerm(final String searchTerm) throws SQLException, IOException, ClassNotFoundException {
         return context.getAuctionsForSearchTerm(searchTerm);
     }
 
-    public Auction getAuctionForId(int auctionId) throws SQLException, IOException, ClassNotFoundException {
+    public Auction getAuctionForId(final int auctionId) throws SQLException, IOException, ClassNotFoundException {
         return context.getAuctionForId(auctionId);
     }
 
-    public boolean addAuction(Profile profile, Auction auction) {
-        return context.addAuction(profile, auction);
+    public boolean addAuction(final Auction auction) throws SQLException {
+        return context.addAuction(auction);
     }
 
-    public boolean setStatus(Status status, int auctionId) {
+    public boolean setStatus(final Status status, final int auctionId) {
         return context.setStatus(status, auctionId);
     }
 
-    public boolean endAuction(int auctionId) {
+    public boolean endAuction(final int auctionId) {
         return context.endAuction(auctionId);
     }
 }

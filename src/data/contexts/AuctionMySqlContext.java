@@ -6,26 +6,19 @@ import logic.algorithms.ImageConverter;
 import logic.repositories.BidRepository;
 import logic.repositories.ProfileRepository;
 import models.Auction;
-import models.Profile;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import utilities.database.Database;
 import utilities.enums.AuctionLoadingType;
 import utilities.enums.Status;
 
-import javax.print.attribute.standard.DateTimeAtCompleted;
 import java.io.*;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class AuctionMySqlContext implements IAuctionContext {
 
-    private ImageConverter imageConverter;
-
-    private ProfileRepository profileRepository;
-    private BidRepository bidRepository;
+    final private ImageConverter imageConverter;
+    final private ProfileRepository profileRepository;
+    final private BidRepository bidRepository;
 
     public AuctionMySqlContext() {
         imageConverter = new ImageConverter();
@@ -36,12 +29,12 @@ public class AuctionMySqlContext implements IAuctionContext {
     @Override
     public ArrayList<Auction> getAuctionsForSearchTerm(final String searchTerm) throws SQLException, IOException, ClassNotFoundException {
         final String query = "SELECT * FROM MyAuctions.Auction WHERE Auction.status = 'OPEN' " +
-                       "AND Auction.endDate > curdate() AND Auction.title LIKE ?;";
+                "AND Auction.endDate > curdate() AND Auction.title LIKE ?;";
         final ResultSet resultSet = Database.getDataForSearchTerm(query, searchTerm);
         final ArrayList<Auction> auctions = new ArrayList<>();
 
-        if (resultSet != null){
-            while (resultSet.next()){
+        if (resultSet != null) {
+            while (resultSet.next()) {
                 auctions.add(getAuctionFromResultSet(resultSet, AuctionLoadingType.FOR_LISTED_AUCTIONS));
             }
         }
@@ -49,12 +42,12 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     @Override
-    public Auction getAuctionForId(int auctionId) throws SQLException, IOException, ClassNotFoundException {
+    public Auction getAuctionForId(final int auctionId) throws SQLException, IOException, ClassNotFoundException {
         final String query = "SELECT * FROM MyAuctions.Auction WHERE id = ?;";
-        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
+        final ResultSet resultSet = Database.getData(query, new String[]{String.valueOf(auctionId)});
 
-        if (resultSet != null){
-            if (resultSet.next()){
+        if (resultSet != null) {
+            if (resultSet.next()) {
                 return getAuctionFromResultSet(resultSet, AuctionLoadingType.FOR_AUCTION_PAGE);
             }
         }
@@ -62,18 +55,20 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     @Override
-    public boolean addAuction(final Profile profile, final Auction auction) {
-//        preparedStatement =  Database.getConnection().prepareStatement("INSERT INTO Auction (Title, StartingBid, Minimum, CreationDate, OpeningDate, EndDate, `Status`, isPremium, Creator_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-//        preparedStatement.setString(1, auction.getTitle());
-//        preparedStatement.setDouble(2, auction.getStartBid());
-//        preparedStatement.setString(3, auction.getMinimum());
-//        preparedStatement.setDate(4, auction.getCreationDate());
-//        preparedStatement.setDate(5, auction.getOpeningDate());
-//        preparedStatement.setDate(6, auction.getExpirationDate());
-//        preparedStatement.setString(7, auction.getStatus());
-//        preparedStatement.setBoolean(8, auction.isPremium());
-//        preparedStatement.setInt(9, profile.getProfileId());
-        return false;
+    public boolean addAuction(final Auction auction) throws SQLException {
+        Database.setData("INSERT INTO Auction (Title, Description, StartingBid, Minimum, CreationDate, OpeningDate, EndDate, `Status`, isPremium, Creator_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", new String[] {
+                auction.getTitle(),
+                auction.getDescription(),
+                String.valueOf(auction.getStartBid()),
+                String.valueOf(auction.getMinimum()),
+                auction.getCreationDate().toString(),
+                auction.getOpeningDate().toString(),
+                auction.getExpirationDate().toString(),
+                auction.getStatus().toString(),
+                String.valueOf(auction.isPremium()),
+                String.valueOf(auction.getCreator().getProfileId())
+        }, false);
+        return true;
     }
 
     @Override
@@ -94,7 +89,7 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     public Auction getAuctionFromResultSet(final ResultSet resultSet, final AuctionLoadingType auctionLoadingType) throws SQLException, IOException, ClassNotFoundException {
-        switch(auctionLoadingType){
+        switch (auctionLoadingType) {
             case FOR_LISTED_AUCTIONS:
                 return new Auction
                         (
@@ -124,13 +119,13 @@ public class AuctionMySqlContext implements IAuctionContext {
     private ArrayList<Image> getImagesForAuctionWithId(final AuctionLoadingType auctionLoadingType, final int auctionId) throws SQLException, IOException, ClassNotFoundException {
         ArrayList<Image> images = new ArrayList<>();
         String query = "SELECT image FROM MyAuctions.Image i INNER JOIN MyAuctions.Auction a ON " +
-                       "a.id = i.auction_id WHERE i.auction_id = ?";
+                "a.id = i.auction_id WHERE i.auction_id = ?";
 
         if (auctionLoadingType.equals(AuctionLoadingType.FOR_LISTED_AUCTIONS)) query += "LIMIT 1";
 
-        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
+        final ResultSet resultSet = Database.getData(query, new String[]{String.valueOf(auctionId)});
 
-        while (resultSet.next()){
+        while (resultSet.next()) {
             final InputStream inputStream = resultSet.getBinaryStream("image");
             images.add(imageConverter.getImageFromInputStream(inputStream));
         }

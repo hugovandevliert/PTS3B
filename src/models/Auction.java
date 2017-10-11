@@ -20,8 +20,20 @@ public class Auction {
     private ArrayList<Bid> bids;
     private Profile creator;
 
-
-    //public Auction(String title, String description, double startBid, double minimum, LocalDateTime)
+    //Constructor used for creating a new Auction.
+    public Auction(String title, String description, double startBid, double minimum, LocalDateTime openingDate, LocalDateTime expirationDate, boolean isPremium, Profile creator, ArrayList<Image> images) {
+        this.title = title;
+        this.description = description;
+        this.startBid = startBid;
+        this.minimum = minimum;
+        this.creationDate = LocalDateTime.now();
+        this.openingDate = openingDate;
+        this.expirationDate = expirationDate;
+        this.isPremium = isPremium;
+        this.creator = creator;
+        this.images = images;
+        this.status = Status.OPEN;
+    }
 
     //Constructor used for listed auctions
     public Auction(final int id, final String title, final String description, final double startBid, final ArrayList<Image> images) {
@@ -46,7 +58,9 @@ public class Auction {
         this.bids = bids;
     }
 
-    public double getId() { return id; }
+    public double getId() {
+        return id;
+    }
 
     public double getStartBid() {
         return startBid;
@@ -76,7 +90,9 @@ public class Auction {
         return title;
     }
 
-    public String getDescription() { return description; }
+    public String getDescription() {
+        return description;
+    }
 
     public List<Image> getImages() {
         return Collections.unmodifiableList(images);
@@ -95,7 +111,8 @@ public class Auction {
         this.status = status;
     }
 
-    public void addBid(final double amount, final Profile profile) { }
+    public void addBid(final double amount, final Profile profile) {
+    }
 
     public boolean endAuction() {
         return false;
