@@ -20,13 +20,13 @@
    <children>
       <Pane fx:id="paneContent" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;" GridPane.valignment="TOP">
          <children>
-            <JFXTextField fx:id="txtUsername" alignment="CENTER" focusColor="#747e8c" layoutX="350.0" layoutY="225.0" mouseTransparent="true" prefHeight="25.0" prefWidth="300.0" promptText="username" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #a6b5c9;" unFocusColor="#242e3b">
+            <JFXTextField fx:id="txtUsername" alignment="CENTER" focusColor="#747e8c" layoutX="350.0" layoutY="225.0" prefHeight="25.0" prefWidth="300.0" promptText="username" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599;" unFocusColor="#242e3b">
                <font>
                   <Font name="Segoe UI Light" size="18.0" />
                </font>
             </JFXTextField>
 
-            <JFXPasswordField fx:id="txtPassword" alignment="CENTER" focusColor="#747e8c" layoutX="350.0" layoutY="325.0" onAction="#login" prefHeight="29.0" prefWidth="300.0" promptText="password" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #a6b5c9; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
+            <JFXPasswordField fx:id="txtPassword" alignment="CENTER" focusColor="#747e8c" layoutX="350.0" layoutY="325.0" onAction="#login" prefHeight="29.0" prefWidth="300.0" promptText="password" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
                 <font>
                     <Font name="Segoe UI Light" size="18.0" />
                 </font>

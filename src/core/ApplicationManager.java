@@ -59,7 +59,7 @@ public class ApplicationManager {
         else if (email.length() > 255){
             throw new IllegalArgumentException("Email can not be longer than 255 characters.");
         }
-        else if (validEmailAddressRegex.matcher(email).find()){
+        else if (!validEmailAddressRegex.matcher(email).find()){
             throw new IllegalArgumentException("Email should be a valid email address.");
         }
         else if (name == null || name.length() == 0){

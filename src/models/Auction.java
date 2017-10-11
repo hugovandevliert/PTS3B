@@ -59,7 +59,7 @@ public class Auction {
         this.bids = bids;
     }
 
-    public double getId() { return id; }
+    public int getId() { return id; }
 
     public double getStartBid() {
         return startBid;

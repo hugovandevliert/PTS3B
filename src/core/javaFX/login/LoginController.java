@@ -24,6 +24,7 @@ public class LoginController extends MenuController {
 
     public void login() throws IOException {
         if (txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {
+            //TODO: Actual client side validation
             System.out.println("Please fill in both a username and a password!");
             return;
         }
@@ -35,6 +36,7 @@ public class LoginController extends MenuController {
             Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/profile/profile.fxml"));
             paneContent.getChildren().add(newLoadedPane);
         } else {
+            //TODO: Actual client side validation
             System.out.println("Incorrect login credentials!");
         }
     }

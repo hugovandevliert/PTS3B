@@ -14,7 +14,7 @@ public class UserMySqlContext implements IUserContext {
     public boolean registerUser(final String username, final String password, final String salt, final String email, final String name) {
         final String query = "INSERT INTO Account (`Username`, `Password`, `Salt`, `Email`, `Name`) VALUES (?, ?, ?, ?, ?)";
 
-        return 1 == Database.setData(query, new String[]{username, password, salt, email, name}, false);
+        return 1 == Database.setData(query, new String[]{username, password, salt, email, name}, true);
     }
 
     @Override
