@@ -64,8 +64,16 @@ public class Auction {
         this.title = title;
         this.description = description;
         this.images = images;
+    }
 
-        bids = new ArrayList<Bid>();
+    /**
+     * Constructor used by the AuctionCountdownTimer
+     * @param id The ID of the auction.
+     * @param expirationDate Date/time when the auction is planned to close.
+     */
+    public Auction(final int id, final LocalDateTime expirationDate) {
+        this.id = id;
+        this.expirationDate = expirationDate;
     }
 
     /**

@@ -14,6 +14,7 @@ import logic.repositories.AuctionRepository;
 import models.Auction;
 import models.Profile;
 import models.User;
+import utilities.enums.AuctionLoadingType;
 
 import java.io.IOException;
 import java.net.URL;
@@ -65,7 +66,7 @@ public class ListedAuctionController extends MenuController {
             auctionPane = fxmlLoader.load();
             auctionController = fxmlLoader.getController();
 
-            final Auction auction = auctionRepository.getAuctionForId(getAuctionId());
+            final Auction auction = auctionRepository.getAuctionForId(getAuctionId(), AuctionLoadingType.FOR_AUCTION_PAGE);
 
             if (auction != null){
                 auctionController.setTitle(auction.getTitle());

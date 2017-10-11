@@ -80,7 +80,7 @@ public class AuctionController extends MenuController {
 
         if (countdownInMilliseconds > 0){
             auctionCountdown = new Timer();
-            auctionCountdown.schedule(new AuctionCountdownTimer(expirationDate, this, this.auctionId), 0, 1000);
+            auctionCountdown.schedule(new AuctionCountdownTimer(this, this.auctionId), 0, 1000);
         }else{
             setTimer("This auction has ended!");
         }

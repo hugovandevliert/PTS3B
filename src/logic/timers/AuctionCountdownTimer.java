@@ -4,7 +4,9 @@ import core.javaFX.auction.AuctionController;
 import data.contexts.AuctionMySqlContext;
 import javafx.application.Platform;
 import logic.repositories.AuctionRepository;
+import utilities.enums.AuctionLoadingType;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -21,8 +23,7 @@ public class AuctionCountdownTimer extends TimerTask {
 
     private AuctionRepository auctionRepository;
 
-    public AuctionCountdownTimer(final LocalDateTime expirationDate, final AuctionController auctionController, final int auctionId) {
-        this.expirationDate = expirationDate;
+    public AuctionCountdownTimer(final AuctionController auctionController, final int auctionId) {
         this.auctionController = auctionController;
         this.auctionId = auctionId;
 
@@ -34,6 +35,8 @@ public class AuctionCountdownTimer extends TimerTask {
         try {
             if (!auctionRepository.auctionIsClosed(this.auctionId)){
                 final Date currentDate = new Date();
+                expirationDate = auctionRepository.getAuctionForId(this.auctionId, AuctionLoadingType.FOR_COUNTDOWN_TIMER).getExpirationDate();
+
                 final long differenceInMs = expirationDate.toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli() - currentDate.getTime();
                 String timerStringValue = "";
 
@@ -53,6 +56,10 @@ public class AuctionCountdownTimer extends TimerTask {
                 this.cancel();
             }
         } catch (SQLException e) {
+            e.printStackTrace(); //TODO: proper error handling
+        } catch (IOException e) {
+            e.printStackTrace(); //TODO: proper error handling
+        } catch (ClassNotFoundException e) {
             e.printStackTrace(); //TODO: proper error handling
         }
     }

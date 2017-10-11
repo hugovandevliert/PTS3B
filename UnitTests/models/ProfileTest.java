@@ -7,6 +7,8 @@ import logic.repositories.AuctionRepository;
 import logic.repositories.ProfileRepository;
 import org.junit.Assert;
 import org.junit.Test;
+import utilities.enums.AuctionLoadingType;
+
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -32,7 +34,7 @@ class ProfileTest {
     @Test
     void testAddVisitedAuction() throws SQLException, IOException, ClassNotFoundException {
         Profile profile = applicationManager.login("testusername", "AbC*1f").getProfile();
-        Auction auction = ar.getAuctionForId(1);
+        Auction auction = ar.getAuctionForId(1, AuctionLoadingType.FOR_AUCTION_PAGE);
 
         pr.addVisitedAuction(profile, auction);
 
@@ -42,7 +44,7 @@ class ProfileTest {
     @Test
     void testAddFavoriteAuction() throws SQLException, IOException, ClassNotFoundException {
         Profile profile = applicationManager.login("testusername", "AbC*1f").getProfile();
-        Auction auction = ar.getAuctionForId(1);
+        Auction auction = ar.getAuctionForId(1, AuctionLoadingType.FOR_AUCTION_PAGE);
 
         pr.addFavoriteAuction(profile, auction);
 
@@ -52,7 +54,7 @@ class ProfileTest {
     @Test
     void testRemoveFavoriteAuction() throws SQLException, IOException, ClassNotFoundException {
         Profile profile = applicationManager.login("testusername", "AbC*1f").getProfile();
-        Auction auction = ar.getAuctionForId(1);
+        Auction auction = ar.getAuctionForId(1, AuctionLoadingType.FOR_AUCTION_PAGE);
 
         Assert.assertTrue(profile.getFavoriteAuctions().contains(auction));
 
@@ -116,7 +118,7 @@ class ProfileTest {
     @Test
     void testGetAuctions() throws SQLException, IOException, ClassNotFoundException {
         Profile profile = applicationManager.login("testusername", "AbC*1f").getProfile();
-        Auction auction = ar.getAuctionForId(2);
+        Auction auction = ar.getAuctionForId(2, AuctionLoadingType.FOR_AUCTION_PAGE);
 
         profile.addAuction(auction);
 
@@ -126,7 +128,7 @@ class ProfileTest {
     @Test
     void testGetVisitedAuctions() throws SQLException, IOException, ClassNotFoundException {
         Profile profile = applicationManager.login("testusername", "AbC*1f").getProfile();
-        Auction auction = ar.getAuctionForId(2);
+        Auction auction = ar.getAuctionForId(2, AuctionLoadingType.FOR_AUCTION_PAGE);
 
         profile.addVisitedAuction(auction);
 
@@ -136,7 +138,7 @@ class ProfileTest {
     @Test
     void testGetFavoriteAuctions() throws SQLException, IOException, ClassNotFoundException {
         Profile profile = applicationManager.login("testusername", "AbC*1f").getProfile();
-        Auction auction = ar.getAuctionForId(2);
+        Auction auction = ar.getAuctionForId(2, AuctionLoadingType.FOR_AUCTION_PAGE);
 
         profile.addFavoriteAuction(auction);
 

@@ -43,13 +43,21 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     @Override
-    public Auction getAuctionForId(final int auctionId) throws SQLException, IOException, ClassNotFoundException {
-        final String query = "SELECT * FROM MyAuctions.Auction WHERE id = ?;";
+    public Auction getAuctionForId(final int auctionId, final AuctionLoadingType auctionLoadingType) throws SQLException, IOException, ClassNotFoundException {
+        String query = "";
+
+        if (auctionLoadingType.equals(AuctionLoadingType.FOR_AUCTION_PAGE)){
+            query = "SELECT * FROM MyAuctions.Auction WHERE id = ?;";
+        }
+        else if (auctionLoadingType.equals(AuctionLoadingType.FOR_COUNTDOWN_TIMER)){
+            query = "SELECT id, EndDate FROM MyAuctions.Auction WHERE id = ?;";
+        }
+
         final ResultSet resultSet = Database.getData(query, new String[]{String.valueOf(auctionId)});
 
         if (resultSet != null) {
             if (resultSet.next()) {
-                return getAuctionFromResultSet(resultSet, AuctionLoadingType.FOR_AUCTION_PAGE);
+                return getAuctionFromResultSet(resultSet, auctionLoadingType);
             }
         }
         return null;
@@ -138,6 +146,12 @@ public class AuctionMySqlContext implements IAuctionContext {
                                 profileRepository.getProfileForId(resultSet.getInt("creator_id")),
                                 getImagesForAuctionWithId(auctionLoadingType, resultSet.getInt("id")),
                                 bidRepository.getBids(resultSet.getInt("id"))
+                        );
+            case FOR_COUNTDOWN_TIMER:
+                return new Auction
+                        (
+                                resultSet.getInt("id"),
+                                resultSet.getTimestamp("endDate").toLocalDateTime()
                         );
             default:
                 return null;
