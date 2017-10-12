@@ -23,8 +23,9 @@ class FeedbackTest {
 
     @Test
     void testGetDate() throws SQLException {
-        Feedback feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), new Date(), false, "Testfeedback");
-        assertNotNull(feedback.getDate());
+        Date date = new Date();
+        Feedback feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), date, false, "Testfeedback");
+        assertEquals(date, feedback.getDate(), "Creation date is not working properly.");
     }
 
     @Test

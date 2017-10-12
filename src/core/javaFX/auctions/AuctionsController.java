@@ -56,6 +56,7 @@ public class AuctionsController extends MenuController {
                         listedAuctionController.setTitle(auction.getTitle());
                         listedAuctionController.setDescription(auction.getDescription());
                         listedAuctionController.setCurrentOffer(auction.getStartBid());
+                        listedAuctionController.setAuctionId(auction.getId());
 
                         Image image = new Image("file:" +  new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath());
 
@@ -65,9 +66,6 @@ public class AuctionsController extends MenuController {
                             if (img != null) image = img;
                         }
                         listedAuctionController.setImage(image);
-
-                        listedAuctionController.setId((int) auction.getId());
-                        listedAuctionController.hideAuctionIdLabel();
 
                         vboxListedAuctions.getChildren().add(listedAuctionPane);
                     }

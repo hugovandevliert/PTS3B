@@ -72,6 +72,11 @@ public class Profile {
         auctionRepository.addAuction(auction);
     }
 
+    public void addAuction(Auction auction) throws SQLException {
+        auctions.add(auction);
+        AuctionRepository auctionRepository = new AuctionRepository(new AuctionMySqlContext());
+        auctionRepository.addAuction(auction);
+    }
 
     /**
      * Method for adding an auction to a profile's visited auctions.
@@ -108,6 +113,10 @@ public class Profile {
      * @param message:    Message added to the feedback.
      */
     public void addFeedback(final Profile author, final boolean isPositive, final String message) {
+
+    }
+
+    public void addFeedback(Feedback feedback) {
 
     }
 

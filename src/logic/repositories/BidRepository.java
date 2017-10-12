@@ -16,4 +16,8 @@ public class BidRepository {
     public ArrayList<Bid> getBids(final int auctionId) throws SQLException {
         return context.getBids(auctionId);
     }
+
+    public Bid getMostRecentBidForAuctionWithId(final int auctionId) throws SQLException {
+        return context.getMostRecentBidForAuctionWithId(auctionId);
+    }
 }

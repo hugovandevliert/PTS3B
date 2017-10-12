@@ -13,7 +13,7 @@ import java.util.List;
 public class Auction {
 
     private int id;
-    private double startBid, minimum;
+    private double startBid, minimum, incrementation;
     private boolean isPremium;
     private LocalDateTime expirationDate, openingDate, creationDate;
     private String title, description;
@@ -64,8 +64,16 @@ public class Auction {
         this.title = title;
         this.description = description;
         this.images = images;
+    }
 
-        bids = new ArrayList<Bid>();
+    /**
+     * Constructor used by the AuctionCountdownTimer
+     * @param id The ID of the auction.
+     * @param expirationDate Date/time when the auction is planned to close.
+     */
+    public Auction(final int id, final LocalDateTime expirationDate) {
+        this.id = id;
+        this.expirationDate = expirationDate;
     }
 
     /**
@@ -79,7 +87,7 @@ public class Auction {
      * @param images: All images added to the auction.
      * @param bids: All bids placed on the auction.
      **/
-    public Auction(final int id, final String title, final String description, final double startBid, final LocalDateTime expirationDate, final Profile creator, final ArrayList<Image> images, final ArrayList<Bid> bids) {
+    public Auction(final int id, final String title, final String description, final double startBid, final LocalDateTime expirationDate, final Profile creator, final ArrayList<Image> images, final ArrayList<Bid> bids, final double minimum, final double incrementation) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -88,6 +96,8 @@ public class Auction {
         this.creator = creator;
         this.images = images;
         this.bids = bids;
+        this.minimum = minimum;
+        this.incrementation = incrementation;
     }
 
     /**
@@ -113,6 +123,13 @@ public class Auction {
     public double getMinimum() {
         return minimum;
     }
+
+    /**
+     * Method to get the incrementation amount of this auction
+     * The incrementation amount is the amount that is atleast needed on top of the most recent bid
+     * @return Returns the minimum incrementation value of this auction
+     */
+    public double getIncrementation() { return incrementation; }
 
     /**
      * Method to check if this auction is a premium auction.

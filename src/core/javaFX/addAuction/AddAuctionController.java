@@ -18,6 +18,7 @@ public class AddAuctionController extends MenuController {
     }
 
     public void createAuction() {
+
     }
 
     private boolean validate(String text)

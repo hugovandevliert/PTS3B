@@ -250,19 +250,19 @@ public class Database {
         return byteArrayOutputStream.toByteArray();
     }
 
-    private static boolean isBoolean(String value) {
-        value = value.toLowerCase();
-
-        return value.equals("true") || value.equals("false");
-    }
-
-    private static boolean isDouble(final String value) {
+    public static boolean isDouble(final String value) {
         try {
             Double.parseDouble(value);
             return true;
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    private static boolean isBoolean(String value) {
+        value = value.toLowerCase();
+
+        return value.equals("true") || value.equals("false");
     }
 
     private static boolean isInteger(final String value) {

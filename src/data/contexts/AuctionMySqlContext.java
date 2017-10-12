@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,13 +44,21 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     @Override
-    public Auction getAuctionForId(final int auctionId) throws SQLException, IOException, ClassNotFoundException {
-        final String query = "SELECT * FROM MyAuctions.Auction WHERE id = ?;";
+    public Auction getAuctionForId(final int auctionId, final AuctionLoadingType auctionLoadingType) throws SQLException, IOException, ClassNotFoundException {
+        String query = "";
+
+        if (auctionLoadingType.equals(AuctionLoadingType.FOR_AUCTION_PAGE)){
+            query = "SELECT * FROM MyAuctions.Auction WHERE id = ?;";
+        }
+        else if (auctionLoadingType.equals(AuctionLoadingType.FOR_COUNTDOWN_TIMER)){
+            query = "SELECT id, EndDate FROM MyAuctions.Auction WHERE id = ?;";
+        }
+
         final ResultSet resultSet = Database.getData(query, new String[]{String.valueOf(auctionId)});
 
         if (resultSet != null) {
             if (resultSet.next()) {
-                return getAuctionFromResultSet(resultSet, AuctionLoadingType.FOR_AUCTION_PAGE);
+                return getAuctionFromResultSet(resultSet, auctionLoadingType);
             }
         }
         return null;
@@ -81,6 +90,19 @@ public class AuctionMySqlContext implements IAuctionContext {
         return result == 1 && addAuctionImages(auction.getImages(), resultSet.getInt("id"));
     }
 
+    @Override
+    public boolean addBid(double amount, int accountId, int auctionId) {
+        final String query = "INSERT INTO MyAuctions.Bid (amount, date, account_id, auction_id) " +
+                             "VALUES (?, ?, ?, ?);";
+
+        return 1 == Database.setData(query, new String[]
+                {
+                    String.valueOf(amount),
+                    String.valueOf(LocalDateTime.now().toLocalDate() + " " + LocalDateTime.now().toLocalTime()),
+                    String.valueOf(accountId), String.valueOf(auctionId)
+                }, true);
+    }
+
     public boolean addAuctionImages(final List<Image> images, final int auctionID) {
         final String query = "INSERT INTO Image (`image`, `auction_id`) (?, ?)";
         int resultCorrect = 0;
@@ -100,7 +122,20 @@ public class AuctionMySqlContext implements IAuctionContext {
     public boolean manuallyEndAuction(final int auctionId) {
         final String query = "UPDATE Auction SET `status` = 'CLOSED' WHERE `ID` = ?";
 
-        return 1 == Database.setData(query, new String[] { Integer.toString(auctionId) }, false);
+        return 1 == Database.setData(query, new String[] { Integer.toString(auctionId) }, true);
+    }
+
+    @Override
+    public boolean auctionIsClosed(int auctionId) throws SQLException {
+        final String query = "SELECT status FROM MyAuctions.Auction WHERE id = ?;";
+        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
+
+        if (resultSet != null){
+            if (resultSet.next()){
+                return resultSet.getString("status").trim().equals("CLOSED");
+            }
+        }
+        return false;
     }
 
     public Auction getAuctionFromResultSet(final ResultSet resultSet, final AuctionLoadingType auctionLoadingType) throws SQLException, IOException, ClassNotFoundException {
@@ -124,7 +159,15 @@ public class AuctionMySqlContext implements IAuctionContext {
                                 resultSet.getTimestamp("endDate").toLocalDateTime(),
                                 profileRepository.getProfileForId(resultSet.getInt("creator_id")),
                                 getImagesForAuctionWithId(auctionLoadingType, resultSet.getInt("id")),
-                                bidRepository.getBids(resultSet.getInt("id"))
+                                bidRepository.getBids(resultSet.getInt("id")),
+                                resultSet.getDouble("minimum"),
+                                resultSet.getDouble("minIncrementation")
+                        );
+            case FOR_COUNTDOWN_TIMER:
+                return new Auction
+                        (
+                                resultSet.getInt("id"),
+                                resultSet.getTimestamp("endDate").toLocalDateTime()
                         );
             default:
                 return null;

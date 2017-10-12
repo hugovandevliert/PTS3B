@@ -4,6 +4,8 @@ import data.interfaces.IBidContext;
 import logic.repositories.ProfileRepository;
 import models.Bid;
 import utilities.database.Database;
+import utilities.enums.BidLoadingType;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,18 +25,41 @@ public class BidMySqlContext implements IBidContext {
 
         if (resultSet != null){
             while (resultSet.next()){
-                bids.add(getBidFromResultSet(resultSet));
+                bids.add(getBidFromResultSet(resultSet, BidLoadingType.FOR_AUCTION));
             }
         }
         return bids;
     }
 
-    private Bid getBidFromResultSet(final ResultSet resultSet) throws SQLException {
-        return new Bid
-                (
-                        profileRepository.getProfileForId(resultSet.getInt("account_id")),
-                        resultSet.getDouble("amount"),
-                        resultSet.getTimestamp("date").toLocalDateTime()
-                );
+    @Override
+    public Bid getMostRecentBidForAuctionWithId(int auctionId) throws SQLException {
+        final String query = "SELECT amount FROM MyAuctions.Bid WHERE auction_id = ? ORDER BY amount DESC LIMIT 1";
+        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
+
+        if (resultSet != null){
+            if (resultSet.next()){
+                return getBidFromResultSet(resultSet, BidLoadingType.FOR_MOST_RECENT_BID);
+            }
+        }
+        return null;
+    }
+
+    private Bid getBidFromResultSet(final ResultSet resultSet, final BidLoadingType bidLoadingType) throws SQLException {
+        switch(bidLoadingType){
+            case FOR_AUCTION:
+                return new Bid
+                        (
+                                profileRepository.getProfileForId(resultSet.getInt("account_id")),
+                                resultSet.getDouble("amount"),
+                                resultSet.getTimestamp("date").toLocalDateTime()
+                        );
+            case FOR_MOST_RECENT_BID:
+                return new Bid
+                        (
+                          resultSet.getDouble("amount")
+                        );
+                default:
+                    return null;
+        }
     }
 }
