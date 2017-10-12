@@ -5,10 +5,12 @@ import com.jfoenix.controls.JFXTextField;
 import core.javaFX.menu.MenuController;
 import data.contexts.AuctionMySqlContext;
 import data.contexts.BidMySqlContext;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -85,7 +87,6 @@ public class AuctionController extends MenuController {
                 imgviewPicture3.setImage(placeholderImage);
             }
         }
-        //TODO: set the selected image and fill the other imageviews with either placeholder images or the actual corresponding images
     }
 
     public void setBids(final List<Bid> bids, final double startBid) {
@@ -198,6 +199,14 @@ public class AuctionController extends MenuController {
         } catch (SQLException e){
             e.printStackTrace(); //TODO: proper error handling
         }
+    }
+
+    public void changeSelectedImage(final MouseEvent event) {
+        final ImageView clickedImageView = (ImageView)event.getSource();
+        final Image previousSelectedPicture = imgviewSelectedPicture.getImage();
+
+        imgviewSelectedPicture.setImage(clickedImageView.getImage());
+        clickedImageView.setImage(previousSelectedPicture);
     }
 
     private boolean amountIsHighEnough(final double bidAmount, final double minimumNeededAmount) {
