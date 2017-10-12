@@ -185,7 +185,7 @@ public class AuctionMySqlContext implements IAuctionContext {
 
         while (resultSet.next()) {
             final InputStream inputStream = resultSet.getBinaryStream("image");
-            images.add(imageConverter.getImageFromInputStream(inputStream));
+            images.add(imageConverter.getImageFromInputStream(inputStream, auctionLoadingType));
         }
         return images;
     }

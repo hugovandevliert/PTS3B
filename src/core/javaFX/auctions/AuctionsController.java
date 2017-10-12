@@ -58,7 +58,7 @@ public class AuctionsController extends MenuController {
                         listedAuctionController.setCurrentOffer(auction.getStartBid());
                         listedAuctionController.setAuctionId(auction.getId());
 
-                        Image image = new Image("file:" +  new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath());
+                        Image image = new Image("file:" +  new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath(), 200, 150, false, false);
 
                         if (auction.getImages().size() > 0){
                             final Image img = auction.getImages().get(0);
