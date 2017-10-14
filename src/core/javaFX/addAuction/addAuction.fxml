@@ -3,13 +3,14 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
+<?import javafx.scene.Cursor?>
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.addAuction.AddAuctionController">
     <columnConstraints>
         <ColumnConstraints />
@@ -20,25 +21,38 @@
     <children>
           <Pane fx:id="paneContent" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;">
          <children>
-             <JFXTextField fx:id="txtTitle" alignment="CENTER" focusColor="#747e8c" layoutX="280.0" layoutY="250.0" prefHeight="35.0" prefWidth="465.0" promptText="title" style="-fx-text-fill: #788599; -fx-prompt-text-fill: #a6b5c9; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
+             <ImageView fx:id="imgviewPicture1" fitHeight="206.0" fitWidth="275.0" layoutX="25.0" layoutY="44.0" onMouseClicked="#addImage" pickOnBounds="true" preserveRatio="true" >
+                 <cursor>
+                     <Cursor fx:constant="HAND" />
+                 </cursor>
+             </ImageView>
+             <ImageView fx:id="imgviewPicture2" fitHeight="206.0" fitWidth="275.0" layoutX="375.0" layoutY="44.0" onMouseClicked="#addImage" pickOnBounds="true" preserveRatio="true" >
+                 <cursor>
+                     <Cursor fx:constant="HAND" />
+                 </cursor>
+             </ImageView>
+             <ImageView fx:id="imgviewPicture3" fitHeight="206.0" fitWidth="275.0" layoutX="700.0" layoutY="44.0" onMouseClicked="#addImage" pickOnBounds="true" preserveRatio="true" >
+                 <cursor>
+                     <Cursor fx:constant="HAND" />
+                 </cursor>
+             </ImageView>
+             
+             <JFXTextField fx:id="txtTitle" alignment="CENTER" focusColor="#747e8c" layoutX="280.0" layoutY="270.0" prefHeight="35.0" prefWidth="465.0" promptText="title" style="-fx-text-fill: #788599; -fx-prompt-text-fill: #a6b5c9; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
                  <font>
                      <Font name="Segoe UI Light" size="18.0" />
                  </font>
              </JFXTextField>
 
+             <JFXDatePicker defaultColor="#788599" layoutX="286.0" layoutY="565.0" prefHeight="25.0" prefWidth="465.0" promptText="end date" style="-fx-text-fill: #a6b5c9; -fx-background-color: #3d4857; -fx-prompt-text-fill: #788599;" />
+
             <JFXButton layoutX="350.0" layoutY="671.0" onAction="#createAuction" prefHeight="45.0" prefWidth="300.0" style="-fx-background-color: f2aa78;" text="Create auction" textFill="#824923">
                 <font>
                     <Font name="Segoe UI Light" size="14.0" />
                 </font>
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
             </JFXButton>
-
-            <Text fill="#747e8c" layoutX="150.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="725.2255859375">
-                <font>
-                    <Font name="Segoe UI Light" size="18.0" />
-                </font>
-            </Text>
-
-             <JFXDatePicker defaultColor="#788599" layoutX="286.0" layoutY="565.0" prefHeight="25.0" prefWidth="465.0" style="-fx-text-fill: #a6b5c9; -fx-background-color: #3d4857; -fx-prompt-text-fill: #788599;" />
          </children>
       </Pane>
     </children>

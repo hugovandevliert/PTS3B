@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.Cursor?>
 <GridPane hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.register.RegisterController">
     <columnConstraints>
         <ColumnConstraints />
@@ -61,12 +62,18 @@
                 <font>
                     <Font name="Segoe UI Light" size="14.0" />
                 </font>
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
             </JFXButton>
 
             <JFXButton fx:id="btnRegister" layoutX="350.0" layoutY="550.0" onAction="#register" prefHeight="45.0" prefWidth="300.0" style="-fx-background-color: f2aa78;" text="Register" textFill="#824923" >
                 <font>
                     <Font name="Segoe UI Light" size="14.0" />
                 </font>
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
             </JFXButton>
 
             <Label layoutX="364.0" layoutY="76.0" style="-fx-text-fill: #a6b5c9" text="Create your account">

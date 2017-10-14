@@ -20,7 +20,8 @@
              <Label layoutX="323.0" layoutY="233.0" text="Favorites page">
                  <font>
                      <Font size="96.0" />
-                 </font></Label>
+                 </font>
+             </Label>
          </children>
       </Pane>
     </children>

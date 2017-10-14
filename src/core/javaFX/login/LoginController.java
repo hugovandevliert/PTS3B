@@ -14,10 +14,8 @@ import java.util.ResourceBundle;
 
 public class LoginController extends MenuController {
 
-    @FXML
-    private JFXTextField txtUsername;
-    @FXML
-    private JFXPasswordField txtPassword;
+    @FXML private JFXTextField txtUsername;
+    @FXML private JFXPasswordField txtPassword;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

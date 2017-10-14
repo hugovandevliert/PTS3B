@@ -24,10 +24,26 @@
                </children></Pane>
                 <Pane fx:id="paneMenu" prefHeight="750.0" prefWidth="250.0" style="-fx-background-color: #242e3b;">
                     <children>
-                        <ImageView fx:id="imgviewProfile" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="200.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="imgviewAuctions" fitHeight="36.0" fitWidth="36.0" layoutX="109.0" layoutY="300.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="imgviewFavorites" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="400.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="imgviewAddAuction" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="500.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="imgviewProfile" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="200.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" >
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </ImageView>
+                        <ImageView fx:id="imgviewAuctions" fitHeight="36.0" fitWidth="36.0" layoutX="109.0" layoutY="300.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" >
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </ImageView>
+                        <ImageView fx:id="imgviewFavorites" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="400.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" >
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </ImageView>
+                        <ImageView fx:id="imgviewAddAuction" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="500.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" >
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </ImageView>
                     </children>
             </Pane>
                 <Pane fx:id="paneAlert" layoutX="315.0" prefHeight="45.0" prefWidth="870.0">
@@ -39,7 +55,7 @@
                         <Font size="30.0" />
                     </font>
                     <cursor>
-                        <Cursor fx:constant="OPEN_HAND" />
+                        <Cursor fx:constant="HAND" />
                     </cursor>
                 </Label>
             </children>
