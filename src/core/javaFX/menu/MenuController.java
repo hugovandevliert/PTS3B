@@ -47,6 +47,8 @@ public class MenuController implements Initializable {
     private Image favoritesIconHovered;
     private Image addAuctionIconHovered;
 
+    private static String lastCalledClass;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setIcons();
@@ -81,7 +83,7 @@ public class MenuController implements Initializable {
         imgviewAddAuction.setImage(addAuctionIcon);
     }
 
-    public void closeApplication(MouseEvent mouseEvent) {
+    public void closeApplication() {
         Database.closeConnection();
         System.exit(0);
     }
@@ -100,6 +102,8 @@ public class MenuController implements Initializable {
         paneContent.getChildren().clear();
         Pane newLoadedPane;
 
+        lastCalledClass = null; // This is for timer classes; to determine whether or not they should stop themselves because the auctions are not being looked at anymore
+
         if (mouseEvent.getSource() == imgviewProfile){
             newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/profile/profile.fxml"));
         }
@@ -115,7 +119,6 @@ public class MenuController implements Initializable {
         else{
             newLoadedPane = new Pane();
         }
-
 
         paneContent.getChildren().add(newLoadedPane);
     }
@@ -165,6 +168,14 @@ public class MenuController implements Initializable {
 
     public void ClearAlert(){
         Platform.runLater(() -> paneAlert.getChildren().clear());
+    }
+
+    public void setLastCalledClass(final Class classname) {
+        this.lastCalledClass = classname.getSimpleName();
+    }
+
+    public static String getLastCalledClass() {
+        return lastCalledClass;
     }
 }
 

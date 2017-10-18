@@ -43,6 +43,8 @@ public class AuctionController extends MenuController {
     private AuctionRepository auctionRepository;
     private BidRepository bidRepository;
 
+    private MenuController menuController;
+
     private int auctionId, currenteUserId;
     private double auctionMinimumBid, auctionMinimumIncrementation;
 
@@ -125,6 +127,8 @@ public class AuctionController extends MenuController {
         this.auctionMinimumIncrementation = auctionMinimumIncrementation;
     }
 
+    public void setMenuController(MenuController menuController) { this.menuController = menuController; }
+
     public void initializeRepositories() {
         auctionRepository = new AuctionRepository(new AuctionMySqlContext());
         bidRepository = new BidRepository(new BidMySqlContext());
@@ -136,7 +140,7 @@ public class AuctionController extends MenuController {
 
         if (countdownInMilliseconds > 0){
             auctionCountdown = new Timer();
-            auctionCountdown.schedule(new AuctionCountdownTimer(this, this.auctionId), 0, 1000);
+            auctionCountdown.schedule(new AuctionCountdownTimer(this, this.menuController, this.auctionId), 0, 1000);
         }else{
             setTimer("This auction has ended!");
         }
@@ -144,7 +148,7 @@ public class AuctionController extends MenuController {
 
     public void initializeBidsLoadingTimer(final List<Bid> bids, final int auctionId, final double startBid) {
         bidsLoadingTimer = new Timer();
-        bidsLoadingTimer.schedule(new AuctionBidsLoadingTimer(this, bids, auctionId, startBid), 1000, 500);
+        bidsLoadingTimer.schedule(new AuctionBidsLoadingTimer(this, this.menuController, bids, auctionId, startBid), 1000, 500);
     }
 
     public void disablePlaceBidPane() {

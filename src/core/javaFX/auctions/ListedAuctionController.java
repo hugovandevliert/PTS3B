@@ -80,6 +80,7 @@ public class ListedAuctionController extends MenuController {
                 auctionController.setBidTextfieldPromptText("Your bid: [ atleast + €" + auction.getIncrementation() + " ]");
                 auctionController.setAuctionMinimumBid(auction.getMinimum());
                 auctionController.setAuctionMinimumIncrementation(auction.getIncrementation());
+                auctionController.setMenuController(this.menuController);
                 auctionController.initializeCountdownTimer(auction.getExpirationDate());
                 auctionController.initializeBidsLoadingTimer(auction.getBids(), this.auctionId, auction.getStartBid());
                 auctionController.initializeRepositories();
