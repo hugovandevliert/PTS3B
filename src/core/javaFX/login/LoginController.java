@@ -39,7 +39,7 @@ public class LoginController extends MenuController {
 
         if (applicationManager.isLoggedIn()) {
             paneContent.getChildren().clear();
-            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/profile/profile.fxml"));
+            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/auctions/auctions.fxml"));
             paneContent.getChildren().add(newLoadedPane);
         } else {
             //TODO: Actual client side feedback

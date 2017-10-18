@@ -2,14 +2,10 @@ package core.javaFX.register;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import core.UserAlert;
 import core.javaFX.menu.MenuController;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
-import utilities.enums.AlertType;
 
 import java.io.IOException;
 import java.net.URL;
@@ -50,7 +46,7 @@ public class RegisterController extends MenuController {
                 applicationManager.login(txtUsername.getText(), txtPassword.getText());
                 if (applicationManager.isLoggedIn()) {
                     paneContent.getChildren().clear();
-                    Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/profile/profile.fxml"));
+                    Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javaFX/profile/profile.fxml"));
                     paneContent.getChildren().add(newLoadedPane);
                 } else {
                     login();

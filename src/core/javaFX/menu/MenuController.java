@@ -6,7 +6,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,7 +17,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.Timer;
 
 public class MenuController implements Initializable {
 
@@ -52,8 +50,8 @@ public class MenuController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setIcons();
-        selectedMenu = imgviewProfile;
-        imgviewProfile.setImage(profileIconHovered);
+        selectedMenu = imgviewAuctions;
+        imgviewAuctions.setImage(auctionsIconHovered);
 
         try {
             paneContent.getChildren().clear();
@@ -104,7 +102,7 @@ public class MenuController implements Initializable {
 
         lastCalledClass = null; // This is for timer classes; to determine whether or not they should stop themselves because the auctions are not being looked at anymore
 
-        if (mouseEvent.getSource() == imgviewProfile){
+        if (source == imgviewProfile){
             newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/profile/profile.fxml"));
         }
         else if(source == imgviewAuctions){
