@@ -11,6 +11,5 @@ import java.util.ResourceBundle;
 public class FavoritesController extends MenuController {
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-    }
+    public void initialize(URL location, ResourceBundle resources) { }
 }

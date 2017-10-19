@@ -26,6 +26,7 @@ import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+@SuppressWarnings("Duplicates")
 public class MenuController implements Initializable {
 
     @FXML public Pane paneMenu;
