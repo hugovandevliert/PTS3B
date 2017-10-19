@@ -16,6 +16,7 @@ import models.Profile;
 import models.User;
 import utilities.enums.AuctionLoadingType;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -45,17 +46,34 @@ public class ListedAuctionController extends MenuController {
 
     public void setMenuController(MenuController menuController) { this.menuController = menuController; }
 
-    public void setTitle(final String title) {
+    public void setListedAuction(final Auction auction) {
+        setTitle(auction.getTitle());
+        setDescription(auction.getDescription());
+        setCurrentOffer(auction.getStartBid());
+        setAuctionId(auction.getId());
+
+        Image image = new Image("file:" + new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath(), 200, 150, false, false);
+
+        if (auction.getImages().size() > 0) {
+            final Image img = auction.getImages().get(0);
+
+            if (img != null) image = img;
+        }
+
+        setImage(image);
+    }
+
+    private void setTitle(final String title) {
         lblAuctionTitle.setText(title);
     }
 
-    public void setDescription(final String description) { textAuctionDescription.setText(description); }
+    private void setDescription(final String description) { textAuctionDescription.setText(description); }
 
-    public void setCurrentOffer(final double offer) { lblCurrentOffer.setText(String.valueOf(offer)); }
+    private void setCurrentOffer(final double offer) { lblCurrentOffer.setText(String.valueOf(offer)); }
 
-    public void setImage(final Image image) { imgviewImage.setImage(image); }
+    private void setImage(final Image image) { imgviewImage.setImage(image); }
 
-    public void setAuctionId(final int auctionId) {
+    private void setAuctionId(final int auctionId) {
         this.auctionId = auctionId;
     }
 

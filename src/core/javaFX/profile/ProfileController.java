@@ -91,19 +91,7 @@ public class ProfileController extends MenuController {
                 final ListedAuctionController listedAuctionController = fxmlLoader.getController();
 
                 listedAuctionController.setMenuController(this);
-                listedAuctionController.setTitle(auction.getTitle());
-                listedAuctionController.setDescription(auction.getDescription());
-                listedAuctionController.setCurrentOffer(auction.getStartBid());
-                listedAuctionController.setAuctionId(auction.getId());
-
-                Image image = new Image("file:" + new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath(), 200, 150, false, false);
-
-                if (auction.getImages().size() > 0) {
-                    final Image img = auction.getImages().get(0);
-
-                    if (img != null) image = img;
-                }
-                listedAuctionController.setImage(image);
+                listedAuctionController.setListedAuction(auction);
 
                 vboxListedAuctions.getChildren().add(listedAuctionPane);
             }
@@ -121,7 +109,7 @@ public class ProfileController extends MenuController {
         if (feedbacks.size() > 0) {
             for (final Feedback feedback : feedbacks) {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/profile/listedFeedback.fxml"));
-                Pane listedFeedbackPane = fxmlLoader.load();
+                final Pane listedFeedbackPane = fxmlLoader.load();
                 final ListedFeedbackController listedFeedbackController = fxmlLoader.getController();
 
                 listedFeedbackController.setMenuController(this.menuController);
