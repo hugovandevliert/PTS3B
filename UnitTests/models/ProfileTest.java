@@ -12,6 +12,7 @@ import utilities.enums.AuctionLoadingType;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 /**
  * ASSUMPTION: There is a user in the database with username="testusername", password="AbC*1f", name="Test User" and email="testuser@gmail.com".
@@ -65,10 +66,9 @@ class ProfileTest {
 
     @Test
     void testAddFeedback() throws SQLException, IOException, ClassNotFoundException {
-        Date date = new Date(2017, 9, 29);
         Profile profile = applicationManager.login("testusername", "AbC*1f").getProfile();
         Profile author = applicationManager.login("testusername2", "AbC*2f").getProfile();
-        Feedback feedback = new Feedback(author, date, true, "Product goed ontvangen, snelle service.");
+        Feedback feedback = new Feedback(author, LocalDateTime.now(), true, "Product goed ontvangen, snelle service.");
 
         profile.addFeedback(feedback);
 
@@ -147,10 +147,9 @@ class ProfileTest {
 
     @Test
     void testGetFeedbacks() throws SQLException, IOException, ClassNotFoundException {
-        Date date = new Date(2017, 10, 2);
         Profile profile = applicationManager.login("testusername", "AbC*1f").getProfile();
         Profile author = applicationManager.login("testusername3", "AbC*3f").getProfile();
-        Feedback feedback = new Feedback(author, date, false, "Slechte service, duurde 3 weken voor ontvangst!");
+        Feedback feedback = new Feedback(author, LocalDateTime.now(), false, "Slechte service, duurde 3 weken voor ontvangst!");
 
         profile.addFeedback(feedback);
 

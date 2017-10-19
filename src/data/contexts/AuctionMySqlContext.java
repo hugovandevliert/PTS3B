@@ -179,7 +179,7 @@ public class AuctionMySqlContext implements IAuctionContext {
                                 getImagesForAuctionWithId(auctionLoadingType, resultSet.getInt("id")),
                                 bidRepository.getBids(resultSet.getInt("id")),
                                 resultSet.getDouble("minimum"),
-                                resultSet.getDouble("minIncrementation")
+                                resultSet.getDouble("minimumincrement")
                         );
             case FOR_COUNTDOWN_TIMER:
                 return new Auction

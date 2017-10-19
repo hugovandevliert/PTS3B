@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,7 +24,7 @@ class FeedbackTest {
 
     @Test
     void testGetDate() throws SQLException {
-        Date date = new Date();
+        LocalDateTime date = LocalDateTime.now();
         Feedback feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), date, false, "Testfeedback");
         assertEquals(date, feedback.getDate(), "Creation date is not working properly.");
     }
@@ -31,22 +32,22 @@ class FeedbackTest {
     @Test
     void testGetAuthor() throws SQLException {
         Profile author = applicationManager.login("testusername2", "AbC*2f").getProfile();
-        Feedback f = new Feedback(author, new Date(), false, "Testfeedback");
+        Feedback f = new Feedback(author, LocalDateTime.now(), false, "Testfeedback");
         assertSame(author, f.getAuthor(), "Author getter is not working properly.");
     }
 
     @Test
     void testGetMessage() throws SQLException {
-        Feedback feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), new Date(), false, "Testfeedback");
+        Feedback feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), LocalDateTime.now(), false, "Testfeedback");
         assertEquals("Testfeedback", feedback.getMessage());
     }
 
     @Test
     void testIsPositive() throws SQLException {
-        Feedback feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), new Date(), false, "Testfeedback");
+        Feedback feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), LocalDateTime.now(), false, "Testfeedback");
         assertFalse(feedback.isPositive(), "Positivity getter is not working properly for negative value.");
 
-        feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), new Date(), true, "Testfeedback");
+        feedback = new Feedback(applicationManager.login("testusername2", "AbC*2f").getProfile(), LocalDateTime.now(), true, "Testfeedback");
         assertTrue(feedback.isPositive(), "Positivity getter is not working properly for positive value.");
     }
 

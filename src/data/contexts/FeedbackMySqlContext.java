@@ -26,21 +26,21 @@ public class FeedbackMySqlContext implements IFeedbackContext {
         final ResultSet resultSet = Database.getData(query, new String[] { Integer.toString(profileId)});
         final ArrayList<Feedback> feedbacks = new ArrayList<>();
 
-        if(resultSet != null){
-            while(resultSet.next()){
+        if (resultSet != null){
+            while (resultSet.next()){
                 feedbacks.add(getFeedbackFromResultSet(resultSet, FeedbackLoadingType.FOR_PROFILE_PAGE));
             }
         }
         return feedbacks;
     }
 
-    public Feedback getFeedbackFromResultSet(final ResultSet resultSet, final FeedbackLoadingType feedbackLoadingType) throws SQLException, IOException, ClassNotFoundException {
+    private Feedback getFeedbackFromResultSet(final ResultSet resultSet, final FeedbackLoadingType feedbackLoadingType) throws SQLException, IOException, ClassNotFoundException {
         switch(feedbackLoadingType){
             case FOR_PROFILE_PAGE:
                 return new Feedback
                         (
                                 profileRepository.getProfileForId(resultSet.getInt("author_id"), ProfileLoadingType.FOR_AUCTION_PAGE),
-                                resultSet.getDate("date"),
+                                resultSet.getTimestamp("date").toLocalDateTime(),
                                 resultSet.getBoolean("ispositive"),
                                 resultSet.getString("message")
                         );

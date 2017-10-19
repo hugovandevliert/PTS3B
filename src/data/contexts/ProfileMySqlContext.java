@@ -3,6 +3,7 @@ package data.contexts;
 import data.interfaces.IProfileContext;
 import logic.algorithms.ImageConverter;
 import logic.repositories.AuctionRepository;
+import logic.repositories.FeedbackRepository;
 import models.Auction;
 import models.Profile;
 import utilities.database.Database;
@@ -70,6 +71,7 @@ public class ProfileMySqlContext implements IProfileContext {
                         );
             case FOR_PROFILE_PAGE:
                 final AuctionRepository auctionRepository = new AuctionRepository(new AuctionMySqlContext()); //This has to be declared here because otherwise there will be a loop of inits and cause errors
+                final FeedbackRepository feedbackRepository = new FeedbackRepository(new FeedbackMySqlContext());
 
                 return new Profile
                         (
@@ -77,7 +79,8 @@ public class ProfileMySqlContext implements IProfileContext {
                                 resultSet.getString("username"),
                                 resultSet.getTimestamp("creationDate").toLocalDateTime(),
                                 imageConverter.getImageFromInputStream(resultSet.getBinaryStream("image"), ImageLoadingType.FOR_PROFILE_PAGE),
-                                auctionRepository.getAuctionsForProfile(resultSet.getInt("id"))
+                                auctionRepository.getAuctionsForProfile(resultSet.getInt("id")),
+                                feedbackRepository.getFeedbacks(resultSet.getInt("id"))
                         );
             default:
                 return null;

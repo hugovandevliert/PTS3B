@@ -69,16 +69,16 @@ public class Profile {
      * @param photo The profile picture of this profile.
      * @param auctions The current running auctions that this profile is the creator of.
      */
-    public Profile(final int profileId, final String username, final LocalDateTime creationDate, final Image photo, final ArrayList<Auction> auctions) {
+    public Profile(final int profileId, final String username, final LocalDateTime creationDate, final Image photo, final ArrayList<Auction> auctions, final ArrayList<Feedback> feedbacks) {
         visitedAuctions = new ArrayList<>();
         favoriteAuctions = new ArrayList<>();
-        feedbacks = new ArrayList<>();
 
         this.profileId = profileId;
         this.username = username;
         this.creationDate = creationDate;
         this.photo = photo;
         this.auctions = auctions;
+        this.feedbacks = feedbacks;
     }
 
     /**

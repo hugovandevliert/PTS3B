@@ -1,10 +1,10 @@
 package models;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Feedback {
 
-    private Date date;
+    private LocalDateTime date;
     private Profile author;
     private String message;
     private boolean isPositive;
@@ -15,7 +15,7 @@ public class Feedback {
      * @param isPositive: Whether the given Feedback was positive
      * @param message: The String message that belongs to the Feedback
      */
-    public Feedback(final Profile author, final Date date, final boolean isPositive, final String message) {
+    public Feedback(final Profile author, final LocalDateTime date, final boolean isPositive, final String message) {
         this.author = author;
         this.date = date;
         this.isPositive = isPositive;
@@ -26,7 +26,7 @@ public class Feedback {
      * Method that gets the Date of when the Feedback was given
      * @return: Returns the Date of when the Feedback was made
      */
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 

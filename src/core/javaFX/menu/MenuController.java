@@ -132,6 +132,7 @@ public class MenuController implements Initializable {
                 profileController.setUserSince(profile.getCreationDate());
                 profileController.setFeedbackCounts(profile.getFeedbacks());
                 profileController.setAuctions(profile.getAuctions());
+                profileController.setFeedbacks(profile.getFeedbacks());
 
             } catch (SQLException e) { e.printStackTrace(); } //TODO: proper error handling
               catch (ClassNotFoundException e) { e.printStackTrace(); }

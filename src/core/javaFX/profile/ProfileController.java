@@ -26,7 +26,7 @@ public class ProfileController extends MenuController {
 
     @FXML private ImageView imgviewProfilePicture, imgviewPositiveIcon, imgviewNegativeIcon;
     @FXML private Label lblName, lblUserSince, lblPositiveFeedbacksCount, lblNegativeFeedbacksCount;
-    @FXML private VBox vboxListedAuctions;
+    @FXML private VBox vboxListedAuctions, vboxListedFeedbacks;
 
     private FXMLLoader fxmlLoader;
 
@@ -94,6 +94,29 @@ public class ProfileController extends MenuController {
             lblNoAuctions.setFont(new Font("System", 17));
 
             vboxListedAuctions.getChildren().add(lblNoAuctions);
+        }
+    }
+
+    public void setFeedbacks(final List<Feedback> feedbacks) throws IOException {
+        if (feedbacks.size() > 0) {
+            for (final Feedback feedback : feedbacks) {
+                fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/profile/listedFeedback.fxml"));
+                Pane listedFeedbackPane = fxmlLoader.load();
+                final ListedFeedbackController listedFeedbackController = fxmlLoader.getController();
+
+                listedFeedbackController.setAuthor(feedback.getAuthor().getUsername());
+                listedFeedbackController.setDate(feedback.getDate());
+                listedFeedbackController.setDescription(feedback.getMessage());
+
+                vboxListedFeedbacks.getChildren().add(listedFeedbackPane);
+            }
+        }else{
+            final Label lblNoFeedbacks = new Label();
+            lblNoFeedbacks.setText("This user has received no feedbacks yet!");
+            lblNoFeedbacks.setTextFill(Color.web("#747e8c"));
+            lblNoFeedbacks.setFont(new Font("System", 17));
+
+            vboxListedFeedbacks.getChildren().add(lblNoFeedbacks);
         }
     }
 
