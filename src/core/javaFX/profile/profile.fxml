@@ -20,7 +20,7 @@
     <children>
           <Pane fx:id="paneContent" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;">
          <children>
-            <ImageView fx:id="imgviewProfilePicture" fitHeight="196.0" fitWidth="275.0" layoutX="23.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgviewProfilePicture" fitHeight="196.0" fitWidth="275.0" layoutX="23.0" layoutY="24.0" onMouseClicked="#changeProfilePicture" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="lblName" alignment="CENTER" layoutX="427.0" layoutY="24.0" prefHeight="21.0" prefWidth="531.0" text="Name" textAlignment="CENTER" textFill="#556070" />
             <Label fx:id="lblUserSince" alignment="CENTER" layoutX="427.0" layoutY="54.0" prefHeight="21.0" prefWidth="531.0" text="User Since 18-10-2017" textAlignment="CENTER" textFill="#556070" />
             <ImageView fx:id="imgviewPositiveIcon" fitHeight="53.0" fitWidth="60.0" layoutX="590.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" />

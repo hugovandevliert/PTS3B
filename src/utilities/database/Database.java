@@ -173,10 +173,8 @@ public class Database {
                 for (int i = 0; i < values.length; i++){
                     index += 1;
 
-                    final byte[] serializedImage = getSerializedObject(images[i]);
-                    final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(serializedImage);
-
-                    preparedStatement.setBinaryStream(index, byteArrayInputStream, serializedImage.length);
+                    /*final FileInputStream fileInputStream = new FileInputStream(images[i]);
+                    preparedStatement.setBinaryStream(index, fileInputStream, (int)images[i].length());*/
                 }
             }
 
@@ -241,13 +239,6 @@ public class Database {
                 e.printStackTrace(); //TODO: proper exception handling
             }
         }
-    }
-
-    private static byte[] getSerializedObject(final Object object) throws IOException {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-        objectOutputStream.writeObject(object);
-        return byteArrayOutputStream.toByteArray();
     }
 
     public static boolean isDouble(final String value) {

@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.ImageView?>
@@ -13,7 +14,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.Cursor?>
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.auction.AuctionController">
     <columnConstraints>
         <ColumnConstraints />
@@ -37,7 +37,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <Label fx:id="lblAuctionSeller" alignment="CENTER" layoutX="642.0" layoutY="246.0" prefHeight="21.0" prefWidth="330.0" textFill="#556070" />
+            <Label fx:id="lblAuctionSeller" alignment="CENTER" layoutX="642.0" layoutY="246.0" onMouseClicked="#goToCreatorProfile" prefHeight="21.0" prefWidth="330.0" textFill="#556070" />
             <ScrollPane fx:id="scrollpaneAuctionDescription" hbarPolicy="NEVER" layoutX="642.0" layoutY="53.0" prefHeight="175.0" prefWidth="346.0" style="-fx-background: #3d4857;  -fx-border-color: #3d4857; -fx-background-color: transparent;" vbarPolicy="NEVER">
                <content>
                   <Text fx:id="textAuctionDescription" fill="#747e8c" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="341.99999821186066" />

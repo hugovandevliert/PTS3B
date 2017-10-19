@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import models.Profile;
 import models.User;
 
+import java.io.File;
 import java.sql.SQLException;
 
 public interface IUserContext {

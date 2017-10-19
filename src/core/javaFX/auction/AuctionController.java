@@ -3,10 +3,13 @@ package core.javaFX.auction;
 
 import com.jfoenix.controls.JFXTextField;
 import core.javaFX.menu.MenuController;
+import core.javaFX.profile.ProfileController;
 import data.contexts.AuctionMySqlContext;
 import data.contexts.BidMySqlContext;
+import data.contexts.ProfileMySqlContext;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,10 +19,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import logic.repositories.AuctionRepository;
 import logic.repositories.BidRepository;
+import logic.repositories.ProfileRepository;
 import logic.timers.AuctionBidsLoadingTimer;
 import logic.timers.AuctionCountdownTimer;
 import models.Bid;
+import models.Profile;
 import utilities.database.Database;
+import utilities.enums.ProfileLoadingType;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,10 +49,12 @@ public class AuctionController extends MenuController {
 
     private AuctionRepository auctionRepository;
     private BidRepository bidRepository;
+    private ProfileRepository profileRepository;
 
     private MenuController menuController;
+    private ProfileController profileController;
 
-    private int auctionId, currenteUserId;
+    private int auctionId, currenteUserId, creatorId;
     private double auctionMinimumBid, auctionMinimumIncrementation;
 
     @Override
@@ -114,6 +122,8 @@ public class AuctionController extends MenuController {
         this.auctionId = auctionId;
     }
 
+    public void setCreatorId(final int creatorId) { this.creatorId = creatorId; }
+
     public void setCurrenteUserId(final int currenteUserId) { this.currenteUserId = currenteUserId; }
 
     public void setBidTextfieldPromptText(final String value) {
@@ -133,6 +143,7 @@ public class AuctionController extends MenuController {
     public void initializeRepositories() {
         auctionRepository = new AuctionRepository(new AuctionMySqlContext());
         bidRepository = new BidRepository(new BidMySqlContext());
+        profileRepository = new ProfileRepository(new ProfileMySqlContext());
     }
 
     public void initializeCountdownTimer(final LocalDateTime expirationDate) {
@@ -216,6 +227,34 @@ public class AuctionController extends MenuController {
 
         imgviewSelectedPicture.setImage(clickedImageView.getImage());
         clickedImageView.setImage(previousSelectedPicture);
+    }
+
+    public void goToCreatorProfile() {
+        try {
+            final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/core/javafx/profile/profile.fxml"));
+            final Pane newLoadedPane = fxmlLoader.load();
+            profileController = fxmlLoader.getController();
+            profileRepository = new ProfileRepository(new ProfileMySqlContext());
+
+            final Profile profile = profileRepository.getProfileForId(this.creatorId, ProfileLoadingType.FOR_PROFILE_PAGE);
+
+            profileController.setProfileVariable(profile);
+            profileController.setProfilePicture(profile.getPhoto());
+            profileController.setName(profile.getUsername());
+            profileController.setUserSince(profile.getCreationDate());
+            profileController.setFeedbackCounts(profile.getFeedbacks());
+            profileController.setAuctions(profile.getAuctions());
+            profileController.setFeedbacks(profile.getFeedbacks());
+
+            this.menuController.paneContent.getChildren().removeAll();
+            this.menuController.paneContent.getChildren().add(newLoadedPane);
+        } catch (SQLException e) {
+            e.printStackTrace();//TODO: proper error handling
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean amountIsHighEnough(final double bidAmount, final double minimumNeededAmount) {

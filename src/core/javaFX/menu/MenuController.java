@@ -127,6 +127,7 @@ public class MenuController implements Initializable {
             try {
                 final Profile profile = profileRepository.getProfileForId(applicationManager.getCurrentUser().getId(), ProfileLoadingType.FOR_PROFILE_PAGE);
 
+                profileController.setProfileVariable(profile);
                 profileController.setProfilePicture(profile.getPhoto());
                 profileController.setName(profile.getUsername());
                 profileController.setUserSince(profile.getCreationDate());

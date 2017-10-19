@@ -5,6 +5,8 @@ import javafx.scene.image.Image;
 import models.Profile;
 import models.User;
 import utilities.database.Database;
+
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -34,7 +36,7 @@ public class UserMySqlContext implements IUserContext {
     public boolean setPhoto(final Profile profile, final Image photo) {
         final String query = "UPDATE Account SET image = ? WHERE id = ?";
 
-        return 1 == Database.setDataWithImages(query, new String[]{Integer.toString(profile.getProfileId())}, new Image[]{photo}, true);
+        return 1 == Database.setDataWithImages(query, new String[]{ Integer.toString(profile.getProfileId()) }, new Image[]{ photo }, true);
     }
 
     @Override

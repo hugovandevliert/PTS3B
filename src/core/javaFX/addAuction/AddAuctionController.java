@@ -26,7 +26,7 @@ public class AddAuctionController extends MenuController {
     }
 
     public void addImage(MouseEvent mouseEvent) {
-        FileChooser fileChooser = new FileChooser();
+        final FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Add an Image");
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Images", "*.jpg", "*.gif", "*.png", "*.jpeg");
         fileChooser.getExtensionFilters().add(filter);

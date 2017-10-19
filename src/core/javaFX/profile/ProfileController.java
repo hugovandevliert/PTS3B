@@ -2,6 +2,7 @@ package core.javaFX.profile;
 
 import core.javaFX.auctions.ListedAuctionController;
 import core.javaFX.menu.MenuController;
+import data.contexts.UserMySqlContext;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -11,14 +12,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
+import logic.repositories.UserRepository;
 import models.Auction;
 import models.Feedback;
+import models.Profile;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -29,6 +32,7 @@ public class ProfileController extends MenuController {
     @FXML private VBox vboxListedAuctions, vboxListedFeedbacks;
 
     private FXMLLoader fxmlLoader;
+    private Profile profile;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) { setIcons(); }
@@ -40,6 +44,8 @@ public class ProfileController extends MenuController {
         imgviewPositiveIcon.setImage(positiveFeedbackIcon);
         imgviewNegativeIcon.setImage(negativeFeedbackIcon);
     }
+
+    public void setProfileVariable(final Profile profile) { this.profile = profile; }
 
     public void setProfilePicture(final Image image) {
         if (image != null){
@@ -118,6 +124,31 @@ public class ProfileController extends MenuController {
 
             vboxListedFeedbacks.getChildren().add(lblNoFeedbacks);
         }
+    }
+
+    public void changeProfilePicture() {
+        /*final FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose your image");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Images", "*.jpg", "*.gif", "*.png", "*.jpeg");
+        fileChooser.getExtensionFilters().add(filter);
+        final File selectedImage = fileChooser.showOpenDialog(null);
+
+        if (selectedImage != null) {
+            final UserRepository userRepository = new UserRepository(new UserMySqlContext());
+            final Image image = new Image("file:" +  selectedImage.getAbsolutePath(), 275, 196, false, false);
+
+            final boolean success = userRepository.setPhoto(profile, image);
+
+            if (success){
+                System.out.println("Your profile picture has successfully been changed!"); //TODO: do this with a user alert message
+
+                setProfilePicture(image);
+            }else{
+                System.out.println("Uploading the selected image failed - please try again!"); //TODO: do this with a user alert message
+            }
+        }else{
+            System.out.println("You did not select an image!"); //TODO: do this with a user alert message
+        }*/
     }
 
     private int getNegativeFeedbackCount(final List<Feedback> feedbacks) {
