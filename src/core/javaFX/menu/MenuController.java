@@ -3,6 +3,7 @@ package core.javaFX.menu;
 import core.ApplicationManager;
 import core.UserAlert;
 import core.javaFX.auctions.ListedAuctionController;
+import core.javaFX.favorites.FavoritesController;
 import core.javaFX.profile.ProfileController;
 import data.contexts.ProfileMySqlContext;
 import javafx.application.Platform;
@@ -58,6 +59,7 @@ public class MenuController implements Initializable {
 
     private FXMLLoader fxmlLoader;
     private ProfileController profileController;
+    private FavoritesController favoritesController;
 
     private ProfileRepository profileRepository;
 
@@ -140,7 +142,13 @@ public class MenuController implements Initializable {
             newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/addAuction/addauction.fxml"));
         }
         else if(source == imgviewFavorites){
-            newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/favorites/favorites.fxml"));
+            fxmlLoader = new FXMLLoader(getClass().getResource("/core/javafx/favorites/favorites.fxml"));
+            newLoadedPane = fxmlLoader.load();
+            favoritesController = fxmlLoader.getController();
+
+            final int profileId = applicationManager.getCurrentUser().getId();
+
+            favoritesController.loadFavorites(profileId);
         }
         else{
             newLoadedPane = new Pane();
