@@ -22,6 +22,7 @@ import models.Bid;
 import utilities.database.Database;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -202,6 +203,10 @@ public class AuctionController extends MenuController {
             }
         } catch (SQLException e){
             e.printStackTrace(); //TODO: proper error handling
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

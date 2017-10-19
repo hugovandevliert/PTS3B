@@ -47,6 +47,21 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     @Override
+    public ArrayList<Auction> getAuctionsForProfile(final int profileId) throws SQLException, IOException, ClassNotFoundException {
+        final String query = "SELECT * FROM MyAuctions.Auction WHERE Auction.status = 'OPEN' " +
+                "AND Auction.endDate > curdate() AND creator_id = ?;";
+        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(profileId) });
+        final ArrayList<Auction> auctions = new ArrayList<>();
+
+        if (resultSet != null) {
+            while (resultSet.next()) {
+                auctions.add(getAuctionFromResultSet(resultSet, AuctionLoadingType.FOR_LISTED_AUCTIONS));
+            }
+        }
+        return auctions;
+    }
+
+    @Override
     public Auction getAuctionForId(final int auctionId, final AuctionLoadingType auctionLoadingType) throws SQLException, IOException, ClassNotFoundException {
         String query = "";
 

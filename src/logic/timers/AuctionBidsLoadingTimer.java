@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import logic.repositories.BidRepository;
 import models.Bid;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -56,6 +57,10 @@ public class AuctionBidsLoadingTimer extends TimerTask {
             }
         } catch (SQLException e) {
             e.printStackTrace(); //TODO proper error handling
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

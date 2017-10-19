@@ -131,7 +131,10 @@ public class MenuController implements Initializable {
                 profileController.setName(profile.getUsername());
                 profileController.setUserSince(profile.getCreationDate());
                 profileController.setFeedbackCounts(profile.getFeedbacks());
-            } catch (SQLException e) { e.printStackTrace(); }
+                profileController.setAuctions(profile.getAuctions());
+
+            } catch (SQLException e) { e.printStackTrace(); } //TODO: proper error handling
+              catch (ClassNotFoundException e) { e.printStackTrace(); }
         }
         else if(source == imgviewAuctions){
             newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/auctions/auctions.fxml"));

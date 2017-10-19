@@ -20,6 +20,10 @@ public class AuctionRepository {
         return context.getAuctionsForSearchTerm(searchTerm);
     }
 
+    public ArrayList<Auction> getAuctionsForProfile(final int profileId) throws SQLException, IOException, ClassNotFoundException {
+        return context.getAuctionsForProfile(profileId);
+    }
+
     public Auction getAuctionForId(final int auctionId, final AuctionLoadingType auctionLoadingType) throws SQLException, IOException, ClassNotFoundException {
         return context.getAuctionForId(auctionId, auctionLoadingType);
     }

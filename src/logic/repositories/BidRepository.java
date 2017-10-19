@@ -2,6 +2,8 @@ package logic.repositories;
 
 import data.interfaces.IBidContext;
 import models.Bid;
+
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -13,11 +15,11 @@ public class BidRepository {
         this.context = context;
     }
 
-    public ArrayList<Bid> getBids(final int auctionId) throws SQLException {
+    public ArrayList<Bid> getBids(final int auctionId) throws SQLException, IOException, ClassNotFoundException {
         return context.getBids(auctionId);
     }
 
-    public Bid getMostRecentBidForAuctionWithId(final int auctionId) throws SQLException {
+    public Bid getMostRecentBidForAuctionWithId(final int auctionId) throws SQLException, IOException, ClassNotFoundException {
         return context.getMostRecentBidForAuctionWithId(auctionId);
     }
 }

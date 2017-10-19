@@ -2,12 +2,14 @@ package data.contexts;
 
 import data.interfaces.IProfileContext;
 import logic.algorithms.ImageConverter;
+import logic.repositories.AuctionRepository;
 import models.Auction;
 import models.Profile;
 import utilities.database.Database;
 import utilities.enums.ImageLoadingType;
 import utilities.enums.ProfileLoadingType;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +23,7 @@ public class ProfileMySqlContext implements IProfileContext {
     }
 
     @Override
-    public Profile getProfileForId(final int userId, final ProfileLoadingType loadingType) throws SQLException {
+    public Profile getProfileForId(final int userId, final ProfileLoadingType loadingType) throws SQLException, IOException, ClassNotFoundException {
         String query = "";
 
         if (loadingType.equals(ProfileLoadingType.FOR_AUCTION_PAGE)) query = "SELECT id, username FROM Account WHERE id = ?";
@@ -58,7 +60,7 @@ public class ProfileMySqlContext implements IProfileContext {
         return 1 == Database.setData(query, new String[] { Integer.toString(profile.getProfileId()), Integer.toString(auction.getId()) }, false);
     }
 
-    private Profile getProfileFromResultSet(final ResultSet resultSet, final ProfileLoadingType profileLoadingType) throws SQLException {
+    private Profile getProfileFromResultSet(final ResultSet resultSet, final ProfileLoadingType profileLoadingType) throws SQLException, IOException, ClassNotFoundException {
         switch(profileLoadingType){
             case FOR_AUCTION_PAGE:
                 return new Profile
@@ -67,12 +69,15 @@ public class ProfileMySqlContext implements IProfileContext {
                                 resultSet.getString("username")
                         );
             case FOR_PROFILE_PAGE:
+                final AuctionRepository auctionRepository = new AuctionRepository(new AuctionMySqlContext()); //This has to be declared here because otherwise there will be a loop of inits and cause errors
+
                 return new Profile
                         (
                                 resultSet.getInt("id"),
                                 resultSet.getString("username"),
                                 resultSet.getTimestamp("creationDate").toLocalDateTime(),
-                                imageConverter.getImageFromInputStream(resultSet.getBinaryStream("image"), ImageLoadingType.FOR_PROFILE_PAGE)
+                                imageConverter.getImageFromInputStream(resultSet.getBinaryStream("image"), ImageLoadingType.FOR_PROFILE_PAGE),
+                                auctionRepository.getAuctionsForProfile(resultSet.getInt("id"))
                         );
             default:
                 return null;

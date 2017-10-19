@@ -1,13 +1,21 @@
 package core.javaFX.profile;
 
+import core.javaFX.auctions.ListedAuctionController;
 import core.javaFX.menu.MenuController;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import models.Auction;
 import models.Feedback;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,6 +26,9 @@ public class ProfileController extends MenuController {
 
     @FXML private ImageView imgviewProfilePicture, imgviewPositiveIcon, imgviewNegativeIcon;
     @FXML private Label lblName, lblUserSince, lblPositiveFeedbacksCount, lblNegativeFeedbacksCount;
+    @FXML private VBox vboxListedAuctions;
+
+    private FXMLLoader fxmlLoader;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) { setIcons(); }
@@ -50,6 +61,40 @@ public class ProfileController extends MenuController {
     public void setFeedbackCounts(final List<Feedback> feedbacks) {
         lblPositiveFeedbacksCount.setText(String.valueOf(getPositiveFeedbackCount(feedbacks)));
         lblNegativeFeedbacksCount.setText(String.valueOf(getNegativeFeedbackCount(feedbacks)));
+    }
+
+    public void setAuctions(final List<Auction> auctions) throws IOException {
+        if (auctions.size() > 0) {
+            for (final Auction auction : auctions) {
+                fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/auctions/listedAuction.fxml"));
+                Pane listedAuctionPane = fxmlLoader.load();
+                final ListedAuctionController listedAuctionController = fxmlLoader.getController();
+
+                listedAuctionController.setMenuController(this);
+                listedAuctionController.setTitle(auction.getTitle());
+                listedAuctionController.setDescription(auction.getDescription());
+                listedAuctionController.setCurrentOffer(auction.getStartBid());
+                listedAuctionController.setAuctionId(auction.getId());
+
+                Image image = new Image("file:" + new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath(), 200, 150, false, false);
+
+                if (auction.getImages().size() > 0) {
+                    final Image img = auction.getImages().get(0);
+
+                    if (img != null) image = img;
+                }
+                listedAuctionController.setImage(image);
+
+                vboxListedAuctions.getChildren().add(listedAuctionPane);
+            }
+        }else{
+            final Label lblNoAuctions = new Label();
+            lblNoAuctions.setText("This user has no active auctions!");
+            lblNoAuctions.setTextFill(Color.web("#747e8c"));
+            lblNoAuctions.setFont(new Font("System", 17));
+
+            vboxListedAuctions.getChildren().add(lblNoAuctions);
+        }
     }
 
     private int getNegativeFeedbackCount(final List<Feedback> feedbacks) {
