@@ -1,24 +1,37 @@
 package data.contexts;
 
 import data.interfaces.IProfileContext;
+import logic.algorithms.ImageConverter;
 import models.Auction;
 import models.Profile;
 import utilities.database.Database;
+import utilities.enums.ImageLoadingType;
 import utilities.enums.ProfileLoadingType;
+
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ProfileMySqlContext implements IProfileContext {
 
+    private ImageConverter imageConverter;
+
+    public ProfileMySqlContext() {
+        imageConverter = new ImageConverter();
+    }
+
     @Override
-    public Profile getProfileForId(final int userId) throws SQLException {
-        final String query = "SELECT id, username FROM Account WHERE id = ?";
+    public Profile getProfileForId(final int userId, final ProfileLoadingType loadingType) throws SQLException {
+        String query = "";
+
+        if (loadingType.equals(ProfileLoadingType.FOR_AUCTION_PAGE)) query = "SELECT id, username FROM Account WHERE id = ?";
+        else if (loadingType.equals(ProfileLoadingType.FOR_PROFILE_PAGE)) query = "SElECT id, username, creationDate, Image FROM Account WHERE id = ?";
 
         final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(userId) });
 
         if (resultSet != null){
             if (resultSet.next()){
-                return getProfileFromResultSet(resultSet, ProfileLoadingType.FOR_AUCTION_PAGE);
+                return getProfileFromResultSet(resultSet, loadingType);
             }
         }
         return null;
@@ -52,6 +65,14 @@ public class ProfileMySqlContext implements IProfileContext {
                         (
                                 resultSet.getInt("id"),
                                 resultSet.getString("username")
+                        );
+            case FOR_PROFILE_PAGE:
+                return new Profile
+                        (
+                                resultSet.getInt("id"),
+                                resultSet.getString("username"),
+                                resultSet.getTimestamp("creationDate").toLocalDateTime(),
+                                imageConverter.getImageFromInputStream(resultSet.getBinaryStream("image"), ImageLoadingType.FOR_PROFILE_PAGE)
                         );
             default:
                 return null;

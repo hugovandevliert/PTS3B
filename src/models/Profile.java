@@ -22,6 +22,8 @@ public class Profile {
     private ArrayList<Auction> auctions, visitedAuctions, favoriteAuctions;
     private ArrayList<Feedback> feedbacks;
 
+    private LocalDateTime creationDate;
+
     /**
      * Constructor for a profile.
      *
@@ -44,6 +46,11 @@ public class Profile {
         this.profileId = profileId;
     }
 
+    /**
+     * This constructor is used for loading profiles for FOR_AUCTION_PAGE
+     * @param profileId The ID of this profile.
+     * @param username User's username.
+     */
     public Profile(final int profileId, final String username) {
         auctions = new ArrayList<>();
         visitedAuctions = new ArrayList<>();
@@ -52,6 +59,25 @@ public class Profile {
 
         this.username = username;
         this.profileId = profileId;
+    }
+
+    /**
+     * This constructor is used for loading profiles for FOR_PROFILE_PAGE
+     * @param profileId The ID of this profile.
+     * @param username User's username.
+     * @param creationDate The register date of this user/profile
+     * @param photo The profile picture of this profile
+     */
+    public Profile(final int profileId, final String username, final LocalDateTime creationDate, final Image photo) {
+        auctions = new ArrayList<>();
+        visitedAuctions = new ArrayList<>();
+        favoriteAuctions = new ArrayList<>();
+        feedbacks = new ArrayList<>();
+
+        this.profileId = profileId;
+        this.username = username;
+        this.creationDate = creationDate;
+        this.photo = photo;
     }
 
     /**
@@ -145,6 +171,10 @@ public class Profile {
 
     public int getProfileId() {
         return profileId;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
     }
 
     public List<Auction> getAuctions() {

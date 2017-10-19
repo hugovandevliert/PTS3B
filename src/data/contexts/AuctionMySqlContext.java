@@ -8,6 +8,9 @@ import logic.repositories.ProfileRepository;
 import models.Auction;
 import utilities.database.Database;
 import utilities.enums.AuctionLoadingType;
+import utilities.enums.ImageLoadingType;
+import utilities.enums.ProfileLoadingType;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.io.IOException;
@@ -157,7 +160,7 @@ public class AuctionMySqlContext implements IAuctionContext {
                                 resultSet.getString("description"),
                                 resultSet.getDouble("startingBid"),
                                 resultSet.getTimestamp("endDate").toLocalDateTime(),
-                                profileRepository.getProfileForId(resultSet.getInt("creator_id")),
+                                profileRepository.getProfileForId(resultSet.getInt("creator_id"), ProfileLoadingType.FOR_AUCTION_PAGE),
                                 getImagesForAuctionWithId(auctionLoadingType, resultSet.getInt("id")),
                                 bidRepository.getBids(resultSet.getInt("id")),
                                 resultSet.getDouble("minimum"),
@@ -185,7 +188,7 @@ public class AuctionMySqlContext implements IAuctionContext {
 
         while (resultSet.next()) {
             final InputStream inputStream = resultSet.getBinaryStream("image");
-            images.add(imageConverter.getImageFromInputStream(inputStream, auctionLoadingType));
+            images.add(imageConverter.getImageFromInputStream(inputStream, ImageLoadingType.valueOf(auctionLoadingType.toString())));
         }
         return images;
     }

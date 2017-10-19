@@ -2,6 +2,9 @@ package core.javaFX.menu;
 
 import core.ApplicationManager;
 import core.UserAlert;
+import core.javaFX.auctions.ListedAuctionController;
+import core.javaFX.profile.ProfileController;
+import data.contexts.ProfileMySqlContext;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,10 +14,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import logic.repositories.ProfileRepository;
+import models.Profile;
 import utilities.database.Database;
 import utilities.enums.AlertType;
+import utilities.enums.ProfileLoadingType;
+
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -47,6 +55,11 @@ public class MenuController implements Initializable {
 
     private static String lastCalledClass;
 
+    private FXMLLoader fxmlLoader;
+    private ProfileController profileController;
+
+    private ProfileRepository profileRepository;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setIcons();
@@ -62,6 +75,10 @@ public class MenuController implements Initializable {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public MenuController() {
+        profileRepository = new ProfileRepository(new ProfileMySqlContext());
     }
 
     private void setIcons() {
@@ -103,7 +120,18 @@ public class MenuController implements Initializable {
         lastCalledClass = null; // This is for timer classes; to determine whether or not they should stop themselves because the auctions are not being looked at anymore
 
         if (source == imgviewProfile){
-            newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/profile/profile.fxml"));
+            fxmlLoader = new FXMLLoader(getClass().getResource("/core/javafx/profile/profile.fxml"));
+            newLoadedPane = fxmlLoader.load();
+            profileController = fxmlLoader.getController();
+
+            try {
+                final Profile profile = profileRepository.getProfileForId(applicationManager.getCurrentUser().getId(), ProfileLoadingType.FOR_PROFILE_PAGE);
+
+                profileController.setProfilePicture(profile.getPhoto());
+                profileController.setName(profile.getUsername());
+                profileController.setUserSince(profile.getCreationDate());
+                profileController.setFeedbackCounts(profile.getFeedbacks());
+            } catch (SQLException e) { e.printStackTrace(); }
         }
         else if(source == imgviewAuctions){
             newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/auctions/auctions.fxml"));

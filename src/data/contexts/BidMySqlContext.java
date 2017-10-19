@@ -5,6 +5,7 @@ import logic.repositories.ProfileRepository;
 import models.Bid;
 import utilities.database.Database;
 import utilities.enums.BidLoadingType;
+import utilities.enums.ProfileLoadingType;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -49,7 +50,7 @@ public class BidMySqlContext implements IBidContext {
             case FOR_AUCTION:
                 return new Bid
                         (
-                                profileRepository.getProfileForId(resultSet.getInt("account_id")),
+                                profileRepository.getProfileForId(resultSet.getInt("account_id"), ProfileLoadingType.FOR_AUCTION_PAGE),
                                 resultSet.getDouble("amount"),
                                 resultSet.getTimestamp("date").toLocalDateTime()
                         );

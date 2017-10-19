@@ -5,6 +5,8 @@ import logic.repositories.ProfileRepository;
 import models.Feedback;
 import utilities.database.Database;
 import utilities.enums.FeedbackLoadingType;
+import utilities.enums.ProfileLoadingType;
+
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,7 +39,7 @@ public class FeedbackMySqlContext implements IFeedbackContext {
             case FOR_PROFILE_PAGE:
                 return new Feedback
                         (
-                                profileRepository.getProfileForId(resultSet.getInt("author_id")),
+                                profileRepository.getProfileForId(resultSet.getInt("author_id"), ProfileLoadingType.FOR_AUCTION_PAGE),
                                 resultSet.getDate("date"),
                                 resultSet.getBoolean("ispositive"),
                                 resultSet.getString("message")
