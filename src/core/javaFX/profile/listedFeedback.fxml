@@ -18,7 +18,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="lblAuthorName" alignment="CENTER" layoutX="14.0" layoutY="56.0" prefHeight="21.0" prefWidth="248.0" text="Name" textAlignment="CENTER" textFill="#556070" />
+      <Label fx:id="lblAuthorName" alignment="CENTER" layoutX="14.0" layoutY="56.0" onMouseClicked="#goToAuthorProfile" prefHeight="21.0" prefWidth="248.0" text="Name" textAlignment="CENTER" textFill="#556070" />
       <Label fx:id="lblDate" alignment="CENTER" layoutX="14.0" layoutY="96.0" prefHeight="21.0" prefWidth="248.0" text="Date" textAlignment="CENTER" textFill="#556070">
          <font>
             <Font name="System Bold" size="15.0" />

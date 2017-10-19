@@ -34,6 +34,8 @@ public class ProfileController extends MenuController {
     private FXMLLoader fxmlLoader;
     private Profile profile;
 
+    private MenuController menuController;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) { setIcons(); }
 
@@ -45,9 +47,21 @@ public class ProfileController extends MenuController {
         imgviewNegativeIcon.setImage(negativeFeedbackIcon);
     }
 
-    public void setProfileVariable(final Profile profile) { this.profile = profile; }
+    public void setMenuController(final MenuController menuController) { this.menuController = menuController; }
 
-    public void setProfilePicture(final Image image) {
+    public void loadProfile(final Profile profile) throws IOException {
+        setProfileVariable(profile);
+        setProfilePicture(profile.getPhoto());
+        setName(profile.getUsername());
+        setUserSince(profile.getCreationDate());
+        setFeedbackCounts(profile.getFeedbacks());
+        setAuctions(profile.getAuctions());
+        setFeedbacks(profile.getFeedbacks());
+    }
+
+    private void setProfileVariable(final Profile profile) { this.profile = profile; }
+
+    private void setProfilePicture(final Image image) {
         if (image != null){
             imgviewProfilePicture.setImage(image);
         }else{
@@ -56,20 +70,20 @@ public class ProfileController extends MenuController {
         }
     }
 
-    public void setName(final String name) {
+    private void setName(final String name) {
         this.lblName.setText(name);
     }
 
-    public void setUserSince(final LocalDateTime registerDate) {
+    private void setUserSince(final LocalDateTime registerDate) {
         lblUserSince.setText("User since " + registerDate.toLocalDate().toString());
     }
 
-    public void setFeedbackCounts(final List<Feedback> feedbacks) {
+    private void setFeedbackCounts(final List<Feedback> feedbacks) {
         lblPositiveFeedbacksCount.setText(String.valueOf(getPositiveFeedbackCount(feedbacks)));
         lblNegativeFeedbacksCount.setText(String.valueOf(getNegativeFeedbackCount(feedbacks)));
     }
 
-    public void setAuctions(final List<Auction> auctions) throws IOException {
+    private void setAuctions(final List<Auction> auctions) throws IOException {
         if (auctions.size() > 0) {
             for (final Auction auction : auctions) {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/auctions/listedAuction.fxml"));
@@ -103,13 +117,15 @@ public class ProfileController extends MenuController {
         }
     }
 
-    public void setFeedbacks(final List<Feedback> feedbacks) throws IOException {
+    private void setFeedbacks(final List<Feedback> feedbacks) throws IOException {
         if (feedbacks.size() > 0) {
             for (final Feedback feedback : feedbacks) {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/profile/listedFeedback.fxml"));
                 Pane listedFeedbackPane = fxmlLoader.load();
                 final ListedFeedbackController listedFeedbackController = fxmlLoader.getController();
 
+                listedFeedbackController.setMenuController(this.menuController);
+                listedFeedbackController.setAuthorId(feedback.getAuthor().getProfileId());
                 listedFeedbackController.setAuthor(feedback.getAuthor().getUsername());
                 listedFeedbackController.setDate(feedback.getDate());
                 listedFeedbackController.setDescription(feedback.getMessage());

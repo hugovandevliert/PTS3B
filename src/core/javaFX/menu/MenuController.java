@@ -127,14 +127,8 @@ public class MenuController implements Initializable {
             try {
                 final Profile profile = profileRepository.getProfileForId(applicationManager.getCurrentUser().getId(), ProfileLoadingType.FOR_PROFILE_PAGE);
 
-                profileController.setProfileVariable(profile);
-                profileController.setProfilePicture(profile.getPhoto());
-                profileController.setName(profile.getUsername());
-                profileController.setUserSince(profile.getCreationDate());
-                profileController.setFeedbackCounts(profile.getFeedbacks());
-                profileController.setAuctions(profile.getAuctions());
-                profileController.setFeedbacks(profile.getFeedbacks());
-
+                profileController.setMenuController(this);
+                profileController.loadProfile(profile);
             } catch (SQLException e) { e.printStackTrace(); } //TODO: proper error handling
               catch (ClassNotFoundException e) { e.printStackTrace(); }
         }

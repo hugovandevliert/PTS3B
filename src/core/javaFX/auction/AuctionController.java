@@ -238,13 +238,8 @@ public class AuctionController extends MenuController {
 
             final Profile profile = profileRepository.getProfileForId(this.creatorId, ProfileLoadingType.FOR_PROFILE_PAGE);
 
-            profileController.setProfileVariable(profile);
-            profileController.setProfilePicture(profile.getPhoto());
-            profileController.setName(profile.getUsername());
-            profileController.setUserSince(profile.getCreationDate());
-            profileController.setFeedbackCounts(profile.getFeedbacks());
-            profileController.setAuctions(profile.getAuctions());
-            profileController.setFeedbacks(profile.getFeedbacks());
+            profileController.setMenuController(this.menuController);
+            profileController.loadProfile(profile);
 
             this.menuController.paneContent.getChildren().removeAll();
             this.menuController.paneContent.getChildren().add(newLoadedPane);
