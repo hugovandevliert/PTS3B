@@ -1,21 +1,17 @@
 package core.javaFX.auctions;
 
-
 import com.jfoenix.controls.JFXTextField;
 import core.javaFX.menu.MenuController;
 import data.contexts.AuctionMySqlContext;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import logic.repositories.AuctionRepository;
 import models.Auction;
-
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -35,7 +31,7 @@ public class AuctionsController extends MenuController {
     public AuctionsController() { auctionRepository = new AuctionRepository(new AuctionMySqlContext()); }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) { }
+    public void initialize(final URL location, final ResourceBundle resources) { }
 
     public void searchAuction() throws IOException {
         final String searchTerm = txtSearchBar.getText().trim();
@@ -65,10 +61,10 @@ public class AuctionsController extends MenuController {
 
                     vboxListedAuctions.getChildren().add(lblNoItemsForSearch);
                 }
-            } catch (SQLException e) {
-                e.printStackTrace(); //TODO: proper error handling
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace(); //TODO: proper error handling
+            } catch (SQLException exception) {
+                exception.printStackTrace(); //TODO: proper error handling
+            } catch (ClassNotFoundException exception) {
+                exception.printStackTrace(); //TODO: proper error handling
             }
         }else{
             //TODO: Proper message handling

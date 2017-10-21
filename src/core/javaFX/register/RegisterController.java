@@ -6,7 +6,6 @@ import core.javaFX.menu.MenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -21,10 +20,8 @@ public class RegisterController extends MenuController {
     @FXML private JFXPasswordField txtPassword;
     @FXML private JFXPasswordField txtPasswordValidate;
 
-
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-    }
+    public void initialize(final URL location, final ResourceBundle resources) { }
 
 
     public void register() throws InterruptedException, IOException {
@@ -46,7 +43,7 @@ public class RegisterController extends MenuController {
                 applicationManager.login(txtUsername.getText(), txtPassword.getText());
                 if (applicationManager.isLoggedIn()) {
                     paneContent.getChildren().clear();
-                    Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javaFX/profile/profile.fxml"));
+                    final Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javaFX/profile/profile.fxml"));
                     paneContent.getChildren().add(newLoadedPane);
                 } else {
                     login();
@@ -57,15 +54,15 @@ public class RegisterController extends MenuController {
 //            UserAlert userAlert = new UserAlert();
 //            userAlert.showMessage("Something went wrong, please try again", AlertType.Error, paneAlert, lblAlertMessage, this);
             }
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException exception){
             //TODO: Actual client side validation feedback
-            System.out.println(e.getMessage());
+            System.out.println(exception.getMessage());
 
 //            UserAlert userAlert = new UserAlert();
 //            userAlert.showMessage(ex.getMessage(), AlertType.Error, paneAlert, lblAlertMessage, this);
-        } catch (SQLException ex) {
+        } catch (SQLException exception) {
             //TODO: Actual client side validation feedback
-            System.out.println(ex.getMessage());
+            System.out.println(exception.getMessage());
 
 //            UserAlert userAlert = new UserAlert();
 //            userAlert.showMessage(ex.getMessage(), AlertType.Error, paneAlert, lblAlertMessage, this);
@@ -74,7 +71,7 @@ public class RegisterController extends MenuController {
 
     public void login() throws IOException {
         paneContent.getChildren().clear();
-        Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/login/login.fxml"));
+        final Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/login/login.fxml"));
         paneContent.getChildren().add(newLoadedPane);
     }
 

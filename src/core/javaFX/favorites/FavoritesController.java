@@ -1,6 +1,5 @@
 package core.javaFX.favorites;
 
-
 import core.javaFX.auctions.ListedAuctionController;
 import core.javaFX.menu.MenuController;
 import data.contexts.AuctionMySqlContext;
@@ -13,7 +12,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import logic.repositories.AuctionRepository;
 import models.Auction;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -31,7 +29,7 @@ public class FavoritesController extends MenuController {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) { }
+    public void initialize(final URL location, final ResourceBundle resources) { }
 
     public void loadFavorites(final int profileId) {
         try {
@@ -56,12 +54,12 @@ public class FavoritesController extends MenuController {
 
                 vboxListedAuctions.getChildren().add(lblNoItemsForSearch);
             }
-        } catch (SQLException e) {
-            e.printStackTrace(); //TODO: proper error handling
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace(); //TODO: proper error handling
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            exception.printStackTrace(); //TODO: proper error handling
+        } catch (ClassNotFoundException exception) {
+            exception.printStackTrace(); //TODO: proper error handling
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 }

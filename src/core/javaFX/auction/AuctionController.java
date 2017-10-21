@@ -1,13 +1,11 @@
 package core.javaFX.auction;
 
-
 import com.jfoenix.controls.JFXTextField;
 import core.javaFX.menu.MenuController;
 import core.javaFX.profile.ProfileController;
 import data.contexts.AuctionMySqlContext;
 import data.contexts.BidMySqlContext;
 import data.contexts.ProfileMySqlContext;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -26,7 +24,6 @@ import models.Bid;
 import models.Profile;
 import utilities.database.Database;
 import utilities.enums.ProfileLoadingType;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -58,7 +55,7 @@ public class AuctionController extends MenuController {
     private double auctionMinimumBid, auctionMinimumIncrementation;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) { }
+    public void initialize(final URL location, final ResourceBundle resources) { }
 
     public String getTimerString() {
         return lblTimer.getText();
@@ -138,7 +135,7 @@ public class AuctionController extends MenuController {
         this.auctionMinimumIncrementation = auctionMinimumIncrementation;
     }
 
-    public void setMenuController(MenuController menuController) { this.menuController = menuController; }
+    public void setMenuController(final MenuController menuController) { this.menuController = menuController; }
 
     public void initializeRepositories() {
         auctionRepository = new AuctionRepository(new AuctionMySqlContext());
@@ -204,7 +201,7 @@ public class AuctionController extends MenuController {
                             System.out.println("Placing the bid wasn't successfull!"); //TODO: show this with a User Alert
                         }
                     }else{
-                        System.out.println("Your bid is not high enough, it should atleast be €" + minimumNeededAmount); //TODO: show htis with a User Alert
+                        System.out.println("Your bid is not high enough, it should atleast be €" + minimumNeededAmount); //TODO: show this with a User Alert
                     }
                 }else{
                     System.out.println("Please fill in a valid bid!"); //TODO: show this with a User Alert
@@ -212,12 +209,12 @@ public class AuctionController extends MenuController {
             }else{
                 System.out.println("This auction has been closed - you are not able to bid anymore"); //TODO: show this with a User Alert
             }
-        } catch (SQLException e){
-            e.printStackTrace(); //TODO: proper error handling
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (SQLException exception){
+            exception.printStackTrace(); //TODO: proper error handling
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        } catch (ClassNotFoundException exception) {
+            exception.printStackTrace();
         }
     }
 

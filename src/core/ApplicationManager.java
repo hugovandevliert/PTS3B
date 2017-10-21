@@ -92,8 +92,8 @@ public class ApplicationManager {
                 byte[] digest = messageDigest.digest();
                 return String.format("%064x", new java.math.BigInteger(1, digest));
             }
-            catch (NoSuchAlgorithmException | UnsupportedEncodingException ex){
-                System.out.println(ex.getStackTrace());
+            catch (NoSuchAlgorithmException | UnsupportedEncodingException exception){
+                System.out.println(exception.getStackTrace());
             }
             return null;
         }

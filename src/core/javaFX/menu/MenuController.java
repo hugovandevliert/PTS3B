@@ -2,7 +2,6 @@ package core.javaFX.menu;
 
 import core.ApplicationManager;
 import core.UserAlert;
-import core.javaFX.auctions.ListedAuctionController;
 import core.javaFX.favorites.FavoritesController;
 import core.javaFX.profile.ProfileController;
 import data.contexts.ProfileMySqlContext;
@@ -20,7 +19,6 @@ import models.Profile;
 import utilities.database.Database;
 import utilities.enums.AlertType;
 import utilities.enums.ProfileLoadingType;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -42,7 +40,7 @@ public class MenuController implements Initializable {
     @FXML protected Pane paneAlert;
     @FXML public Label lblAlertMessage;
 
-    protected static ApplicationManager applicationManager = new ApplicationManager();
+    protected final static ApplicationManager applicationManager = new ApplicationManager();
     protected ImageView selectedMenu;
 
     private Image profileIcon;
@@ -64,19 +62,19 @@ public class MenuController implements Initializable {
     private ProfileRepository profileRepository;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(final URL location, final ResourceBundle resources) {
         setIcons();
         selectedMenu = imgviewAuctions;
         imgviewAuctions.setImage(auctionsIconHovered);
 
         try {
             paneContent.getChildren().clear();
-            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/login/login.fxml"));
+            final Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/login/login.fxml"));
             paneContent.getChildren().add(newLoadedPane);
 
             ShowMessage("Please login", AlertType.Message);
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+        } catch (IOException | InterruptedException exception) {
+            exception.printStackTrace();
         }
     }
 
@@ -106,10 +104,10 @@ public class MenuController implements Initializable {
         System.exit(0);
     }
 
-    public void selectMenuItem(MouseEvent mouseEvent) throws IOException {
+    public void selectMenuItem(final MouseEvent mouseEvent) throws IOException {
         if (!applicationManager.isLoggedIn()) return;
 
-        ImageView source = (ImageView) mouseEvent.getSource();
+        final ImageView source = (ImageView) mouseEvent.getSource();
         imgviewProfile.setImage(profileIcon);
         imgviewAuctions.setImage(auctionsIcon);
         imgviewFavorites.setImage(favoritesIcon);
@@ -118,7 +116,7 @@ public class MenuController implements Initializable {
         selectedMenu = source;
 
         paneContent.getChildren().clear();
-        Pane newLoadedPane;
+        final Pane newLoadedPane;
 
         lastCalledClass = null; // This is for timer classes; to determine whether or not they should stop themselves because the auctions are not being looked at anymore
 
@@ -132,8 +130,12 @@ public class MenuController implements Initializable {
 
                 profileController.setMenuController(this);
                 profileController.loadProfile(profile);
-            } catch (SQLException e) { e.printStackTrace(); } //TODO: proper error handling
-              catch (ClassNotFoundException e) { e.printStackTrace(); }
+            } catch (SQLException exception) {
+                exception.printStackTrace(); //TODO: proper error handling
+            }
+              catch (ClassNotFoundException exception) {
+                exception.printStackTrace();
+            }
         }
         else if(source == imgviewAuctions){
             newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/auctions/auctions.fxml"));
@@ -157,8 +159,8 @@ public class MenuController implements Initializable {
         paneContent.getChildren().add(newLoadedPane);
     }
 
-    public void highlightIconColor(MouseEvent mouseEvent) {
-        ImageView icon = (ImageView) mouseEvent.getSource();
+    public void highlightIconColor(final MouseEvent mouseEvent) {
+        final ImageView icon = (ImageView) mouseEvent.getSource();
         if (Objects.equals(selectedMenu.getId(), icon.getId())) return;
         switch(icon.getId()) {
             case "imgviewProfile":
@@ -176,8 +178,8 @@ public class MenuController implements Initializable {
         }
     }
 
-    public void revertIconColor(MouseEvent mouseEvent) {
-        ImageView icon = (ImageView) mouseEvent.getSource();
+    public void revertIconColor(final MouseEvent mouseEvent) {
+        final ImageView icon = (ImageView) mouseEvent.getSource();
         if (Objects.equals(selectedMenu.getId(), icon.getId())) return;
         switch(icon.getId()) {
             case "imgviewProfile":
@@ -195,8 +197,8 @@ public class MenuController implements Initializable {
         }
     }
 
-    protected void ShowMessage(String message, AlertType type) throws InterruptedException {
-        UserAlert userAlert = new UserAlert();
+    protected void ShowMessage(final String message, final AlertType type) throws InterruptedException {
+        final UserAlert userAlert = new UserAlert();
         userAlert.showMessage(message, type, paneAlert, lblAlertMessage, this);
     }
 

@@ -2,7 +2,6 @@ package core.javaFX.profile;
 
 import core.javaFX.auctions.ListedAuctionController;
 import core.javaFX.menu.MenuController;
-import data.contexts.UserMySqlContext;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -12,12 +11,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.FileChooser;
-import logic.repositories.UserRepository;
 import models.Auction;
 import models.Feedback;
 import models.Profile;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -37,7 +33,7 @@ public class ProfileController extends MenuController {
     private MenuController menuController;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) { setIcons(); }
+    public void initialize(final URL location, final ResourceBundle resources) { setIcons(); }
 
     private void setIcons() {
         final Image positiveFeedbackIcon = new Image( "/utilities/images/feedback/positive_feedback_icon.png");
@@ -87,7 +83,7 @@ public class ProfileController extends MenuController {
         if (auctions.size() > 0) {
             for (final Auction auction : auctions) {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/auctions/listedAuction.fxml"));
-                Pane listedAuctionPane = fxmlLoader.load();
+                final Pane listedAuctionPane = fxmlLoader.load();
                 final ListedAuctionController listedAuctionController = fxmlLoader.getController();
 
                 listedAuctionController.setMenuController(this);

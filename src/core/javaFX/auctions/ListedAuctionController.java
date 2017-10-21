@@ -12,15 +12,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import logic.repositories.AuctionRepository;
 import models.Auction;
-import models.Profile;
-import models.User;
 import utilities.enums.AuctionLoadingType;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ListedAuctionController extends MenuController {
@@ -40,11 +36,11 @@ public class ListedAuctionController extends MenuController {
     private int auctionId;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) { }
+    public void initialize(final URL location, final ResourceBundle resources) { }
 
     public ListedAuctionController() { auctionRepository = new AuctionRepository(new AuctionMySqlContext()); }
 
-    public void setMenuController(MenuController menuController) { this.menuController = menuController; }
+    public void setMenuController(final MenuController menuController) { this.menuController = menuController; }
 
     public void setListedAuction(final Auction auction) {
         setTitle(auction.getTitle());
@@ -114,12 +110,12 @@ public class ListedAuctionController extends MenuController {
             }else{
                 System.out.println("Something went wrong - Couldn't load auction page"); //TODO: proper error handling
             }
-        } catch (IOException e){
-            e.printStackTrace(); //TODO: proper error handling
-        } catch (SQLException e) {
-            e.printStackTrace(); //TODO: proper error handling
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace(); //TODO: proper error handling
+        } catch (IOException exception){
+            exception.printStackTrace(); //TODO: proper error handling
+        } catch (SQLException exception) {
+            exception.printStackTrace(); //TODO: proper error handling
+        } catch (ClassNotFoundException exception) {
+            exception.printStackTrace(); //TODO: proper error handling
         }
     }
 

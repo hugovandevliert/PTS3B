@@ -10,7 +10,6 @@ import javafx.scene.text.Text;
 import logic.repositories.ProfileRepository;
 import models.Profile;
 import utilities.enums.ProfileLoadingType;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -27,7 +26,7 @@ public class ListedFeedbackController extends MenuController {
     private MenuController menuController;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) { }
+    public void initialize(final URL location, final ResourceBundle resources) { }
 
     public void setMenuController(final MenuController menuController) { this.menuController = menuController; }
 
@@ -60,12 +59,12 @@ public class ListedFeedbackController extends MenuController {
 
             this.menuController.paneContent.getChildren().removeAll();
             this.menuController.paneContent.getChildren().add(newLoadedPane);
-        } catch (SQLException e) {
-            e.printStackTrace();//TODO: proper error handling
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            exception.printStackTrace();//TODO: proper error handling
+        } catch (ClassNotFoundException exception) {
+            exception.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 }

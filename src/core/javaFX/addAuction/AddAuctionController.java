@@ -21,16 +21,16 @@ public class AddAuctionController extends MenuController {
     @FXML private JFXTextArea txtDescription;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(final URL location, final ResourceBundle resources) {
         setImages();
     }
 
-    public void addImage(MouseEvent mouseEvent) {
+    public void addImage(final MouseEvent mouseEvent) {
         final FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Add an Image");
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Images", "*.jpg", "*.gif", "*.png", "*.jpeg");
         fileChooser.getExtensionFilters().add(filter);
-        File selectedImage = fileChooser.showOpenDialog(txtTitle.getScene().getWindow());
+        final File selectedImage = fileChooser.showOpenDialog(txtTitle.getScene().getWindow());
 
         if (selectedImage != null) {
             ImageView source = (ImageView) mouseEvent.getSource();
@@ -56,7 +56,7 @@ public class AddAuctionController extends MenuController {
         imgviewPicture3.setImage(placeholderImage);
     }
 
-    private boolean validate(String text) {
+    private boolean validate(final String text) {
         return text.matches("[0-9]*");
     }
 }

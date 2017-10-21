@@ -1,36 +1,28 @@
 package core;
 
-
 import core.javaFX.menu.MenuController;
-import javafx.application.Platform;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import utilities.enums.AlertType;
-
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 public class UserAlert {
 
 //    private String message;
 //    private AlertType alertType;
 
-    public Pane showMessage(String message, AlertType alertType, Pane pane, Label label, MenuController menuController) throws InterruptedException {
-        Pane tempPane = new Pane();
+    public Pane showMessage(final String message, final AlertType alertType, final Pane pane, final Label label, final MenuController menuController) throws InterruptedException {
+        final Pane tempPane = new Pane();
         tempPane.setPrefWidth(870);
         tempPane.setPrefHeight(45);
 
-        Label tempLabel = new Label();
+        final Label tempLabel = new Label();
         tempLabel.setLayoutX(19.0);
         tempLabel.setLayoutY(-1.0);
         tempLabel.prefHeight(45.0);
@@ -54,9 +46,9 @@ public class UserAlert {
         tempLabel.setTextFill(Color.web("#FFFFFF"));
         tempLabel.setFont(new Font("Segoe UI Light", 20));
 
-        TimerTask clearUserAlert = new ClearUserAlert(menuController);
+        final TimerTask clearUserAlert = new ClearUserAlert(menuController);
 
-        Timer timer = new Timer();
+        final Timer timer = new Timer();
         timer.schedule(clearUserAlert, 5000);
 
         tempPane.getChildren().add(tempLabel);
