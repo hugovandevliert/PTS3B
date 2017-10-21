@@ -3,7 +3,6 @@ package models;
 import data.contexts.AuctionMySqlContext;
 import javafx.scene.image.Image;
 import logic.repositories.AuctionRepository;
-
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -25,8 +24,7 @@ public class Profile {
     private LocalDateTime creationDate;
 
     /**
-     * Constructor for a profile.
-     *
+     * Default Constructor.
      * @param photo:     User's profile picture.
      * @param username:  User's username.
      * @param name:      User's full name.
@@ -48,8 +46,8 @@ public class Profile {
 
     /**
      * This constructor is used for loading profiles for FOR_AUCTION_PAGE.
-     * @param profileId The ID of this profile.
-     * @param username User's username.
+     * @param profileId:     The ID of this profile.
+     * @param username:      User's username.
      */
     public Profile(final int profileId, final String username) {
         auctions = new ArrayList<>();
@@ -63,11 +61,11 @@ public class Profile {
 
     /**
      * This constructor is used for loading profiles for FOR_PROFILE_PAGE.
-     * @param profileId The ID of this profile.
-     * @param username User's username.
-     * @param creationDate The register date of this user/profile.
-     * @param photo The profile picture of this profile.
-     * @param auctions The current running auctions that this profile is the creator of.
+     * @param profileId:     The ID of this profile.
+     * @param username:      User's username.
+     * @param creationDate:  The register date of this user/profile.
+     * @param photo:         The profile picture of this profile.
+     * @param auctions:      The current running auctions that this profile is the creator of.
      */
     public Profile(final int profileId, final String username, final LocalDateTime creationDate, final Image photo, final ArrayList<Auction> auctions, final ArrayList<Feedback> feedbacks) {
         visitedAuctions = new ArrayList<>();
@@ -83,7 +81,6 @@ public class Profile {
 
     /**
      * Method for creating a new auction.
-     *
      * @param startBid:       Minimum value of the first bid. Must be >0.
      * @param minimum:        Minimum bid the auction must have reached before the seller actually sells the item. Must be >0.
      * @param expirationDate: Date/time when the auction is planned to close. Should be later then the current date.
@@ -99,7 +96,12 @@ public class Profile {
         auctionRepository.addAuction(auction);
     }
 
-    public void addAuction(Auction auction) throws SQLException {
+    /**
+     * Method used for adding an auction to this Profile-object for testing purposes.
+     * @param auction: The auction to be added to this profile.
+     * @throws SQLException
+     */
+    public void addAuction(final Auction auction) throws SQLException {
         auctions.add(auction);
         AuctionRepository auctionRepository = new AuctionRepository(new AuctionMySqlContext());
         auctionRepository.addAuction(auction);
@@ -107,7 +109,6 @@ public class Profile {
 
     /**
      * Method for adding an auction to a profile's visited auctions.
-     *
      * @param auction: The auction to add.
      */
     public void addVisitedAuction(final Auction auction) {
@@ -116,7 +117,6 @@ public class Profile {
 
     /**
      * Method for adding an auction to a profile's favorite auctions.
-     *
      * @param auction: The auction to add.
      */
     public void addFavoriteAuction(final Auction auction) {
@@ -125,7 +125,6 @@ public class Profile {
 
     /**
      * Method for removing an auction to a profile's favorite auctions.
-     *
      * @param auction: The auction to remove.
      */
     public void removeFavoriteAuction(final Auction auction) {
@@ -133,8 +132,7 @@ public class Profile {
     }
 
     /**
-     * Method for adding feedback to this profile
-     *
+     * Method for adding feedback to this Profile-object
      * @param author:     Profile that gave the feedback.
      * @param isPositive: Feedback can be positive (true), or negative (false)
      * @param message:    Message added to the feedback.
@@ -143,7 +141,11 @@ public class Profile {
 
     }
 
-    public void addFeedback(Feedback feedback) {
+    /**
+     * Method for adding feedback to this Profile-object for testing purposes.
+     * @param feedback: The Feedback-object to add to this Profile-object
+     */
+    public void addFeedback(final Feedback feedback) {
 
     }
 

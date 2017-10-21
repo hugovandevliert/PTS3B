@@ -19,10 +19,11 @@ public class ImageConverter {
             width = 200;
             height = 150;
         }
-        else {
+        else if (loadingType.equals(ImageLoadingType.FOR_PROFILE_PAGE)){
             width = 275;
             height = 196;
         }
+        else return null;
 
         return new Image(inputStream, width, height, false, false);
     }

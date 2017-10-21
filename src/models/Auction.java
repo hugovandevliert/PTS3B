@@ -24,17 +24,17 @@ public class Auction {
 
      /**
      * Constructor used for creating a new auction.
-     * @param title: Title of the auction.
-     * @param description: Description of the auction
-     * @param startBid: Minimum value of the first bid.
-     * @param minimum: Minimum bid the auction must have reached before the seller actually sells the item.
-     * @param openingDate: Date/time when the auction is planned to open.
-     * @param expirationDate: Date/time when the auction is planned to close.
-     * @param isPremium: Indicates if a user paid to boost his auction.
-     * @param creator: The user's profile that created this auction.
-     * @param images: All images added to the auction.
+     * @param title:            Title of the auction.
+     * @param description:      Description of the auction
+     * @param startBid:         Minimum value of the first bid.
+     * @param minimum:          Minimum bid the auction must have reached before the seller actually sells the item.
+     * @param openingDate:      Date/time when the auction is planned to open.
+     * @param expirationDate:   Date/time when the auction is planned to close.
+     * @param isPremium:        Indicates if a user paid to boost his auction.
+     * @param creator:          The user's profile that created this auction.
+     * @param images:           All images added to the auction.
      **/
-    public Auction(String title, String description, double startBid, double minimum, LocalDateTime openingDate, LocalDateTime expirationDate, boolean isPremium, Profile creator, ArrayList<Image> images) {
+    public Auction(final String title, final String description, final double startBid, final double minimum, final LocalDateTime openingDate, final LocalDateTime expirationDate, final boolean isPremium, final Profile creator, final ArrayList<Image> images) {
         this.title = title;
         this.description = description;
         this.startBid = startBid;
@@ -47,16 +47,16 @@ public class Auction {
         this.images = images;
         this.status = Status.OPEN;
 
-        bids = new ArrayList<Bid>();
+        bids = new ArrayList<>();
     }
 
     /**
      * Constructor used for listing the auctions.
-     * @param id: The ID of the auction.
-     * @param title: Title of the auction.
-     * @param description: Description of the auction
-     * @param startBid: Minimum value of the first bid.
-     * @param images: All images added to the auction.
+     * @param id:           The ID of the auction.
+     * @param title:        Title of the auction.
+     * @param description:  Description of the auction
+     * @param startBid:     Minimum value of the first bid.
+     * @param images:       All images added to the auction.
      **/
     public Auction(final int id, final String title, final String description, final double startBid, final ArrayList<Image> images) {
         this.id = id;
@@ -68,8 +68,8 @@ public class Auction {
 
     /**
      * Constructor used by the AuctionCountdownTimer
-     * @param id The ID of the auction.
-     * @param expirationDate Date/time when the auction is planned to close.
+     * @param id:               The ID of the auction.
+     * @param expirationDate:   Date/time when the auction is planned to close.
      */
     public Auction(final int id, final LocalDateTime expirationDate) {
         this.id = id;
@@ -78,14 +78,14 @@ public class Auction {
 
     /**
      * Constructor used for auction page (viewing an auction)
-     * @param id: The ID of the auction.
-     * @param title: Title of the auction.
-     * @param description: Description of the auction
-     * @param startBid: Minimum value of the first bid.
-     * @param expirationDate: Date/time when the auction is planned to close.
-     * @param creator: The user's profile that created this auction.
-     * @param images: All images added to the auction.
-     * @param bids: All bids placed on the auction.
+     * @param id:               The ID of the auction.
+     * @param title:            Title of the auction.
+     * @param description:      Description of the auction
+     * @param startBid:         Minimum value of the first bid.
+     * @param expirationDate:   Date/time when the auction is planned to close.
+     * @param creator:          The user's profile that created this auction.
+     * @param images:           All images added to the auction.
+     * @param bids:             All bids placed on the auction.
      **/
     public Auction(final int id, final String title, final String description, final double startBid, final LocalDateTime expirationDate, final Profile creator, final ArrayList<Image> images, final ArrayList<Bid> bids, final double minimum, final double incrementation) {
         this.id = id;
@@ -101,107 +101,10 @@ public class Auction {
     }
 
     /**
-     * Method to get the id of this auction.
-     * @return Returns the id of this auction.
+     * Method to change the status of this Auction-object
+     * @param status: This will be the new status of this Auction-object.
      */
-    public int getId() { return id; }
-
-    /**
-     * Method to get the minimum amount to start bidding of this auction.
-     * @return Returns the start bid of this auction.
-     */
-    public double getStartBid() {
-        return startBid;
-    }
-
-    /**
-     * Method to get the minimum of this auction.
-     * Minimum is the minumum amount of money for which the creator of this auction will sell it.
-     * The minimum is only visible to the creator himself.
-     * @return Returns the minimum of this auction.
-     */
-    public double getMinimum() {
-        return minimum;
-    }
-
-    /**
-     * Method to get the incrementation amount of this auction
-     * The incrementation amount is the amount that is atleast needed on top of the most recent bid
-     * @return Returns the minimum incrementation value of this auction
-     */
-    public double getIncrementation() { return incrementation; }
-
-    /**
-     * Method to check if this auction is a premium auction.
-     * @return Returns true if this auction is indeed a premium auction. Otherwise returns false.
-     */
-    public boolean isPremium() {
-        return isPremium;
-    }
-
-    /**
-     * Method to get the expiration date of this auction.
-     * @return Returns the expiration date of this auction.
-     */
-    public LocalDateTime getExpirationDate() {
-        return expirationDate;
-    }
-
-    /**
-     * Method to get the opening date of this auction.
-     * @return Returns the opening date of this auction.
-     */
-    public LocalDateTime getOpeningDate() {
-        return openingDate;
-    }
-
-    /**
-     * Method to get the creation date of this auction.
-     * @return Returns the creation date of this auction.
-     */
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    /**
-     * Method to get the title of this auction.
-     * @return Returns the title of this auction.
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * Method to get the description of this auction.
-     * @return Returns the description of this auction.
-     */
-    public String getDescription() { return description; }
-
-    /**
-     * Method to get all the images of this auction.
-     * @return Returns a list of images containing all the images of this auction.
-     */
-    public List<Image> getImages() {
-        return Collections.unmodifiableList(images);
-    }
-
-    /**
-     * Method to get all the bids placed on this auction.
-     * @return Returns a list containing all the bids placed on this auction.
-     */
-    public List<Bid> getBids() {
-        Collections.sort(bids);
-        return Collections.unmodifiableList(bids);
-    }
-
-    /**
-     * Method to get the status of this auction.
-     * @return Returns the status of this auction.
-     */
-    public Status getStatus() {
-        return status;
-    }
-
+    //TODO: Shouldn't this return a boolean in case it was not possible to change the status on the database? Like when a SQLException occurs etc?
     public void setStatus(final Status status) {
         this.status = status;
     }
@@ -211,21 +114,64 @@ public class Auction {
      * @param amount: Amount that was bid.
      * @param profile: profile that placed the bid.
      **/
+    //TODO: Shouldn't this return a boolean in case it was not possible to add the bid on the database? Like when a SQLException occurs etc?
     public void addBid(final double amount, final Profile profile) { }
 
     /**
-    * Method to end the auction
-    * @return: Return true if succeeded, false if failed to close.
-    **/
+     * Method to end the auction
+     * @return: Return true if succeeded, false if failed to close.
+     **/
     public boolean endAuction() {
         return false;
     }
 
+    public int getId() { return id; }
 
-    /**
-     * Method to get the creator of this auction.
-     * @return Returns the profile of the user who created this auction.
-     */
+    public double getStartBid() {
+        return startBid;
+    }
+
+    public double getMinimum() {
+        return minimum;
+    }
+
+    public double getIncrementation() { return incrementation; }
+
+    public boolean isPremium() {
+        return isPremium;
+    }
+
+    public LocalDateTime getExpirationDate() {
+        return expirationDate;
+    }
+
+    public LocalDateTime getOpeningDate() {
+        return openingDate;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() { return description; }
+
+    public List<Image> getImages() {
+        return Collections.unmodifiableList(images);
+    }
+
+    public List<Bid> getBids() {
+        Collections.sort(bids);
+        return Collections.unmodifiableList(bids);
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
     public Profile getCreator() {
         return creator;
     }

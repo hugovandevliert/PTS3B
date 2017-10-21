@@ -87,6 +87,7 @@ public class AuctionMySqlContext implements IAuctionContext {
         else if (auctionLoadingType.equals(AuctionLoadingType.FOR_COUNTDOWN_TIMER)){
             query = "SELECT id, EndDate FROM MyAuctions.Auction WHERE id = ?;";
         }
+        else return null;
 
         final ResultSet resultSet = Database.getData(query, new String[]{String.valueOf(auctionId)});
 
