@@ -23,6 +23,8 @@ public class Profile {
 
     private LocalDateTime creationDate;
 
+    private AuctionRepository auctionRepository;
+
     /**
      * Default Constructor.
      * @param photo:     User's profile picture.
@@ -32,20 +34,15 @@ public class Profile {
      * @param profileId: The ID of this profile.
      */
     public Profile(final Image photo, final String username, final String name, final String email, final int profileId) {
-        auctions = new ArrayList<>();
-        visitedAuctions = new ArrayList<>();
-        favoriteAuctions = new ArrayList<>();
-        feedbacks = new ArrayList<>();
-
+        this(profileId, username);
         this.photo = photo;
-        this.username = username;
         this.name = name;
         this.email = email;
-        this.profileId = profileId;
     }
 
     /**
-     * This constructor is used for loading profiles for FOR_AUCTION_PAGE.
+     * This constructor is used for setting default properties.
+     * This constructor is also used for loading profiles for FOR_AUCTION_PAGE.
      * @param profileId:     The ID of this profile.
      * @param username:      User's username.
      */
@@ -54,6 +51,8 @@ public class Profile {
         visitedAuctions = new ArrayList<>();
         favoriteAuctions = new ArrayList<>();
         feedbacks = new ArrayList<>();
+
+        auctionRepository = new AuctionRepository(new AuctionMySqlContext());
 
         this.username = username;
         this.profileId = profileId;
@@ -68,11 +67,7 @@ public class Profile {
      * @param auctions:      The current running auctions that this profile is the creator of.
      */
     public Profile(final int profileId, final String username, final LocalDateTime creationDate, final Image photo, final ArrayList<Auction> auctions, final ArrayList<Feedback> feedbacks) {
-        visitedAuctions = new ArrayList<>();
-        favoriteAuctions = new ArrayList<>();
-
-        this.profileId = profileId;
-        this.username = username;
+        this(profileId, username);
         this.creationDate = creationDate;
         this.photo = photo;
         this.auctions = auctions;
@@ -90,20 +85,42 @@ public class Profile {
      * @param images:         All images added to the auction.
      */
     public void addAuction(final double startBid, final double minimum, final LocalDateTime expirationDate, final LocalDateTime openingDate, final boolean isPremium, final String title, final String description, final ArrayList<Image> images) throws SQLException {
-        Auction auction = new Auction(title, description, startBid, minimum, openingDate, expirationDate, isPremium, this, images);
+        if (startBid <= 0){
+            throw new IllegalArgumentException("Startbid should be higher than 0.");
+        }
+        else if (minimum <= 0){
+            throw new IllegalArgumentException("Minimum bid should be higher than 0.");
+        }
+        else if (expirationDate == null){
+            throw new IllegalArgumentException("Expiration date can not be empty.");
+        }
+        else if (expirationDate.compareTo(LocalDateTime.now()) < 0){
+            throw new IllegalArgumentException("Expiration date should be in the future");
+        }
+        else if (openingDate == null){
+            throw new IllegalArgumentException("Opening date can not be empty");
+        }
+        else if (openingDate.compareTo(LocalDateTime.now()) < 0){
+            throw new IllegalArgumentException("Opening date can not be before today");
+        }
+        else if (expirationDate.compareTo(openingDate) < 1){
+            throw new IllegalArgumentException("Opening date must be before the expiration date");
+        }
+        else if (title.length() > 64){
+            throw new IllegalArgumentException("Title can not be longer than 64 characters.");
+        }
+
+        final Auction auction = new Auction(title, description, startBid, minimum, openingDate, expirationDate, isPremium, this, images);
         auctions.add(auction);
-        AuctionRepository auctionRepository = new AuctionRepository(new AuctionMySqlContext());
         auctionRepository.addAuction(auction);
     }
 
     /**
      * Method used for adding an auction to this Profile-object for testing purposes.
      * @param auction: The auction to be added to this profile.
-     * @throws SQLException
      */
     public void addAuction(final Auction auction) throws SQLException {
         auctions.add(auction);
-        AuctionRepository auctionRepository = new AuctionRepository(new AuctionMySqlContext());
         auctionRepository.addAuction(auction);
     }
 

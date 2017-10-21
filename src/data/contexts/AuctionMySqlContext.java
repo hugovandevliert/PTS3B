@@ -114,13 +114,14 @@ public class AuctionMySqlContext implements IAuctionContext {
                 auction.getStatus().toString(),
                 String.valueOf(auction.isPremium()),
                 String.valueOf(auction.getCreator().getProfileId())
-        }, false);
+        }, true);
 
         //TODO: Title is not unique, so we need to retrieve the ID in a different way.
         final ResultSet resultSet = Database.getData(
-                "SELECT id FROM Auction WHERE title = '?'",
+                "SELECT id FROM Auction WHERE title = ?",
                 new String[]{ auction.getTitle() }
         );
+        resultSet.next();
 
         return result == 1 && addAuctionImages(auction.getImages(), resultSet.getInt("id"));
     }
@@ -139,6 +140,7 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     public boolean addAuctionImages(final List<Image> images, final int auctionID) {
+        if (images == null) return true;
         final String query = "INSERT INTO Image (`image`, `auction_id`) (?, ?)";
         int resultCorrect = 0;
 

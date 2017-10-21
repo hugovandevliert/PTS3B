@@ -75,7 +75,7 @@ class ProfileTest {
     }
 
     @Test
-    void testGetPhoto() throws SQLException {
+    void testGetPhoto() throws SQLException, IOException, ClassNotFoundException {
         Image img = new Image("src/TestImages/2.jpg");
         User user = applicationManager.login("testusername", "AbC*1f");
         Profile profile = user.getProfile();
@@ -86,21 +86,21 @@ class ProfileTest {
     }
 
     @Test
-    void testGetUsername() throws SQLException {
+    void testGetUsername() throws SQLException, IOException, ClassNotFoundException {
         Profile profile = applicationManager.login("testusername", "AbC*1f").getProfile();
 
         assertEquals(profile.getUsername(), "testusername");
     }
 
     @Test
-    void testGetName() throws SQLException {
+    void testGetName() throws SQLException, IOException, ClassNotFoundException {
         Profile profile = applicationManager.login("testusername", "AbC*1f").getProfile();
 
         assertEquals(profile.getName(), "Test User");
     }
 
     @Test
-    void testGetEmail() throws SQLException {
+    void testGetEmail() throws SQLException, IOException, ClassNotFoundException {
         Profile profile = applicationManager.login("testusername", "AbC*1f").getProfile();
 
         assertEquals(profile.getEmail(), "testuser@gmail.com");

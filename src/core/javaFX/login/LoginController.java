@@ -35,6 +35,12 @@ public class LoginController extends MenuController {
             System.out.println("Error: " + exception.getMessage());
             return;
         }
+        catch (IOException exception){
+            exception.printStackTrace();
+        }
+        catch(ClassNotFoundException exception){
+            exception.printStackTrace();
+        }
 
         if (applicationManager.isLoggedIn()) {
             paneContent.getChildren().clear();

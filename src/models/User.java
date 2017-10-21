@@ -1,6 +1,11 @@
 package models;
 
+import data.contexts.ProfileMySqlContext;
 import javafx.scene.image.Image;
+import logic.repositories.ProfileRepository;
+import utilities.enums.ProfileLoadingType;
+import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * User class, used for authenticating users in the application.
@@ -11,17 +16,21 @@ public class User {
     private int id;
     private Profile profile;
 
+    private ProfileRepository profileRepository;
+
     /**
      * Constructor of the User-object which is used for creating an instance, it requires the following input parameters: Username, Name en Email
      * @param username: The Username of an User-object, Username is an unique String value
      * @param name:     The Name of the User
      * @param email:    The Email of the User, this value should be unique. It should always end with @[Valid domain name]
      */
-    public User(final int id, final String username, final String name, final String email) {
+    public User(final int id, final String username, final String name, final String email) throws IOException, SQLException, ClassNotFoundException{
         this.id = id;
         this.username = username;
         this.name = name;
         this.email = email;
+        profileRepository = new ProfileRepository(new ProfileMySqlContext());
+        this.profile = profileRepository.getProfileForId(id, ProfileLoadingType.FOR_AUCTION_PAGE);
     }
 
     /**

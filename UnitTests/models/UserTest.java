@@ -4,6 +4,7 @@ import core.ApplicationManager;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import java.io.IOException;
 import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,7 +18,7 @@ class UserTest {
     private static User user;
 
     @BeforeAll
-    static void setUp() throws SQLException {
+    static void setUp() throws SQLException, IOException, ClassNotFoundException {
         ApplicationManager applicationManager = new ApplicationManager();
         user = applicationManager.login("testusername", "AbC*1f");
     }

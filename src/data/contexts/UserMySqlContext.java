@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import models.Profile;
 import models.User;
 import utilities.database.Database;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -38,7 +39,7 @@ public class UserMySqlContext implements IUserContext {
     }
 
     @Override
-    public User getUserByUsername(final String username) throws SQLException {
+    public User getUserByUsername(final String username) throws SQLException, IOException, ClassNotFoundException {
         final String query = "SELECT id, username, name, email FROM MyAuctions.Account WHERE username = ?";
         final ResultSet resultSet = Database.getData(query, new String[]{username});
 

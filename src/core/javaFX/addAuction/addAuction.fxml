@@ -43,7 +43,8 @@
                  </font>
              </JFXTextField>
 
-             <JFXDatePicker defaultColor="#788599" layoutX="286.0" layoutY="565.0" prefHeight="25.0" prefWidth="465.0" promptText="end date" style="-fx-text-fill: #a6b5c9; -fx-background-color: #3d4857; -fx-prompt-text-fill: #788599;" />
+             <JFXDatePicker fx:id="datepicker_Expiration" defaultColor="#788599" layoutX="286.0" layoutY="535.0" prefHeight="25.0" prefWidth="465.0" promptText="end date" style="-fx-text-fill: #a6b5c9; -fx-background-color: #3d4857; -fx-prompt-text-fill: #788599;" />
+             <JFXDatePicker fx:id="datepicker_Opening" defaultColor="#788599" layoutX="286.0" layoutY="565.0" prefHeight="25.0" prefWidth="465.0" promptText="end date" style="-fx-text-fill: #a6b5c9; -fx-background-color: #3d4857; -fx-prompt-text-fill: #788599;" />
 
             <JFXButton layoutX="350.0" layoutY="671.0" onAction="#createAuction" prefHeight="45.0" prefWidth="300.0" style="-fx-background-color: f2aa78;" text="Create auction" textFill="#824923">
                 <font>

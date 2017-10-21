@@ -1,18 +1,17 @@
 package utilities.database;
 
 import javafx.scene.image.Image;
-import java.text.ParseException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.CallableStatement;
+import java.sql.DriverManager;
+import java.sql.Timestamp;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.Properties;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.sql.PreparedStatement;
-import java.sql.Date;
-import java.sql.CallableStatement;
 import java.io.IOException;
 import java.io.FileInputStream;
 
@@ -65,8 +64,7 @@ public class Database {
                         preparedStatement.setInt(index, Integer.parseInt(values[i]));
                     }
                     else if (isDate(values[i])){
-                        //Todo: callableStatement.setTimeStamp instead of setDate. If this even works it will only set the date not the time. -Thomas
-                        preparedStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
+                        preparedStatement.setTimestamp(index, Timestamp.valueOf(LocalDateTime.parse(values[i])));
                     }else{
                         preparedStatement.setString(index, values[i]);
                     }
@@ -115,7 +113,7 @@ public class Database {
                         preparedStatement.setInt(index, Integer.parseInt(values[i]));
                     }
                     else if (isDate(values[i])){
-                        preparedStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
+                        preparedStatement.setTimestamp(index, Timestamp.valueOf(LocalDateTime.parse(values[i])));
                     }
                     else if (isBoolean(values[i])){
                         preparedStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
@@ -162,7 +160,7 @@ public class Database {
                         preparedStatement.setInt(index, Integer.parseInt(values[i]));
                     }
                     else if (isDate(values[i])){
-                        preparedStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
+                        preparedStatement.setTimestamp(index, Timestamp.valueOf(LocalDateTime.parse(values[i])));
                     }
                     else if (isBoolean(values[i])){
                         preparedStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
@@ -213,8 +211,7 @@ public class Database {
                         callableStatement.setInt(index, Integer.parseInt(values[i]));
                     }
                     else if (isDate(values[i])){
-                        //Todo: callableStatement.setTimeStamp instead of setDate. If this even works it will only set the date not the time. -Thomas
-                        callableStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
+                        callableStatement.setTimestamp(index, Timestamp.valueOf(LocalDateTime.parse(values[i])));
                     }
                     else if (isBoolean(values[i])){
                         callableStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
@@ -227,8 +224,6 @@ public class Database {
             callableStatement.execute();
             updateCount = callableStatement.getUpdateCount();
         } catch (SQLException exception){
-            exception.printStackTrace(); //TODO: proper exception handling
-        } catch (ParseException exception) {
             exception.printStackTrace(); //TODO: proper exception handling
         }
         return updateCount;

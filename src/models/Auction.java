@@ -46,7 +46,6 @@ public class Auction {
         this.creator = creator;
         this.images = images;
         this.status = Status.OPEN;
-
         bids = new ArrayList<>();
     }
 
@@ -160,6 +159,7 @@ public class Auction {
     public String getDescription() { return description; }
 
     public List<Image> getImages() {
+        if(images == null) return null;
         return Collections.unmodifiableList(images);
     }
 

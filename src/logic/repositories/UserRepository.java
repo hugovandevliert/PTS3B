@@ -4,6 +4,8 @@ import data.interfaces.IUserContext;
 import javafx.scene.image.Image;
 import models.Profile;
 import models.User;
+
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class UserRepository {
@@ -22,7 +24,7 @@ public class UserRepository {
         return context.getSaltAndHash(username);
     }
 
-    public User getUserByUsername(final String username) throws SQLException{
+    public User getUserByUsername(final String username) throws SQLException, IOException, ClassNotFoundException {
         return context.getUserByUsername(username);
     }
 

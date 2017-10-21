@@ -5,6 +5,7 @@ import logic.repositories.UserRepository;
 import models.Auction;
 import models.Profile;
 import models.User;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -25,7 +26,7 @@ public class ApplicationManager {
         userRepository = new UserRepository(new UserMySqlContext());
     }
 
-    public User login(final String username, final String password) throws SQLException {
+    public User login(final String username, final String password) throws SQLException, IOException, ClassNotFoundException {
         String[] saltAndHash = userRepository.getSaltAndHash(username);
 
         if (saltAndHash != null){

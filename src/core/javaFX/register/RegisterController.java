@@ -66,7 +66,14 @@ public class RegisterController extends MenuController {
 
 //            UserAlert userAlert = new UserAlert();
 //            userAlert.showMessage(ex.getMessage(), AlertType.Error, paneAlert, lblAlertMessage, this);
+        } catch (ClassNotFoundException exception) {
+            //TODO: Actual client side validation feedback
+            System.out.println(exception.getMessage());
+
+//            UserAlert userAlert = new UserAlert();
+//            userAlert.showMessage(ex.getMessage(), AlertType.Error, paneAlert, lblAlertMessage, this);
         }
+
     }
 
     public void login() throws IOException {
