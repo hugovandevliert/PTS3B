@@ -6,7 +6,6 @@ import data.contexts.BidMySqlContext;
 import javafx.application.Platform;
 import logic.repositories.BidRepository;
 import models.Bid;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -39,28 +38,21 @@ public class AuctionBidsLoadingTimer extends TimerTask {
     @Override
     public void run() {
         try {
-            if (!userStoppedLookingAtThisAuction()){
-                if (!auctionHasEnded()){
-                    final ArrayList<Bid> newLoadedBids = bidRepository.getBids(this.auctionId);
+            // There is no need to keep this TimerTask running as the auction has been ended or the user stopped looking at the auction
+            // We will therefore cancel the TimerTask
+            if(userStoppedLookingAtThisAuction() || auctionHasEnded()) this.cancel();
+            final ArrayList<Bid> newLoadedBids = bidRepository.getBids(this.auctionId);
 
-                    if (bidsHaveChanged(newLoadedBids)){
-                        Collections.sort(newLoadedBids);
-                        Platform.runLater(() -> auctionController.setBids(newLoadedBids, startBid));
-                    }
-                }else{
-                    // There is no need to keep this TimerTask running as the auction has been ended or the user stopped looking at the auction
-                    // We will therefore cancel the TimerTask
-                    this.cancel();
-                }
-            }else{
-                this.cancel();
+            if (bidsHaveChanged(newLoadedBids)){
+                Collections.sort(newLoadedBids);
+                Platform.runLater(() -> auctionController.setBids(newLoadedBids, startBid));
             }
-        } catch (SQLException e) {
-            e.printStackTrace(); //TODO proper error handling
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (SQLException exception) {
+            exception.printStackTrace(); //TODO proper error handling
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        } catch (ClassNotFoundException exception) {
+            exception.printStackTrace();
         }
     }
 

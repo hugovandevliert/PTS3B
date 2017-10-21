@@ -10,7 +10,6 @@ import utilities.database.Database;
 import utilities.enums.AuctionLoadingType;
 import utilities.enums.ImageLoadingType;
 import utilities.enums.ProfileLoadingType;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.io.IOException;
@@ -161,7 +160,7 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     @Override
-    public boolean auctionIsClosed(int auctionId) throws SQLException {
+    public boolean auctionIsClosed(final int auctionId) throws SQLException {
         final String query = "SELECT status FROM MyAuctions.Auction WHERE id = ?;";
         final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
 

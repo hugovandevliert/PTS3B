@@ -3,7 +3,6 @@ package data.interfaces;
 import models.Auction;
 import models.Profile;
 import utilities.enums.ProfileLoadingType;
-
 import java.io.IOException;
 import java.sql.SQLException;
 

@@ -9,9 +9,7 @@ import models.Profile;
 import utilities.database.Database;
 import utilities.enums.ImageLoadingType;
 import utilities.enums.ProfileLoadingType;
-
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -25,10 +23,11 @@ public class ProfileMySqlContext implements IProfileContext {
 
     @Override
     public Profile getProfileForId(final int userId, final ProfileLoadingType loadingType) throws SQLException, IOException, ClassNotFoundException {
-        String query = "";
+        String query;
 
         if (loadingType.equals(ProfileLoadingType.FOR_AUCTION_PAGE)) query = "SELECT id, username FROM Account WHERE id = ?";
         else if (loadingType.equals(ProfileLoadingType.FOR_PROFILE_PAGE)) query = "SElECT id, username, creationDate, Image FROM Account WHERE id = ?";
+        else return null;
 
         final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(userId) });
 

@@ -6,7 +6,6 @@ import models.Bid;
 import utilities.database.Database;
 import utilities.enums.BidLoadingType;
 import utilities.enums.ProfileLoadingType;
-
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,9 +19,9 @@ public class BidMySqlContext implements IBidContext {
 
     @Override
     public ArrayList<Bid> getBids(final int auctionId) throws SQLException, IOException, ClassNotFoundException {
-        ArrayList<Bid> bids = new ArrayList<>();
         final String query = "SELECT b.* FROM MyAuctions.Bid b " +
-                             "INNER JOIN MyAuctions.Account a ON a.id = b.account_id WHERE Auction_ID = ?";
+                "INNER JOIN MyAuctions.Account a ON a.id = b.account_id WHERE Auction_ID = ?";
+        final ArrayList<Bid> bids = new ArrayList<>();
         final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
 
         if (resultSet != null){
@@ -34,7 +33,7 @@ public class BidMySqlContext implements IBidContext {
     }
 
     @Override
-    public Bid getMostRecentBidForAuctionWithId(int auctionId) throws SQLException, IOException, ClassNotFoundException {
+    public Bid getMostRecentBidForAuctionWithId(final int auctionId) throws SQLException, IOException, ClassNotFoundException {
         final String query = "SELECT amount FROM MyAuctions.Bid WHERE auction_id = ? ORDER BY amount DESC LIMIT 1";
         final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
 

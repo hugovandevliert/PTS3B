@@ -3,7 +3,6 @@ package logic.repositories;
 import data.interfaces.IAuctionContext;
 import models.Auction;
 import utilities.enums.AuctionLoadingType;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ public class AuctionRepository {
         return context.addAuction(auction);
     }
 
-    public boolean addBid(double amount, int accountId, int auctionId) {
+    public boolean addBid(final double amount, final int accountId, final int auctionId) {
         return context.addBid(amount, accountId, auctionId);
     }
 

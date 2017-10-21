@@ -6,7 +6,6 @@ import models.Feedback;
 import utilities.database.Database;
 import utilities.enums.FeedbackLoadingType;
 import utilities.enums.ProfileLoadingType;
-
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;

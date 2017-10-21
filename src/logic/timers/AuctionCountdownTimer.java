@@ -6,13 +6,11 @@ import data.contexts.AuctionMySqlContext;
 import javafx.application.Platform;
 import logic.repositories.AuctionRepository;
 import utilities.enums.AuctionLoadingType;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
-import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
@@ -38,38 +36,35 @@ public class AuctionCountdownTimer extends TimerTask {
     @Override
     public void run() {
         try {
-            if (!userStoppedLookingAtThisAuction()){
-                if (!auctionRepository.auctionIsClosed(this.auctionId)){
-                    final Date currentDate = new Date();
-                    expirationDate = auctionRepository.getAuctionForId(this.auctionId, AuctionLoadingType.FOR_COUNTDOWN_TIMER).getExpirationDate();
+            if(userStoppedLookingAtThisAuction()) this.cancel();
+            if (!auctionRepository.auctionIsClosed(this.auctionId)){
+                final Date currentDate = new Date();
+                expirationDate = auctionRepository.getAuctionForId(this.auctionId, AuctionLoadingType.FOR_COUNTDOWN_TIMER).getExpirationDate();
 
-                    final long differenceInMs = expirationDate.toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli() - currentDate.getTime();
-                    String timerStringValue = "";
+                final long differenceInMs = expirationDate.toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli() - currentDate.getTime();
+                String timerStringValue;
 
-                    if (differenceInMs > 0){
-                        timerStringValue = getDurationFromMilliseconds(differenceInMs);
-                    }else{
-                        timerStringValue = "This auction has ended!";
-                    }
-
-                    //TODO: ook zorgen dat deze thread netjes gestopt wordt als deze pagina verwijdert wordt!
-                    final String finalTimerStringValue = timerStringValue;
-                    setTimerValue(finalTimerStringValue);
-                }else{
-                    // There is no need to keep this TimerTask running as the auction has been ended
-                    // We will therefore cancel the TimerTask
-                    setTimerValue("This auction has ended!");
-                    this.cancel();
+                if (differenceInMs > 0){
+                    timerStringValue = getDurationFromMilliseconds(differenceInMs);
+                } else{
+                    timerStringValue = "This auction has ended!";
                 }
-            }else{
+
+                //TODO: ook zorgen dat deze thread netjes gestopt wordt als deze pagina verwijdert wordt!
+                final String finalTimerStringValue = timerStringValue;
+                setTimerValue(finalTimerStringValue);
+            } else{
+                // There is no need to keep this TimerTask running as the auction has been ended
+                // We will therefore cancel the TimerTask
+                setTimerValue("This auction has ended!");
                 this.cancel();
             }
-        } catch (SQLException e) {
-            e.printStackTrace(); //TODO: proper error handling
-        } catch (IOException e) {
-            e.printStackTrace(); //TODO: proper error handling
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace(); //TODO: proper error handling
+        } catch (SQLException exception) {
+            exception.printStackTrace(); //TODO: proper error handling
+        } catch (IOException exception) {
+            exception.printStackTrace(); //TODO: proper error handling
+        } catch (ClassNotFoundException exception) {
+            exception.printStackTrace(); //TODO: proper error handling
         }
     }
 
