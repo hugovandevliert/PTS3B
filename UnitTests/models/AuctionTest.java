@@ -111,8 +111,8 @@ class AuctionTest {
         try{
             auction1.addBid(10.00, profile2);
         }
-        catch(Exception ex){
-            fail("Expected no exception, but got: " + ex.getStackTrace());
+        catch(Exception exception){
+            fail("Expected no exception, but got: " + exception.getStackTrace());
         }
         assertThrows(IllegalArgumentException.class, () -> auction1.addBid(10, profile1), "Can not bid on your own auction.");
     }
