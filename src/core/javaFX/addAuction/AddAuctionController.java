@@ -18,16 +18,16 @@ import java.util.ResourceBundle;
 
 public class AddAuctionController extends MenuController {
 
-    @FXML private ImageView imgviewPicture1;
-    @FXML private ImageView imgviewPicture2;
-    @FXML private ImageView imgviewPicture3;
+    @FXML private ImageView imgviewPicture1,imgviewPicture2, imgviewPicture3;
     @FXML private JFXTextField txtTitle;
     @FXML private JFXTextArea txtDescription;
-    @FXML private JFXDatePicker datepicker_Expiration;
-    @FXML private JFXDatePicker datepicker_Opening;
+    @FXML private JFXDatePicker datepicker_Expiration, datepicker_Opening;
+
+    private File[] images;
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
+        images = new File[3];
         setImages();
     }
 
@@ -41,22 +41,30 @@ public class AddAuctionController extends MenuController {
         if (selectedImage != null) {
             ImageView source = (ImageView) mouseEvent.getSource();
             if (source == imgviewPicture1) {
+                images[0] = selectedImage;
                 imgviewPicture1.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 275, 206, false, false));
             } else if (source == imgviewPicture2) {
+                images[1] = selectedImage;
                 imgviewPicture2.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 275, 206, false, false));
             } else if (source == imgviewPicture3) {
+                images[2] = selectedImage;
                 imgviewPicture3.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 275, 206, false, false));
             }
         }
     }
 
     public void createAuction() {
-        try{
-            //TODO: Connect this to the UI instead of adding an hard coded auction
-            File myFileImage = new File("MyPathToFile");
-            ArrayList<File> fileImages = new ArrayList<>();
-            fileImages.add(myFileImage);
-            applicationManager.currentUser.getProfile().addAuction(1, 1, LocalDateTime.now().plusDays(1), LocalDateTime.now().plusSeconds(1), false, "title", "Description", fileImages);
+        try {
+            applicationManager.currentUser.getProfile().addAuction(
+                    1,
+                    1,
+                    LocalDateTime.now().plusDays(1),
+                    LocalDateTime.now().plusSeconds(1),
+                    false,
+                    txtTitle.getText(),
+                    "Description",
+                    getImages(this.images)
+                    );
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
         } catch (SQLException exception) {
@@ -67,10 +75,20 @@ public class AddAuctionController extends MenuController {
 
     private void setImages() {
         final Image placeholderImage = new Image("file:" +  new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath(),
-                275, 206, false, false);
+                275, 206, false, true);
+
         imgviewPicture1.setImage(placeholderImage);
         imgviewPicture2.setImage(placeholderImage);
         imgviewPicture3.setImage(placeholderImage);
+    }
+
+    private ArrayList<File> getImages(final File... files) {
+        ArrayList<File> images = new ArrayList<>();
+
+        for (final File file : files){
+            if (file != null) images.add(file);
+        }
+        return images;
     }
 
     private boolean validate(final String text) {
