@@ -2,6 +2,7 @@ package models;
 
 import javafx.scene.image.Image;
 import utilities.enums.Status;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +20,7 @@ public class Auction {
     private String title, description;
     private Status status;
     private ArrayList<Image> images;
+    private ArrayList<File> fileImages;
     private ArrayList<Bid> bids;
     private Profile creator;
 
@@ -32,9 +34,9 @@ public class Auction {
      * @param expirationDate:   Date/time when the auction is planned to close.
      * @param isPremium:        Indicates if a user paid to boost his auction.
      * @param creator:          The user's profile that created this auction.
-     * @param images:           All images added to the auction.
+     * @param fileImages:       The file's which represent the images added to this auction.
      **/
-    public Auction(final String title, final String description, final double startBid, final double minimum, final LocalDateTime openingDate, final LocalDateTime expirationDate, final boolean isPremium, final Profile creator, final ArrayList<Image> images) {
+    public Auction(final String title, final String description, final double startBid, final double minimum, final LocalDateTime openingDate, final LocalDateTime expirationDate, final boolean isPremium, final Profile creator, final ArrayList<File> fileImages) {
         this.title = title;
         this.description = description;
         this.startBid = startBid;
@@ -44,7 +46,7 @@ public class Auction {
         this.expirationDate = expirationDate;
         this.isPremium = isPremium;
         this.creator = creator;
-        this.images = images;
+        this.fileImages = fileImages;
         this.status = Status.OPEN;
         bids = new ArrayList<>();
     }
@@ -159,11 +161,17 @@ public class Auction {
     public String getDescription() { return description; }
 
     public List<Image> getImages() {
-        if(images == null) return null;
+        if (images == null) return null;
         return Collections.unmodifiableList(images);
     }
 
+    public List<File> getFileImages() {
+        if (fileImages == null) return null;
+        return Collections.unmodifiableList(fileImages);
+    }
+
     public List<Bid> getBids() {
+        if (bids == null) return null;
         Collections.sort(bids);
         return Collections.unmodifiableList(bids);
     }

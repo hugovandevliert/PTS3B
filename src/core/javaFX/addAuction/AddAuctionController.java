@@ -13,6 +13,7 @@ import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AddAuctionController extends MenuController {
@@ -51,12 +52,14 @@ public class AddAuctionController extends MenuController {
 
     public void createAuction() {
         try{
-            applicationManager.currentUser.getProfile().addAuction(1, 1, LocalDateTime.now().plusDays(1), LocalDateTime.now(), false, "title", "Description", null);
-        }
-        catch(IllegalArgumentException exception){
+            //TODO: Connect this to the UI instead of adding an hard coded auction
+            File myFileImage = new File("MyPathToFile");
+            ArrayList<File> fileImages = new ArrayList<>();
+            fileImages.add(myFileImage);
+            applicationManager.currentUser.getProfile().addAuction(1, 1, LocalDateTime.now().plusDays(1), LocalDateTime.now().plusSeconds(1), false, "title", "Description", fileImages);
+        } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
-        }
-        catch(SQLException exception){
+        } catch (SQLException exception) {
             //TODO: Actual client side feedback
             exception.printStackTrace();
         }

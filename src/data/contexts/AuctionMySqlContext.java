@@ -10,6 +10,7 @@ import utilities.database.Database;
 import utilities.enums.AuctionLoadingType;
 import utilities.enums.ImageLoadingType;
 import utilities.enums.ProfileLoadingType;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.io.IOException;
@@ -123,7 +124,7 @@ public class AuctionMySqlContext implements IAuctionContext {
         );
         resultSet.next();
 
-        return result == 1 && addAuctionImages(auction.getImages(), resultSet.getInt("id"));
+        return result == 1 && addAuctionImages(auction.getFileImages(), resultSet.getInt("id"));
     }
 
     @Override
@@ -139,17 +140,17 @@ public class AuctionMySqlContext implements IAuctionContext {
                 }, true);
     }
 
-    public boolean addAuctionImages(final List<Image> images, final int auctionID) {
+    public boolean addAuctionImages(final List<File> images, final int auctionID) {
         if (images == null) return true;
-        final String query = "INSERT INTO Image (`image`, `auction_id`) (?, ?)";
+        final String query = "INSERT INTO Image (`auction_id`, `image`) VALUES (?, ?)";
         int resultCorrect = 0;
 
-        for (Image image : images) {
+        for (File image : images) {
             resultCorrect += Database.setDataWithImages(
                     query,
                     new String[]{ String.valueOf(auctionID) },
-                    new Image[]{ image },
-                    false
+                    new File[]{ image },
+                    true
             );
         }
         return resultCorrect == images.size();

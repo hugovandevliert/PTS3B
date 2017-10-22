@@ -1,10 +1,9 @@
 package logic.repositories;
 
 import data.interfaces.IUserContext;
-import javafx.scene.image.Image;
 import models.Profile;
 import models.User;
-
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -16,7 +15,7 @@ public class UserRepository {
         this.context = context;
     }
 
-    public boolean setPhoto(final Profile profile, final Image photo) {
+    public boolean setPhoto(final Profile profile, final File photo) {
         return context.setPhoto(profile, photo);
     }
 

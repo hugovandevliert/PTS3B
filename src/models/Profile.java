@@ -3,6 +3,7 @@ package models;
 import data.contexts.AuctionMySqlContext;
 import javafx.scene.image.Image;
 import logic.repositories.AuctionRepository;
+import java.io.File;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -82,9 +83,9 @@ public class Profile {
      * @param openingDate:    Date/time when the auction is planned to open. Should be earlier then the the expirationdate, and can't be earlier then today.
      * @param isPremium:      Indicates if a user paid to boost his auction.
      * @param title:          Title of the auction. Can't contain more then 64 characters.
-     * @param images:         All images added to the auction.
+     * @param fileImages:     The file's which represent the images added to this auction.
      */
-    public void addAuction(final double startBid, final double minimum, final LocalDateTime expirationDate, final LocalDateTime openingDate, final boolean isPremium, final String title, final String description, final ArrayList<Image> images) throws SQLException {
+    public void addAuction(final double startBid, final double minimum, final LocalDateTime expirationDate, final LocalDateTime openingDate, final boolean isPremium, final String title, final String description, final ArrayList<File> fileImages) throws SQLException {
         if (startBid <= 0){
             throw new IllegalArgumentException("Startbid should be higher than 0.");
         }
@@ -110,7 +111,7 @@ public class Profile {
             throw new IllegalArgumentException("Title can not be longer than 64 characters.");
         }
 
-        final Auction auction = new Auction(title, description, startBid, minimum, openingDate, expirationDate, isPremium, this, images);
+        final Auction auction = new Auction(title, description, startBid, minimum, openingDate, expirationDate, isPremium, this, fileImages);
         auctions.add(auction);
         auctionRepository.addAuction(auction);
     }

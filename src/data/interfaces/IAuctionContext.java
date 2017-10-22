@@ -2,7 +2,6 @@ package data.interfaces;
 
 import models.Auction;
 import utilities.enums.AuctionLoadingType;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;

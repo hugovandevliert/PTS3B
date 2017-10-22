@@ -34,11 +34,9 @@ public class LoginController extends MenuController {
             System.out.println("Incorrect login credentials!");
             System.out.println("Error: " + exception.getMessage());
             return;
-        }
-        catch (IOException exception){
+        } catch (IOException exception) {
             exception.printStackTrace();
-        }
-        catch(ClassNotFoundException exception){
+        } catch(ClassNotFoundException exception) {
             exception.printStackTrace();
         }
 

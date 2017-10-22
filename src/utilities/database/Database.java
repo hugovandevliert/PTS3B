@@ -1,6 +1,6 @@
 package utilities.database;
 
-import javafx.scene.image.Image;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
@@ -8,7 +8,6 @@ import java.sql.CallableStatement;
 import java.sql.DriverManager;
 import java.sql.Timestamp;
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.Properties;
@@ -19,7 +18,6 @@ import java.io.FileInputStream;
 public class Database {
 
     private static String server, username, password;
-    private static SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");
     private static Connection connection;
 
     public static Connection getConnection() {
@@ -65,7 +63,8 @@ public class Database {
                     }
                     else if (isDate(values[i])){
                         preparedStatement.setTimestamp(index, Timestamp.valueOf(LocalDateTime.parse(values[i])));
-                    }else{
+                    }
+                    else{
                         preparedStatement.setString(index, values[i]);
                     }
                 }
@@ -117,7 +116,8 @@ public class Database {
                     }
                     else if (isBoolean(values[i])){
                         preparedStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
-                    }else{
+                    }
+                    else{
                         preparedStatement.setString(index, values[i]);
                     }
                 }
@@ -141,9 +141,8 @@ public class Database {
      * @param images:            This is an array of images
      * @param isUpdateQuery:    This indicates if the query is an update query
      */
-    public static int setDataWithImages(final String query, final String[] values, final Image[] images, final boolean isUpdateQuery) {
+    public static int setDataWithImages(final String query, final String[] values, final File[] images, final boolean isUpdateQuery) {
         int updateCount = -1;
-
         try {
             final Connection connection = Database.getConnection();
             final PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -164,18 +163,18 @@ public class Database {
                     }
                     else if (isBoolean(values[i])){
                         preparedStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
-                    }else{
+                    }
+                    else {
                         preparedStatement.setString(index, values[i]);
                     }
                 }
             }
-
             if (images != null && images.length > 0){
-                for (int i = 0; i < values.length; i++){
+                for (int i = 0; i < images.length; i++){
                     index += 1;
+                    final FileInputStream fileInputStream = new FileInputStream(images[i]);
 
-                    /*final FileInputStream fileInputStream = new FileInputStream(images[i]);
-                    preparedStatement.setBinaryStream(index, fileInputStream, (int)images[i].length());*/
+                    preparedStatement.setBinaryStream(index, fileInputStream, (int)images[i].length());
                 }
             }
 
@@ -215,7 +214,8 @@ public class Database {
                     }
                     else if (isBoolean(values[i])){
                         callableStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
-                    }else{
+                    }
+                    else{
                         callableStatement.setString(index, values[i]);
                     }
                 }
