@@ -55,18 +55,7 @@ public class Database {
                 for (int i = 0; i < values.length; i++){
                     final int index = i + 1;
 
-                    if (isDouble(values[i])){
-                        preparedStatement.setDouble(index, Double.parseDouble(values[i]));
-                    }
-                    else if (isInteger(values[i])){
-                        preparedStatement.setInt(index, Integer.parseInt(values[i]));
-                    }
-                    else if (isDate(values[i])){
-                        preparedStatement.setTimestamp(index, Timestamp.valueOf(LocalDateTime.parse(values[i])));
-                    }
-                    else{
-                        preparedStatement.setString(index, values[i]);
-                    }
+                    fillPreparedStatementRowWithValue(preparedStatement, values[i], index);
                 }
             }
 
@@ -105,21 +94,7 @@ public class Database {
                 for (int i = 0; i < values.length; i++){
                     final int index = i + 1;
 
-                    if (isDouble(values[i])){
-                        preparedStatement.setDouble(index, Double.parseDouble(values[i]));
-                    }
-                    else if (isInteger(values[i])){
-                        preparedStatement.setInt(index, Integer.parseInt(values[i]));
-                    }
-                    else if (isDate(values[i])){
-                        preparedStatement.setTimestamp(index, Timestamp.valueOf(LocalDateTime.parse(values[i])));
-                    }
-                    else if (isBoolean(values[i])){
-                        preparedStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
-                    }
-                    else{
-                        preparedStatement.setString(index, values[i]);
-                    }
+                    fillPreparedStatementRowWithValue(preparedStatement, values[i], index);
                 }
             }
 
@@ -143,6 +118,7 @@ public class Database {
      */
     public static int setDataWithImages(final String query, final String[] values, final File[] images, final boolean isUpdateQuery) {
         int updateCount = -1;
+
         try {
             final Connection connection = Database.getConnection();
             final PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -152,21 +128,7 @@ public class Database {
                 for (int i = 0; i < values.length; i++){
                     index += 1;
 
-                    if (isDouble(values[i])){
-                        preparedStatement.setDouble(index, Double.parseDouble(values[i]));
-                    }
-                    else if (isInteger(values[i])){
-                        preparedStatement.setInt(index, Integer.parseInt(values[i]));
-                    }
-                    else if (isDate(values[i])){
-                        preparedStatement.setTimestamp(index, Timestamp.valueOf(LocalDateTime.parse(values[i])));
-                    }
-                    else if (isBoolean(values[i])){
-                        preparedStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
-                    }
-                    else {
-                        preparedStatement.setString(index, values[i]);
-                    }
+                    fillPreparedStatementRowWithValue(preparedStatement, values[i], index);
                 }
             }
             if (images != null && images.length > 0){
@@ -245,6 +207,24 @@ public class Database {
             return true;
         } catch (NumberFormatException exception) {
             return false;
+        }
+    }
+
+    private static void fillPreparedStatementRowWithValue(final PreparedStatement preparedStatement, final String value, final int index) throws SQLException {
+        if (isDouble(value)){
+            preparedStatement.setDouble(index, Double.parseDouble(value));
+        }
+        else if (isInteger(value)){
+            preparedStatement.setInt(index, Integer.parseInt(value));
+        }
+        else if (isDate(value)){
+            preparedStatement.setTimestamp(index, Timestamp.valueOf(LocalDateTime.parse(value)));
+        }
+        else if (isBoolean(value)){
+            preparedStatement.setBoolean(index, Boolean.parseBoolean(value));
+        }
+        else {
+            preparedStatement.setString(index, value);
         }
     }
 
