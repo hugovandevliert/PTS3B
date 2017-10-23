@@ -1,27 +1,26 @@
 package models;
 
 import core.ApplicationManager;
-import javafx.scene.image.Image;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
+import java.io.IOException;
 import java.sql.SQLException;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * ASSUMPTION: There is a user in the database with username="testusername", password="AbC*1f", name="Test User" and email="testuser@gmail.com".
+ * If this is not true, all tests will fail..
+ */
 class UserTest {
     private static User user;
 
-    /**
-     * ASSUMPTION: There is a user in the database with username="testusername", password="AbC*1f", name="Test User" and email="testuser@gmail.com".
-     * If this is not true, all tests will fail..
-     */
-
     @BeforeAll
-    static void setUp() throws SQLException {
-        ApplicationManager am = new ApplicationManager();
-        user = am.login("testusername", "AbC*1f");
+    static void setUp() throws SQLException, IOException, ClassNotFoundException {
+        ApplicationManager applicationManager = new ApplicationManager();
+        user = applicationManager.login("testusername", "AbC*1f");
     }
 
     @Test

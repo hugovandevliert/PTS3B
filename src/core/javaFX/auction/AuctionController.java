@@ -1,12 +1,13 @@
 package core.javaFX.auction;
 
-
 import com.jfoenix.controls.JFXTextField;
 import core.javaFX.menu.MenuController;
+import core.javaFX.profile.ProfileController;
 import data.contexts.AuctionMySqlContext;
 import data.contexts.BidMySqlContext;
-import javafx.event.ActionEvent;
+import data.contexts.ProfileMySqlContext;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,12 +17,15 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import logic.repositories.AuctionRepository;
 import logic.repositories.BidRepository;
+import logic.repositories.ProfileRepository;
 import logic.timers.AuctionBidsLoadingTimer;
 import logic.timers.AuctionCountdownTimer;
 import models.Bid;
+import models.Profile;
 import utilities.database.Database;
-
+import utilities.enums.ProfileLoadingType;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -42,12 +46,16 @@ public class AuctionController extends MenuController {
 
     private AuctionRepository auctionRepository;
     private BidRepository bidRepository;
+    private ProfileRepository profileRepository;
 
-    private int auctionId, currenteUserId;
+    private MenuController menuController;
+    private ProfileController profileController;
+
+    private int auctionId, currenteUserId, creatorId;
     private double auctionMinimumBid, auctionMinimumIncrementation;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) { }
+    public void initialize(final URL location, final ResourceBundle resources) { }
 
     public String getTimerString() {
         return lblTimer.getText();
@@ -111,6 +119,8 @@ public class AuctionController extends MenuController {
         this.auctionId = auctionId;
     }
 
+    public void setCreatorId(final int creatorId) { this.creatorId = creatorId; }
+
     public void setCurrenteUserId(final int currenteUserId) { this.currenteUserId = currenteUserId; }
 
     public void setBidTextfieldPromptText(final String value) {
@@ -125,9 +135,12 @@ public class AuctionController extends MenuController {
         this.auctionMinimumIncrementation = auctionMinimumIncrementation;
     }
 
+    public void setMenuController(final MenuController menuController) { this.menuController = menuController; }
+
     public void initializeRepositories() {
         auctionRepository = new AuctionRepository(new AuctionMySqlContext());
         bidRepository = new BidRepository(new BidMySqlContext());
+        profileRepository = new ProfileRepository(new ProfileMySqlContext());
     }
 
     public void initializeCountdownTimer(final LocalDateTime expirationDate) {
@@ -136,7 +149,7 @@ public class AuctionController extends MenuController {
 
         if (countdownInMilliseconds > 0){
             auctionCountdown = new Timer();
-            auctionCountdown.schedule(new AuctionCountdownTimer(this, this.auctionId), 0, 1000);
+            auctionCountdown.schedule(new AuctionCountdownTimer(this, this.menuController, this.auctionId), 0, 1000);
         }else{
             setTimer("This auction has ended!");
         }
@@ -144,7 +157,7 @@ public class AuctionController extends MenuController {
 
     public void initializeBidsLoadingTimer(final List<Bid> bids, final int auctionId, final double startBid) {
         bidsLoadingTimer = new Timer();
-        bidsLoadingTimer.schedule(new AuctionBidsLoadingTimer(this, bids, auctionId, startBid), 1000, 500);
+        bidsLoadingTimer.schedule(new AuctionBidsLoadingTimer(this, this.menuController, bids, auctionId, startBid), 1000, 500);
     }
 
     public void disablePlaceBidPane() {
@@ -188,7 +201,7 @@ public class AuctionController extends MenuController {
                             System.out.println("Placing the bid wasn't successfull!"); //TODO: show this with a User Alert
                         }
                     }else{
-                        System.out.println("Your bid is not high enough, it should atleast be €" + minimumNeededAmount); //TODO: show htis with a User Alert
+                        System.out.println("Your bid is not high enough, it should atleast be €" + minimumNeededAmount); //TODO: show this with a User Alert
                     }
                 }else{
                     System.out.println("Please fill in a valid bid!"); //TODO: show this with a User Alert
@@ -196,8 +209,12 @@ public class AuctionController extends MenuController {
             }else{
                 System.out.println("This auction has been closed - you are not able to bid anymore"); //TODO: show this with a User Alert
             }
-        } catch (SQLException e){
-            e.printStackTrace(); //TODO: proper error handling
+        } catch (SQLException exception){
+            exception.printStackTrace(); //TODO: proper error handling
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        } catch (ClassNotFoundException exception) {
+            exception.printStackTrace();
         }
     }
 
@@ -207,6 +224,29 @@ public class AuctionController extends MenuController {
 
         imgviewSelectedPicture.setImage(clickedImageView.getImage());
         clickedImageView.setImage(previousSelectedPicture);
+    }
+
+    public void goToCreatorProfile() {
+        try {
+            final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/core/javafx/profile/profile.fxml"));
+            final Pane newLoadedPane = fxmlLoader.load();
+            profileController = fxmlLoader.getController();
+            profileRepository = new ProfileRepository(new ProfileMySqlContext());
+
+            final Profile profile = profileRepository.getProfileForId(this.creatorId, ProfileLoadingType.FOR_PROFILE_PAGE);
+
+            profileController.setMenuController(this.menuController);
+            profileController.loadProfile(profile);
+
+            this.menuController.paneContent.getChildren().removeAll();
+            this.menuController.paneContent.getChildren().add(newLoadedPane);
+        } catch (SQLException e) {
+            e.printStackTrace();//TODO: proper error handling
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean amountIsHighEnough(final double bidAmount, final double minimumNeededAmount) {

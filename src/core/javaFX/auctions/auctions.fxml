@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -9,7 +10,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.Cursor?>
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.auctions.AuctionsController">
     <columnConstraints>
         <ColumnConstraints />
@@ -29,9 +29,9 @@
                 </cursor>
             </JFXTextField>
 
-             <ScrollPane fx:id="scrollpaneListedAuctions" hbarPolicy="NEVER" layoutX="14.0" layoutY="120.0" prefHeight="642.0" prefWidth="976.0" style="-fx-background: #3d4857;  -fx-border-color: #3d4857; -fx-background-color: transparent;" vbarPolicy="NEVER">
+             <ScrollPane fx:id="scrollpaneListedAuctions" hbarPolicy="NEVER" layoutX="14.0" layoutY="120.0" prefHeight="616.0" prefWidth="976.0" style="-fx-background: #3d4857;  -fx-border-color: #3d4857; -fx-background-color: transparent;" vbarPolicy="NEVER">
                <content>
-                  <VBox fx:id="vboxListedAuctions" alignment="TOP_CENTER" prefHeight="636.0" prefWidth="971.0" spacing="30.0" />
+                  <VBox fx:id="vboxListedAuctions" alignment="TOP_CENTER" prefHeight="611.0" prefWidth="971.0" spacing="30.0" />
                </content>
              </ScrollPane>
          </children>

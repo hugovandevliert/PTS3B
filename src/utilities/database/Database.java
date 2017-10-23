@@ -1,23 +1,23 @@
 package utilities.database;
 
-import javafx.scene.image.Image;
-
-import java.io.*;
-import java.sql.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.CallableStatement;
+import java.sql.DriverManager;
+import java.sql.Timestamp;
+import java.sql.ResultSet;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Properties;
+import java.io.IOException;
+import java.io.FileInputStream;
 
 @SuppressWarnings("Duplicates")
 public class Database {
 
     private static String server, username, password;
-    private static SimpleDateFormat  dateFormatter = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss");
     private static Connection connection;
 
     public static Connection getConnection() {
@@ -38,43 +38,32 @@ public class Database {
                 connection = DriverManager.getConnection("jdbc:mysql://" + server + ":3306/MyAuctions", username, password);
             }
             return connection;
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (SQLException ex){
-            ex.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        } catch (SQLException exception){
+            exception.printStackTrace();
         }
         return null;
     }
 
     public static ResultSet getData(final String query, final String[] values) {
         try {
-            Connection connection = Database.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            final Connection connection = Database.getConnection();
+            final PreparedStatement preparedStatement = connection.prepareStatement(query);
 
             if (values != null && values.length > 0){
                 for (int i = 0; i < values.length; i++){
                     final int index = i + 1;
 
-                    if (isDouble(values[i])){
-                        preparedStatement.setDouble(index, Double.parseDouble(values[i]));
-                    }
-                    else if (isInteger(values[i])){
-                        preparedStatement.setInt(index, Integer.parseInt(values[i]));
-                    }
-                    else if (isDate(values[i])){
-                        //Todo: callableStatement.setTimeStamp instead of setDate. If this even works it will only set the date not the time. -Thomas
-                        preparedStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
-                    }else{
-                        preparedStatement.setString(index, values[i]);
-                    }
+                    fillPreparedStatementRowWithValue(preparedStatement, values[i], index);
                 }
             }
 
             final ResultSet resultSet = preparedStatement.executeQuery();
             return resultSet;
         }
-        catch (Exception ex) {
-            ex.printStackTrace();
+        catch (Exception exception) {
+            exception.printStackTrace();
         }
         return null;
     }
@@ -82,15 +71,14 @@ public class Database {
     public static ResultSet getDataForSearchTerm(final String query, final String searchTerm) {
         try {
             final Connection connection = Database.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            final PreparedStatement preparedStatement = connection.prepareStatement(query);
 
             preparedStatement.setString(1, "%" + searchTerm + "%");
 
-            final ResultSet resultSet = preparedStatement.executeQuery();
-            return resultSet;
+            return preparedStatement.executeQuery();
         }
-        catch (Exception ex) {
-            ex.printStackTrace();
+        catch (Exception exception) {
+            exception.printStackTrace();
         }
         return null;
     }
@@ -100,26 +88,13 @@ public class Database {
 
         try {
             final Connection connection = Database.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            final PreparedStatement preparedStatement = connection.prepareStatement(query);
 
             if (values != null && values.length > 0){
                 for (int i = 0; i < values.length; i++){
                     final int index = i + 1;
 
-                    if (isDouble(values[i])){
-                        preparedStatement.setDouble(index, Double.parseDouble(values[i]));
-                    }
-                    else if (isInteger(values[i])){
-                        preparedStatement.setInt(index, Integer.parseInt(values[i]));
-                    }
-                    else if (isDate(values[i])){
-                        preparedStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
-                    }
-                    else if (isBoolean(values[i])){
-                        preparedStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
-                    }else{
-                        preparedStatement.setString(index, values[i]);
-                    }
+                    fillPreparedStatementRowWithValue(preparedStatement, values[i], index);
                 }
             }
 
@@ -128,55 +103,40 @@ public class Database {
 
             updateCount = preparedStatement.getUpdateCount();
         }
-        catch (Exception ex) {
-            ex.printStackTrace();
+        catch (Exception exception) {
+            exception.printStackTrace();
         }
         return updateCount;
     }
 
     /**
-     * @param query     This is the query to execute. Make sure to write it in such a way that all the normal values can be parsed first, then afterwards the
-     *                  images will be parsed, all happening in the order that the arrays are in.
-     * @param values    This is the array of normal values, like the the getData() method
-     * @param images    This is an array of images
+     * @param query:             This is the query to execute. Make sure to write it in such a way that all the normal values can be parsed first, then afterwards the
+     *                          images will be parsed, all happening in the order that the arrays are in.
+     * @param values:            This is the array of normal values, like the the getData() method
+     * @param images:            This is an array of images
+     * @param isUpdateQuery:    This indicates if the query is an update query
      */
-    public static int setDataWithImages(final String query, final String[] values, final Image[] images, final boolean isUpdateQuery) {
+    public static int setDataWithImages(final String query, final String[] values, final File[] images, final boolean isUpdateQuery) {
         int updateCount = -1;
 
         try {
             final Connection connection = Database.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            final PreparedStatement preparedStatement = connection.prepareStatement(query);
             int index = 0;
 
             if (values != null && values.length > 0){
                 for (int i = 0; i < values.length; i++){
                     index += 1;
 
-                    if (isDouble(values[i])){
-                        preparedStatement.setDouble(index, Double.parseDouble(values[i]));
-                    }
-                    else if (isInteger(values[i])){
-                        preparedStatement.setInt(index, Integer.parseInt(values[i]));
-                    }
-                    else if (isDate(values[i])){
-                        preparedStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
-                    }
-                    else if (isBoolean(values[i])){
-                        preparedStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
-                    }else{
-                        preparedStatement.setString(index, values[i]);
-                    }
+                    fillPreparedStatementRowWithValue(preparedStatement, values[i], index);
                 }
             }
-
             if (images != null && images.length > 0){
-                for (int i = 0; i < values.length; i++){
+                for (int i = 0; i < images.length; i++){
                     index += 1;
+                    final FileInputStream fileInputStream = new FileInputStream(images[i]);
 
-                    final byte[] serializedImage = getSerializedObject(images[i]);
-                    final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(serializedImage);
-
-                    preparedStatement.setBinaryStream(index, byteArrayInputStream, serializedImage.length);
+                    preparedStatement.setBinaryStream(index, fileInputStream, (int)images[i].length());
                 }
             }
 
@@ -185,21 +145,21 @@ public class Database {
 
             updateCount = preparedStatement.getUpdateCount();
         }
-        catch (Exception ex) {
-            ex.printStackTrace();
+        catch (Exception exception) {
+            exception.printStackTrace();
         }
         return updateCount;
     }
 
     /**
-     * @param query Usage for query --> {call increase_salaries_for_department(?, ?)}
-     *              increase_salaries_for_department being the name of the stored procedure
+     * @param query:    Usage for query --> {call increase_salaries_for_department(?, ?)}
+     *                  increase_salaries_for_department being the name of the stored procedure
      */
     public static int executeStoredProcedure(final String query, final String[] values) {
         int updateCount = -1;
 
         try {
-            CallableStatement callableStatement = Database.getConnection().prepareCall(query);
+            final CallableStatement callableStatement = Database.getConnection().prepareCall(query);
 
             if (values != null && values.length > 0){
                 for (int i = 0; i < values.length; i++){
@@ -212,12 +172,12 @@ public class Database {
                         callableStatement.setInt(index, Integer.parseInt(values[i]));
                     }
                     else if (isDate(values[i])){
-                        //Todo: callableStatement.setTimeStamp instead of setDate. If this even works it will only set the date not the time. -Thomas
-                        callableStatement.setDate(index, (Date)dateFormatter.parse(values[i]));
+                        callableStatement.setTimestamp(index, Timestamp.valueOf(LocalDateTime.parse(values[i])));
                     }
                     else if (isBoolean(values[i])){
                         callableStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
-                    }else{
+                    }
+                    else{
                         callableStatement.setString(index, values[i]);
                     }
                 }
@@ -225,10 +185,8 @@ public class Database {
 
             callableStatement.execute();
             updateCount = callableStatement.getUpdateCount();
-        } catch (SQLException ex){
-            ex.printStackTrace(); //TODO: proper exception handling
-        } catch (ParseException e) {
-            e.printStackTrace(); //TODO: proper exception handling
+        } catch (SQLException exception){
+            exception.printStackTrace(); //TODO: proper exception handling
         }
         return updateCount;
     }
@@ -237,30 +195,41 @@ public class Database {
         if (connection != null){
             try {
                 connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace(); //TODO: proper exception handling
+            } catch (SQLException exception) {
+                exception.printStackTrace(); //TODO: proper exception handling
             }
         }
-    }
-
-    private static byte[] getSerializedObject(final Object object) throws IOException {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-        objectOutputStream.writeObject(object);
-        return byteArrayOutputStream.toByteArray();
     }
 
     public static boolean isDouble(final String value) {
         try {
             Double.parseDouble(value);
             return true;
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException exception) {
             return false;
         }
     }
 
-    private static boolean isBoolean(String value) {
-        value = value.toLowerCase();
+    private static void fillPreparedStatementRowWithValue(final PreparedStatement preparedStatement, final String value, final int index) throws SQLException {
+        if (isDouble(value)){
+            preparedStatement.setDouble(index, Double.parseDouble(value));
+        }
+        else if (isInteger(value)){
+            preparedStatement.setInt(index, Integer.parseInt(value));
+        }
+        else if (isDate(value)){
+            preparedStatement.setTimestamp(index, Timestamp.valueOf(LocalDateTime.parse(value)));
+        }
+        else if (isBoolean(value)){
+            preparedStatement.setBoolean(index, Boolean.parseBoolean(value));
+        }
+        else {
+            preparedStatement.setString(index, value);
+        }
+    }
+
+    private static boolean isBoolean(final String paramValue) {
+        final String value = paramValue.toLowerCase();
 
         return value.equals("true") || value.equals("false");
     }
@@ -269,7 +238,7 @@ public class Database {
         try {
             Integer.parseInt(value);
             return true;
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException exception) {
             return false;
         }
     }
@@ -278,7 +247,7 @@ public class Database {
         try {
             LocalDateTime.parse(value);
             return true;
-        } catch (DateTimeParseException e) {
+        } catch (DateTimeParseException exception) {
             return false;
         }
     }

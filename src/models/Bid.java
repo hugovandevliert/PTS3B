@@ -1,7 +1,6 @@
 package models;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * Class used for keeping information about a bid on an auction.
@@ -14,8 +13,8 @@ public class Bid implements Comparable<Bid> {
 
     /**
      * Constructor for Bid. This constructor is being used for auctions
-     * @param profile: The user's profile that placed the bid.
-     * @param amount: The amount of money.
+     * @param profile:  The user's profile that placed the bid.
+     * @param amount:   The amount of money.
      * */
     public Bid(final Profile profile, final double amount, final LocalDateTime date) {
         this.profile = profile;
@@ -40,9 +39,9 @@ public class Bid implements Comparable<Bid> {
     public double getAmount() { return amount; }
 
     @Override
-    public int compareTo(Bid o) {
-        if (this.amount > o.getAmount()) return -1;
-        else if (this.amount < o.getAmount()) return 1;
+    public int compareTo(final Bid otherBid) {
+        if (this.amount > otherBid.getAmount()) return -1;
+        else if (this.amount < otherBid.getAmount()) return 1;
         return 0;
     }
 }

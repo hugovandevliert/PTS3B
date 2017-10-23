@@ -8,6 +8,9 @@ import logic.repositories.ProfileRepository;
 import models.Auction;
 import utilities.database.Database;
 import utilities.enums.AuctionLoadingType;
+import utilities.enums.ImageLoadingType;
+import utilities.enums.ProfileLoadingType;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.io.IOException;
@@ -44,15 +47,48 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     @Override
+    public ArrayList<Auction> getAuctionsForProfile(final int profileId) throws SQLException, IOException, ClassNotFoundException {
+        final String query = "SELECT * FROM MyAuctions.Auction WHERE Auction.status = 'OPEN' " +
+                "AND Auction.endDate > curdate() AND creator_id = ?;";
+        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(profileId) });
+        final ArrayList<Auction> auctions = new ArrayList<>();
+
+        if (resultSet != null) {
+            while (resultSet.next()) {
+                auctions.add(getAuctionFromResultSet(resultSet, AuctionLoadingType.FOR_LISTED_AUCTIONS));
+            }
+        }
+        return auctions;
+    }
+
+    @Override
+    public ArrayList<Auction> getFavoriteAuctionsForProfile(final int profileId) throws SQLException, IOException, ClassNotFoundException {
+        final String query = "SELECT auction_id FROM FavoriteAuction WHERE account_id = ?;";
+        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(profileId) });
+        final ArrayList<Auction> auctions = new ArrayList<>();
+
+        if (resultSet != null) {
+            while (resultSet.next()) {
+                auctions.add(getAuctionForId(resultSet.getInt("auction_id"), AuctionLoadingType.FOR_LISTED_AUCTIONS));
+            }
+        }
+        return auctions;
+    }
+
+    @Override
     public Auction getAuctionForId(final int auctionId, final AuctionLoadingType auctionLoadingType) throws SQLException, IOException, ClassNotFoundException {
         String query = "";
 
         if (auctionLoadingType.equals(AuctionLoadingType.FOR_AUCTION_PAGE)){
             query = "SELECT * FROM MyAuctions.Auction WHERE id = ?;";
         }
+        else if (auctionLoadingType.equals(AuctionLoadingType.FOR_LISTED_AUCTIONS)){
+            query = "SELECT * FROM MyAuctions.Auction WHERE id = ?;";
+        }
         else if (auctionLoadingType.equals(AuctionLoadingType.FOR_COUNTDOWN_TIMER)){
             query = "SELECT id, EndDate FROM MyAuctions.Auction WHERE id = ?;";
         }
+        else return null;
 
         final ResultSet resultSet = Database.getData(query, new String[]{String.valueOf(auctionId)});
 
@@ -79,15 +115,16 @@ public class AuctionMySqlContext implements IAuctionContext {
                 auction.getStatus().toString(),
                 String.valueOf(auction.isPremium()),
                 String.valueOf(auction.getCreator().getProfileId())
-        }, false);
+        }, true);
 
         //TODO: Title is not unique, so we need to retrieve the ID in a different way.
         final ResultSet resultSet = Database.getData(
-                "SELECT id FROM Auction WHERE title = '?'",
+                "SELECT id FROM Auction WHERE title = ?",
                 new String[]{ auction.getTitle() }
         );
+        resultSet.next();
 
-        return result == 1 && addAuctionImages(auction.getImages(), resultSet.getInt("id"));
+        return result == 1 && addAuctionImages(auction.getFileImages(), resultSet.getInt("id"));
     }
 
     @Override
@@ -103,16 +140,17 @@ public class AuctionMySqlContext implements IAuctionContext {
                 }, true);
     }
 
-    public boolean addAuctionImages(final List<Image> images, final int auctionID) {
-        final String query = "INSERT INTO Image (`image`, `auction_id`) (?, ?)";
+    public boolean addAuctionImages(final List<File> images, final int auctionID) {
+        if (images == null) return true;
+        final String query = "INSERT INTO Image (`auction_id`, `image`) VALUES (?, ?)";
         int resultCorrect = 0;
 
-        for (Image image : images) {
+        for (File image : images) {
             resultCorrect += Database.setDataWithImages(
                     query,
                     new String[]{ String.valueOf(auctionID) },
-                    new Image[]{ image },
-                    false
+                    new File[]{ image },
+                    true
             );
         }
         return resultCorrect == images.size();
@@ -126,7 +164,7 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     @Override
-    public boolean auctionIsClosed(int auctionId) throws SQLException {
+    public boolean auctionIsClosed(final int auctionId) throws SQLException {
         final String query = "SELECT status FROM MyAuctions.Auction WHERE id = ?;";
         final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
 
@@ -157,11 +195,11 @@ public class AuctionMySqlContext implements IAuctionContext {
                                 resultSet.getString("description"),
                                 resultSet.getDouble("startingBid"),
                                 resultSet.getTimestamp("endDate").toLocalDateTime(),
-                                profileRepository.getProfileForId(resultSet.getInt("creator_id")),
+                                profileRepository.getProfileForId(resultSet.getInt("creator_id"), ProfileLoadingType.FOR_AUCTION_PAGE),
                                 getImagesForAuctionWithId(auctionLoadingType, resultSet.getInt("id")),
                                 bidRepository.getBids(resultSet.getInt("id")),
                                 resultSet.getDouble("minimum"),
-                                resultSet.getDouble("minIncrementation")
+                                resultSet.getDouble("minimumincrement")
                         );
             case FOR_COUNTDOWN_TIMER:
                 return new Auction
@@ -185,7 +223,7 @@ public class AuctionMySqlContext implements IAuctionContext {
 
         while (resultSet.next()) {
             final InputStream inputStream = resultSet.getBinaryStream("image");
-            images.add(imageConverter.getImageFromInputStream(inputStream, auctionLoadingType));
+            images.add(imageConverter.getImageFromInputStream(inputStream, ImageLoadingType.valueOf(auctionLoadingType.toString())));
         }
         return images;
     }

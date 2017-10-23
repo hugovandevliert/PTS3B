@@ -1,10 +1,11 @@
 package data.contexts;
 
 import data.interfaces.IUserContext;
-import javafx.scene.image.Image;
 import models.Profile;
 import models.User;
 import utilities.database.Database;
+import java.io.File;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -31,20 +32,19 @@ public class UserMySqlContext implements IUserContext {
     }
 
     @Override
-    public boolean setPhoto(final Profile profile, final Image photo) {
+    public boolean setPhoto(final Profile profile, final File photo) {
         final String query = "UPDATE Account SET image = ? WHERE id = ?";
 
-        return 1 == Database.setDataWithImages(query, new String[]{Integer.toString(profile.getProfileId())}, new Image[]{photo}, true);
+        return 1 == Database.setDataWithImages(query, new String[]{ Integer.toString(profile.getProfileId()) }, new File[]{ photo }, true);
     }
 
     @Override
-    public User getUserByUsername(final String username) throws SQLException {
+    public User getUserByUsername(final String username) throws SQLException, IOException, ClassNotFoundException {
         final String query = "SELECT id, username, name, email FROM MyAuctions.Account WHERE username = ?";
-        User currentUser = null;
         final ResultSet resultSet = Database.getData(query, new String[]{username});
 
         if (resultSet.next()) {
-            currentUser = new User
+            return new User
                     (
                             resultSet.getInt("id"),
                             resultSet.getString("username"),
@@ -52,6 +52,6 @@ public class UserMySqlContext implements IUserContext {
                             resultSet.getString("email")
                     );
         }
-        return currentUser;
+        return null;
     }
 }

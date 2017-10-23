@@ -12,14 +12,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import logic.repositories.AuctionRepository;
 import models.Auction;
-import models.Profile;
-import models.User;
 import utilities.enums.AuctionLoadingType;
-
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ListedAuctionController extends MenuController {
@@ -39,23 +36,40 @@ public class ListedAuctionController extends MenuController {
     private int auctionId;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) { }
+    public void initialize(final URL location, final ResourceBundle resources) { }
 
     public ListedAuctionController() { auctionRepository = new AuctionRepository(new AuctionMySqlContext()); }
 
-    public void setMenuController(MenuController menuController) { this.menuController = menuController; }
+    public void setMenuController(final MenuController menuController) { this.menuController = menuController; }
 
-    public void setTitle(final String title) {
+    public void setListedAuction(final Auction auction) {
+        setTitle(auction.getTitle());
+        setDescription(auction.getDescription());
+        setCurrentOffer(auction.getStartBid());
+        setAuctionId(auction.getId());
+
+        Image image = new Image("file:" + new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath(), 200, 150, false, false);
+
+        if (auction.getImages().size() > 0) {
+            final Image img = auction.getImages().get(0);
+
+            if (img != null) image = img;
+        }
+
+        setImage(image);
+    }
+
+    private void setTitle(final String title) {
         lblAuctionTitle.setText(title);
     }
 
-    public void setDescription(final String description) { textAuctionDescription.setText(description); }
+    private void setDescription(final String description) { textAuctionDescription.setText(description); }
 
-    public void setCurrentOffer(final double offer) { lblCurrentOffer.setText(String.valueOf(offer)); }
+    private void setCurrentOffer(final double offer) { lblCurrentOffer.setText(String.valueOf(offer)); }
 
-    public void setImage(final Image image) { imgviewImage.setImage(image); }
+    private void setImage(final Image image) { imgviewImage.setImage(image); }
 
-    public void setAuctionId(final int auctionId) {
+    private void setAuctionId(final int auctionId) {
         this.auctionId = auctionId;
     }
 
@@ -76,10 +90,12 @@ public class ListedAuctionController extends MenuController {
                 auctionController.setImages(auction.getImages());
                 auctionController.setBids(auction.getBids(), auction.getStartBid());
                 auctionController.setAuctionId(auction.getId());
+                auctionController.setCreatorId(auction.getCreator().getProfileId());
                 auctionController.setCurrenteUserId(applicationManager.getCurrentUser().getId());
                 auctionController.setBidTextfieldPromptText("Your bid: [ atleast + €" + auction.getIncrementation() + " ]");
                 auctionController.setAuctionMinimumBid(auction.getMinimum());
                 auctionController.setAuctionMinimumIncrementation(auction.getIncrementation());
+                auctionController.setMenuController(this.menuController);
                 auctionController.initializeCountdownTimer(auction.getExpirationDate());
                 auctionController.initializeBidsLoadingTimer(auction.getBids(), this.auctionId, auction.getStartBid());
                 auctionController.initializeRepositories();
@@ -94,12 +110,12 @@ public class ListedAuctionController extends MenuController {
             }else{
                 System.out.println("Something went wrong - Couldn't load auction page"); //TODO: proper error handling
             }
-        } catch (IOException e){
-            e.printStackTrace(); //TODO: proper error handling
-        } catch (SQLException e) {
-            e.printStackTrace(); //TODO: proper error handling
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace(); //TODO: proper error handling
+        } catch (IOException exception){
+            exception.printStackTrace(); //TODO: proper error handling
+        } catch (SQLException exception) {
+            exception.printStackTrace(); //TODO: proper error handling
+        } catch (ClassNotFoundException exception) {
+            exception.printStackTrace(); //TODO: proper error handling
         }
     }
 

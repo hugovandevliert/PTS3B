@@ -7,18 +7,16 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.util.concurrent.TimeUnit;
-
 public class Main extends Application {
 
     private double xOffset, yOffset;
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(final Stage primaryStage) throws Exception {
         //Open login
-        Parent root = FXMLLoader.load(getClass().getResource("javaFX/menu/menu.fxml"));
+        final Parent root = FXMLLoader.load(getClass().getResource("javaFX/menu/menu.fxml"));
         primaryStage.initStyle(StageStyle.UNDECORATED);
-        Scene scene = new Scene(root);
+        final Scene scene = new Scene(root);
 
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -26,7 +24,7 @@ public class Main extends Application {
         enableGUIMoving(root, primaryStage);
     }
 
-    private void enableGUIMoving(Parent parent, Stage stage) {
+    private void enableGUIMoving(final Parent parent, final Stage stage) {
         // Change the offset for both X and Y
         // whenever the user clicks on our GUI we need to register that coordinate and save it
         parent.setOnMousePressed(event -> {

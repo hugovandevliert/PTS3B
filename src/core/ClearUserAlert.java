@@ -1,16 +1,13 @@
 package core;
 
 import core.javaFX.menu.MenuController;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-
 import java.util.TimerTask;
 
 public class ClearUserAlert extends TimerTask {
 
-    private MenuController menuController;
+    final private MenuController menuController;
 
-    public ClearUserAlert(MenuController menuController) {
+    public ClearUserAlert(final MenuController menuController) {
         this.menuController = menuController;
     }
 

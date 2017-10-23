@@ -5,7 +5,8 @@ import logic.repositories.ProfileRepository;
 import models.Bid;
 import utilities.database.Database;
 import utilities.enums.BidLoadingType;
-
+import utilities.enums.ProfileLoadingType;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,10 +18,10 @@ public class BidMySqlContext implements IBidContext {
     public BidMySqlContext() { profileRepository = new ProfileRepository(new ProfileMySqlContext()); }
 
     @Override
-    public ArrayList<Bid> getBids(final int auctionId) throws SQLException {
-        ArrayList<Bid> bids = new ArrayList<>();
+    public ArrayList<Bid> getBids(final int auctionId) throws SQLException, IOException, ClassNotFoundException {
         final String query = "SELECT b.* FROM MyAuctions.Bid b " +
-                             "INNER JOIN MyAuctions.Account a ON a.id = b.account_id WHERE Auction_ID = ?";
+                "INNER JOIN MyAuctions.Account a ON a.id = b.account_id WHERE Auction_ID = ?";
+        final ArrayList<Bid> bids = new ArrayList<>();
         final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
 
         if (resultSet != null){
@@ -32,7 +33,7 @@ public class BidMySqlContext implements IBidContext {
     }
 
     @Override
-    public Bid getMostRecentBidForAuctionWithId(int auctionId) throws SQLException {
+    public Bid getMostRecentBidForAuctionWithId(final int auctionId) throws SQLException, IOException, ClassNotFoundException {
         final String query = "SELECT amount FROM MyAuctions.Bid WHERE auction_id = ? ORDER BY amount DESC LIMIT 1";
         final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
 
@@ -44,12 +45,12 @@ public class BidMySqlContext implements IBidContext {
         return null;
     }
 
-    private Bid getBidFromResultSet(final ResultSet resultSet, final BidLoadingType bidLoadingType) throws SQLException {
+    private Bid getBidFromResultSet(final ResultSet resultSet, final BidLoadingType bidLoadingType) throws SQLException, IOException, ClassNotFoundException {
         switch(bidLoadingType){
             case FOR_AUCTION:
                 return new Bid
                         (
-                                profileRepository.getProfileForId(resultSet.getInt("account_id")),
+                                profileRepository.getProfileForId(resultSet.getInt("account_id"), ProfileLoadingType.FOR_AUCTION_PAGE),
                                 resultSet.getDouble("amount"),
                                 resultSet.getTimestamp("date").toLocalDateTime()
                         );

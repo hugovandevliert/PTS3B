@@ -2,24 +2,30 @@ package core.javaFX.menu;
 
 import core.ApplicationManager;
 import core.UserAlert;
+import core.javaFX.favorites.FavoritesController;
+import core.javaFX.profile.ProfileController;
+import data.contexts.ProfileMySqlContext;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import logic.repositories.ProfileRepository;
+import models.Profile;
 import utilities.database.Database;
 import utilities.enums.AlertType;
+import utilities.enums.ProfileLoadingType;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.Timer;
 
+@SuppressWarnings("Duplicates")
 public class MenuController implements Initializable {
 
     @FXML public Pane paneMenu;
@@ -34,7 +40,7 @@ public class MenuController implements Initializable {
     @FXML protected Pane paneAlert;
     @FXML public Label lblAlertMessage;
 
-    protected static ApplicationManager applicationManager = new ApplicationManager();
+    protected final static ApplicationManager applicationManager = new ApplicationManager();
     protected ImageView selectedMenu;
 
     private Image profileIcon;
@@ -47,21 +53,33 @@ public class MenuController implements Initializable {
     private Image favoritesIconHovered;
     private Image addAuctionIconHovered;
 
+    private static String lastCalledClass;
+
+    private FXMLLoader fxmlLoader;
+    private ProfileController profileController;
+    private FavoritesController favoritesController;
+
+    private ProfileRepository profileRepository;
+
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(final URL location, final ResourceBundle resources) {
         setIcons();
-        selectedMenu = imgviewProfile;
-        imgviewProfile.setImage(profileIconHovered);
+        selectedMenu = imgviewAuctions;
+        imgviewAuctions.setImage(auctionsIconHovered);
 
         try {
             paneContent.getChildren().clear();
-            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/login/login.fxml"));
+            final Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/login/login.fxml"));
             paneContent.getChildren().add(newLoadedPane);
 
             ShowMessage("Please login", AlertType.Message);
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+        } catch (IOException | InterruptedException exception) {
+            exception.printStackTrace();
         }
+    }
+
+    public MenuController() {
+        profileRepository = new ProfileRepository(new ProfileMySqlContext());
     }
 
     private void setIcons() {
@@ -81,15 +99,15 @@ public class MenuController implements Initializable {
         imgviewAddAuction.setImage(addAuctionIcon);
     }
 
-    public void closeApplication(MouseEvent mouseEvent) {
+    public void closeApplication() {
         Database.closeConnection();
         System.exit(0);
     }
 
-    public void selectMenuItem(MouseEvent mouseEvent) throws IOException {
+    public void selectMenuItem(final MouseEvent mouseEvent) throws IOException {
         if (!applicationManager.isLoggedIn()) return;
 
-        ImageView source = (ImageView) mouseEvent.getSource();
+        final ImageView source = (ImageView) mouseEvent.getSource();
         imgviewProfile.setImage(profileIcon);
         imgviewAuctions.setImage(auctionsIcon);
         imgviewFavorites.setImage(favoritesIcon);
@@ -98,10 +116,26 @@ public class MenuController implements Initializable {
         selectedMenu = source;
 
         paneContent.getChildren().clear();
-        Pane newLoadedPane;
+        final Pane newLoadedPane;
 
-        if (mouseEvent.getSource() == imgviewProfile){
-            newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/profile/profile.fxml"));
+        lastCalledClass = null; // This is for timer classes; to determine whether or not they should stop themselves because the auctions are not being looked at anymore
+
+        if (source == imgviewProfile){
+            fxmlLoader = new FXMLLoader(getClass().getResource("/core/javafx/profile/profile.fxml"));
+            newLoadedPane = fxmlLoader.load();
+            profileController = fxmlLoader.getController();
+
+            try {
+                final Profile profile = profileRepository.getProfileForId(applicationManager.getCurrentUser().getId(), ProfileLoadingType.FOR_PROFILE_PAGE);
+
+                profileController.setMenuController(this);
+                profileController.loadProfile(profile);
+            } catch (SQLException exception) {
+                exception.printStackTrace(); //TODO: proper error handling
+            }
+              catch (ClassNotFoundException exception) {
+                exception.printStackTrace();
+            }
         }
         else if(source == imgviewAuctions){
             newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/auctions/auctions.fxml"));
@@ -110,18 +144,23 @@ public class MenuController implements Initializable {
             newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/addAuction/addauction.fxml"));
         }
         else if(source == imgviewFavorites){
-            newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/favorites/favorites.fxml"));
+            fxmlLoader = new FXMLLoader(getClass().getResource("/core/javafx/favorites/favorites.fxml"));
+            newLoadedPane = fxmlLoader.load();
+            favoritesController = fxmlLoader.getController();
+
+            final int profileId = applicationManager.getCurrentUser().getId();
+
+            favoritesController.loadFavorites(profileId);
         }
         else{
             newLoadedPane = new Pane();
         }
 
-
         paneContent.getChildren().add(newLoadedPane);
     }
 
-    public void highlightIconColor(MouseEvent mouseEvent) {
-        ImageView icon = (ImageView) mouseEvent.getSource();
+    public void highlightIconColor(final MouseEvent mouseEvent) {
+        final ImageView icon = (ImageView) mouseEvent.getSource();
         if (Objects.equals(selectedMenu.getId(), icon.getId())) return;
         switch(icon.getId()) {
             case "imgviewProfile":
@@ -139,8 +178,8 @@ public class MenuController implements Initializable {
         }
     }
 
-    public void revertIconColor(MouseEvent mouseEvent) {
-        ImageView icon = (ImageView) mouseEvent.getSource();
+    public void revertIconColor(final MouseEvent mouseEvent) {
+        final ImageView icon = (ImageView) mouseEvent.getSource();
         if (Objects.equals(selectedMenu.getId(), icon.getId())) return;
         switch(icon.getId()) {
             case "imgviewProfile":
@@ -158,13 +197,21 @@ public class MenuController implements Initializable {
         }
     }
 
-    protected void ShowMessage(String message, AlertType type) throws InterruptedException {
-        UserAlert userAlert = new UserAlert();
+    protected void ShowMessage(final String message, final AlertType type) throws InterruptedException {
+        final UserAlert userAlert = new UserAlert();
         userAlert.showMessage(message, type, paneAlert, lblAlertMessage, this);
     }
 
     public void ClearAlert(){
         Platform.runLater(() -> paneAlert.getChildren().clear());
+    }
+
+    public void setLastCalledClass(final Class classname) {
+        this.lastCalledClass = classname.getSimpleName();
+    }
+
+    public static String getLastCalledClass() {
+        return lastCalledClass;
     }
 }
 

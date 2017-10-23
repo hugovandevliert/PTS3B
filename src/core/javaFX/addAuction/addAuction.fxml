@@ -44,7 +44,8 @@
                  </font>
              </JFXTextField>
 
-             <JFXDatePicker defaultColor="#a6b5c9" layoutX="500.0" layoutY="565.0" prefHeight="25.0" prefWidth="400.0" promptText="end date" style="; -jfx-unfocus-color: #788599;" />
+             <JFXDatePicker fx:id="datepicker_Expiration" defaultColor="#788599" layoutX="286.0" layoutY="535.0" prefHeight="25.0" prefWidth="465.0" promptText="end date" style="-fx-text-fill: #a6b5c9; -fx-background-color: #3d4857; -fx-prompt-text-fill: #788599;" />
+             <JFXDatePicker fx:id="datepicker_Opening" defaultColor="#788599" layoutX="286.0" layoutY="565.0" prefHeight="25.0" prefWidth="465.0" promptText="end date" style="-fx-text-fill: #a6b5c9; -fx-background-color: #3d4857; -fx-prompt-text-fill: #788599;" />
 
              <!--//TODO: this crashes somehow? TIMO HELP-->
             <!--<JFXTimePicker layoutX="20.0" layoutY="675.0" prefHeight="25.0" prefWidth="400.0" />-->

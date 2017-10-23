@@ -6,7 +6,6 @@ import core.javaFX.menu.MenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -18,7 +17,7 @@ public class LoginController extends MenuController {
     @FXML private JFXPasswordField txtPassword;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(final URL location, final ResourceBundle resources) {
     }
 
     public void login() throws IOException {
@@ -30,16 +29,20 @@ public class LoginController extends MenuController {
 
         try {
             applicationManager.login(txtUsername.getText(), txtPassword.getText());
-        } catch (SQLException e) {
+        } catch (SQLException exception) {
             //TODO: Actual client side feedback
             System.out.println("Incorrect login credentials!");
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error: " + exception.getMessage());
             return;
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        } catch(ClassNotFoundException exception) {
+            exception.printStackTrace();
         }
 
         if (applicationManager.isLoggedIn()) {
             paneContent.getChildren().clear();
-            Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/profile/profile.fxml"));
+            final Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/auctions/auctions.fxml"));
             paneContent.getChildren().add(newLoadedPane);
         } else {
             //TODO: Actual client side feedback
@@ -49,7 +52,7 @@ public class LoginController extends MenuController {
 
     public void register() throws IOException {
         paneContent.getChildren().clear();
-        Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/register/register.fxml"));
+        final Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/register/register.fxml"));
         paneContent.getChildren().add(newLoadedPane);
     }
 }

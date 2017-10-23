@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.menu.MenuController">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.profile.ProfileController">
     <columnConstraints>
         <ColumnConstraints />
     </columnConstraints>
@@ -17,10 +20,33 @@
     <children>
           <Pane fx:id="paneContent" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;">
          <children>
-            <Label layoutX="323.0" layoutY="233.0" text="Profile page">
+            <ImageView fx:id="imgviewProfilePicture" fitHeight="196.0" fitWidth="275.0" layoutX="23.0" layoutY="24.0" onMouseClicked="#changeProfilePicture" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="lblName" alignment="CENTER" layoutX="427.0" layoutY="24.0" prefHeight="21.0" prefWidth="531.0" text="Name" textAlignment="CENTER" textFill="#556070" />
+            <Label fx:id="lblUserSince" alignment="CENTER" layoutX="427.0" layoutY="54.0" prefHeight="21.0" prefWidth="531.0" text="User Since 18-10-2017" textAlignment="CENTER" textFill="#556070" />
+            <ImageView fx:id="imgviewPositiveIcon" fitHeight="53.0" fitWidth="60.0" layoutX="590.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="lblPositiveFeedbacksCount" alignment="CENTER" layoutX="590.0" layoutY="172.0" prefHeight="21.0" prefWidth="60.0" text="121" textAlignment="CENTER" textFill="#556070" />
+            <Label fx:id="lblNegativeFeedbacksCount" alignment="CENTER" layoutX="736.0" layoutY="172.0" prefHeight="21.0" prefWidth="60.0" text="0" textAlignment="CENTER" textFill="#556070" />
+            <ScrollPane fx:id="scrollpaneListedFeedbacks" hbarPolicy="NEVER" layoutX="28.0" layoutY="281.0" prefHeight="149.0" prefWidth="945.0" style="-fx-background: #3d4857;  -fx-border-color: #3d4857; -fx-background-color: transparent;" vbarPolicy="NEVER">
+               <content>
+                  <VBox fx:id="vboxListedFeedbacks" alignment="TOP_CENTER" prefHeight="144.0" prefWidth="941.0" spacing="30.0" />
+               </content>
+            </ScrollPane>
+            <ScrollPane fx:id="scrollpaneListedAuctions" hbarPolicy="NEVER" layoutX="23.0" layoutY="487.0" prefHeight="239.0" prefWidth="945.0" style="-fx-background: #3d4857;  -fx-border-color: #3d4857; -fx-background-color: transparent;" vbarPolicy="NEVER">
+               <content>
+                  <VBox fx:id="vboxListedAuctions" alignment="TOP_CENTER" prefHeight="234.0" prefWidth="941.0" spacing="30.0" />
+               </content>
+            </ScrollPane>
+            <Label fx:id="lblFeedbacks" alignment="CENTER" layoutX="235.0" layoutY="252.0" prefHeight="21.0" prefWidth="531.0" text="Feedbacks" textAlignment="CENTER" textFill="#556070">
                <font>
-                  <Font size="96.0" />
-               </font></Label>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblUsersAuctions" alignment="CENTER" layoutX="235.0" layoutY="456.0" prefHeight="21.0" prefWidth="531.0" text="User's Auctions" textAlignment="CENTER" textFill="#556070">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="imgviewNegativeIcon" fitHeight="53.0" fitWidth="60.0" layoutX="736.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
     </children>
