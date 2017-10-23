@@ -117,14 +117,7 @@ public class AuctionMySqlContext implements IAuctionContext {
                 String.valueOf(auction.getCreator().getProfileId())
         }, true);
 
-        //TODO: Title is not unique, so we need to retrieve the ID in a different way.
-        final ResultSet resultSet = Database.getData(
-                "SELECT id FROM Auction WHERE title = ?",
-                new String[]{ auction.getTitle() }
-        );
-        resultSet.next();
-
-        return result == 1 && addAuctionImages(auction.getFileImages(), resultSet.getInt("id"));
+        return result == 1 && addAuctionImages(auction.getFileImages(), getLastInsertedAuctionId());
     }
 
     @Override
@@ -140,7 +133,7 @@ public class AuctionMySqlContext implements IAuctionContext {
                 }, true);
     }
 
-    public boolean addAuctionImages(final List<File> images, final int auctionID) {
+    public boolean addAuctionImages(final List<File> images, final int auctionId) {
         if (images == null) return true;
         final String query = "INSERT INTO Image (`auction_id`, `image`) VALUES (?, ?)";
         int resultCorrect = 0;
@@ -148,7 +141,7 @@ public class AuctionMySqlContext implements IAuctionContext {
         for (File image : images) {
             resultCorrect += Database.setDataWithImages(
                     query,
-                    new String[]{ String.valueOf(auctionID) },
+                    new String[]{ String.valueOf(auctionId) },
                     new File[]{ image },
                     true
             );
@@ -174,6 +167,16 @@ public class AuctionMySqlContext implements IAuctionContext {
             }
         }
         return false;
+    }
+
+    private int getLastInsertedAuctionId() throws SQLException {
+        final ResultSet resultSet = Database.getData(
+                "SELECT MAX(id) FROM Auction",
+                null
+        );
+        resultSet.next();
+
+        return resultSet.getInt("MAX(id)");
     }
 
     public Auction getAuctionFromResultSet(final ResultSet resultSet, final AuctionLoadingType auctionLoadingType) throws SQLException, IOException, ClassNotFoundException {

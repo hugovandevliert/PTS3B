@@ -85,7 +85,7 @@ public class Profile {
      * @param title:          Title of the auction. Can't contain more then 64 characters.
      * @param fileImages:     The file's which represent the images added to this auction.
      */
-    public void addAuction(final double startBid, final double minimum, final LocalDateTime expirationDate, final LocalDateTime openingDate, final boolean isPremium, final String title, final String description, final ArrayList<File> fileImages) throws SQLException {
+    public boolean addAuction(final double startBid, final double minimum, final LocalDateTime expirationDate, final LocalDateTime openingDate, final boolean isPremium, final String title, final String description, final ArrayList<File> fileImages) throws SQLException {
         if (startBid <= 0){
             throw new IllegalArgumentException("Startbid should be higher than 0.");
         }
@@ -112,8 +112,12 @@ public class Profile {
         }
 
         final Auction auction = new Auction(title, description, startBid, minimum, openingDate, expirationDate, isPremium, this, fileImages);
-        auctions.add(auction);
-        auctionRepository.addAuction(auction);
+
+        if (auctionRepository.addAuction(auction)) {
+            auctions.add(auction);
+            return true;
+        }
+        return false;
     }
 
     /**

@@ -55,7 +55,7 @@ public class AddAuctionController extends MenuController {
 
     public void createAuction() {
         try {
-            applicationManager.currentUser.getProfile().addAuction(
+            final boolean successfull = applicationManager.currentUser.getProfile().addAuction(
                     1,
                     1,
                     LocalDateTime.now().plusDays(1),
@@ -65,6 +65,9 @@ public class AddAuctionController extends MenuController {
                     "Description",
                     getImages(this.images)
                     );
+
+            if (successfull) System.out.println("Successfully added auction!"); //TODO: user alert
+            else System.out.println("Your auction could not be added - Please try again!"); //TODO: user alert
         } catch (IllegalArgumentException exception) {
             System.out.println(exception.getMessage());
         } catch (SQLException exception) {

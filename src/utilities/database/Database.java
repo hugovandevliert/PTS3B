@@ -14,7 +14,6 @@ import java.util.Properties;
 import java.io.IOException;
 import java.io.FileInputStream;
 
-@SuppressWarnings("Duplicates")
 public class Database {
 
     private static String server, username, password;
