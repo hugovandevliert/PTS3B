@@ -9,47 +9,42 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.menu.MenuController">
+<GridPane fx:id="gridPaneBase" alignment="center" hgap="10" minHeight="0.0" minWidth="0.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.menu.MenuController">
     <columnConstraints>
         <ColumnConstraints />
     </columnConstraints>
     <rowConstraints>
         <RowConstraints />
+      <RowConstraints />
     </rowConstraints>
     <children>
-        <Pane fx:id="paneBackground" prefHeight="750.0" prefWidth="1250.0">
+        <Pane fx:id="paneBackground" prefHeight="790.0" prefWidth="1250.0">
             <children>
-                <Pane fx:id="paneContent" layoutX="250.0" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;">
-               <children>
-               </children></Pane>
+                <Pane fx:id="paneContent" layoutX="250.0" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;" />
                 <Pane fx:id="paneMenu" prefHeight="750.0" prefWidth="250.0" style="-fx-background-color: #242e3b;">
                     <children>
-                        <ImageView fx:id="imgviewProfile" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="200.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" >
+                        <ImageView fx:id="imgviewProfile" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="200.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </ImageView>
-                        <ImageView fx:id="imgviewAuctions" fitHeight="36.0" fitWidth="36.0" layoutX="109.0" layoutY="300.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" >
+                        <ImageView fx:id="imgviewAuctions" fitHeight="36.0" fitWidth="36.0" layoutX="109.0" layoutY="300.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </ImageView>
-                        <ImageView fx:id="imgviewFavorites" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="400.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" >
+                        <ImageView fx:id="imgviewFavorites" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="400.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </ImageView>
-                        <ImageView fx:id="imgviewAddAuction" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="500.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true" >
+                        <ImageView fx:id="imgviewAddAuction" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="500.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true">
                             <cursor>
                                 <Cursor fx:constant="HAND" />
                             </cursor>
                         </ImageView>
                     </children>
             </Pane>
-                <Pane fx:id="paneAlert" layoutX="315.0" prefHeight="45.0" prefWidth="870.0">
-               <children>
-                  <Label fx:id="lblAlertMessage" layoutX="19.0" layoutY="-1.0" prefHeight="45.0" prefWidth="830.0" />
-               </children></Pane>
                 <Label fx:id="lblClose" layoutX="1220.0" layoutY="-2.0" onMouseClicked="#closeApplication" prefHeight="33.0" prefWidth="14.0" style="-fx-text-fill: #747e8c" text="x">
                     <font>
                         <Font size="30.0" />
@@ -58,6 +53,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Label>
+            <Pane fx:id="paneAlert" layoutY="750.0" prefHeight="40.0" prefWidth="1250.0" />
             </children>
         </Pane>
     </children>

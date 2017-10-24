@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.useralert.UserAlertController">
+    <Pane fx:id="paneContent" prefHeight="50.0" prefWidth="1250.0" style="-fx-background-color: #3d4857;" GridPane.valignment="TOP">
+      <children>
+         <Pane fx:id="paneBackgroundColor" layoutX="250.0" prefHeight="50.0" prefWidth="1000.0" />
+         <Label fx:id="lblMessage" layoutX="262.0" layoutY="15.0" prefHeight="21.0" prefWidth="974.0" textFill="WHITE" />
+         <Pane fx:id="paneMenu" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #242e3b;">
+            <children>
+               <ImageView fx:id="imgviewProfile" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="200.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+               </ImageView>
+               <ImageView fx:id="imgviewAuctions" fitHeight="36.0" fitWidth="36.0" layoutX="109.0" layoutY="300.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+               </ImageView>
+               <ImageView fx:id="imgviewFavorites" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="400.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+               </ImageView>
+               <ImageView fx:id="imgviewAddAuction" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="500.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true">
+                  <cursor>
+                     <Cursor fx:constant="HAND" />
+                  </cursor>
+               </ImageView>
+            </children>
+         </Pane>
+      </children></Pane>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>

@@ -6,6 +6,8 @@ import core.javaFX.menu.MenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
+import utilities.enums.AlertType;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -23,18 +25,16 @@ public class RegisterController extends MenuController {
     @Override
     public void initialize(final URL location, final ResourceBundle resources) { }
 
-
     public void register() throws InterruptedException, IOException {
         if (!txtPasswordValidate.getText().equals(txtPassword.getText())) {
-            //TODO: Actual client side validation feedback
-            System.out.println("The passwords don't match");
+            MenuController.showAlertMessage("The passwords do not match", AlertType.WARNING, 3000);
+
             txtPassword.setText("");
             txtPasswordValidate.setText("");
             return;
         }
         if (!txtEmailValidate.getText().equals(txtEmail.getText())) {
-            //TODO: Actual client side validation feedback
-            System.out.println("The emails don't match");
+            MenuController.showAlertMessage("The emails do not match", AlertType.WARNING, 3000);
             return;
         }
 
@@ -49,29 +49,14 @@ public class RegisterController extends MenuController {
                     login();
                 }
             } else {
-                //TODO: Actual client side validation feedback
-                System.out.println("Something went wrong...");
-//            UserAlert userAlert = new UserAlert();
-//            userAlert.showMessage("Something went wrong, please try again", AlertType.Error, paneAlert, lblAlertMessage, this);
+                MenuController.showAlertMessage("Something went wrong, please try again!", AlertType.WARNING, 3000);
             }
         } catch (IllegalArgumentException exception){
-            //TODO: Actual client side validation feedback
-            System.out.println(exception.getMessage());
-
-//            UserAlert userAlert = new UserAlert();
-//            userAlert.showMessage(ex.getMessage(), AlertType.Error, paneAlert, lblAlertMessage, this);
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         } catch (SQLException exception) {
-            //TODO: Actual client side validation feedback
-            System.out.println(exception.getMessage());
-
-//            UserAlert userAlert = new UserAlert();
-//            userAlert.showMessage(ex.getMessage(), AlertType.Error, paneAlert, lblAlertMessage, this);
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         } catch (ClassNotFoundException exception) {
-            //TODO: Actual client side validation feedback
-            System.out.println(exception.getMessage());
-
-//            UserAlert userAlert = new UserAlert();
-//            userAlert.showMessage(ex.getMessage(), AlertType.Error, paneAlert, lblAlertMessage, this);
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
 
     }
@@ -81,13 +66,4 @@ public class RegisterController extends MenuController {
         final Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/login/login.fxml"));
         paneContent.getChildren().add(newLoadedPane);
     }
-
-//    public void ClearAlert() {
-//        Platform.runLater(this::run);
-//    }
-//
-//    private void run() {
-//        paneAlert.setStyle("fx-background-color: rgba(61, 72, 87, 1); -fx-background-radius: 2");
-//        lblAlertMessage.setText("");
-//    }
 }

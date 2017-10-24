@@ -12,6 +12,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import logic.repositories.AuctionRepository;
 import models.Auction;
+import utilities.enums.AlertType;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -55,11 +57,11 @@ public class FavoritesController extends MenuController {
                 vboxListedAuctions.getChildren().add(lblNoItemsForSearch);
             }
         } catch (SQLException exception) {
-            exception.printStackTrace(); //TODO: proper error handling
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         } catch (ClassNotFoundException exception) {
-            exception.printStackTrace(); //TODO: proper error handling
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         } catch (IOException exception) {
-            exception.printStackTrace();
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }
 }

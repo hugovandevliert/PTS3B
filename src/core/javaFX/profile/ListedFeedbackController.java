@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import logic.repositories.ProfileRepository;
 import models.Profile;
+import utilities.enums.AlertType;
 import utilities.enums.ProfileLoadingType;
 import java.io.IOException;
 import java.net.URL;
@@ -60,11 +61,11 @@ public class ListedFeedbackController extends MenuController {
             this.menuController.paneContent.getChildren().removeAll();
             this.menuController.paneContent.getChildren().add(newLoadedPane);
         } catch (SQLException exception) {
-            exception.printStackTrace();//TODO: proper error handling
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         } catch (ClassNotFoundException exception) {
-            exception.printStackTrace();
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         } catch (IOException exception) {
-            exception.printStackTrace();
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }
 }

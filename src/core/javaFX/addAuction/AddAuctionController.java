@@ -9,6 +9,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
+import utilities.enums.AlertType;
+
 import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
@@ -55,7 +57,7 @@ public class AddAuctionController extends MenuController {
 
     public void createAuction() {
         try {
-            final boolean successfull = applicationManager.currentUser.getProfile().addAuction(
+            final boolean successful = applicationManager.currentUser.getProfile().addAuction(
                     1,
                     1,
                     LocalDateTime.now().plusDays(1),
@@ -66,13 +68,12 @@ public class AddAuctionController extends MenuController {
                     getImages(this.images)
                     );
 
-            if (successfull) System.out.println("Successfully added auction!"); //TODO: user alert
-            else System.out.println("Your auction could not be added - Please try again!"); //TODO: user alert
+            if (successful) MenuController.showAlertMessage("Successfully added auction!", AlertType.MESSAGE, 3000);
+            else MenuController.showAlertMessage("Your auction could not be added - Please try again!", AlertType.ERROR, 3000);
         } catch (IllegalArgumentException exception) {
-            System.out.println(exception.getMessage());
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         } catch (SQLException exception) {
-            //TODO: Actual client side feedback
-            exception.printStackTrace();
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }
 

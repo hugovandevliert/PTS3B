@@ -16,6 +16,7 @@ import models.Auction;
 import models.Feedback;
 import models.Profile;
 import models.User;
+import utilities.enums.AlertType;
 
 import java.io.File;
 import java.io.IOException;
@@ -142,15 +143,15 @@ public class ProfileController extends MenuController {
             final boolean successful = currentUser.setPhoto(selectedImage);
 
             if (successful){
-                System.out.println("Your profile picture has successfully been changed!"); //TODO: do this with a user alert message
+                MenuController.showAlertMessage("Your profile picture has successfully been changed!", AlertType.MESSAGE, 3000);
 
                 final Image image = new Image("file:" +  selectedImage.getAbsolutePath(), 275, 196, false, false);
                 setProfilePicture(image);
             }else{
-                System.out.println("Uploading the selected image failed - please try again!"); //TODO: do this with a user alert message
+                MenuController.showAlertMessage("Uploading the selected image failed - please try again!", AlertType.ERROR, 3000);
             }
         }else{
-            System.out.println("You did not select an image!"); //TODO: do this with a user alert message
+            MenuController.showAlertMessage("You did not select an image!", AlertType.WARNING, 3000);
         }
     }
 

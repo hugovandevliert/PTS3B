@@ -1,11 +1,10 @@
 package core.javaFX.menu;
 
 import core.ApplicationManager;
-import core.UserAlert;
 import core.javaFX.favorites.FavoritesController;
 import core.javaFX.profile.ProfileController;
+import core.javaFX.useralert.UserAlertController;
 import data.contexts.ProfileMySqlContext;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -30,15 +29,14 @@ public class MenuController implements Initializable {
 
     @FXML public Pane paneMenu;
     @FXML public Pane paneContent;
-    @FXML public Pane paneBackground;
     @FXML public Label lblClose;
 
     @FXML public ImageView imgviewProfile;
     @FXML public ImageView imgviewAuctions;
     @FXML public ImageView imgviewFavorites;
     @FXML public ImageView imgviewAddAuction;
-    @FXML protected Pane paneAlert;
-    @FXML public Label lblAlertMessage;
+
+    @FXML private Pane paneAlert;
 
     protected final static ApplicationManager applicationManager = new ApplicationManager();
     protected ImageView selectedMenu;
@@ -58,6 +56,7 @@ public class MenuController implements Initializable {
     private FXMLLoader fxmlLoader;
     private ProfileController profileController;
     private FavoritesController favoritesController;
+    private static UserAlertController userAlertController;
 
     private ProfileRepository profileRepository;
 
@@ -69,11 +68,15 @@ public class MenuController implements Initializable {
 
         try {
             paneContent.getChildren().clear();
-            final Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/login/login.fxml"));
-            paneContent.getChildren().add(newLoadedPane);
+            final Pane newContentPane = FXMLLoader.load(getClass().getResource("/core/javafx/login/login.fxml"));
+            paneContent.getChildren().add(newContentPane);
 
-            ShowMessage("Please login", AlertType.Message);
-        } catch (IOException | InterruptedException exception) {
+            /* Setting up the UserAlert fxml + controller */
+            fxmlLoader = new FXMLLoader(getClass().getResource("/core/javafx/useralert/useralert.fxml"));
+            final Pane newAlertPane = fxmlLoader.load();
+            userAlertController = fxmlLoader.getController();
+            paneAlert.getChildren().add(newAlertPane);
+        } catch (IOException exception) {
             exception.printStackTrace();
         }
     }
@@ -131,10 +134,9 @@ public class MenuController implements Initializable {
                 profileController.setMenuController(this);
                 profileController.loadProfile(profile);
             } catch (SQLException exception) {
-                exception.printStackTrace(); //TODO: proper error handling
-            }
-              catch (ClassNotFoundException exception) {
-                exception.printStackTrace();
+                MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
+            } catch (ClassNotFoundException exception) {
+                MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
             }
         }
         else if(source == imgviewAuctions){
@@ -161,7 +163,9 @@ public class MenuController implements Initializable {
 
     public void highlightIconColor(final MouseEvent mouseEvent) {
         final ImageView icon = (ImageView) mouseEvent.getSource();
+
         if (Objects.equals(selectedMenu.getId(), icon.getId())) return;
+
         switch(icon.getId()) {
             case "imgviewProfile":
                 imgviewProfile.setImage(profileIconHovered);
@@ -180,7 +184,9 @@ public class MenuController implements Initializable {
 
     public void revertIconColor(final MouseEvent mouseEvent) {
         final ImageView icon = (ImageView) mouseEvent.getSource();
+
         if (Objects.equals(selectedMenu.getId(), icon.getId())) return;
+
         switch(icon.getId()) {
             case "imgviewProfile":
                 imgviewProfile.setImage(profileIcon);
@@ -197,21 +203,16 @@ public class MenuController implements Initializable {
         }
     }
 
-    protected void ShowMessage(final String message, final AlertType type) throws InterruptedException {
-        final UserAlert userAlert = new UserAlert();
-        userAlert.showMessage(message, type, paneAlert, lblAlertMessage, this);
-    }
-
-    public void ClearAlert(){
-        Platform.runLater(() -> paneAlert.getChildren().clear());
-    }
-
     public void setLastCalledClass(final Class classname) {
         this.lastCalledClass = classname.getSimpleName();
     }
 
     public static String getLastCalledClass() {
         return lastCalledClass;
+    }
+
+    public static void showAlertMessage(final String message, final AlertType alertType, final int delay) {
+        userAlertController.setMessage(message, alertType, delay);
     }
 }
 

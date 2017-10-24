@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import logic.repositories.AuctionRepository;
 import models.Auction;
+import utilities.enums.AlertType;
 import utilities.enums.AuctionLoadingType;
 import java.io.File;
 import java.io.IOException;
@@ -108,14 +109,14 @@ public class ListedAuctionController extends MenuController {
 
                 menuController.paneContent.getChildren().add(auctionPane);
             }else{
-                System.out.println("Something went wrong - Couldn't load auction page"); //TODO: proper error handling
+                MenuController.showAlertMessage("Something went wrong - Couldn't load auction page", AlertType.ERROR, 3000);
             }
         } catch (IOException exception){
-            exception.printStackTrace(); //TODO: proper error handling
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         } catch (SQLException exception) {
-            exception.printStackTrace(); //TODO: proper error handling
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         } catch (ClassNotFoundException exception) {
-            exception.printStackTrace(); //TODO: proper error handling
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }
 

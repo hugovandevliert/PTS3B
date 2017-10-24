@@ -23,6 +23,7 @@ import logic.timers.AuctionCountdownTimer;
 import models.Bid;
 import models.Profile;
 import utilities.database.Database;
+import utilities.enums.AlertType;
 import utilities.enums.ProfileLoadingType;
 import java.io.File;
 import java.io.IOException;
@@ -170,11 +171,10 @@ public class AuctionController extends MenuController {
 
     public void manuallyEndAuction() {
         if (auctionRepository.manuallyEndAuction(this.auctionId)){
-            System.out.println("Auction successfully ended!");
+            MenuController.showAlertMessage("Auction successfully ended!", AlertType.MESSAGE, 3000);
         }else{
-            System.out.println("Auction has not successfully been ended!");
+            MenuController.showAlertMessage("Auction has not successfully been ended!", AlertType.ERROR, 3000);
         }
-        //TODO: Use UserAlert here instead of System prints
     }
 
     public void placeNewBid() {
@@ -196,25 +196,25 @@ public class AuctionController extends MenuController {
 
                     if (amountIsHighEnough(bidAmount, minimumNeededAmount)){
                         if (auctionRepository.addBid(bidAmount, currenteUserId, auctionId)){
-                            System.out.println("Successfully placed bid!"); //TODO: show this with a User Alert
+                            MenuController.showAlertMessage("Successfully placed bid!", AlertType.MESSAGE, 3000);
                         }else{
-                            System.out.println("Placing the bid wasn't successfull!"); //TODO: show this with a User Alert
+                            MenuController.showAlertMessage("Placing the bid wasn't successfull!", AlertType.ERROR, 3000);
                         }
                     }else{
-                        System.out.println("Your bid is not high enough, it should atleast be €" + minimumNeededAmount); //TODO: show this with a User Alert
+                        MenuController.showAlertMessage("Your bid is not high enough, it should atleast be €" + minimumNeededAmount, AlertType.WARNING, 3000);
                     }
                 }else{
-                    System.out.println("Please fill in a valid bid!"); //TODO: show this with a User Alert
+                    MenuController.showAlertMessage("Please fill in a valid bid!", AlertType.WARNING, 3000);
                 }
             }else{
-                System.out.println("This auction has been closed - you are not able to bid anymore"); //TODO: show this with a User Alert
+                MenuController.showAlertMessage("This auction has been closed - you are not able to bid anymore", AlertType.WARNING, 3000);
             }
         } catch (SQLException exception){
-            exception.printStackTrace(); //TODO: proper error handling
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         } catch (IOException exception) {
-            exception.printStackTrace();
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         } catch (ClassNotFoundException exception) {
-            exception.printStackTrace();
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }
 
@@ -241,11 +241,11 @@ public class AuctionController extends MenuController {
             this.menuController.paneContent.getChildren().removeAll();
             this.menuController.paneContent.getChildren().add(newLoadedPane);
         } catch (SQLException e) {
-            e.printStackTrace();//TODO: proper error handling
+            MenuController.showAlertMessage(e.getMessage(), AlertType.ERROR, 3000);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            MenuController.showAlertMessage(e.getMessage(), AlertType.ERROR, 3000);
         } catch (IOException e) {
-            e.printStackTrace();
+            MenuController.showAlertMessage(e.getMessage(), AlertType.ERROR, 3000);
         }
     }
 
