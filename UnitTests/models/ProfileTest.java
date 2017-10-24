@@ -6,6 +6,8 @@ import logic.repositories.AuctionRepository;
 import logic.repositories.ProfileRepository;
 import org.junit.jupiter.api.Test;
 import utilities.enums.AuctionLoadingType;
+
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -76,7 +78,7 @@ class ProfileTest {
 
     @Test
     void testGetPhoto() throws SQLException, IOException, ClassNotFoundException {
-        Image img = new Image("src/TestImages/2.jpg");
+        File img = new File("src/TestImages/2.jpg");
         User user = applicationManager.login("testusername", "AbC*1f");
         Profile profile = user.getProfile();
 

@@ -1,9 +1,13 @@
 package models;
 
 import data.contexts.ProfileMySqlContext;
+import data.contexts.UserMySqlContext;
 import javafx.scene.image.Image;
 import logic.repositories.ProfileRepository;
+import logic.repositories.UserRepository;
 import utilities.enums.ProfileLoadingType;
+
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -17,6 +21,7 @@ public class User {
     private Profile profile;
 
     private ProfileRepository profileRepository;
+    private UserRepository userRepository;
 
     /**
      * Constructor of the User-object which is used for creating an instance, it requires the following input parameters: Username, Name en Email
@@ -29,7 +34,10 @@ public class User {
         this.username = username;
         this.name = name;
         this.email = email;
+
         profileRepository = new ProfileRepository(new ProfileMySqlContext());
+        userRepository = new UserRepository(new UserMySqlContext());
+
         this.profile = profileRepository.getProfileForId(id, ProfileLoadingType.FOR_AUCTION_PAGE);
     }
 
@@ -64,8 +72,8 @@ public class User {
      * @param photo: The new Image value that this User-object should hold as photo. Value may not be null or return value will be false
      * @return: Depending on whether the Image is accepted it will reutrn a boolean value. The method will return true when it s succesfully changed
      */
-    public boolean setPhoto(final Image photo) {
-        return false;
+    public boolean setPhoto(final File photo) {
+        return userRepository.setPhoto(this, photo);
     }
 
     public Profile getProfile() {

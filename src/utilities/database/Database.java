@@ -151,6 +151,37 @@ public class Database {
     }
 
     /**
+     * This method is used to set the Profile Picture of a user.
+     * It is needed to have this as a seperate method because the structure of this query is different;
+     * The value of the image has to be set before the userId, the other setData methods do this in the opposite sequence.
+     * @param userId
+     * @param image
+     * @return
+     */
+    public static int setProfilePicture(final int userId, final File image) {
+        int updateCount = -1;
+
+        try {
+            final Connection connection = Database.getConnection();
+            final PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Account SET image = ? WHERE id = ?");
+
+            // Add the image to the PreparedStatement
+            final FileInputStream fileInputStream = new FileInputStream(image);
+            preparedStatement.setBinaryStream(1, fileInputStream, (int)image.length());
+
+            // Add the userId to the PreparedStatement
+            fillPreparedStatementRowWithValue(preparedStatement, String.valueOf(userId), 2);
+
+            preparedStatement.executeUpdate();
+            updateCount = preparedStatement.getUpdateCount();
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return updateCount;
+    }
+
+    /**
      * @param query:    Usage for query --> {call increase_salaries_for_department(?, ?)}
      *                  increase_salaries_for_department being the name of the stored procedure
      */

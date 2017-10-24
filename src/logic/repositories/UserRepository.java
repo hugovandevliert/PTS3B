@@ -15,7 +15,7 @@ public class UserRepository {
         this.context = context;
     }
 
-    public boolean setPhoto(final Profile profile, final File photo) {
+    public boolean setPhoto(final User profile, final File photo) {
         return context.setPhoto(profile, photo);
     }
 

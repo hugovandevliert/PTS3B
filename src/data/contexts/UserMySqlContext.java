@@ -1,9 +1,9 @@
 package data.contexts;
 
 import data.interfaces.IUserContext;
-import models.Profile;
 import models.User;
 import utilities.database.Database;
+
 import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -32,10 +32,8 @@ public class UserMySqlContext implements IUserContext {
     }
 
     @Override
-    public boolean setPhoto(final Profile profile, final File photo) {
-        final String query = "UPDATE Account SET image = ? WHERE id = ?";
-
-        return 1 == Database.setDataWithImages(query, new String[]{ Integer.toString(profile.getProfileId()) }, new File[]{ photo }, true);
+    public boolean setPhoto(final User profile, final File photo) {
+        return 1 == Database.setProfilePicture(profile.getId(), photo);
     }
 
     @Override
