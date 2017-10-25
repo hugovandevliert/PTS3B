@@ -40,6 +40,12 @@ public class Profile {
      */
     public Profile(final Image photo, final String username, final String name, final String email, final int profileId) {
         this(profileId, username);
+
+        auctions = new ArrayList<>();
+        visitedAuctions = new ArrayList<>();
+        favoriteAuctions = new ArrayList<>();
+        feedbacks = new ArrayList<>();
+
         this.photo = photo;
         this.name = name;
         this.email = email;
@@ -80,6 +86,9 @@ public class Profile {
         this.photo = photo;
         this.auctions = auctions;
         this.feedbacks = feedbacks;
+
+        visitedAuctions = new ArrayList<>();
+        favoriteAuctions = new ArrayList<>();
 
         profileRepository = new ProfileRepository(new ProfileMySqlContext());
     }

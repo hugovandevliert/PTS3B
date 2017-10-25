@@ -38,10 +38,10 @@ public class BidTest {
     @Test
     public void testCompareTo() {
         Bid bid2 = new Bid(profile, 400, time);
-        assertEquals(1, bid2.compareTo(bid));
+        assertEquals(-1, bid2.compareTo(bid));
 
         Bid bid3 = new Bid(profile, 200, time);
-        assertEquals(-1, bid3.compareTo(bid));
+        assertEquals(1, bid3.compareTo(bid));
 
         Bid bid4 = new Bid(profile, 300, time);
         assertEquals(0, bid4.compareTo(bid));

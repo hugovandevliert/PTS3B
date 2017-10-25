@@ -111,9 +111,4 @@ class AuctionTest {
         }
         assertThrows(IllegalArgumentException.class, () -> auction1.addBid(10, profile1), "Can not bid on your own auction.");
     }
-
-    @Test
-    void endAuction() {
-        //TODO: Not sure how to test this
-    }
 }
