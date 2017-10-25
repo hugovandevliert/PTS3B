@@ -131,28 +131,36 @@ public class ProfileController extends MenuController {
     }
 
     public void changeProfilePicture() {
-        final FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose your image");
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Images", "*.jpg", "*.gif", "*.png", "*.jpeg");
-        fileChooser.getExtensionFilters().add(filter);
-        final File selectedImage = fileChooser.showOpenDialog(null);
+        if (profileIsFromLoggedInUser()){
+            final FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choose your image");
+            FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Images", "*.jpg", "*.gif", "*.png", "*.jpeg");
+            fileChooser.getExtensionFilters().add(filter);
+            final File selectedImage = fileChooser.showOpenDialog(null);
 
-        if (selectedImage != null) {
-            final User currentUser = MenuController.applicationManager.getCurrentUser();
+            if (selectedImage != null) {
+                final User currentUser = MenuController.applicationManager.getCurrentUser();
 
-            final boolean successful = currentUser.setPhoto(selectedImage);
+                final boolean successful = currentUser.setPhoto(selectedImage);
 
-            if (successful){
-                MenuController.showAlertMessage("Your profile picture has successfully been changed!", AlertType.MESSAGE, 3000);
+                if (successful){
+                    MenuController.showAlertMessage("Your profile picture has successfully been changed!", AlertType.MESSAGE, 3000);
 
-                final Image image = new Image("file:" +  selectedImage.getAbsolutePath(), 275, 196, false, false);
-                setProfilePicture(image);
+                    final Image image = new Image("file:" +  selectedImage.getAbsolutePath(), 275, 196, false, false);
+                    setProfilePicture(image);
+                }else{
+                    MenuController.showAlertMessage("Uploading the selected image failed - please try again!", AlertType.ERROR, 3000);
+                }
             }else{
-                MenuController.showAlertMessage("Uploading the selected image failed - please try again!", AlertType.ERROR, 3000);
+                MenuController.showAlertMessage("You did not select an image!", AlertType.WARNING, 3000);
             }
         }else{
-            MenuController.showAlertMessage("You did not select an image!", AlertType.WARNING, 3000);
+            MenuController.showAlertMessage("You can't change this picture - It is not your profile!", AlertType.WARNING, 3000);
         }
+    }
+
+    private boolean profileIsFromLoggedInUser() {
+        return MenuController.applicationManager.getCurrentUser().getProfile().getProfileId() == this.profile.getProfileId();
     }
 
     private int getNegativeFeedbackCount(final List<Feedback> feedbacks) {
