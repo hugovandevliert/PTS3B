@@ -46,7 +46,7 @@ public class AuctionController extends MenuController {
     @FXML private VBox vboxBids;
     @FXML private Pane panePlaceBid, paneEndAuction, paneContent;
     @FXML private JFXTextField txtBid;
-    @FXML private JFXButton btnEndAuction;
+    @FXML private JFXButton btnEndAuction, btnAddToFavorites;
 
     private Timer auctionCountdown;
     private Timer bidsLoadingTimer;
@@ -66,7 +66,7 @@ public class AuctionController extends MenuController {
         /* Adding the AddFavorites Button with a star icon */
         final Image starIcon = new Image( "/utilities/images/button/button_star_image.png");
 
-        final JFXButton btnAddToFavorites = new JFXButton("Add to favorites", new ImageView(starIcon));
+        btnAddToFavorites = new JFXButton("Add to favorites", new ImageView(starIcon));
         btnAddToFavorites.setPrefSize(346, 48);
         btnAddToFavorites.setLayoutX(626);
         btnAddToFavorites.setLayoutY(580);
@@ -201,6 +201,18 @@ public class AuctionController extends MenuController {
         }
     }
 
+    public void handleAddtoFavoritesButtonRemoving(final int auctionCreatorProfileId) {
+        try {
+            // If we have already marked the auction as our favorite, there is no need to display the user an option to mark it once more
+            // Neither do we want the creator of an auction to mark his/her own auction as favorite
+            if (auctionRepository.auctionIsFavoriteForUser(this.auctionId, this.currenteUserId) || auctionCreatorProfileId == this.currenteUserId){
+                paneContent.getChildren().remove(btnAddToFavorites);
+            }
+        } catch (SQLException exception) {
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
+        }
+    }
+
     public void disablePlaceBidPane() {
         paneContent.getChildren().remove(panePlaceBid);
     }
@@ -295,8 +307,14 @@ public class AuctionController extends MenuController {
     public void addToFavoriteAuctions() {
         final Profile profile = MenuController.applicationManager.getCurrentUser().getProfile();
 
-        if (profile.addFavoriteAuction(this.auctionId)) MenuController.showAlertMessage("Successfully added auction to favorites!", AlertType.MESSAGE, 3000);
-        else MenuController.showAlertMessage("Could not add the auction to favorites!", AlertType.ERROR, 3000);
+        if (profile.addFavoriteAuction(this.auctionId)) {
+            // We successfully added this auction to our favorites, we can now delete the button because we already added to our favorites
+            MenuController.showAlertMessage("Successfully added auction to favorites!", AlertType.MESSAGE, 3000);
+
+            paneContent.getChildren().remove(btnAddToFavorites);
+        } else {
+            MenuController.showAlertMessage("Could not add the auction to favorites!", AlertType.ERROR, 3000);
+        }
     }
 
     private boolean amountIsHighEnough(final double bidAmount, final double minimumNeededAmount) {

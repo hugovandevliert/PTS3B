@@ -169,6 +169,14 @@ public class AuctionMySqlContext implements IAuctionContext {
         return false;
     }
 
+    @Override
+    public boolean auctionIsFavoriteForUser(final int auctionId, final int userId) throws SQLException {
+        final String query = "SELECT auction_id FROM MyAuctions.FavoriteAuction WHERE auction_id = ? AND account_id = ?;";
+        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId), String.valueOf(userId) });
+
+        return resultSet.next();
+    }
+
     private int getLastInsertedAuctionId() throws SQLException {
         final ResultSet resultSet = Database.getData(
                 "SELECT MAX(id) FROM Auction",

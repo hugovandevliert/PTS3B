@@ -101,6 +101,7 @@ public class ListedAuctionController extends MenuController {
                 auctionController.initializeBidsLoadingTimer(auction.getBids(), this.auctionId, auction.getStartBid());
                 auctionController.initializeRepositories();
                 auctionController.handleEndAuctionPaneRemoving();
+                auctionController.handleAddtoFavoritesButtonRemoving(auction.getCreator().getProfileId());
 
                 if (currentUserIsCreatorOfThisAuction(auction)){
                     auctionController.disablePlaceBidPane();

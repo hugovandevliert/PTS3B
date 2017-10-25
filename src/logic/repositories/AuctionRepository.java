@@ -44,4 +44,6 @@ public class AuctionRepository {
     }
 
     public boolean auctionIsClosed(final int auctionId) throws SQLException { return context.auctionIsClosed(auctionId); }
+
+    public boolean auctionIsFavoriteForUser(final int auctionId, final int userId) throws SQLException { return context.auctionIsFavoriteForUser(auctionId, userId); }
 }
