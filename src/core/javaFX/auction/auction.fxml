@@ -32,15 +32,21 @@
                   <ImageView fx:id="imgviewPicture3" fitHeight="89.0" fitWidth="149.0" onMouseClicked="#changeSelectedImage" pickOnBounds="true" preserveRatio="true" />
                </children>
             </VBox>
-            <Label fx:id="lblAuctionTitle" alignment="CENTER" layoutX="642.0" layoutY="23.0" prefHeight="21.0" prefWidth="346.0" textFill="#556070">
+            <Label fx:id="lblAuctionTitle" alignment="CENTER" layoutX="642.0" layoutY="23.0" prefHeight="21.0" prefWidth="346.0" textFill="#a6b5c9">
                <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font name="Segoe UI Light" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lblAuctionSeller" alignment="CENTER" layoutX="642.0" layoutY="246.0" onMouseClicked="#goToCreatorProfile" prefHeight="21.0" prefWidth="330.0" textFill="#556070" />
+            <Label fx:id="lblAuctionSeller" alignment="CENTER" layoutX="642.0" layoutY="246.0" onMouseClicked="#goToCreatorProfile" prefHeight="21.0" prefWidth="330.0" textFill="#a6b5c9">
+               <font>
+                  <Font name="Segoe UI Light" size="18.0" />
+               </font></Label>
             <ScrollPane fx:id="scrollpaneAuctionDescription" hbarPolicy="NEVER" layoutX="642.0" layoutY="53.0" prefHeight="175.0" prefWidth="346.0" style="-fx-background: #3d4857;  -fx-border-color: #3d4857; -fx-background-color: transparent;" vbarPolicy="NEVER">
                <content>
-                  <Text fx:id="textAuctionDescription" fill="#747e8c" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="341.99999821186066" />
+                  <Text fx:id="textAuctionDescription" fill="#788599" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="341.99999821186066">
+                     <font>
+                        <Font name="Segoe UI Semilight" size="14.0" />
+                     </font></Text>
                </content>
             </ScrollPane>
             <ScrollPane fx:id="scrollpaneBids" hbarPolicy="NEVER" layoutX="21.0" layoutY="337.0" prefHeight="392.0" prefWidth="429.0" style="-fx-background: #3d4857;  -fx-border-color: #3d4857; -fx-background-color: transparent;" vbarPolicy="NEVER">
@@ -63,7 +69,7 @@
                           <Cursor fx:constant="HAND" />
                       </cursor>
                   </JFXButton>
-                  <JFXTextField fx:id="txtBid" alignment="BOTTOM_CENTER" focusColor="#747e8c" onAction="#placeNewBid" prefHeight="48.0" prefWidth="346.0" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #a6b5c9;" unFocusColor="#242e3b">
+                  <JFXTextField fx:id="txtBid" alignment="BOTTOM_CENTER" focusColor="#a6b5c9" onAction="#placeNewBid" prefHeight="48.0" prefWidth="346.0" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #a6b5c9;" unFocusColor="#242e3b">
                      <font>
                         <Font name="Segoe UI Light" size="24.0" />
                      </font>

@@ -6,6 +6,8 @@ import data.contexts.BidMySqlContext;
 import javafx.application.Platform;
 import logic.repositories.BidRepository;
 import models.Bid;
+import utilities.enums.AlertType;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,11 +50,11 @@ public class AuctionBidsLoadingTimer extends TimerTask {
                 Platform.runLater(() -> auctionController.setBids(newLoadedBids, startBid));
             }
         } catch (SQLException exception) {
-            exception.printStackTrace(); //TODO proper error handling
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         } catch (IOException exception) {
-            exception.printStackTrace();
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         } catch (ClassNotFoundException exception) {
-            exception.printStackTrace();
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }
 

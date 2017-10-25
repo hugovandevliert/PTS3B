@@ -1,6 +1,7 @@
 package core;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,6 +23,8 @@ public class Main extends Application {
         primaryStage.show();
 
         enableGUIMoving(root, primaryStage);
+
+        primaryStage.setOnCloseRequest(e -> Platform.exit());
     }
 
     private void enableGUIMoving(final Parent parent, final Stage stage) {

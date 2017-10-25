@@ -43,7 +43,7 @@ public class RegisterController extends MenuController {
                 applicationManager.login(txtUsername.getText(), txtPassword.getText());
                 if (applicationManager.isLoggedIn()) {
                     paneContent.getChildren().clear();
-                    final Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javaFX/profile/profile.fxml"));
+                    final Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/auctions/auctions.fxml"));
                     paneContent.getChildren().add(newLoadedPane);
                 } else {
                     login();

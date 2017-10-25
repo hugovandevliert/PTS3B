@@ -1,5 +1,8 @@
 package utilities.database;
 
+import core.javaFX.menu.MenuController;
+import utilities.enums.AlertType;
+
 import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -38,9 +41,9 @@ public class Database {
             }
             return connection;
         } catch (IOException exception) {
-            exception.printStackTrace();
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         } catch (SQLException exception){
-            exception.printStackTrace();
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
         return null;
     }
@@ -62,7 +65,7 @@ public class Database {
             return resultSet;
         }
         catch (Exception exception) {
-            exception.printStackTrace();
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
         return null;
     }
@@ -77,7 +80,7 @@ public class Database {
             return preparedStatement.executeQuery();
         }
         catch (Exception exception) {
-            exception.printStackTrace();
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
         return null;
     }
@@ -103,7 +106,7 @@ public class Database {
             updateCount = preparedStatement.getUpdateCount();
         }
         catch (Exception exception) {
-            exception.printStackTrace();
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
         return updateCount;
     }
@@ -145,7 +148,7 @@ public class Database {
             updateCount = preparedStatement.getUpdateCount();
         }
         catch (Exception exception) {
-            exception.printStackTrace();
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
         return updateCount;
     }
@@ -176,7 +179,7 @@ public class Database {
             updateCount = preparedStatement.getUpdateCount();
         }
         catch (Exception exception) {
-            exception.printStackTrace();
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
         return updateCount;
     }
@@ -216,7 +219,7 @@ public class Database {
             callableStatement.execute();
             updateCount = callableStatement.getUpdateCount();
         } catch (SQLException exception){
-            exception.printStackTrace(); //TODO: proper exception handling
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
         return updateCount;
     }
@@ -226,7 +229,7 @@ public class Database {
             try {
                 connection.close();
             } catch (SQLException exception) {
-                exception.printStackTrace(); //TODO: proper exception handling
+                MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
             }
         }
     }

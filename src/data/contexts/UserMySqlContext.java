@@ -8,14 +8,15 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class UserMySqlContext implements IUserContext {
 
     @Override
     public boolean registerUser(final String username, final String password, final String salt, final String email, final String name) {
-        final String query = "INSERT INTO Account (`Username`, `Password`, `Salt`, `Email`, `Name`) VALUES (?, ?, ?, ?, ?)";
+        final String query = "INSERT INTO Account (`Username`, `Password`, `Salt`, `Email`, `Name`, `CreationDate`) VALUES (?, ?, ?, ?, ?, curDate())";
 
-        return 1 == Database.setData(query, new String[]{username, password, salt, email, name}, true);
+        return 1 == Database.setData(query, new String[]{ username, password, salt, email, name }, true);
     }
 
     @Override

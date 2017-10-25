@@ -5,6 +5,7 @@ import core.javaFX.menu.MenuController;
 import data.contexts.AuctionMySqlContext;
 import javafx.application.Platform;
 import logic.repositories.AuctionRepository;
+import utilities.enums.AlertType;
 import utilities.enums.AuctionLoadingType;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -36,7 +37,8 @@ public class AuctionCountdownTimer extends TimerTask {
     @Override
     public void run() {
         try {
-            if(userStoppedLookingAtThisAuction()) this.cancel();
+            if (userStoppedLookingAtThisAuction()) this.cancel();
+
             if (!auctionRepository.auctionIsClosed(this.auctionId)){
                 final Date currentDate = new Date();
                 expirationDate = auctionRepository.getAuctionForId(this.auctionId, AuctionLoadingType.FOR_COUNTDOWN_TIMER).getExpirationDate();
@@ -50,7 +52,6 @@ public class AuctionCountdownTimer extends TimerTask {
                     timerStringValue = "This auction has ended!";
                 }
 
-                //TODO: ook zorgen dat deze thread netjes gestopt wordt als deze pagina verwijdert wordt!
                 final String finalTimerStringValue = timerStringValue;
                 setTimerValue(finalTimerStringValue);
             } else{
@@ -60,11 +61,11 @@ public class AuctionCountdownTimer extends TimerTask {
                 this.cancel();
             }
         } catch (SQLException exception) {
-            exception.printStackTrace(); //TODO: proper error handling
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         } catch (IOException exception) {
-            exception.printStackTrace(); //TODO: proper error handling
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         } catch (ClassNotFoundException exception) {
-            exception.printStackTrace(); //TODO: proper error handling
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }
 

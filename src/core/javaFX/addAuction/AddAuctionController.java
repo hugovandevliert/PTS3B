@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 
 public class AddAuctionController extends MenuController {
 
-    @FXML private ImageView imgviewPicture1,imgviewPicture2, imgviewPicture3;
+    @FXML private ImageView imgviewPicture1,imgviewPicture2, imgviewPicture3, imgviewPicture4;
     @FXML private JFXTextField txtTitle;
     @FXML private JFXTextArea txtDescription;
     @FXML private JFXTextField txtStartTime;
@@ -49,13 +49,16 @@ public class AddAuctionController extends MenuController {
             ImageView source = (ImageView) mouseEvent.getSource();
             if (source == imgviewPicture1) {
                 images[0] = selectedImage;
-                imgviewPicture1.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 275, 206, false, false));
+                imgviewPicture1.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 225, 156, false, false));
             } else if (source == imgviewPicture2) {
                 images[1] = selectedImage;
-                imgviewPicture2.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 275, 206, false, false));
+                imgviewPicture2.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 225, 156, false, false));
             } else if (source == imgviewPicture3) {
                 images[2] = selectedImage;
-                imgviewPicture3.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 275, 206, false, false));
+                imgviewPicture3.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 225, 156, false, false));
+            } else if (source == imgviewPicture4) {
+                images[3] = selectedImage;
+                imgviewPicture3.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 225, 156, false, false));
             }
         }
     }
@@ -85,11 +88,12 @@ public class AddAuctionController extends MenuController {
 
     private void setImages() {
         final Image placeholderImage = new Image("file:" +  new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath(),
-                275, 206, false, true);
+                225, 156, false, true);
 
         imgviewPicture1.setImage(placeholderImage);
         imgviewPicture2.setImage(placeholderImage);
         imgviewPicture3.setImage(placeholderImage);
+        imgviewPicture4.setImage(placeholderImage);
     }
 
     private ArrayList<File> getImages(final File... files) {
