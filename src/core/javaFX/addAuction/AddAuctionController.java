@@ -124,6 +124,7 @@ public class AddAuctionController extends MenuController {
     }
 
     private double convertToDouble(final String text) {
+        text.replaceAll(",", ".");
         if (text.matches("[0-9]*")) {
             return Double.parseDouble(text);
         } else {

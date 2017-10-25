@@ -34,6 +34,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
@@ -123,7 +125,7 @@ public class AuctionController extends MenuController {
 
         if (bids != null && bids.size() > 0){
             for (final Bid bid : bids){
-                final Label lblBid = new Label("€" + bid.getAmount() + " - " + bid.getProfile().getUsername() + " - " + bid.getDate().toLocalDate() + " " + bid.getDate().toLocalTime());
+                final Label lblBid = new Label(convertToEuro(bid.getAmount()) + " - " + bid.getProfile().getUsername() + " - " + bid.getDate().toLocalDate() + " " + bid.getDate().toLocalTime());
                 lblBid.setFont(Font.font("Segoe UI Semilight"));
                 lblBid.setTextFill(Color.web("#A6B5C9"));
                 lblBid.setStyle("-fx-font-size: 16");
@@ -131,7 +133,13 @@ public class AuctionController extends MenuController {
             }
         }else{
             final Label lblNoBids1 = new Label("Be the first one to place a bid!");
-            final Label lblNoBids2 = new Label("The price to start bidding at is " + startBid);
+            final Label lblNoBids2 = new Label("The price to start bidding at is " + convertToEuro(startBid));
+            lblNoBids1.setFont(Font.font("Segoe UI Semilight"));
+            lblNoBids1.setTextFill(Color.web("#A6B5C9"));
+            lblNoBids1.setStyle("-fx-font-size: 16");
+            lblNoBids2.setFont(Font.font("Segoe UI Semilight"));
+            lblNoBids2.setTextFill(Color.web("#A6B5C9"));
+            lblNoBids2.setStyle("-fx-font-size: 16");
             vboxBids.getChildren().add(lblNoBids1);
             vboxBids.getChildren().add(lblNoBids2);
         }
@@ -235,7 +243,7 @@ public class AuctionController extends MenuController {
     public void placeNewBid() {
         try {
             if (!auctionRepository.auctionIsClosed(this.auctionId)){
-                final String bidPriceString = txtBid.getText();
+                final String bidPriceString = txtBid.getText().replaceAll(",", ".");
                 txtBid.setText("");
 
                 if (bidPriceString != null && bidPriceString.length() > 0 && !bidPriceString.isEmpty() && Database.isDouble(bidPriceString)){
@@ -253,16 +261,16 @@ public class AuctionController extends MenuController {
                         if (auctionRepository.addBid(bidAmount, currenteUserId, auctionId)){
                             MenuController.showAlertMessage("Successfully placed bid!", AlertType.MESSAGE, 3000);
                         }else{
-                            MenuController.showAlertMessage("Placing the bid wasn't successfull!", AlertType.ERROR, 3000);
+                            MenuController.showAlertMessage("Placing the bid wasn't successful!", AlertType.ERROR, 3000);
                         }
                     }else{
-                        MenuController.showAlertMessage("Your bid is not high enough, it should atleast be €" + minimumNeededAmount, AlertType.WARNING, 3000);
+                        MenuController.showAlertMessage("Your bid is not high enough, it should at least be " + convertToEuro(minimumNeededAmount), AlertType.WARNING, 3000);
                     }
                 }else{
                     MenuController.showAlertMessage("Please fill in a valid bid!", AlertType.WARNING, 3000);
                 }
             }else{
-                MenuController.showAlertMessage("This auction has been closed - you are not able to bid anymore", AlertType.WARNING, 3000);
+                MenuController.showAlertMessage("This auction has been closed - you are not able to bid anymore.", AlertType.WARNING, 3000);
             }
         } catch (SQLException exception){
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
@@ -319,5 +327,11 @@ public class AuctionController extends MenuController {
 
     private boolean amountIsHighEnough(final double bidAmount, final double minimumNeededAmount) {
         return bidAmount >= minimumNeededAmount;
+    }
+
+    private String convertToEuro(final double amount) {
+        Locale dutch = new Locale("nl", "NL");
+        DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(dutch);
+        return decimalFormat.format(amount);
     }
 }
