@@ -46,7 +46,7 @@ public class AuctionController extends MenuController {
     @FXML private VBox vboxBids;
     @FXML private Pane panePlaceBid, paneEndAuction, paneContent;
     @FXML private JFXTextField txtBid;
-    @FXML private JFXButton btnPlaceBid;
+    @FXML private JFXButton btnEndAuction;
 
     private Timer auctionCountdown;
     private Timer bidsLoadingTimer;
@@ -190,6 +190,17 @@ public class AuctionController extends MenuController {
         bidsLoadingTimer.schedule(new AuctionBidsLoadingTimer(this, this.menuController, bids, auctionId, startBid), 1000, 500);
     }
 
+    public void handleEndAuctionPaneRemoving() {
+        // If this auction has been closed, we should never get the option again to close it once more
+        try {
+            if (auctionRepository.auctionIsClosed(this.auctionId)) {
+                paneEndAuction.getChildren().remove(btnEndAuction);
+            }
+        } catch (SQLException exception) {
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
+        }
+    }
+
     public void disablePlaceBidPane() {
         paneContent.getChildren().remove(panePlaceBid);
     }
@@ -201,6 +212,9 @@ public class AuctionController extends MenuController {
     public void manuallyEndAuction() {
         if (auctionRepository.manuallyEndAuction(this.auctionId)){
             MenuController.showAlertMessage("Auction successfully ended!", AlertType.MESSAGE, 3000);
+
+            // We just ended the auction - we should therefore remove the option to keep ending it!
+            paneEndAuction.getChildren().remove(btnEndAuction);
         }else{
             MenuController.showAlertMessage("Auction has not successfully been ended!", AlertType.ERROR, 3000);
         }

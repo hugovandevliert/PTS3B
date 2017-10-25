@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -90,21 +91,21 @@ public class ProfileTest {
     public void testGetUsername() throws SQLException, IOException, ClassNotFoundException {
         Profile profile = applicationManager.login("user1", "User1!").getProfile();
 
-        assertEquals(profile.getUsername(), "user1");
+        assertSame("user1", profile.getUsername());
     }
 
     @Test
     public void testGetName() throws SQLException, IOException, ClassNotFoundException {
         Profile profile = applicationManager.login("user1", "User1!").getProfile();
 
-        assertEquals(profile.getName(), "Mohamed Ali");
+        assertSame("Mohamed Ali", profile.getName());
     }
 
     @Test
     public void testGetEmail() throws SQLException, IOException, ClassNotFoundException {
         Profile profile = applicationManager.login("user1", "User1!").getProfile();
 
-        assertEquals(profile.getEmail(), "User1@gmail.com");
+        assertSame("User1@gmail.com", profile.getEmail());
     }
 
     @Test
