@@ -27,74 +27,74 @@ class AuctionTest {
     }
 
     @Test
-    void getId() {
+    void testGetId() {
         assertEquals(0, auction2.getId(), "The auction ID should've been 0");
     }
 
     @Test
-    void getStartBid() {
+    void testGetStartBid() {
         assertEquals(0, auction1.getStartBid(), "Start bid should've been 0");
         assertEquals(10, auction2.getStartBid(), "Start bid should've been 10");
     }
 
     @Test
-    void getMinimum() {
+    void testGetMinimum() {
         assertEquals(5, auction1.getMinimum(), "Minimum should've been 5");
     }
 
     @Test
-    void isPremium() {
+    void testIsPremium() {
         assertEquals(false, auction1.isPremium(), "Should've been false");
     }
 
     @Test
-    void getExpirationDate() {
+    void testGetExpirationDate() {
         assertEquals(LocalDateTime.of(2017, 10, 11, 13, 34), auction1.getExpirationDate(), "This should've been 11-10-2017 13:34");
         assertEquals(LocalDateTime.of(2017, 10, 11, 13, 38), auction2.getExpirationDate(), "This should've been 11-10-2017 13:38");
     }
 
     @Test
-    void getOpeningDate() {
+    void testGetOpeningDate() {
         assertEquals(LocalDateTime.of(2016, 9, 10, 12, 33), auction1.getOpeningDate(), "This should've been 10-9-2016 12:33");
     }
 
     @Test
-    void getTitle() {
+    void testGetTitle() {
         assertEquals("MyTitle", auction1.getTitle(), "This should've been MyTitle");
         assertEquals("MySecondTitle", auction2.getTitle(), "This should've been MySecondTitle");
     }
 
     @Test
-    void getDescription() {
+    void testGetDescription() {
         assertEquals("MyDescription", auction1.getDescription(), "This should've been MyDescription");
         assertEquals("MySecondDescription", auction2.getDescription(), "This should've been MySecondDescription");
     }
 
     @Test
-    void getImages() {
+    void testGetImages() {
         assertNull(auction1.getImages());
         assertEquals(new ArrayList<Image>(), auction2.getImages());
     }
 
     @Test
-    void getBids() {
+    void testGetBids() {
         assertEquals(new ArrayList<Bid>(), auction2.getBids());
     }
 
     @Test
-    void getStatus() {
+    void testGetStatus() {
         assertEquals(Status.OPEN, auction1.getStatus());
         assertNull(auction2.getStatus());
     }
 
     @Test
-    void getCreator() {
+    void testGetCreator() {
         assertEquals(profile1, auction1.getCreator());
         assertEquals(profile1, auction2.getCreator());
     }
 
     @Test
-    void setStatus() {
+    void testSetStatus() {
         auction1.setStatus(Status.CLOSED);
         assertEquals(Status.CLOSED, auction1.getStatus());
         auction1.setStatus(Status.OPEN);
@@ -102,7 +102,7 @@ class AuctionTest {
     }
 
     @Test
-    void addBid() {
+    void testAddBid() {
         try{
             auction1.addBid(10.00, profile2);
         }
