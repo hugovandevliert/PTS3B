@@ -100,6 +100,7 @@ public class ListedAuctionController extends MenuController {
                 auctionController.initializeCountdownTimer(auction.getExpirationDate());
                 auctionController.initializeBidsLoadingTimer(auction.getBids(), this.auctionId, auction.getStartBid());
                 auctionController.initializeRepositories();
+                auctionController.handleEndAuctionPaneRemoving();
 
                 if (currentUserIsCreatorOfThisAuction(auction)){
                     auctionController.disablePlaceBidPane();
