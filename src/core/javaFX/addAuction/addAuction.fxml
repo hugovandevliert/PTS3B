@@ -42,49 +42,55 @@
                  </cursor>
             </ImageView>
              
-             <JFXTextField fx:id="txtTitle" alignment="CENTER" focusColor="#747e8c" layoutX="25.0" layoutY="300.0" prefHeight="35.0" prefWidth="950.0" promptText="title" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
+             <JFXTextField fx:id="txtTitle" alignment="CENTER" focusColor="#747e8c" layoutX="25.0" layoutY="244.0" prefHeight="35.0" prefWidth="950.0" promptText="title" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
                  <font>
                      <Font name="Segoe UI Light" size="18.0" />
                  </font>
              </JFXTextField>
 
-             <JFXTextArea fx:id="txtDescription" focusColor="#788599" layoutX="25.0" layoutY="375.0" prefHeight="105.0" prefWidth="950.0" promptText="description" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: transparent;" unFocusColor="#242e3b">
+             <JFXTextArea fx:id="txtDescription" focusColor="#788599" layoutX="25.0" layoutY="320.0" prefHeight="105.0" prefWidth="950.0" promptText="description" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: transparent;" unFocusColor="#242e3b">
                  <font>
                      <Font name="Segoe UI Light" size="18.0" />
                  </font>
              </JFXTextArea>
 
-             <JFXTextField fx:id="txtStartTime" focusColor="#788599" layoutX="25.0" layoutY="525.0" prefHeight="35.0" prefWidth="250.0" promptText="start time (HH:MM)" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
-                <font>
-                    <Font name="Segoe UI Light" size="18.0" />
-                </font>
-            </JFXTextField>
-
-            <JFXTextField fx:id="txtStartDate" focusColor="#788599" layoutX="375.0" layoutY="525.0" prefHeight="35.0" prefWidth="250.0" promptText="start date (DD/MM/YYYY)" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
-                <font>
-                    <Font name="Segoe UI Light" size="18.0" />
-                </font>
-            </JFXTextField>
-
-            <JFXTextField fx:id="txtStartPrice" focusColor="#788599" layoutX="725.0" layoutY="525.0" prefHeight="35.0" prefWidth="250.0" promptText="start price" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
-                <font>
-                    <Font name="Segoe UI Light" size="18.0" />
-                </font>
-            </JFXTextField>
-
-             <JFXTextField fx:id="txtEndTime" focusColor="#788599" layoutX="25.0" layoutY="600.0" prefHeight="35.0" prefWidth="250.0" promptText="end time (HH:MM)" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
+             <JFXTextField fx:id="txtMinimumPrice" focusColor="#788599" layoutX="375.0" layoutY="455.0" prefHeight="35.0" prefWidth="250.0" promptText="minimal selling price" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
                  <font>
                      <Font name="Segoe UI Light" size="18.0" />
                  </font>
              </JFXTextField>
 
-            <JFXTextField fx:id="txtEndDate" focusColor="#788599" layoutX="375.0" layoutY="600.0" prefHeight="35.0" prefWidth="250.0" promptText="end date (DD/MM/YYYY)" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
+             <JFXTextField fx:id="txtStartTime" focusColor="#788599" layoutX="25.0" layoutY="530.0" prefHeight="35.0" prefWidth="250.0" promptText="start time (HH:MM)" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
                 <font>
                     <Font name="Segoe UI Light" size="18.0" />
                 </font>
             </JFXTextField>
 
-            <JFXTextField fx:id="txtIncrementation" focusColor="#788599" layoutX="725.0" layoutY="600.0" prefHeight="35.0" prefWidth="250.0" promptText="minimal incrementation" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
+            <JFXTextField fx:id="txtStartDate" focusColor="#788599" layoutX="375.0" layoutY="530.0" prefHeight="35.0" prefWidth="250.0" promptText="start date (DD/MM/YYYY)" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
+                <font>
+                    <Font name="Segoe UI Light" size="18.0" />
+                </font>
+            </JFXTextField>
+
+            <JFXTextField fx:id="txtStartBid" focusColor="#788599" layoutX="725.0" layoutY="530.0" prefHeight="35.0" prefWidth="250.0" promptText="start bid" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
+                <font>
+                    <Font name="Segoe UI Light" size="18.0" />
+                </font>
+            </JFXTextField>
+
+             <JFXTextField fx:id="txtEndTime" focusColor="#788599" layoutX="25.0" layoutY="605.0" prefHeight="35.0" prefWidth="250.0" promptText="end time (HH:MM)" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
+                 <font>
+                     <Font name="Segoe UI Light" size="18.0" />
+                 </font>
+             </JFXTextField>
+
+            <JFXTextField fx:id="txtEndDate" focusColor="#788599" layoutX="375.0" layoutY="605.0" prefHeight="35.0" prefWidth="250.0" promptText="end date (DD/MM/YYYY)" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
+                <font>
+                    <Font name="Segoe UI Light" size="18.0" />
+                </font>
+            </JFXTextField>
+
+            <JFXTextField fx:id="txtIncrementation" focusColor="#788599" layoutX="725.0" layoutY="605.0" prefHeight="35.0" prefWidth="250.0" promptText="minimal incrementation" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: #3d4857;" unFocusColor="#242e3b">
                 <font>
                     <Font name="Segoe UI Light" size="18.0" />
                 </font>

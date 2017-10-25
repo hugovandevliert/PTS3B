@@ -87,6 +87,7 @@ public class Profile {
     /**
      * Method for creating a new auction.
      * @param startBid:       Minimum value of the first bid. Must be >0.
+     * @param incrementation: Minimum difference a bid must have from the previous one. Must be >0.
      * @param minimum:        Minimum bid the auction must have reached before the seller actually sells the item. Must be >0.
      * @param expirationDate: Date/time when the auction is planned to close. Should be later then the current date.
      * @param openingDate:    Date/time when the auction is planned to open. Should be earlier then the the expirationdate, and can't be earlier then today.
@@ -94,9 +95,13 @@ public class Profile {
      * @param title:          Title of the auction. Can't contain more then 64 characters.
      * @param fileImages:     The file's which represent the images added to this auction.
      */
-    public boolean addAuction(final double startBid, final double minimum, final LocalDateTime expirationDate, final LocalDateTime openingDate, final boolean isPremium, final String title, final String description, final ArrayList<File> fileImages) throws SQLException {
+    public boolean addAuction(final double startBid, final double incrementation, final double minimum, final LocalDateTime expirationDate, final LocalDateTime openingDate,
+                              final boolean isPremium, final String title, final String description, final ArrayList<File> fileImages) throws SQLException {
         if (startBid <= 0){
-            throw new IllegalArgumentException("Startbid should be higher than 0.");
+            throw new IllegalArgumentException("Start bid should be higher than 0.");
+        }
+        else if (incrementation <= 0){
+            throw new IllegalArgumentException("incrementation bid should be higher than 0.");
         }
         else if (minimum <= 0){
             throw new IllegalArgumentException("Minimum bid should be higher than 0.");
