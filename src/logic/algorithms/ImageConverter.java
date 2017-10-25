@@ -7,7 +7,8 @@ import java.io.InputStream;
 public class ImageConverter {
 
     public Image getImageFromInputStream(final InputStream inputStream, final ImageLoadingType loadingType) {
-        if(inputStream == null) return null;
+        if (inputStream == null) return null;
+
         int width;
         int height;
 
