@@ -21,11 +21,23 @@
           <Pane fx:id="paneContent" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;">
          <children>
             <ImageView fx:id="imgviewProfilePicture" fitHeight="196.0" fitWidth="275.0" layoutX="23.0" layoutY="24.0" onMouseClicked="#changeProfilePicture" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="lblName" alignment="CENTER" layoutX="427.0" layoutY="24.0" prefHeight="21.0" prefWidth="531.0" text="Name" textAlignment="CENTER" textFill="#556070" />
-            <Label fx:id="lblUserSince" alignment="CENTER" layoutX="427.0" layoutY="54.0" prefHeight="21.0" prefWidth="531.0" text="User Since 18-10-2017" textAlignment="CENTER" textFill="#556070" />
+            <Label fx:id="lblName" alignment="CENTER" layoutX="427.0" layoutY="24.0" prefHeight="21.0" prefWidth="531.0" text="Name" textAlignment="CENTER" textFill="#a6b5c9">
+               <font>
+                  <Font name="Segoe UI Light" size="18.0" />
+               </font></Label>
+            <Label fx:id="lblUserSince" alignment="CENTER" layoutX="427.0" layoutY="54.0" prefHeight="21.0" prefWidth="531.0" text="User since 18-10-2017" textAlignment="CENTER" textFill="#788599">
+               <font>
+                  <Font name="Segoe UI Light" size="14.0" />
+               </font></Label>
             <ImageView fx:id="imgviewPositiveIcon" fitHeight="53.0" fitWidth="60.0" layoutX="590.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="lblPositiveFeedbacksCount" alignment="CENTER" layoutX="590.0" layoutY="172.0" prefHeight="21.0" prefWidth="60.0" text="121" textAlignment="CENTER" textFill="#556070" />
-            <Label fx:id="lblNegativeFeedbacksCount" alignment="CENTER" layoutX="736.0" layoutY="172.0" prefHeight="21.0" prefWidth="60.0" text="0" textAlignment="CENTER" textFill="#556070" />
+            <Label fx:id="lblPositiveFeedbacksCount" alignment="CENTER" layoutX="590.0" layoutY="172.0" prefHeight="21.0" prefWidth="60.0" text="121" textAlignment="CENTER" textFill="#a6b5c9">
+               <font>
+                  <Font name="Segoe UI Light" size="18.0" />
+               </font></Label>
+            <Label fx:id="lblNegativeFeedbacksCount" alignment="CENTER" layoutX="736.0" layoutY="172.0" prefHeight="21.0" prefWidth="60.0" text="0" textAlignment="CENTER" textFill="#a6b5c9">
+               <font>
+                  <Font name="Segoe UI Light" size="18.0" />
+               </font></Label>
             <ScrollPane fx:id="scrollpaneListedFeedbacks" hbarPolicy="NEVER" layoutX="28.0" layoutY="281.0" prefHeight="149.0" prefWidth="945.0" style="-fx-background: #3d4857;  -fx-border-color: #3d4857; -fx-background-color: transparent;" vbarPolicy="NEVER">
                <content>
                   <VBox fx:id="vboxListedFeedbacks" alignment="TOP_CENTER" prefHeight="144.0" prefWidth="941.0" spacing="30.0" />
@@ -36,14 +48,14 @@
                   <VBox fx:id="vboxListedAuctions" alignment="TOP_CENTER" prefHeight="234.0" prefWidth="941.0" spacing="30.0" />
                </content>
             </ScrollPane>
-            <Label fx:id="lblFeedbacks" alignment="CENTER" layoutX="235.0" layoutY="252.0" prefHeight="21.0" prefWidth="531.0" text="Feedbacks" textAlignment="CENTER" textFill="#556070">
+            <Label fx:id="lblFeedbacks" alignment="CENTER" layoutX="235.0" layoutY="252.0" prefHeight="21.0" prefWidth="531.0" text="Feedbacks" textAlignment="CENTER" textFill="#a6b5c9">
                <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font name="Segoe UI" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lblUsersAuctions" alignment="CENTER" layoutX="235.0" layoutY="456.0" prefHeight="21.0" prefWidth="531.0" text="User's Auctions" textAlignment="CENTER" textFill="#556070">
+            <Label fx:id="lblUsersAuctions" alignment="CENTER" layoutX="235.0" layoutY="456.0" prefHeight="21.0" prefWidth="531.0" text="User's Auctions" textAlignment="CENTER" textFill="#a6b5c9">
                <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font name="Segoe UI" size="18.0" />
                </font>
             </Label>
             <ImageView fx:id="imgviewNegativeIcon" fitHeight="53.0" fitWidth="60.0" layoutX="736.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" />

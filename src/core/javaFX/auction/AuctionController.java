@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import logic.repositories.AuctionRepository;
 import logic.repositories.BidRepository;
@@ -104,6 +105,8 @@ public class AuctionController extends MenuController {
         if (bids != null && bids.size() > 0){
             for (final Bid bid : bids){
                 final Label lblBid = new Label("€" + bid.getAmount() + " - " + bid.getProfile().getUsername() + " - " + bid.getDate().toLocalDate() + " " + bid.getDate().toLocalTime());
+                lblBid.setFont(Font.font("Segoe UI Light"));
+                lblBid.setStyle("-fx-text-fill: #A6B5C9");
                 vboxBids.getChildren().add(lblBid);
             }
         }else{
