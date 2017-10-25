@@ -46,6 +46,7 @@ public class AuctionController extends MenuController {
     @FXML private VBox vboxBids;
     @FXML private Pane panePlaceBid, paneEndAuction, paneContent;
     @FXML private JFXTextField txtBid;
+    @FXML private JFXButton btnPlaceBid;
 
     private Timer auctionCountdown;
     private Timer bidsLoadingTimer;
@@ -136,7 +137,13 @@ public class AuctionController extends MenuController {
         }
     }
 
-    public void setTimer(final String timer) { lblTimer.setText(timer); }
+    public void setTimer(final String timer) {
+        lblTimer.setText(timer);
+
+        if (timer.equals("This auction has ended!")){ // The auction ended - we should remove the addBid pane for clearity
+            paneContent.getChildren().remove(panePlaceBid);
+        }
+    }
 
     public void setAuctionId(final int auctionId) {
         this.auctionId = auctionId;
