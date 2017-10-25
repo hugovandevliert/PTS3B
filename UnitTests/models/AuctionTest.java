@@ -59,11 +59,6 @@ class AuctionTest {
     }
 
     @Test
-    void getCreationDate() {
-        assertEquals(LocalDateTime.now(), auction1.getCreationDate(), "Get creationDate is not working properly.");
-    }
-
-    @Test
     void getTitle() {
         assertEquals("MyTitle", auction1.getTitle(), "This should've been MyTitle");
         assertEquals("MySecondTitle", auction2.getTitle(), "This should've been MySecondTitle");

@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * ASSUMPTION: There is a user in the database with username="testusername", password="AbC*1f", name="Test User" and email="testuser@gmail.com".
+ * ASSUMPTION: There is a user in the database with username="user1", password="User1!", name="Mohamed Ali" and email="User1@gmail.com".
  * If this is not true, all tests will fail..
  */
 class UserTest {
@@ -20,7 +20,7 @@ class UserTest {
     @BeforeAll
     static void setUp() throws SQLException, IOException, ClassNotFoundException {
         ApplicationManager applicationManager = new ApplicationManager();
-        user = applicationManager.login("testusername", "AbC*1f");
+        user = applicationManager.login("user1", "User1!");
     }
 
     @Test
@@ -34,18 +34,18 @@ class UserTest {
         assertThrows(IllegalArgumentException.class, () -> user.changePassword("AB*CDEF3"), "Passwords should contain at least 1 lowercase letter.");
         assertThrows(IllegalArgumentException.class, () -> user.changePassword("ab*cdEf3Wolfeschlegelsteinhausenb"), "Passwords should not exceed 32 chars");
 
-        assertTrue(user.changePassword("AbC*1f"), "Tried to change to a correct password (AbC*1f), but got false in return.");
+        assertTrue(user.changePassword("User1!"), "Tried to change to a correct password (User1!), but got false in return.");
     }
 
     @Test
     void testGetUsername() {
-        assertEquals("testusername", user.getUsername(), "Username getter is not working properly.");
+        assertEquals("User1", user.getUsername(), "Username getter is not working properly.");
         assertEquals(user.getUsername(), user.getProfile().getUsername(), "Username in profile does not match the one in user.");
     }
 
     @Test
     void testGetName() {
-        assertEquals("Test User", user.getName(), "Full name getter is not working properly");
+        assertEquals("Mohamed Ali", user.getName(), "Full name getter is not working properly");
         assertEquals(user.getName(), user.getProfile().getName(), "Full name in profile does not match the one in user.");
     }
 
@@ -61,7 +61,7 @@ class UserTest {
 
     @Test
     void testGetEmail() {
-        assertEquals("testuser@gmail.com", user.getEmail(), "Email getter is not working properly");
+        assertEquals("User1@gmail.com", user.getEmail(), "Email getter is not working properly");
     }
 
     @Test
@@ -79,7 +79,7 @@ class UserTest {
 
     @AfterAll
     static void cleanUp() {
-        user.setName("Test User");
-        user.setEmail("testuser@gmail.com");
+        user.setName("Mohamed Ali");
+        user.setEmail("User1@gmail.com");
     }
 }
