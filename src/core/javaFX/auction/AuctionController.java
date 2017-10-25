@@ -1,11 +1,14 @@
 package core.javaFX.auction;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import core.javaFX.menu.MenuController;
 import core.javaFX.profile.ProfileController;
 import data.contexts.AuctionMySqlContext;
 import data.contexts.BidMySqlContext;
 import data.contexts.ProfileMySqlContext;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -41,7 +44,7 @@ public class AuctionController extends MenuController {
     @FXML private Text textAuctionDescription;
     @FXML private ImageView imgviewSelectedPicture, imgviewPicture1, imgviewPicture2, imgviewPicture3;
     @FXML private VBox vboxBids;
-    @FXML private Pane panePlaceBid, paneEndAuction;
+    @FXML private Pane panePlaceBid, paneEndAuction, paneContent;
     @FXML private JFXTextField txtBid;
 
     private Timer auctionCountdown;
@@ -58,7 +61,21 @@ public class AuctionController extends MenuController {
     private double auctionMinimumBid, auctionMinimumIncrementation;
 
     @Override
-    public void initialize(final URL location, final ResourceBundle resources) { }
+    public void initialize(final URL location, final ResourceBundle resources) {
+        /* Adding the AddFavorites Button with a star icon */
+        final Image starIcon = new Image( "/utilities/images/button/button_star_image.png");
+
+        final JFXButton btnAddToFavorites = new JFXButton("Add to favorites", new ImageView(starIcon));
+        btnAddToFavorites.setPrefSize(346, 48);
+        btnAddToFavorites.setLayoutX(626);
+        btnAddToFavorites.setLayoutY(580);
+        btnAddToFavorites.setFont(Font.font("Segoe UI Light"));
+        btnAddToFavorites.setTextFill(Color.web("#824923"));
+        btnAddToFavorites.setStyle("-fx-font-size: 14; -fx-background-color: #f2aa78");
+        btnAddToFavorites.setOnAction(event -> addToFavoriteAuctions());
+
+        paneContent.getChildren().add(btnAddToFavorites);
+    }
 
     public String getTimerString() {
         return lblTimer.getText();
@@ -252,6 +269,13 @@ public class AuctionController extends MenuController {
         } catch (IOException e) {
             MenuController.showAlertMessage(e.getMessage(), AlertType.ERROR, 3000);
         }
+    }
+
+    public void addToFavoriteAuctions() {
+        final Profile profile = MenuController.applicationManager.getCurrentUser().getProfile();
+
+        if (profile.addFavoriteAuction(this.auctionId)) MenuController.showAlertMessage("Successfully added auction to favorites!", AlertType.MESSAGE, 3000);
+        else MenuController.showAlertMessage("Could not add the auction to favorites!", AlertType.ERROR, 3000);
     }
 
     private boolean amountIsHighEnough(final double bidAmount, final double minimumNeededAmount) {

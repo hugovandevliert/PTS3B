@@ -53,7 +53,7 @@ public class ProfileTest {
         Profile profile = applicationManager.login("user1", "User1!").getProfile();
         Auction auction = auctionRepository.getAuctionForId(1, AuctionLoadingType.FOR_AUCTION_PAGE);
 
-        profileRepository.addFavoriteAuction(profile, auction);
+        profileRepository.addFavoriteAuction(profile, auction.getId());
 
         assertTrue(profile.getFavoriteAuctions().contains(auction));
     }
@@ -134,7 +134,7 @@ public class ProfileTest {
         Profile profile = applicationManager.login("user1", "User1!").getProfile();
         Auction auction = auctionRepository.getAuctionForId(2, AuctionLoadingType.FOR_AUCTION_PAGE);
 
-        profile.addFavoriteAuction(auction);
+        profile.addFavoriteAuction(auction.getId());
 
         assertTrue(profile.getFavoriteAuctions().contains(auction));
     }

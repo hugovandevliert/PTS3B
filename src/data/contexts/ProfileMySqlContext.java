@@ -47,10 +47,10 @@ public class ProfileMySqlContext implements IProfileContext {
     }
 
     @Override
-    public boolean addFavoriteAuction(final Profile profile, final Auction auction) {
+    public boolean addFavoriteAuction(final Profile profile, final int auctionId) {
         final String query = "INSERT INTO FavoriteAuction (`account_id`, `auction_id`) VALUES (?, ?)";
 
-        return 1 == Database.setData(query, new String[] { Integer.toString(profile.getProfileId()), Integer.toString(auction.getId()) }, false);
+        return 1 == Database.setData(query, new String[] { Integer.toString(profile.getProfileId()), Integer.toString(auctionId) }, true);
     }
 
     @Override

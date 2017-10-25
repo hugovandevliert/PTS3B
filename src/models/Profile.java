@@ -1,8 +1,11 @@
 package models;
 
 import data.contexts.AuctionMySqlContext;
+import data.contexts.ProfileMySqlContext;
 import javafx.scene.image.Image;
 import logic.repositories.AuctionRepository;
+import logic.repositories.ProfileRepository;
+
 import java.io.File;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -25,6 +28,7 @@ public class Profile {
     private LocalDateTime creationDate;
 
     private AuctionRepository auctionRepository;
+    private ProfileRepository profileRepository;
 
     /**
      * Default Constructor.
@@ -39,6 +43,8 @@ public class Profile {
         this.photo = photo;
         this.name = name;
         this.email = email;
+
+        profileRepository = new ProfileRepository(new ProfileMySqlContext());
     }
 
     /**
@@ -54,6 +60,7 @@ public class Profile {
         feedbacks = new ArrayList<>();
 
         auctionRepository = new AuctionRepository(new AuctionMySqlContext());
+        profileRepository = new ProfileRepository(new ProfileMySqlContext());
 
         this.username = username;
         this.profileId = profileId;
@@ -73,6 +80,8 @@ public class Profile {
         this.photo = photo;
         this.auctions = auctions;
         this.feedbacks = feedbacks;
+
+        profileRepository = new ProfileRepository(new ProfileMySqlContext());
     }
 
     /**
@@ -139,10 +148,10 @@ public class Profile {
 
     /**
      * Method for adding an auction to a profile's favorite auctions.
-     * @param auction: The auction to add.
+     * @param auctionId: The auctionId to add.
      */
-    public void addFavoriteAuction(final Auction auction) {
-
+    public boolean addFavoriteAuction(final int auctionId) {
+        return profileRepository.addFavoriteAuction(this, auctionId);
     }
 
     /**

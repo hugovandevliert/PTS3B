@@ -23,8 +23,8 @@ public class ProfileRepository {
         return context.addVisitedAuction(profile, auction);
     }
 
-    public boolean addFavoriteAuction(final Profile profile, Auction auction) {
-        return context.addFavoriteAuction(profile, auction);
+    public boolean addFavoriteAuction(final Profile profile, final int auctionId) {
+        return context.addFavoriteAuction(profile, auctionId);
     }
 
     public boolean removeFavoriteAuction(final Profile profile, Auction auction) {
