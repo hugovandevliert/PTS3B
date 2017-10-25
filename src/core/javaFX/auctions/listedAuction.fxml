@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -19,14 +20,17 @@
             </Label>
             <Text fx:id="textAuctionDescription" fill="#747e8c" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="454.2255859375" VBox.vgrow="NEVER">
                <font>
-                  <Font name="Segoe UI Semilight" size="15.0" />
+                  <Font name="Segoe UI Semilight" size="16.0" />
                </font></Text>
          </children>
       </VBox>
-      <Label fx:id="lblCurrentOffer" alignment="CENTER" layoutX="805.0" layoutY="60.0" prefHeight="113.0" prefWidth="136.0" textAlignment="CENTER" textFill="#b4b481">
+      <Label fx:id="lblCurrentOffer" alignment="CENTER" layoutX="805.0" layoutY="60.0" prefHeight="113.0" prefWidth="136.0" textAlignment="CENTER" textFill="#f2aa78">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="Segoe UI Semibold" size="24.0" />
          </font>
       </Label>
    </children>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
 </Pane>

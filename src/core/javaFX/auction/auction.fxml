@@ -45,7 +45,7 @@
                <content>
                   <Text fx:id="textAuctionDescription" fill="#788599" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="341.99999821186066">
                      <font>
-                        <Font name="Segoe UI Light" size="14.0" />
+                        <Font name="Segoe UI Semilight" size="14.0" />
                      </font></Text>
                </content>
             </ScrollPane>

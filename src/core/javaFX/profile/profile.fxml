@@ -27,14 +27,14 @@
                </font></Label>
             <Label fx:id="lblUserSince" alignment="CENTER" layoutX="427.0" layoutY="54.0" prefHeight="21.0" prefWidth="531.0" text="User since 18-10-2017" textAlignment="CENTER" textFill="#788599">
                <font>
-                  <Font name="Segoe UI Light" size="14.0" />
+                  <Font name="Segoe UI Semilight" size="14.0" />
                </font></Label>
-            <ImageView fx:id="imgviewPositiveIcon" fitHeight="53.0" fitWidth="60.0" layoutX="590.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="lblPositiveFeedbacksCount" alignment="CENTER" layoutX="590.0" layoutY="172.0" prefHeight="21.0" prefWidth="60.0" text="121" textAlignment="CENTER" textFill="#a6b5c9">
+            <ImageView fx:id="imgviewPositiveIcon" fitHeight="53.0" fitWidth="60.0" layoutX="590.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="lblPositiveFeedbacksCount" alignment="CENTER" layoutX="590.0" layoutY="193.0" prefHeight="21.0" prefWidth="60.0" text="121" textAlignment="CENTER" textFill="#a6b5c9">
                <font>
                   <Font name="Segoe UI Light" size="18.0" />
                </font></Label>
-            <Label fx:id="lblNegativeFeedbacksCount" alignment="CENTER" layoutX="736.0" layoutY="172.0" prefHeight="21.0" prefWidth="60.0" text="0" textAlignment="CENTER" textFill="#a6b5c9">
+            <Label fx:id="lblNegativeFeedbacksCount" alignment="CENTER" layoutX="736.0" layoutY="193.0" prefHeight="21.0" prefWidth="60.0" text="0" textAlignment="CENTER" textFill="#a6b5c9">
                <font>
                   <Font name="Segoe UI Light" size="18.0" />
                </font></Label>
@@ -58,7 +58,7 @@
                   <Font name="Segoe UI" size="18.0" />
                </font>
             </Label>
-            <ImageView fx:id="imgviewNegativeIcon" fitHeight="53.0" fitWidth="60.0" layoutX="736.0" layoutY="96.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgviewNegativeIcon" fitHeight="53.0" fitWidth="60.0" layoutX="736.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </Pane>
     </children>
