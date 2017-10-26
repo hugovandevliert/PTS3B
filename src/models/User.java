@@ -2,12 +2,12 @@ package models;
 
 import data.contexts.ProfileMySqlContext;
 import data.contexts.UserMySqlContext;
-import javafx.scene.image.Image;
+import logic.algorithms.Sha256HashCalculator;
 import logic.repositories.ProfileRepository;
 import logic.repositories.UserRepository;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import sun.security.provider.SHA;
 import utilities.enums.ProfileLoadingType;
-
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -44,17 +44,32 @@ public class User {
 
     /**
      * Method for changing the password of an User, it requires a String value that holds the new password and will return a boolean value back
-     * @param password: The new password that the User's password should be changed to. Password must have at least: 6 characters, 1 lowercase, 1 uppercase, 1 symbol, 1 integer
+     * @param currentPassword:  The current password used for an extra security check.
+     * @param newPassword:      The new password that the User's password should be changed to. Password must have at least: 6 characters, 1 lowercase, 1 uppercase, 1 symbol, 1 integer
      * @return: Depending on whether the new password is allowed and the outcome of the check, the method will return true when password is successfully changed
      */
-    public boolean changePassword(final String password) {
-        if(password.length() < 6){throw new IllegalArgumentException("Password should be at least 6 characters");}
-        if(password.matches("^[0-9]*$")) {throw new IllegalArgumentException("Password should not only contain numbers");}
-        if(password.length() > 32){throw new IllegalArgumentException("Password should not exceed 32 characters");}
-        if(!password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{6,}")){throw new IllegalArgumentException("Password doesn't contain Upper/Lower case letter or at least one number or one special character");}
-        //TODO: Contact the database to update the password
-        throw new NotImplementedException();
-        //return true;
+    public boolean changePassword(final String currentPassword, final String newPassword) throws SQLException {
+        if (newPassword.length() < 6){
+            throw new IllegalArgumentException("Password should be at least 6 characters");
+        }
+        if (newPassword.matches("^[0-9]*$")) {
+            throw new IllegalArgumentException("Password should not only contain numbers");}
+        if (newPassword.length() > 32) {
+            throw new IllegalArgumentException("Password should not exceed 32 characters");
+        }
+        if (!newPassword.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{6,}")) {
+            throw new IllegalArgumentException("Password doesn't contain Upper/Lower case letter or at least one number or one special character");
+        }
+
+        final String[] saltAndHash = userRepository.getSaltAndHash(this.username);
+        final Sha256HashCalculator sha256HashCalculator = new Sha256HashCalculator();
+
+        //Check if the currentPassword is correct.
+        if(sha256HashCalculator.hashString(currentPassword, saltAndHash[0]) == saltAndHash[1]){
+            return userRepository.setPassword(sha256HashCalculator.hashString(newPassword, saltAndHash[0]), this.username);
+        }
+
+        return false;
     }
 
     /**
