@@ -46,13 +46,12 @@ class UserTest {
     @Test
     void testGetName() {
         assertEquals("Mohamed Ali", user.getName(), "Full name getter is not working properly");
-        assertEquals(user.getName(), user.getProfile().getName(), "Full name in profile does not match the one in user.");
     }
 
     @Test
     void testSetName() {
         user.setName("Barnaby Marmaduke Aloysius Benjy Cobweb Dartagnan Egbert Felix G");
-        assertEquals("Barnaby Marmaduke Aloysius Benjy Cobweb Dartagnan Egbert Felix G", user.getUsername(), "Username should be able to contain 64 chars");
+        assertEquals("Barnaby Marmaduke Aloysius Benjy Cobweb Dartagnan Egbert Felix G", user.getName(), "Username should be able to contain 64 chars");
         assertThrows(IllegalArgumentException.class, () -> user.setName("Barnaby Marmaduke Aloysius Benjy Cobweb Dartagnan Egbert Felix Gaspar"), "Full name should not be able to exceed 64 chars. Currently: 69");
         assertThrows(IllegalArgumentException.class, () -> user.setName("T3st User"), "Full name should not be able to contain numbers");
         assertThrows(IllegalArgumentException.class, () -> user.setName("T&st User"), "Full name should not be able to contain special characters");

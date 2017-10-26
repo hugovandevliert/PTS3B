@@ -5,6 +5,7 @@ import data.contexts.UserMySqlContext;
 import javafx.scene.image.Image;
 import logic.repositories.ProfileRepository;
 import logic.repositories.UserRepository;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import utilities.enums.ProfileLoadingType;
 
 import java.io.File;
@@ -46,7 +47,15 @@ public class User {
      * @param password: The new password that the User's password should be changed to. Password must have at least: 6 characters, 1 lowercase, 1 uppercase, 1 symbol, 1 integer
      * @return: Depending on whether the new password is allowed and the outcome of the check, the method will return true when password is successfully changed
      */
-    public boolean changePassword(final String password) { return false; }
+    public boolean changePassword(final String password) {
+        if(password.length() < 6){throw new IllegalArgumentException("Password should be at least 6 characters");}
+        if(password.matches("^[0-9]*$")) {throw new IllegalArgumentException("Password should not only contain numbers");}
+        if(password.length() > 32){throw new IllegalArgumentException("Password should not exceed 32 characters");}
+        if(!password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{6,}")){throw new IllegalArgumentException("Password doesn't contain Upper/Lower case letter or at least one number or one special character");}
+        //TODO: Contact the database to update the password
+        throw new NotImplementedException();
+        //return true;
+    }
 
     /**
      * Method for changing the Name of this User-object, this requires a String parameter Name that consist of the new Name it should be changed to
@@ -54,6 +63,9 @@ public class User {
      */
     //TODO: Shouldn't this return a boolean as well? So we can check if it was actually updated on the database without any SQLExceptions etc?
     public void setName(final String name) {
+        if(name.length() > 64){throw new IllegalArgumentException("Name can't be longer then 64 characters"); }
+        if(name.matches(".*[0-9].*")){throw new IllegalArgumentException("Full name can't contain numbers");}
+        if(!name.matches("[A-z ]+")){throw new IllegalArgumentException("Full name should only contain letters. No other characters accepted");}
         this.name = name;
     }
 
