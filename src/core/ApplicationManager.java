@@ -51,8 +51,17 @@ public class ApplicationManager {
         else if (username.length() > 16){
             throw new IllegalArgumentException("Username can not be longer than 16 characters.");
         }
-        else if (password == null || password.length() <= 5){
-            throw new IllegalArgumentException("Password must be at least 6 characters.");
+        else if (password.length() < 6){
+            throw new IllegalArgumentException("Password should be at least 6 characters");
+        }
+        else if (password.matches("^[0-9]*$")) {
+            throw new IllegalArgumentException("Password should not only contain numbers");
+        }
+        else if (password.length() > 32) {
+            throw new IllegalArgumentException("Password should not exceed 32 characters");
+        }
+        else if (!password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{6,}")) {
+            throw new IllegalArgumentException("Password doesn't contain Upper/Lower case letter or at least one number or one special character");
         }
         else if (email == null || email.length() == 0){
             throw new IllegalArgumentException("Email can not be empty.");

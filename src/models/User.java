@@ -53,7 +53,8 @@ public class User {
             throw new IllegalArgumentException("Password should be at least 6 characters");
         }
         if (newPassword.matches("^[0-9]*$")) {
-            throw new IllegalArgumentException("Password should not only contain numbers");}
+            throw new IllegalArgumentException("Password should not only contain numbers");
+        }
         if (newPassword.length() > 32) {
             throw new IllegalArgumentException("Password should not exceed 32 characters");
         }
@@ -62,11 +63,14 @@ public class User {
         }
 
         final String[] saltAndHash = userRepository.getSaltAndHash(this.username);
-        final Sha256HashCalculator sha256HashCalculator = new Sha256HashCalculator();
 
-        //Check if the currentPassword is correct.
-        if(sha256HashCalculator.hashString(currentPassword, saltAndHash[0]) == saltAndHash[1]){
-            return userRepository.setPassword(sha256HashCalculator.hashString(newPassword, saltAndHash[0]), this.username);
+        if(saltAndHash != null){
+            final Sha256HashCalculator sha256HashCalculator = new Sha256HashCalculator();
+
+            //Check if the currentPassword is correct.
+            if(sha256HashCalculator.hashString(currentPassword, saltAndHash[0]).equals(saltAndHash[1])){
+                return userRepository.setPassword(sha256HashCalculator.hashString(newPassword, saltAndHash[0]), this.username);
+            }
         }
 
         return false;

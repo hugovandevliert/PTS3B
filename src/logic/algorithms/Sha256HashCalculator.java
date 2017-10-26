@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException;
 public class Sha256HashCalculator {
 
     public String hashString(final String password, final String salt){
-        if (password != null && password.length() >= 6 && salt != null && salt.length() == 16){
+        if (password != null  && salt != null){
             try {
                 MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
                 String passwordToHash = "592" + password + salt;
@@ -23,6 +23,6 @@ public class Sha256HashCalculator {
             }
             return null;
         }
-        throw new IllegalArgumentException("Password must be at least 6 characters, and SALT should be exactly 16 characters");
+        throw new IllegalArgumentException("Password and salt can not be empty or null");
     }
 }
