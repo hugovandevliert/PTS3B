@@ -160,7 +160,7 @@ public class ProfileController extends MenuController {
     }
 
     public void logout() {
-        MenuController.applicationManager.currentUser = null;
+        MenuController.applicationManager.logout();
 
         this.menuController.paneContent.getChildren().clear();
         try {

@@ -18,7 +18,7 @@ public class ApplicationManager {
     private UserRepository userRepository;
     public ArrayList<Auction> loadedAuctions;
     public Profile loadedProfile;
-    public User currentUser;
+    private User currentUser;
 
     public ApplicationManager() {
         loadedAuctions = new ArrayList<>();
@@ -27,7 +27,7 @@ public class ApplicationManager {
     }
 
     public User login(final String username, final String password) throws SQLException, IOException, ClassNotFoundException {
-        String[] saltAndHash = userRepository.getSaltAndHash(username);
+        final String[] saltAndHash = userRepository.getSaltAndHash(username);
 
         if (saltAndHash != null){
             if (sha256HashCalculator.hashString(password, saltAndHash[0]).equals(saltAndHash[1])){
@@ -96,8 +96,8 @@ public class ApplicationManager {
         return saltStringBuilder.toString();
     }
 
-    public boolean logout() {
-        return false;
+    public void logout() {
+        this.currentUser = null;
     }
 
     public boolean isLoggedIn() {
