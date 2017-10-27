@@ -26,7 +26,7 @@ public class ProfileMySqlContext implements IProfileContext {
         String query;
 
         if (loadingType.equals(ProfileLoadingType.FOR_AUCTION_PAGE)) query = "SELECT id, username FROM Account WHERE id = ?";
-        else if (loadingType.equals(ProfileLoadingType.FOR_PROFILE_PAGE)) query = "SElECT id, username, creationDate, Image FROM Account WHERE id = ?";
+        else if (loadingType.equals(ProfileLoadingType.FOR_PROFILE_PAGE)) query = "SElECT id, username, name, creationDate, Image, Email FROM Account WHERE id = ?";
         else return null;
 
         final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(userId) });
@@ -76,8 +76,10 @@ public class ProfileMySqlContext implements IProfileContext {
                         (
                                 resultSet.getInt("id"),
                                 resultSet.getString("username"),
+                                resultSet.getString("name"),
                                 resultSet.getTimestamp("creationDate").toLocalDateTime(),
                                 imageConverter.getImageFromInputStream(resultSet.getBinaryStream("image"), ImageLoadingType.FOR_PROFILE_PAGE),
+                                resultSet.getString("Email"),
                                 auctionRepository.getAuctionsForProfile(resultSet.getInt("id")),
                                 feedbackRepository.getFeedbacks(resultSet.getInt("id"))
                         );

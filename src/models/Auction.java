@@ -1,6 +1,9 @@
 package models;
 
+import data.contexts.AuctionMySqlContext;
+import data.interfaces.IAuctionContext;
 import javafx.scene.image.Image;
+import logic.repositories.AuctionRepository;
 import utilities.enums.Status;
 import java.io.File;
 import java.time.LocalDateTime;
@@ -23,6 +26,8 @@ public class Auction {
     private ArrayList<File> fileImages;
     private ArrayList<Bid> bids;
     private Profile creator;
+    private IAuctionContext iAuctionContext;
+    private AuctionRepository auctionRepository;
 
      /**
      * Constructor used for creating a new auction.
@@ -49,6 +54,8 @@ public class Auction {
         this.fileImages = fileImages;
         this.status = Status.OPEN;
         bids = new ArrayList<>();
+        this.iAuctionContext = new AuctionMySqlContext();
+        this.auctionRepository = new AuctionRepository(this.iAuctionContext);
     }
 
     /**
@@ -116,7 +123,10 @@ public class Auction {
      * @param profile: profile that placed the bid.
      **/
     //TODO: Shouldn't this return a boolean in case it was not possible to add the bid on the database? Like when a SQLException occurs etc?
-    public void addBid(final double amount, final Profile profile) { }
+    public void addBid(final double amount, final Profile profile) {
+        if (profile.getAuctions().contains(this)){throw new IllegalArgumentException("User can't bid on his own auctions");}
+        auctionRepository.addBid(amount, profile.getProfileId(), this.getId());
+    }
 
     /**
      * Method to end the auction

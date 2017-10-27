@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -86,21 +87,20 @@ public class ProfileTest {
     public void testGetUsername() throws SQLException, IOException, ClassNotFoundException {
         Profile profile = applicationManager.login("user1", "User1!").getProfile();
 
-        assertSame("User1", profile.getUsername());
+        assertEquals("User1", profile.getUsername());
     }
 
     @Test
     public void testGetName() throws SQLException, IOException, ClassNotFoundException {
         Profile profile = applicationManager.login("user1", "User1!").getProfile();
 
-        assertSame("Mohamed Ali", profile.getName());
+        assertEquals("Mohamed Ali", profile.getName());
     }
 
     @Test
     public void testGetEmail() throws SQLException, IOException, ClassNotFoundException {
-        Profile profile = applicationManager.login("user1", "User1!").getProfile();
-
-        assertSame("User1@gmail.com", profile.getEmail());
+        Profile profile = applicationManager.login("User1", "User1!").getProfile();
+        assertEquals("User1@gmail.com", profile.getEmail());
     }
 
     @Test
@@ -111,7 +111,7 @@ public class ProfileTest {
 
     @Test
     public void testGetAuctions() throws SQLException, IOException, ClassNotFoundException {
-        Profile profile = new Profile(1, "user1", LocalDateTime.now(), null, new ArrayList<Auction>(), null);
+        Profile profile = new Profile(1, "user1", "Test User", LocalDateTime.now(), null, "test@gmail.com", new ArrayList<Auction>(), null);
         profile.addAuction(1, 1, 1, LocalDateTime.now().plusDays(3), LocalDateTime.now().plusDays(1), false, "AbCdE", "", null);
 
         assertEquals("AbCdE", profile.getAuctions().get(0).getTitle());
