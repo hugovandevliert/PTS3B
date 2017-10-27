@@ -94,8 +94,11 @@ public class User {
      * @return: Depending on whether the new Email is allowed and accepted it will return a boolean value. The method will return true when it is succesfully changed
      */
     public boolean setEmail(final String email) {
+        if (email.length() > 255){throw new IllegalArgumentException("Email should not exceed 255 characters");}
+        if(!email.contains("@")){throw new IllegalArgumentException("Email should conntain '@'");}
+        if(!email.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,5})$")){throw new IllegalArgumentException("Email should end with a valid domain name");}
         this.email = email;
-        return false;
+        return true;
     }
 
     /**
