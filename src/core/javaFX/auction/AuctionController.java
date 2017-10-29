@@ -34,6 +34,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
@@ -46,7 +48,7 @@ public class AuctionController extends MenuController {
     @FXML private VBox vboxBids;
     @FXML private Pane panePlaceBid, paneEndAuction, paneContent;
     @FXML private JFXTextField txtBid;
-    @FXML private JFXButton btnEndAuction;
+    @FXML private JFXButton btnEndAuction, btnAddToFavorites;
 
     private Timer auctionCountdown;
     private Timer bidsLoadingTimer;
@@ -66,7 +68,7 @@ public class AuctionController extends MenuController {
         /* Adding the AddFavorites Button with a star icon */
         final Image starIcon = new Image( "/utilities/images/button/button_star_image.png");
 
-        final JFXButton btnAddToFavorites = new JFXButton("Add to favorites", new ImageView(starIcon));
+        btnAddToFavorites = new JFXButton("Add to favorites", new ImageView(starIcon));
         btnAddToFavorites.setPrefSize(346, 48);
         btnAddToFavorites.setLayoutX(626);
         btnAddToFavorites.setLayoutY(580);
@@ -123,7 +125,7 @@ public class AuctionController extends MenuController {
 
         if (bids != null && bids.size() > 0){
             for (final Bid bid : bids){
-                final Label lblBid = new Label("€" + bid.getAmount() + " - " + bid.getProfile().getUsername() + " - " + bid.getDate().toLocalDate() + " " + bid.getDate().toLocalTime());
+                final Label lblBid = new Label(convertToEuro(bid.getAmount()) + " - " + bid.getProfile().getUsername() + " - " + bid.getDate().toLocalDate() + " " + bid.getDate().toLocalTime());
                 lblBid.setFont(Font.font("Segoe UI Semilight"));
                 lblBid.setTextFill(Color.web("#A6B5C9"));
                 lblBid.setStyle("-fx-font-size: 16");
@@ -131,7 +133,13 @@ public class AuctionController extends MenuController {
             }
         }else{
             final Label lblNoBids1 = new Label("Be the first one to place a bid!");
-            final Label lblNoBids2 = new Label("The price to start bidding at is " + startBid);
+            final Label lblNoBids2 = new Label("The price to start bidding at is " + convertToEuro(startBid));
+            lblNoBids1.setFont(Font.font("Segoe UI Semilight"));
+            lblNoBids1.setTextFill(Color.web("#A6B5C9"));
+            lblNoBids1.setStyle("-fx-font-size: 16");
+            lblNoBids2.setFont(Font.font("Segoe UI Semilight"));
+            lblNoBids2.setTextFill(Color.web("#A6B5C9"));
+            lblNoBids2.setStyle("-fx-font-size: 16");
             vboxBids.getChildren().add(lblNoBids1);
             vboxBids.getChildren().add(lblNoBids2);
         }
@@ -201,6 +209,18 @@ public class AuctionController extends MenuController {
         }
     }
 
+    public void handleAddtoFavoritesButtonRemoving(final int auctionCreatorProfileId) {
+        try {
+            // If we have already marked the auction as our favorite, there is no need to display the user an option to mark it once more
+            // Neither do we want the creator of an auction to mark his/her own auction as favorite
+            if (auctionRepository.auctionIsFavoriteForUser(this.auctionId, this.currenteUserId) || auctionCreatorProfileId == this.currenteUserId){
+                paneContent.getChildren().remove(btnAddToFavorites);
+            }
+        } catch (SQLException exception) {
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
+        }
+    }
+
     public void disablePlaceBidPane() {
         paneContent.getChildren().remove(panePlaceBid);
     }
@@ -223,7 +243,7 @@ public class AuctionController extends MenuController {
     public void placeNewBid() {
         try {
             if (!auctionRepository.auctionIsClosed(this.auctionId)){
-                final String bidPriceString = txtBid.getText();
+                final String bidPriceString = txtBid.getText().replaceAll(",", ".");
                 txtBid.setText("");
 
                 if (bidPriceString != null && bidPriceString.length() > 0 && !bidPriceString.isEmpty() && Database.isDouble(bidPriceString)){
@@ -241,16 +261,16 @@ public class AuctionController extends MenuController {
                         if (auctionRepository.addBid(bidAmount, currenteUserId, auctionId)){
                             MenuController.showAlertMessage("Successfully placed bid!", AlertType.MESSAGE, 3000);
                         }else{
-                            MenuController.showAlertMessage("Placing the bid wasn't successfull!", AlertType.ERROR, 3000);
+                            MenuController.showAlertMessage("Placing the bid wasn't successful!", AlertType.ERROR, 3000);
                         }
                     }else{
-                        MenuController.showAlertMessage("Your bid is not high enough, it should atleast be €" + minimumNeededAmount, AlertType.WARNING, 3000);
+                        MenuController.showAlertMessage("Your bid is not high enough, it should at least be " + convertToEuro(minimumNeededAmount), AlertType.WARNING, 3000);
                     }
                 }else{
                     MenuController.showAlertMessage("Please fill in a valid bid!", AlertType.WARNING, 3000);
                 }
             }else{
-                MenuController.showAlertMessage("This auction has been closed - you are not able to bid anymore", AlertType.WARNING, 3000);
+                MenuController.showAlertMessage("This auction has been closed - you are not able to bid anymore.", AlertType.WARNING, 3000);
             }
         } catch (SQLException exception){
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
@@ -295,11 +315,23 @@ public class AuctionController extends MenuController {
     public void addToFavoriteAuctions() {
         final Profile profile = MenuController.applicationManager.getCurrentUser().getProfile();
 
-        if (profile.addFavoriteAuction(this.auctionId)) MenuController.showAlertMessage("Successfully added auction to favorites!", AlertType.MESSAGE, 3000);
-        else MenuController.showAlertMessage("Could not add the auction to favorites!", AlertType.ERROR, 3000);
+        if (profile.addFavoriteAuction(this.auctionId)) {
+            // We successfully added this auction to our favorites, we can now delete the button because we already added to our favorites
+            MenuController.showAlertMessage("Successfully added auction to favorites!", AlertType.MESSAGE, 3000);
+
+            paneContent.getChildren().remove(btnAddToFavorites);
+        } else {
+            MenuController.showAlertMessage("Could not add the auction to favorites!", AlertType.ERROR, 3000);
+        }
     }
 
     private boolean amountIsHighEnough(final double bidAmount, final double minimumNeededAmount) {
         return bidAmount >= minimumNeededAmount;
+    }
+
+    private String convertToEuro(final double amount) {
+        Locale dutch = new Locale("nl", "NL");
+        DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(dutch);
+        return decimalFormat.format(amount);
     }
 }

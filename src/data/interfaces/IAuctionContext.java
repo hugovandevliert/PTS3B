@@ -16,4 +16,5 @@ public interface IAuctionContext {
     boolean addBid(final double amount, final int accountId, final int auctionId);
     boolean manuallyEndAuction(final int auctionId);
     boolean auctionIsClosed(final int auctionId) throws SQLException;
+    boolean auctionIsFavoriteForUser(final int auctionId, final int userId) throws SQLException;
 }

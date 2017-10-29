@@ -6,9 +6,7 @@ import models.Auction;
 import models.Profile;
 import models.User;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import logic.algorithms.Sha256HashCalculator;
 import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,21 +14,23 @@ import java.util.regex.Pattern;
 
 public class ApplicationManager {
 
-    UserRepository userRepository;
+    private Sha256HashCalculator sha256HashCalculator;
+    private UserRepository userRepository;
     public ArrayList<Auction> loadedAuctions;
     public Profile loadedProfile;
-    public User currentUser;
+    private User currentUser;
 
     public ApplicationManager() {
         loadedAuctions = new ArrayList<>();
         userRepository = new UserRepository(new UserMySqlContext());
+        sha256HashCalculator = new Sha256HashCalculator();
     }
 
     public User login(final String username, final String password) throws SQLException, IOException, ClassNotFoundException {
-        String[] saltAndHash = userRepository.getSaltAndHash(username);
+        final String[] saltAndHash = userRepository.getSaltAndHash(username);
 
         if (saltAndHash != null){
-            if (hashString(password, saltAndHash[0]).equals(saltAndHash[1])){
+            if (sha256HashCalculator.hashString(password, saltAndHash[0]).equals(saltAndHash[1])){
                 return currentUser = userRepository.getUserByUsername(username);
             }
         }
@@ -51,8 +51,17 @@ public class ApplicationManager {
         else if (username.length() > 16){
             throw new IllegalArgumentException("Username can not be longer than 16 characters.");
         }
-        else if (password == null || password.length() <= 5){
-            throw new IllegalArgumentException("Password must be at least 6 characters.");
+        else if (password.length() < 6){
+            throw new IllegalArgumentException("Password should be at least 6 characters");
+        }
+        else if (password.matches("^[0-9]*$")) {
+            throw new IllegalArgumentException("Password should not only contain numbers");
+        }
+        else if (password.length() > 32) {
+            throw new IllegalArgumentException("Password should not exceed 32 characters");
+        }
+        else if (!password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{6,}")) {
+            throw new IllegalArgumentException("Password doesn't contain Upper/Lower case letter or at least one number or one special character");
         }
         else if (email == null || email.length() == 0){
             throw new IllegalArgumentException("Email can not be empty.");
@@ -67,10 +76,15 @@ public class ApplicationManager {
             throw new IllegalArgumentException("Name can not be empty.");
         }
 
+        final String salt = generateSalt();
+        return userRepository.registerUser(username, sha256HashCalculator.hashString(password, salt), salt, email, name);
+    }
+
+    public String generateSalt(){
         final Character[] characters = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
-                                        'Q', 'R', 'S', 'T', 'U', 'W', 'V', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
-                                        'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
-                                        'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
+                'Q', 'R', 'S', 'T', 'U', 'W', 'V', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
+                'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+                'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
 
         final SecureRandom secureRandom = new SecureRandom();
         final StringBuilder saltStringBuilder = new StringBuilder();
@@ -79,30 +93,11 @@ public class ApplicationManager {
             saltStringBuilder.append(characters[secureRandom.nextInt(characters.length)]);
         }
 
-        final String salt = saltStringBuilder.toString();
-        return userRepository.registerUser(username, hashString(password, salt), salt, email, name);
+        return saltStringBuilder.toString();
     }
 
-    public String hashString(final String password, final String salt){
-        if (password != null && password.length() >= 6 && salt != null && salt.length() == 16){
-            try {
-                MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-                String passwordToHash = "592" + password + salt;
-                messageDigest.update(passwordToHash.getBytes("UTF-8"));
-
-                byte[] digest = messageDigest.digest();
-                return String.format("%064x", new java.math.BigInteger(1, digest));
-            }
-            catch (NoSuchAlgorithmException | UnsupportedEncodingException exception){
-                System.out.println(exception.getStackTrace());
-            }
-            return null;
-        }
-        throw new IllegalArgumentException("Password must be at least 6 characters, and SALT should be exactly 16 characters");
-    }
-
-    public boolean logout() {
-        return false;
+    public void logout() {
+        this.currentUser = null;
     }
 
     public boolean isLoggedIn() {

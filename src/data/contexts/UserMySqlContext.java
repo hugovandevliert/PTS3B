@@ -38,8 +38,15 @@ public class UserMySqlContext implements IUserContext {
     }
 
     @Override
+    public boolean setPassword(final String newPassword, final String username) {
+        final String query = "UPDATE Account SET `Password` = ? WHERE username = ?";
+
+        return 1 == Database.setData(query, new String[] { newPassword, username }, true);
+    }
+
+    @Override
     public User getUserByUsername(final String username) throws SQLException, IOException, ClassNotFoundException {
-        final String query = "SELECT id, username, name, email FROM MyAuctions.Account WHERE username = ?";
+        final String query = "SELECT id, username, name, email FROM Account WHERE username = ?";
         final ResultSet resultSet = Database.getData(query, new String[]{username});
 
         if (resultSet.next()) {

@@ -74,7 +74,7 @@ public class AddAuctionController extends MenuController {
             final double startBid = convertToDouble(txtStartBid.getText());
             final double incrementation = convertToDouble(txtIncrementation.getText());
 
-            final boolean successful = applicationManager.currentUser.getProfile().addAuction(startBid, incrementation, minimumPrice,
+            final boolean successful = applicationManager.getCurrentUser().getProfile().addAuction(startBid, incrementation, minimumPrice,
                     expirationDate, openingDate, false, title, description, getImages(this.images));
 
             if (successful) MenuController.showAlertMessage("Auction added successfully!", AlertType.MESSAGE, 3000);
@@ -124,6 +124,7 @@ public class AddAuctionController extends MenuController {
     }
 
     private double convertToDouble(final String text) {
+        text.replaceAll(",", ".");
         if (text.matches("[0-9]*")) {
             return Double.parseDouble(text);
         } else {

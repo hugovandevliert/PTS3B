@@ -2,11 +2,12 @@ package models;
 
 import data.contexts.ProfileMySqlContext;
 import data.contexts.UserMySqlContext;
-import javafx.scene.image.Image;
+import logic.algorithms.Sha256HashCalculator;
 import logic.repositories.ProfileRepository;
 import logic.repositories.UserRepository;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import sun.security.provider.SHA;
 import utilities.enums.ProfileLoadingType;
-
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -38,15 +39,42 @@ public class User {
         profileRepository = new ProfileRepository(new ProfileMySqlContext());
         userRepository = new UserRepository(new UserMySqlContext());
 
-        this.profile = profileRepository.getProfileForId(id, ProfileLoadingType.FOR_AUCTION_PAGE);
+        this.profile = profileRepository.getProfileForId(id, ProfileLoadingType.FOR_PROFILE_PAGE);
     }
 
     /**
      * Method for changing the password of an User, it requires a String value that holds the new password and will return a boolean value back
-     * @param password: The new password that the User's password should be changed to. Password must have at least: 6 characters, 1 lowercase, 1 uppercase, 1 symbol, 1 integer
+     * @param currentPassword:  The current password used for an extra security check.
+     * @param newPassword:      The new password that the User's password should be changed to. Password must have at least: 6 characters, 1 lowercase, 1 uppercase, 1 symbol, 1 integer
      * @return: Depending on whether the new password is allowed and the outcome of the check, the method will return true when password is successfully changed
      */
-    public boolean changePassword(final String password) { return false; }
+    public boolean changePassword(final String currentPassword, final String newPassword) throws SQLException {
+        if (newPassword.length() < 6){
+            throw new IllegalArgumentException("Password should be at least 6 characters");
+        }
+        if (newPassword.matches("^[0-9]*$")) {
+            throw new IllegalArgumentException("Password should not only contain numbers");
+        }
+        if (newPassword.length() > 32) {
+            throw new IllegalArgumentException("Password should not exceed 32 characters");
+        }
+        if (!newPassword.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{6,}")) {
+            throw new IllegalArgumentException("Password doesn't contain Upper/Lower case letter or at least one number or one special character");
+        }
+
+        final String[] saltAndHash = userRepository.getSaltAndHash(this.username);
+
+        if(saltAndHash != null){
+            final Sha256HashCalculator sha256HashCalculator = new Sha256HashCalculator();
+
+            //Check if the currentPassword is correct.
+            if(sha256HashCalculator.hashString(currentPassword, saltAndHash[0]).equals(saltAndHash[1])){
+                return userRepository.setPassword(sha256HashCalculator.hashString(newPassword, saltAndHash[0]), this.username);
+            }
+        }
+
+        return false;
+    }
 
     /**
      * Method for changing the Name of this User-object, this requires a String parameter Name that consist of the new Name it should be changed to
@@ -54,6 +82,9 @@ public class User {
      */
     //TODO: Shouldn't this return a boolean as well? So we can check if it was actually updated on the database without any SQLExceptions etc?
     public void setName(final String name) {
+        if(name.length() > 64){throw new IllegalArgumentException("Name can't be longer then 64 characters"); }
+        if(name.matches(".*[0-9].*")){throw new IllegalArgumentException("Full name can't contain numbers");}
+        if(!name.matches("[A-z ]+")){throw new IllegalArgumentException("Full name should only contain letters. No other characters accepted");}
         this.name = name;
     }
 
@@ -63,8 +94,11 @@ public class User {
      * @return: Depending on whether the new Email is allowed and accepted it will return a boolean value. The method will return true when it is succesfully changed
      */
     public boolean setEmail(final String email) {
+        if (email.length() > 255){throw new IllegalArgumentException("Email should not exceed 255 characters");}
+        if(!email.contains("@")){throw new IllegalArgumentException("Email should conntain '@'");}
+        if(!email.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,5})$")){throw new IllegalArgumentException("Email should end with a valid domain name");}
         this.email = email;
-        return false;
+        return true;
     }
 
     /**

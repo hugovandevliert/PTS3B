@@ -159,6 +159,20 @@ public class ProfileController extends MenuController {
         }
     }
 
+    public void logout() {
+        MenuController.applicationManager.logout();
+
+        this.menuController.paneContent.getChildren().clear();
+        try {
+            final Pane newContentPane = FXMLLoader.load(getClass().getResource("/core/javafx/login/login.fxml"));
+            this.menuController.paneContent.getChildren().add(newContentPane);
+
+            MenuController.showAlertMessage("Successfully logged out!", AlertType.MESSAGE, 3000);
+        } catch (IOException exception) {
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
+        }
+    }
+
     private boolean profileIsFromLoggedInUser() {
         return MenuController.applicationManager.getCurrentUser().getProfile().getProfileId() == this.profile.getProfileId();
     }

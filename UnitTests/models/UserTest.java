@@ -1,6 +1,8 @@
 package models;
 
 import core.ApplicationManager;
+import data.interfaces.IUserContext;
+import logic.repositories.UserRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -24,17 +26,17 @@ class UserTest {
     }
 
     @Test
-    void testChangePassword() {
-        assertThrows(IllegalArgumentException.class, () -> user.changePassword("12345"), "Passwords should not be able to be less then 6 chars. (Currently: 5) ");
-        assertThrows(IllegalArgumentException.class, () -> user.changePassword("12345678"), "Passwords should not be able to contain only numbers");
-        assertThrows(IllegalArgumentException.class, () -> user.changePassword(""), "Passwords should never be able to be empty.");
-        assertThrows(IllegalArgumentException.class, () -> user.changePassword("A&cdefg"), "Passwords should contain at least 1 number");
-        assertThrows(IllegalArgumentException.class, () -> user.changePassword("Abcdef3"), "Passwords should contain at least 1 special char");
-        assertThrows(IllegalArgumentException.class, () -> user.changePassword("ab*cdef3"), "Passwords should contain at least 1 uppercase letter.");
-        assertThrows(IllegalArgumentException.class, () -> user.changePassword("AB*CDEF3"), "Passwords should contain at least 1 lowercase letter.");
-        assertThrows(IllegalArgumentException.class, () -> user.changePassword("ab*cdEf3Wolfeschlegelsteinhausenb"), "Passwords should not exceed 32 chars");
+    void testChangePassword() throws SQLException {
+        assertThrows(IllegalArgumentException.class, () -> user.changePassword("User1!", "12345"), "Passwords should not be able to be less then 6 chars. (Currently: 5) ");
+        assertThrows(IllegalArgumentException.class, () -> user.changePassword("User1!", "12345678"), "Passwords should not be able to contain only numbers");
+        assertThrows(IllegalArgumentException.class, () -> user.changePassword( "User1!",""), "Passwords should never be able to be empty.");
+        assertThrows(IllegalArgumentException.class, () -> user.changePassword("User1!","A&cdefg"), "Passwords should contain at least 1 number");
+        assertThrows(IllegalArgumentException.class, () -> user.changePassword("User1!","Abcdef3"), "Passwords should contain at least 1 special char");
+        assertThrows(IllegalArgumentException.class, () -> user.changePassword("User1!","ab*cdef3"), "Passwords should contain at least 1 uppercase letter.");
+        assertThrows(IllegalArgumentException.class, () -> user.changePassword("User1!","AB*CDEF3"), "Passwords should contain at least 1 lowercase letter.");
+        assertThrows(IllegalArgumentException.class, () -> user.changePassword("User1!","ab*cdEf3Wolfeschlegelsteinhausenb"), "Passwords should not exceed 32 chars");
 
-        assertTrue(user.changePassword("User1!"), "Tried to change to a correct password (User1!), but got false in return.");
+        assertTrue(user.changePassword("User1!","User2!"), "Tried to change to a correct password (User1!), but got false in return.");
     }
 
     @Test
@@ -46,13 +48,12 @@ class UserTest {
     @Test
     void testGetName() {
         assertEquals("Mohamed Ali", user.getName(), "Full name getter is not working properly");
-        assertEquals(user.getName(), user.getProfile().getName(), "Full name in profile does not match the one in user.");
     }
 
     @Test
     void testSetName() {
         user.setName("Barnaby Marmaduke Aloysius Benjy Cobweb Dartagnan Egbert Felix G");
-        assertEquals("Barnaby Marmaduke Aloysius Benjy Cobweb Dartagnan Egbert Felix G", user.getUsername(), "Username should be able to contain 64 chars");
+        assertEquals("Barnaby Marmaduke Aloysius Benjy Cobweb Dartagnan Egbert Felix G", user.getName(), "Username should be able to contain 64 chars");
         assertThrows(IllegalArgumentException.class, () -> user.setName("Barnaby Marmaduke Aloysius Benjy Cobweb Dartagnan Egbert Felix Gaspar"), "Full name should not be able to exceed 64 chars. Currently: 69");
         assertThrows(IllegalArgumentException.class, () -> user.setName("T3st User"), "Full name should not be able to contain numbers");
         assertThrows(IllegalArgumentException.class, () -> user.setName("T&st User"), "Full name should not be able to contain special characters");
@@ -68,9 +69,9 @@ class UserTest {
     void testSetEmail() {
         assertThrows(IllegalArgumentException.class, () -> user.setEmail("JamesDrNoFromRussiawithLoveGoldfingerThunderballYouOnlyLiveTwiceOnHerMajestysSecretServiceDiamondsAreForeverLiveandLetDieTheManwiththeGoldenGunTheSpyWhoLovedMeMoonrakerForYourEyesOnlyOctopussyAViewtoaKillTheLivingDaylightsLicencetoKillGoldenEye123@gmail.com"),
                 "Email should not be able to exceed 255 chars. Currently: 256");
-        user.setEmail("JamesDrNoFromRussiawithLoveGoldfingerThunderballYouOnlyLiveTwiceOnHerMajestysSecretServiceDiamondsAreForeverLiveandLetDieTheManwiththeGoldenGunTheSpyWhoLovedMeMoonrakerForYourEyesOnlyOctopussyAViewtoaKillTheLivingDaylightsLicencetoKillGoldenEye123@gmail.com");
-        assertEquals("JamesDrNoFromRussiawithLoveGoldfingerThunderballYouOnlyLiveTwiceOnHerMajestysSecretServiceDiamondsAreForeverLiveandLetDieTheManwiththeGoldenGunTheSpyWhoLovedMeMoonrakerForYourEyesOnlyOctopussyAViewtoaKillTheLivingDaylightsLicencetoKillGoldenEye12@gmail.com", user.getEmail(),
-                "Username should be able to contain 255 chars.");
+        user.setEmail("JamesNoFromRussiawithLoveGoldfingerThunderballYouOnlyLiveTwiceOnHerMajestysSecretServiceDiamondsAreForeverLiveandLetDieTheManwiththeGoldenGunTheSpyWhoLovedMeMoonrakerForYourEyesOnlyOctopussyAViewtoaKillTheLivingDaylightsLicencetoKillGoldenEye123@gmail.com");
+        assertEquals("JamesNoFromRussiawithLoveGoldfingerThunderballYouOnlyLiveTwiceOnHerMajestysSecretServiceDiamondsAreForeverLiveandLetDieTheManwiththeGoldenGunTheSpyWhoLovedMeMoonrakerForYourEyesOnlyOctopussyAViewtoaKillTheLivingDaylightsLicencetoKillGoldenEye123@gmail.com", user.getEmail(),
+                "Email should be able to contain 255 chars.");
 
         assertThrows(IllegalArgumentException.class, () -> user.setEmail("testuserwithoutatemail.com"), "Email should always contain an '@'.");
         assertThrows(IllegalArgumentException.class, () -> user.setEmail("testuserwith@gmailcom"), "Email should always end with a valid domain name.");
@@ -78,8 +79,9 @@ class UserTest {
     }
 
     @AfterAll
-    static void cleanUp() {
+    static void cleanUp() throws SQLException {
         user.setName("Mohamed Ali");
         user.setEmail("User1@gmail.com");
+        user.changePassword("User2!", "User1!");
     }
 }
