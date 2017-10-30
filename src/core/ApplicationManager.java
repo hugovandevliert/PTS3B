@@ -1,5 +1,6 @@
 package core;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import data.contexts.UserMySqlContext;
 import logic.repositories.UserRepository;
 import models.Auction;
@@ -26,16 +27,18 @@ public class ApplicationManager {
         sha256HashCalculator = new Sha256HashCalculator();
     }
 
-    public User login(final String username, final String password) throws SQLException, IOException, ClassNotFoundException {
+    public User login(final String username, final String password) throws Exception {
         final String[] saltAndHash = userRepository.getSaltAndHash(username);
 
         if (saltAndHash != null){
             if (sha256HashCalculator.hashString(password, saltAndHash[0]).equals(saltAndHash[1])){
                 return currentUser = userRepository.getUserByUsername(username);
+            } else {
+                throw new Exception("Invalid password. Please try again.");
             }
+        } else {
+            throw new Exception("Invalid username. Please try again.");
         }
-        //Password incorrect
-        return null;
     }
 
     public User getCurrentUser() {

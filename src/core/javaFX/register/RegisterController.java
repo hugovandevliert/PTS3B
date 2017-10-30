@@ -51,14 +51,9 @@ public class RegisterController extends MenuController {
             } else {
                 MenuController.showAlertMessage("Something went wrong, please try again!", AlertType.WARNING, 3000);
             }
-        } catch (IllegalArgumentException exception){
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch (SQLException exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch (ClassNotFoundException exception) {
+        } catch (Exception exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
-
     }
 
     public void login() throws IOException {

@@ -2,6 +2,7 @@ package core.javaFX.login;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import core.javaFX.menu.MenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,24 +30,16 @@ public class LoginController extends MenuController {
 
         try {
             applicationManager.login(txtUsername.getText(), txtPassword.getText());
-        } catch (SQLException exception) {
-            MenuController.showAlertMessage("Incorrect login credentials!", AlertType.ERROR, 3000);
+        } catch (Exception exception) {
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
             return;
-        } catch (IOException exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch(ClassNotFoundException exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
 
-        if (applicationManager.isLoggedIn()) {
-            paneContent.getChildren().clear();
-            final Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/auctions/auctions.fxml"));
-            paneContent.getChildren().add(newLoadedPane);
+        paneContent.getChildren().clear();
+        final Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/auctions/auctions.fxml"));
+        paneContent.getChildren().add(newLoadedPane);
 
-            MenuController.showAlertMessage("Logged In!", AlertType.MESSAGE, 3000);
-        } else {
-            MenuController.showAlertMessage("Something went wrong, please try again.", AlertType.ERROR, 3000);
-        }
+        MenuController.showAlertMessage("Log in successful!", AlertType.MESSAGE, 3000);
     }
 
     public void register() throws IOException {

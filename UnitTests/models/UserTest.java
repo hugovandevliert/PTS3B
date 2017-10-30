@@ -1,12 +1,9 @@
 package models;
 
 import core.ApplicationManager;
-import data.interfaces.IUserContext;
-import logic.repositories.UserRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import java.io.IOException;
 import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,7 +17,7 @@ class UserTest {
     private static User user;
 
     @BeforeAll
-    static void setUp() throws SQLException, IOException, ClassNotFoundException {
+    static void setUp() throws Exception {
         ApplicationManager applicationManager = new ApplicationManager();
         user = applicationManager.login("user1", "User1!");
     }

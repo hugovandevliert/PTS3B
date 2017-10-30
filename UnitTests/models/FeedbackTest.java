@@ -1,5 +1,6 @@
 package models;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import core.ApplicationManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -24,20 +25,20 @@ class FeedbackTest {
     }
 
     @Test
-    void testGetAuthor() throws SQLException, IOException, ClassNotFoundException {
+    void testGetAuthor() throws Exception {
         final Profile author = applicationManager.login("user2", "User2!").getProfile();
         final Feedback feedback = new Feedback(author, LocalDateTime.now(), false, "Testfeedback");
         assertSame(author, feedback.getAuthor(), "Author getter is not working properly.");
     }
 
     @Test
-    void testGetMessage() throws SQLException, IOException, ClassNotFoundException {
+    void testGetMessage() throws Exception {
         final Feedback feedback = new Feedback(applicationManager.login("user2", "User2!").getProfile(), LocalDateTime.now(), false, "Testfeedback");
         assertEquals("Testfeedback", feedback.getMessage());
     }
 
     @Test
-    void testIsPositive() throws SQLException, IOException, ClassNotFoundException {
+    void testIsPositive() throws Exception {
         Feedback feedback = new Feedback(applicationManager.login("user1", "User1!").getProfile(), LocalDateTime.now(), false, "Testfeedback");
         assertFalse(feedback.isPositive(), "Positivity getter is not working properly for negative value.");
 
