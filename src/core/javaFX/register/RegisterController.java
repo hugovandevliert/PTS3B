@@ -54,7 +54,7 @@ public class RegisterController extends MenuController {
         } catch (SQLException exception) {
             MenuController.showAlertMessage("Could not connect to our server. Error: " + exception.getMessage(), AlertType.ERROR, 5000);
         } catch (Exception exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.WARNING, 7000);
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.WARNING, 5000);
         }
     }
 

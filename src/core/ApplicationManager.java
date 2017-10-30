@@ -1,6 +1,5 @@
 package core;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import data.contexts.UserMySqlContext;
 import logic.repositories.UserRepository;
 import models.Auction;
@@ -49,7 +48,19 @@ public class ApplicationManager {
     public boolean registerUser(final String username, final String password, final String email, final String name) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         final Pattern validEmailAddressRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
-        if (username == null || username.length() == 0){
+        if (name == null || name.length() == 0){
+            throw new IllegalArgumentException("Name can not be empty.");
+        }
+        else if (email == null || email.length() == 0){
+            throw new IllegalArgumentException("Email can not be empty.");
+        }
+        else if (email.length() > 255){
+            throw new IllegalArgumentException("Email can not be longer than 255 characters.");
+        }
+        else if (!validEmailAddressRegex.matcher(email).find()){
+            throw new IllegalArgumentException("Email should be a valid email address.");
+        }
+        else if (username == null || username.length() == 0){
             throw new IllegalArgumentException("Username can not be empty.");
         }
         else if (username.length() > 16){
@@ -65,26 +76,14 @@ public class ApplicationManager {
             throw new IllegalArgumentException("Password should not exceed 32 characters");
         }
         else if (!password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{6,}")) {
-            throw new IllegalArgumentException("Password doesn't contain Upper/Lower case letter or at least one number or one special character");
-        }
-        else if (email == null || email.length() == 0){
-            throw new IllegalArgumentException("Email can not be empty.");
-        }
-        else if (email.length() > 255){
-            throw new IllegalArgumentException("Email can not be longer than 255 characters.");
-        }
-        else if (!validEmailAddressRegex.matcher(email).find()){
-            throw new IllegalArgumentException("Email should be a valid email address.");
-        }
-        else if (name == null || name.length() == 0){
-            throw new IllegalArgumentException("Name can not be empty.");
+            throw new IllegalArgumentException("Password doesn't contain upper/lower case letter or at least one number or special character");
         }
 
         final String salt = generateSalt();
         return userRepository.registerUser(username, sha256HashCalculator.hashString(password, salt), salt, email, name);
     }
 
-    public String generateSalt(){
+    private String generateSalt(){
         final Character[] characters = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                 'Q', 'R', 'S', 'T', 'U', 'W', 'V', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
                 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
