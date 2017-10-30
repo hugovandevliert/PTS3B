@@ -8,6 +8,9 @@ import models.Profile;
 import models.User;
 import java.io.IOException;
 import logic.algorithms.Sha256HashCalculator;
+
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,25 +30,23 @@ public class ApplicationManager {
         sha256HashCalculator = new Sha256HashCalculator();
     }
 
-    public User login(final String username, final String password) throws Exception {
+    public boolean login(final String username, final String password) throws SQLException, IOException, ClassNotFoundException, NoSuchAlgorithmException {
         final String[] saltAndHash = userRepository.getSaltAndHash(username);
 
         if (saltAndHash != null){
             if (sha256HashCalculator.hashString(password, saltAndHash[0]).equals(saltAndHash[1])){
-                return currentUser = userRepository.getUserByUsername(username);
-            } else {
-                throw new Exception("Invalid password. Please try again.");
+                currentUser = userRepository.getUserByUsername(username);
+                return true;
             }
-        } else {
-            throw new Exception("Invalid username. Please try again.");
         }
+        return false;
     }
 
     public User getCurrentUser() {
         return currentUser;
     }
 
-    public boolean registerUser(final String username, final String password, final String email, final String name) {
+    public boolean registerUser(final String username, final String password, final String email, final String name) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         final Pattern validEmailAddressRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
         if (username == null || username.length() == 0){

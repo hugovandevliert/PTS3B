@@ -26,23 +26,30 @@ class FeedbackTest {
 
     @Test
     void testGetAuthor() throws Exception {
-        final Profile author = applicationManager.login("user2", "User2!").getProfile();
+        applicationManager.login("user2", "User2!");
+        final Profile author = applicationManager.getCurrentUser().getProfile();
         final Feedback feedback = new Feedback(author, LocalDateTime.now(), false, "Testfeedback");
         assertSame(author, feedback.getAuthor(), "Author getter is not working properly.");
     }
 
     @Test
     void testGetMessage() throws Exception {
-        final Feedback feedback = new Feedback(applicationManager.login("user2", "User2!").getProfile(), LocalDateTime.now(), false, "Testfeedback");
+        applicationManager.login("user2", "User2!");
+        final Profile author = applicationManager.getCurrentUser().getProfile();
+        final Feedback feedback = new Feedback(author, LocalDateTime.now(), false, "Testfeedback");
         assertEquals("Testfeedback", feedback.getMessage());
     }
 
     @Test
     void testIsPositive() throws Exception {
-        Feedback feedback = new Feedback(applicationManager.login("user1", "User1!").getProfile(), LocalDateTime.now(), false, "Testfeedback");
+        applicationManager.login("user1", "User1!");
+        final Profile author = applicationManager.getCurrentUser().getProfile();
+        Feedback feedback = new Feedback(author, LocalDateTime.now(), false, "Testfeedback");
         assertFalse(feedback.isPositive(), "Positivity getter is not working properly for negative value.");
 
-        feedback = new Feedback(applicationManager.login("user2", "User2!").getProfile(), LocalDateTime.now(), true, "Testfeedback");
+        applicationManager.login("user2", "User2!");
+        final Profile author2 = applicationManager.getCurrentUser().getProfile();
+        feedback = new Feedback(author2, LocalDateTime.now(), true, "Testfeedback");
         assertTrue(feedback.isPositive(), "Positivity getter is not working properly for positive value.");
     }
 

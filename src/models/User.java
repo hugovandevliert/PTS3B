@@ -10,6 +10,8 @@ import sun.security.provider.SHA;
 import utilities.enums.ProfileLoadingType;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 /**
@@ -39,6 +41,7 @@ public class User {
         profileRepository = new ProfileRepository(new ProfileMySqlContext());
         userRepository = new UserRepository(new UserMySqlContext());
 
+        //TODO: Niet feedback laden etc. laden hier.
         this.profile = profileRepository.getProfileForId(id, ProfileLoadingType.FOR_PROFILE_PAGE);
     }
 
@@ -48,7 +51,7 @@ public class User {
      * @param newPassword:      The new password that the User's password should be changed to. Password must have at least: 6 characters, 1 lowercase, 1 uppercase, 1 symbol, 1 integer
      * @return: Depending on whether the new password is allowed and the outcome of the check, the method will return true when password is successfully changed
      */
-    public boolean changePassword(final String currentPassword, final String newPassword) throws SQLException {
+    public boolean changePassword(final String currentPassword, final String newPassword) throws SQLException, UnsupportedEncodingException, NoSuchAlgorithmException {
         if (newPassword.length() < 6){
             throw new IllegalArgumentException("Password should be at least 6 characters");
         }

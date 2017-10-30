@@ -29,9 +29,15 @@ public class LoginController extends MenuController {
         }
 
         try {
-            applicationManager.login(txtUsername.getText(), txtPassword.getText());
+            if (!applicationManager.login(txtUsername.getText(), txtPassword.getText())) {
+                MenuController.showAlertMessage("Username or password incorrect. Please try again.", AlertType.WARNING, 3000);
+                return;
+            }
+        } catch (SQLException exception) {
+            MenuController.showAlertMessage("Could not connect to our server. Error: " + exception.getMessage(), AlertType.ERROR, 3000);
+            return;
         } catch (Exception exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
+            MenuController.showAlertMessage("Something went wrong. Error: " + exception.getMessage(), AlertType.ERROR, 3000);
             return;
         }
 

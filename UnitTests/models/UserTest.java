@@ -1,9 +1,13 @@
 package models;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import core.ApplicationManager;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,11 +23,12 @@ class UserTest {
     @BeforeAll
     static void setUp() throws Exception {
         ApplicationManager applicationManager = new ApplicationManager();
-        user = applicationManager.login("user1", "User1!");
+        applicationManager.login("user1", "User1!");
+        user = applicationManager.getCurrentUser();
     }
 
     @Test
-    void testChangePassword() throws SQLException {
+    void testChangePassword() throws SQLException, UnsupportedEncodingException, NoSuchAlgorithmException {
         assertThrows(IllegalArgumentException.class, () -> user.changePassword("User1!", "12345"), "Passwords should not be able to be less then 6 chars. (Currently: 5) ");
         assertThrows(IllegalArgumentException.class, () -> user.changePassword("User1!", "12345678"), "Passwords should not be able to contain only numbers");
         assertThrows(IllegalArgumentException.class, () -> user.changePassword( "User1!",""), "Passwords should never be able to be empty.");
@@ -76,7 +81,7 @@ class UserTest {
     }
 
     @AfterAll
-    static void cleanUp() throws SQLException {
+    static void cleanUp() throws SQLException, UnsupportedEncodingException, NoSuchAlgorithmException {
         user.setName("Mohamed Ali");
         user.setEmail("User1@gmail.com");
         user.changePassword("User2!", "User1!");
