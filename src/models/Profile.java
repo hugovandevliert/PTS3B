@@ -136,7 +136,7 @@ public class Profile {
             throw new IllegalArgumentException("Title can not be longer than 64 characters.");
         }
 
-        final Auction auction = new Auction(title, description, startBid, minimum, openingDate, expirationDate, isPremium, this, fileImages);
+        final Auction auction = new Auction(title, description, startBid, minimum, openingDate, expirationDate, isPremium, this, fileImages, incrementation);
 
         if (auctionRepository.addAuction(auction)) {
             auctions.add(auction);
