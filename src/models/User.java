@@ -41,8 +41,7 @@ public class User {
         profileRepository = new ProfileRepository(new ProfileMySqlContext());
         userRepository = new UserRepository(new UserMySqlContext());
 
-        //TODO: Niet feedback laden etc. laden hier.
-        this.profile = profileRepository.getProfileForId(id, ProfileLoadingType.FOR_PROFILE_PAGE);
+        this.profile = profileRepository.getProfileForId(id, ProfileLoadingType.FOR_AUCTION_PAGE);
     }
 
     /**
