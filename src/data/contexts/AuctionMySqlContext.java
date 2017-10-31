@@ -177,7 +177,7 @@ public class AuctionMySqlContext implements IAuctionContext {
         return resultSet.next();
     }
 
-    private int getLastInsertedAuctionId() throws SQLException {
+    public int getLastInsertedAuctionId() throws SQLException {
         final ResultSet resultSet = Database.getData(
                 "SELECT MAX(id) FROM Auction",
                 null

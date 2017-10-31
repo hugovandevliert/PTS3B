@@ -2,14 +2,23 @@ package core.javaFX.addAuction;
 
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import core.javaFX.auction.AuctionController;
 import core.javaFX.menu.MenuController;
+import data.contexts.AuctionMySqlContext;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import logic.repositories.AuctionRepository;
+import models.Auction;
 import utilities.enums.AlertType;
+import utilities.enums.AuctionLoadingType;
+
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -31,12 +40,17 @@ public class AddAuctionController extends MenuController {
     @FXML private JFXTextField txtEndTime;
     @FXML private JFXTextField txtEndDate;
     @FXML private JFXTextField txtIncrementation;
+
     private File[] images;
+
+    private AuctionRepository auctionRepository;
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         images = new File[3];
         setImages();
+
+        auctionRepository = new AuctionRepository(new AuctionMySqlContext());
     }
 
     public void addImage(final MouseEvent mouseEvent) {
@@ -77,11 +91,33 @@ public class AddAuctionController extends MenuController {
             final boolean successful = applicationManager.getCurrentUser().getProfile().addAuction(startBid, incrementation, minimumPrice,
                     expirationDate, openingDate, false, title, description, getImages(this.images));
 
-            if (successful) MenuController.showAlertMessage("Auction added successfully!", AlertType.MESSAGE, 3000);
-            else MenuController.showAlertMessage("Your auction could not be added - Please try again.", AlertType.ERROR, 3000);
+            if (successful){
+                MenuController.showAlertMessage("Auction added successfully!", AlertType.MESSAGE, 3000);
+
+                final Auction auction = auctionRepository.getAuctionForId(auctionRepository.getLastInsertedAuctionId(), AuctionLoadingType.FOR_AUCTION_PAGE);
+
+                if (auction != null){
+                    paneContent.getChildren().clear();
+
+                    final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/auction/auction.fxml"));
+                    final Pane auctionPane = fxmlLoader.load();
+                    final AuctionController auctionController = fxmlLoader.getController();
+
+                    auctionController.setAuction(auction, this);
+                    paneContent.getChildren().add(auctionPane);
+                }else{
+                    MenuController.showAlertMessage("Something went wrong - Couldn't load auction page", AlertType.ERROR, 3000);
+                }
+            }else{
+                MenuController.showAlertMessage("Your auction could not be added - Please try again.", AlertType.ERROR, 3000);
+            }
         } catch (IllegalArgumentException exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         } catch (SQLException exception) {
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
+        } catch (IOException exception) {
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
+        } catch (ClassNotFoundException exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }
