@@ -164,8 +164,6 @@ public class MenuController implements Initializable {
     public void highlightIconColor(final MouseEvent mouseEvent) {
         final ImageView icon = (ImageView) mouseEvent.getSource();
 
-        if (Objects.equals(selectedMenu.getId(), icon.getId())) return;
-
         switch(icon.getId()) {
             case "imgviewProfile":
                 imgviewProfile.setImage(profileIconHovered);
