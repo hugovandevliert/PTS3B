@@ -49,7 +49,7 @@ public class UserMySqlContext implements IUserContext {
         final String query = "SELECT id, username, name, email FROM Account WHERE username = ?";
         final ResultSet resultSet = Database.getData(query, new String[]{username});
 
-        if (resultSet.next()) {
+        if (resultSet != null && resultSet.next()) {
             return new User
                     (
                             resultSet.getInt("id"),

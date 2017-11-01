@@ -92,7 +92,7 @@ public class AuctionController extends MenuController {
         setCreatorId(auction.getCreator().getProfileId());
         setCurrenteUserId(applicationManager.getCurrentUser().getId());
         setBidTextfieldPromptText("Your bid: (at least + " + convertToEuro(auction.getIncrementation()) + ")");
-        setAuctionMinimumBid(auction.getMinimum());
+        setAuctionMinimumBid(auction.getStartBid());
         setAuctionMinimumIncrementation(auction.getIncrementation());
         setMenuController(menuController);
         initializeCountdownTimer();
@@ -273,6 +273,9 @@ public class AuctionController extends MenuController {
                     }else{
                         minimumNeededAmount = this.auctionMinimumBid;
                     }
+
+                    System.out.println("minimum" + minimumNeededAmount);
+                    System.out.println("start+ " + auctionMinimumBid);
 
                     if (amountIsHighEnough(bidAmount, minimumNeededAmount)){
                         if (auctionRepository.addBid(bidAmount, currenteUserId, auctionId)){
