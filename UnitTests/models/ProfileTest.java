@@ -87,17 +87,14 @@ public class ProfileTest {
 
     @Test
     public void testGetName() throws Exception {
-        applicationManager.login("user1", "User1!");
-        Profile profile = applicationManager.getCurrentUser().getProfile();
-
+        Profile profile = new Profile(null, null,  "Mohamed Ali", null, 1);
         assertEquals("Mohamed Ali", profile.getName());
     }
 
     @Test
     public void testGetEmail() throws Exception {
-        applicationManager.login("user1", "User1!");
-        Profile profile = applicationManager.getCurrentUser().getProfile();
-        assertEquals("User1@gmail.com", profile.getEmail());
+        Profile p = new Profile(null, null, null, "testuser@email.com", 1);
+        assertEquals("testuser@email.com", p.getEmail());
     }
 
     @Test
