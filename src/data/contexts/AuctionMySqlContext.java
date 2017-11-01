@@ -86,7 +86,7 @@ public class AuctionMySqlContext implements IAuctionContext {
             query = "SELECT * FROM MyAuctions.Auction WHERE id = ?;";
         }
         else if (auctionLoadingType.equals(AuctionLoadingType.FOR_COUNTDOWN_TIMER)){
-            query = "SELECT id, EndDate FROM MyAuctions.Auction WHERE id = ?;";
+            query = "SELECT id, OpeningDate, EndDate FROM MyAuctions.Auction WHERE id = ?;";
         }
         else return null;
 
@@ -217,6 +217,7 @@ public class AuctionMySqlContext implements IAuctionContext {
                 return new Auction
                         (
                                 resultSet.getInt("id"),
+                                resultSet.getTimestamp("openingDate").toLocalDateTime(),
                                 resultSet.getTimestamp("endDate").toLocalDateTime()
                         );
             default:
