@@ -47,7 +47,7 @@ public class AddAuctionController extends MenuController {
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-        images = new File[3];
+        images = new File[4];
         setImages();
 
         auctionRepository = new AuctionRepository(new AuctionMySqlContext());
@@ -73,7 +73,7 @@ public class AddAuctionController extends MenuController {
                 imgviewPicture3.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 225, 156, false, false));
             } else if (source == imgviewPicture4) {
                 images[3] = selectedImage;
-                imgviewPicture3.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 225, 156, false, false));
+                imgviewPicture4.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 225, 156, false, false));
             }
         }
     }
