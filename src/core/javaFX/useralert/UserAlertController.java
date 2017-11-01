@@ -30,7 +30,7 @@ public class UserAlertController extends MenuController {
                 paneBackgroundColor.setStyle("-fx-background-color: rgba(132, 89, 89, 1); -fx-background-radius: 2;");
                 break;
             case WARNING:
-                paneBackgroundColor.setStyle("-fx-background-color: #E08530; -fx-background-radius: 2;");
+                paneBackgroundColor.setStyle("-fx-background-color: #F4A257; -fx-background-radius: 2;");
                 break;
         }
 

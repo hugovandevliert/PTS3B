@@ -24,7 +24,7 @@ class AuctionTest {
     void setUp() throws SQLException {
         profile1 = new Profile(1, "MyProfile");
         profile2 = new Profile(2, "MySecondProfile");
-        auction1 = new Auction("MyTitle", "MyDescription", 0, 5, LocalDateTime.of(2016, 9, 10, 12, 33), LocalDateTime.of(2017, 10, 11, 13, 34), false, profile1, null);
+        auction1 = new Auction("MyTitle", "MyDescription", 0, 5, LocalDateTime.of(2016, 9, 10, 12, 33), LocalDateTime.of(2017, 10, 11, 13, 34), false, profile1, null, 0);
         auction2 = new Auction(0, "MySecondTitle", "MySecondDescription", 10, LocalDateTime.of(2017, 10, 11, 13, 38), profile1, new ArrayList<>(), new ArrayList<>(), 0, 0);
     }
 

@@ -39,6 +39,10 @@ public class AuctionRepository {
         return context.addBid(amount, accountId, auctionId);
     }
 
+    public int getLastInsertedAuctionId() throws SQLException {
+        return context.getLastInsertedAuctionId();
+    }
+
     public boolean manuallyEndAuction(final int auctionId) {
         return context.manuallyEndAuction(auctionId);
     }

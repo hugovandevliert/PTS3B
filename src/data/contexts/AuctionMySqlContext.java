@@ -102,7 +102,7 @@ public class AuctionMySqlContext implements IAuctionContext {
 
     @Override
     public boolean addAuction(final Auction auction) throws SQLException {
-        final String query = "INSERT INTO Auction (Title, Description, StartingBid, Minimum, CreationDate, OpeningDate, EndDate, `Status`, isPremium, Creator_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        final String query = "INSERT INTO Auction (Title, Description, StartingBid, Minimum, CreationDate, OpeningDate, EndDate, `Status`, isPremium, Creator_ID, minimumincrement) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         final int result = Database.setData(query, new String[]{
                 auction.getTitle(),
@@ -114,7 +114,8 @@ public class AuctionMySqlContext implements IAuctionContext {
                 auction.getExpirationDate().toString(),
                 auction.getStatus().toString(),
                 String.valueOf(auction.isPremium()),
-                String.valueOf(auction.getCreator().getProfileId())
+                String.valueOf(auction.getCreator().getProfileId()),
+                String.valueOf(auction.getIncrementation())
         }, true);
 
         return result == 1 && addAuctionImages(auction.getFileImages(), getLastInsertedAuctionId());
@@ -177,7 +178,7 @@ public class AuctionMySqlContext implements IAuctionContext {
         return resultSet.next();
     }
 
-    private int getLastInsertedAuctionId() throws SQLException {
+    public int getLastInsertedAuctionId() throws SQLException {
         final ResultSet resultSet = Database.getData(
                 "SELECT MAX(id) FROM Auction",
                 null

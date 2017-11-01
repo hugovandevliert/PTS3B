@@ -69,7 +69,7 @@ public class ListedAuctionController extends MenuController {
 
     private void setDescription(final String description) { textAuctionDescription.setText(description); }
 
-    private void setCurrentOffer(final double offer) { lblCurrentOffer.setText(convertToEuro(offer)); }
+    private void setCurrentOffer(final double offer) { lblCurrentOffer.setText(AuctionController.convertToEuro(offer)); }
 
     private void setImage(final Image image) { imgviewImage.setImage(image); }
 
@@ -88,29 +88,7 @@ public class ListedAuctionController extends MenuController {
             final Auction auction = auctionRepository.getAuctionForId(this.auctionId, AuctionLoadingType.FOR_AUCTION_PAGE);
 
             if (auction != null){
-                auctionController.setTitle(auction.getTitle());
-                auctionController.setDescription(auction.getDescription());
-                auctionController.setSeller(auction.getCreator().getUsername());
-                auctionController.setImages(auction.getImages());
-                auctionController.setBids(auction.getBids(), auction.getStartBid());
-                auctionController.setAuctionId(auction.getId());
-                auctionController.setCreatorId(auction.getCreator().getProfileId());
-                auctionController.setCurrenteUserId(applicationManager.getCurrentUser().getId());
-                auctionController.setBidTextfieldPromptText("Your bid: (at least + " + convertToEuro(auction.getIncrementation()) + ")");
-                auctionController.setAuctionMinimumBid(auction.getMinimum());
-                auctionController.setAuctionMinimumIncrementation(auction.getIncrementation());
-                auctionController.setMenuController(this.menuController);
-                auctionController.initializeCountdownTimer(auction.getExpirationDate());
-                auctionController.initializeBidsLoadingTimer(auction.getBids(), this.auctionId, auction.getStartBid());
-                auctionController.initializeRepositories();
-                auctionController.handleEndAuctionPaneRemoving();
-                auctionController.handleAddtoFavoritesButtonRemoving(auction.getCreator().getProfileId());
-
-                if (currentUserIsCreatorOfThisAuction(auction)){
-                    auctionController.disablePlaceBidPane();
-                }else{
-                    auctionController.disableEndAuctionPane();
-                }
+                auctionController.setAuction(auction, this.menuController);
 
                 menuController.paneContent.getChildren().add(auctionPane);
             }else{
@@ -123,15 +101,5 @@ public class ListedAuctionController extends MenuController {
         } catch (ClassNotFoundException exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
-    }
-
-    private boolean currentUserIsCreatorOfThisAuction(final Auction auction) {
-        return applicationManager.getCurrentUser().getId() == auction.getCreator().getProfileId();
-    }
-
-    private String convertToEuro(final double amount) {
-        Locale dutch = new Locale("nl", "NL");
-        DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(dutch);
-        return decimalFormat.format(amount);
     }
 }

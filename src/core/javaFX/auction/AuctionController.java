@@ -25,6 +25,7 @@ import logic.repositories.BidRepository;
 import logic.repositories.ProfileRepository;
 import logic.timers.AuctionBidsLoadingTimer;
 import logic.timers.AuctionCountdownTimer;
+import models.Auction;
 import models.Bid;
 import models.Profile;
 import utilities.database.Database;
@@ -80,17 +81,39 @@ public class AuctionController extends MenuController {
         paneContent.getChildren().add(btnAddToFavorites);
     }
 
-    public String getTimerString() {
-        return lblTimer.getText();
+    public void setAuction(final Auction auction, final MenuController menuController) {
+        setTitle(auction.getTitle());
+        setDescription(auction.getDescription());
+        setSeller(auction.getCreator().getUsername());
+        setImages(auction.getImages());
+        setBids(auction.getBids(), auction.getStartBid());
+        setAuctionId(auction.getId());
+        setCreatorId(auction.getCreator().getProfileId());
+        setCurrenteUserId(applicationManager.getCurrentUser().getId());
+        setBidTextfieldPromptText("Your bid: (at least + " + convertToEuro(auction.getIncrementation()) + ")");
+        setAuctionMinimumBid(auction.getMinimum());
+        setAuctionMinimumIncrementation(auction.getIncrementation());
+        setMenuController(menuController);
+        initializeCountdownTimer(auction.getExpirationDate());
+        initializeBidsLoadingTimer(auction.getBids(), this.auctionId, auction.getStartBid());
+        initializeRepositories();
+        handleEndAuctionPaneRemoving();
+        handleAddtoFavoritesButtonRemoving(auction.getCreator().getProfileId());
+
+        if (currentUserIsCreatorOfThisAuction(auction)){
+            disablePlaceBidPane();
+        }else{
+            disableEndAuctionPane();
+        }
     }
 
-    public void setTitle(final String title) { lblAuctionTitle.setText(title); }
+    private void setTitle(final String title) { lblAuctionTitle.setText(title); }
 
-    public void setDescription(final String description) { textAuctionDescription.setText(description); }
+    private void setDescription(final String description) { textAuctionDescription.setText(description); }
 
-    public void setSeller(final String seller) { lblAuctionSeller.setText(seller); }
+    private void setSeller(final String seller) { lblAuctionSeller.setText(seller); }
 
-    public void setImages(final List<Image> images) {
+    private void setImages(final List<Image> images) {
         if (images != null){
             final Image placeholderImage = new Image("file:" +  new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath(), 429, 277, false, false);
 
@@ -153,35 +176,35 @@ public class AuctionController extends MenuController {
         }
     }
 
-    public void setAuctionId(final int auctionId) {
+    private void setAuctionId(final int auctionId) {
         this.auctionId = auctionId;
     }
 
-    public void setCreatorId(final int creatorId) { this.creatorId = creatorId; }
+    private void setCreatorId(final int creatorId) { this.creatorId = creatorId; }
 
-    public void setCurrenteUserId(final int currenteUserId) { this.currenteUserId = currenteUserId; }
+    private void setCurrenteUserId(final int currenteUserId) { this.currenteUserId = currenteUserId; }
 
-    public void setBidTextfieldPromptText(final String value) {
+    private void setBidTextfieldPromptText(final String value) {
         txtBid.setPromptText(value);
     }
 
-    public void setAuctionMinimumBid(final double auctionMinimumBid) {
+    private void setAuctionMinimumBid(final double auctionMinimumBid) {
         this.auctionMinimumBid = auctionMinimumBid;
     }
 
-    public void setAuctionMinimumIncrementation(final double auctionMinimumIncrementation) {
+    private void setAuctionMinimumIncrementation(final double auctionMinimumIncrementation) {
         this.auctionMinimumIncrementation = auctionMinimumIncrementation;
     }
 
-    public void setMenuController(final MenuController menuController) { this.menuController = menuController; }
+    private void setMenuController(final MenuController menuController) { this.menuController = menuController; }
 
-    public void initializeRepositories() {
+    private void initializeRepositories() {
         auctionRepository = new AuctionRepository(new AuctionMySqlContext());
         bidRepository = new BidRepository(new BidMySqlContext());
         profileRepository = new ProfileRepository(new ProfileMySqlContext());
     }
 
-    public void initializeCountdownTimer(final LocalDateTime expirationDate) {
+    private void initializeCountdownTimer(final LocalDateTime expirationDate) {
         final Date currentDate = new Date();
         final long countdownInMilliseconds = expirationDate.toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli() - currentDate.getTime();
 
@@ -193,12 +216,12 @@ public class AuctionController extends MenuController {
         }
     }
 
-    public void initializeBidsLoadingTimer(final List<Bid> bids, final int auctionId, final double startBid) {
+    private void initializeBidsLoadingTimer(final List<Bid> bids, final int auctionId, final double startBid) {
         bidsLoadingTimer = new Timer();
         bidsLoadingTimer.schedule(new AuctionBidsLoadingTimer(this, this.menuController, bids, auctionId, startBid), 1000, 500);
     }
 
-    public void handleEndAuctionPaneRemoving() {
+    private void handleEndAuctionPaneRemoving() {
         // If this auction has been closed, we should never get the option again to close it once more
         try {
             if (auctionRepository.auctionIsClosed(this.auctionId)) {
@@ -209,7 +232,7 @@ public class AuctionController extends MenuController {
         }
     }
 
-    public void handleAddtoFavoritesButtonRemoving(final int auctionCreatorProfileId) {
+    private void handleAddtoFavoritesButtonRemoving(final int auctionCreatorProfileId) {
         try {
             // If we have already marked the auction as our favorite, there is no need to display the user an option to mark it once more
             // Neither do we want the creator of an auction to mark his/her own auction as favorite
@@ -221,11 +244,11 @@ public class AuctionController extends MenuController {
         }
     }
 
-    public void disablePlaceBidPane() {
+    private void disablePlaceBidPane() {
         paneContent.getChildren().remove(panePlaceBid);
     }
 
-    public void disableEndAuctionPane() {
+    private void disableEndAuctionPane() {
         paneContent.getChildren().remove(paneEndAuction);
     }
 
@@ -325,13 +348,21 @@ public class AuctionController extends MenuController {
         }
     }
 
+    public String getTimerString() {
+        return lblTimer.getText();
+    }
+
     private boolean amountIsHighEnough(final double bidAmount, final double minimumNeededAmount) {
         return bidAmount >= minimumNeededAmount;
     }
 
-    private String convertToEuro(final double amount) {
-        Locale dutch = new Locale("nl", "NL");
-        DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(dutch);
+    private boolean currentUserIsCreatorOfThisAuction(final Auction auction) {
+        return applicationManager.getCurrentUser().getId() == auction.getCreator().getProfileId();
+    }
+
+    public static String convertToEuro(final double amount) {
+        final Locale dutch = new Locale("nl", "NL");
+        final DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getCurrencyInstance(dutch);
         return decimalFormat.format(amount);
     }
 }

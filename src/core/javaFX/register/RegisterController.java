@@ -49,16 +49,13 @@ public class RegisterController extends MenuController {
                     login();
                 }
             } else {
-                MenuController.showAlertMessage("Something went wrong, please try again!", AlertType.WARNING, 3000);
+                MenuController.showAlertMessage("Something went wrong, please try again!", AlertType.ERROR, 3000);
             }
-        } catch (IllegalArgumentException exception){
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         } catch (SQLException exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch (ClassNotFoundException exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
+            MenuController.showAlertMessage("Could not connect to our server. Error: " + exception.getMessage(), AlertType.ERROR, 5000);
+        } catch (Exception exception) {
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.WARNING, 5000);
         }
-
     }
 
     public void login() throws IOException {

@@ -7,18 +7,12 @@ import logic.repositories.AuctionRepository;
 import logic.repositories.ProfileRepository;
 import org.junit.Before;
 import org.junit.Test;
-import utilities.enums.AuctionLoadingType;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * ASSUMPTION: There is a user in the database with username="user1", password="User1!", name="Mohamed Ali" and email="User1@gmail.com".
@@ -84,22 +78,25 @@ public class ProfileTest {
 //    }
 
     @Test
-    public void testGetUsername() throws SQLException, IOException, ClassNotFoundException {
-        Profile profile = applicationManager.login("user1", "User1!").getProfile();
+    public void testGetUsername() throws Exception {
+        applicationManager.login("user1", "User1!");
+        Profile profile = applicationManager.getCurrentUser().getProfile();
 
         assertEquals("User1", profile.getUsername());
     }
 
     @Test
-    public void testGetName() throws SQLException, IOException, ClassNotFoundException {
-        Profile profile = applicationManager.login("user1", "User1!").getProfile();
+    public void testGetName() throws Exception {
+        applicationManager.login("user1", "User1!");
+        Profile profile = applicationManager.getCurrentUser().getProfile();
 
         assertEquals("Mohamed Ali", profile.getName());
     }
 
     @Test
-    public void testGetEmail() throws SQLException, IOException, ClassNotFoundException {
-        Profile profile = applicationManager.login("User1", "User1!").getProfile();
+    public void testGetEmail() throws Exception {
+        applicationManager.login("user1", "User1!");
+        Profile profile = applicationManager.getCurrentUser().getProfile();
         assertEquals("User1@gmail.com", profile.getEmail());
     }
 

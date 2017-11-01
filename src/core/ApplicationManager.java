@@ -7,6 +7,9 @@ import models.Profile;
 import models.User;
 import java.io.IOException;
 import logic.algorithms.Sha256HashCalculator;
+
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,26 +29,38 @@ public class ApplicationManager {
         sha256HashCalculator = new Sha256HashCalculator();
     }
 
-    public User login(final String username, final String password) throws SQLException, IOException, ClassNotFoundException {
+    public boolean login(final String username, final String password) throws SQLException, IOException, ClassNotFoundException, NoSuchAlgorithmException {
         final String[] saltAndHash = userRepository.getSaltAndHash(username);
 
         if (saltAndHash != null){
             if (sha256HashCalculator.hashString(password, saltAndHash[0]).equals(saltAndHash[1])){
-                return currentUser = userRepository.getUserByUsername(username);
+                currentUser = userRepository.getUserByUsername(username);
+                return true;
             }
         }
-        //Password incorrect
-        return null;
+        return false;
     }
 
     public User getCurrentUser() {
         return currentUser;
     }
 
-    public boolean registerUser(final String username, final String password, final String email, final String name) {
+    public boolean registerUser(final String username, final String password, final String email, final String name) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         final Pattern validEmailAddressRegex = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
-        if (username == null || username.length() == 0){
+        if (name == null || name.length() == 0){
+            throw new IllegalArgumentException("Name can not be empty.");
+        }
+        else if (email == null || email.length() == 0){
+            throw new IllegalArgumentException("Email can not be empty.");
+        }
+        else if (email.length() > 255){
+            throw new IllegalArgumentException("Email can not be longer than 255 characters.");
+        }
+        else if (!validEmailAddressRegex.matcher(email).find()){
+            throw new IllegalArgumentException("Email should be a valid email address.");
+        }
+        else if (username == null || username.length() == 0){
             throw new IllegalArgumentException("Username can not be empty.");
         }
         else if (username.length() > 16){
@@ -61,26 +76,14 @@ public class ApplicationManager {
             throw new IllegalArgumentException("Password should not exceed 32 characters");
         }
         else if (!password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{6,}")) {
-            throw new IllegalArgumentException("Password doesn't contain Upper/Lower case letter or at least one number or one special character");
-        }
-        else if (email == null || email.length() == 0){
-            throw new IllegalArgumentException("Email can not be empty.");
-        }
-        else if (email.length() > 255){
-            throw new IllegalArgumentException("Email can not be longer than 255 characters.");
-        }
-        else if (!validEmailAddressRegex.matcher(email).find()){
-            throw new IllegalArgumentException("Email should be a valid email address.");
-        }
-        else if (name == null || name.length() == 0){
-            throw new IllegalArgumentException("Name can not be empty.");
+            throw new IllegalArgumentException("Password doesn't contain upper/lower case letter or at least one number or special character");
         }
 
         final String salt = generateSalt();
         return userRepository.registerUser(username, sha256HashCalculator.hashString(password, salt), salt, email, name);
     }
 
-    public String generateSalt(){
+    private String generateSalt(){
         final Character[] characters = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                 'Q', 'R', 'S', 'T', 'U', 'W', 'V', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
                 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',

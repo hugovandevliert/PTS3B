@@ -41,7 +41,7 @@ public class Auction {
      * @param creator:          The user's profile that created this auction.
      * @param fileImages:       The file's which represent the images added to this auction.
      **/
-    public Auction(final String title, final String description, final double startBid, final double minimum, final LocalDateTime openingDate, final LocalDateTime expirationDate, final boolean isPremium, final Profile creator, final ArrayList<File> fileImages) {
+    public Auction(final String title, final String description, final double startBid, final double minimum, final LocalDateTime openingDate, final LocalDateTime expirationDate, final boolean isPremium, final Profile creator, final ArrayList<File> fileImages, final double incrementation) {
         this.title = title;
         this.description = description;
         this.startBid = startBid;
@@ -53,6 +53,8 @@ public class Auction {
         this.creator = creator;
         this.fileImages = fileImages;
         this.status = Status.OPEN;
+        this.incrementation = incrementation;
+
         bids = new ArrayList<>();
         this.iAuctionContext = new AuctionMySqlContext();
         this.auctionRepository = new AuctionRepository(this.iAuctionContext);
