@@ -38,6 +38,7 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.*;
 
@@ -94,7 +95,7 @@ public class AuctionController extends MenuController {
         setAuctionMinimumBid(auction.getMinimum());
         setAuctionMinimumIncrementation(auction.getIncrementation());
         setMenuController(menuController);
-        initializeCountdownTimer(auction.getExpirationDate());
+        initializeCountdownTimer();
         initializeBidsLoadingTimer(auction.getBids(), this.auctionId, auction.getStartBid());
         initializeRepositories();
         handleEndAuctionPaneRemoving();
@@ -204,16 +205,9 @@ public class AuctionController extends MenuController {
         profileRepository = new ProfileRepository(new ProfileMySqlContext());
     }
 
-    private void initializeCountdownTimer(final LocalDateTime expirationDate) {
-        final Date currentDate = new Date();
-        final long countdownInMilliseconds = expirationDate.toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli() - currentDate.getTime();
-
-        if (countdownInMilliseconds > 0){
-            auctionCountdown = new Timer();
-            auctionCountdown.schedule(new AuctionCountdownTimer(this, this.menuController, this.auctionId), 0, 1000);
-        }else{
-            setTimer("This auction has ended!");
-        }
+    private void initializeCountdownTimer() {
+        auctionCountdown = new Timer();
+        auctionCountdown.schedule(new AuctionCountdownTimer(this, this.menuController, this.auctionId), 0, 1000);
     }
 
     private void initializeBidsLoadingTimer(final List<Bid> bids, final int auctionId, final double startBid) {
@@ -358,6 +352,10 @@ public class AuctionController extends MenuController {
 
     private boolean currentUserIsCreatorOfThisAuction(final Auction auction) {
         return applicationManager.getCurrentUser().getId() == auction.getCreator().getProfileId();
+    }
+
+    private long getMillisFromLocalDateTime(final LocalDateTime localDateTime) {
+        return localDateTime.toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli();
     }
 
     public static String convertToEuro(final double amount) {

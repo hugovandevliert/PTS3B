@@ -79,10 +79,12 @@ public class Auction {
     /**
      * Constructor used by the AuctionCountdownTimer
      * @param id:               The ID of the auction.
+     * @param openingDate       Date/time when the auction is allowed to be opened.
      * @param expirationDate:   Date/time when the auction is planned to close.
      */
-    public Auction(final int id, final LocalDateTime expirationDate) {
+    public Auction(final int id, final LocalDateTime openingDate, final LocalDateTime expirationDate) {
         this.id = id;
+        this.openingDate = openingDate;
         this.expirationDate = expirationDate;
     }
 

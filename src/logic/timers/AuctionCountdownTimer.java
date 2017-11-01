@@ -5,6 +5,7 @@ import core.javaFX.menu.MenuController;
 import data.contexts.AuctionMySqlContext;
 import javafx.application.Platform;
 import logic.repositories.AuctionRepository;
+import models.Auction;
 import utilities.enums.AlertType;
 import utilities.enums.AuctionLoadingType;
 import java.io.IOException;
@@ -40,20 +41,31 @@ public class AuctionCountdownTimer extends TimerTask {
             if (userStoppedLookingAtThisAuction()) this.cancel();
 
             if (!auctionRepository.auctionIsClosed(this.auctionId)){
-                final Date currentDate = new Date();
-                expirationDate = auctionRepository.getAuctionForId(this.auctionId, AuctionLoadingType.FOR_COUNTDOWN_TIMER).getExpirationDate();
+                final Auction auction = auctionRepository.getAuctionForId(this.auctionId, AuctionLoadingType.FOR_COUNTDOWN_TIMER);
 
-                final long differenceInMs = expirationDate.toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli() - currentDate.getTime();
-                String timerStringValue;
+                if (auction != null){
+                    final long currentDateInMillis = getMillisFromLocalDateTime(LocalDateTime.now());
+                    final long openingDateInMillis = getMillisFromLocalDateTime(auction.getOpeningDate());
+                    final long expirationDateInMillis = getMillisFromLocalDateTime(auction.getExpirationDate());
+                    long differenceInMs = -1;
+                    String timerStringValue;
 
-                if (differenceInMs > 0){
-                    timerStringValue = getDurationFromMilliseconds(differenceInMs);
-                } else{
-                    timerStringValue = "This auction has ended!";
+                    if (currentDateInMillis >= openingDateInMillis){
+                        differenceInMs = expirationDateInMillis - currentDateInMillis;
+                    }
+
+                    if (differenceInMs > 0){
+                        timerStringValue = getDurationFromMilliseconds(differenceInMs);
+                    }
+                    else if (differenceInMs == -1){
+                        timerStringValue = "Still has to open!";
+                    }else{
+                        timerStringValue = "This auction has ended!";
+                    }
+
+                    final String finalTimerStringValue = timerStringValue;
+                    setTimerValue(finalTimerStringValue);
                 }
-
-                final String finalTimerStringValue = timerStringValue;
-                setTimerValue(finalTimerStringValue);
             } else{
                 // There is no need to keep this TimerTask running as the auction has been ended
                 // We will therefore cancel the TimerTask
@@ -69,6 +81,10 @@ public class AuctionCountdownTimer extends TimerTask {
         }
     }
 
+    private void setTimerValue(final String value) {
+        Platform.runLater(() -> auctionController.setTimer(value));
+    }
+
     private String getDurationFromMilliseconds(final long milliSeconds) {
         if (milliSeconds < 0) {
             throw new IllegalArgumentException("milliSeconds duration should be bigger then 0");
@@ -82,11 +98,11 @@ public class AuctionCountdownTimer extends TimerTask {
         return String.format("%d D %d H %d M %d S", days, hours, minutes, seconds);
     }
 
-    private boolean userStoppedLookingAtThisAuction() {
-        return MenuController.getLastCalledClass() == null;
+    private long getMillisFromLocalDateTime(final LocalDateTime localDateTime) {
+        return localDateTime.toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli();
     }
 
-    private void setTimerValue(final String value) {
-        Platform.runLater(() -> auctionController.setTimer(value));
+    private boolean userStoppedLookingAtThisAuction() {
+        return MenuController.getLastCalledClass() == null;
     }
 }
