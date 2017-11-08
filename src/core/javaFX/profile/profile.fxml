@@ -22,7 +22,11 @@
     <children>
           <Pane fx:id="paneContent" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;">
          <children>
-            <ImageView fx:id="imgviewProfilePicture" fitHeight="196.0" fitWidth="275.0" layoutX="23.0" layoutY="24.0" onMouseClicked="#changeProfilePicture" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgviewProfilePicture" fitHeight="196.0" fitWidth="275.0" layoutX="23.0" layoutY="24.0" onMouseClicked="#changeProfilePicture" pickOnBounds="true" preserveRatio="true" >
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+            </ImageView>
             <Label fx:id="lblName" alignment="CENTER" layoutX="427.0" layoutY="24.0" prefHeight="21.0" prefWidth="531.0" text="Name" textAlignment="CENTER" textFill="#a6b5c9">
                <font>
                   <Font name="Segoe UI Light" size="18.0" />

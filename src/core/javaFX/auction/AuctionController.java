@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -78,6 +79,7 @@ public class AuctionController extends MenuController {
         btnAddToFavorites.setTextFill(Color.web("#824923"));
         btnAddToFavorites.setStyle("-fx-font-size: 14; -fx-background-color: #f2aa78");
         btnAddToFavorites.setOnAction(event -> addToFavoriteAuctions());
+        btnAddToFavorites.setCursor(Cursor.HAND);
 
         paneContent.getChildren().add(btnAddToFavorites);
     }

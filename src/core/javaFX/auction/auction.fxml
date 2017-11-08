@@ -52,7 +52,11 @@
             <Label fx:id="lblAuctionSeller" alignment="CENTER" layoutX="642.0" layoutY="246.0" onMouseClicked="#goToCreatorProfile" prefHeight="21.0" prefWidth="330.0" textFill="#a6b5c9">
                <font>
                   <Font name="Segoe UI Light" size="18.0" />
-               </font></Label>
+               </font>
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+            </Label>
             <ScrollPane fx:id="scrollpaneAuctionDescription" hbarPolicy="NEVER" layoutX="642.0" layoutY="53.0" prefHeight="175.0" prefWidth="346.0" style="-fx-background: #3d4857;  -fx-border-color: #3d4857; -fx-background-color: transparent;" vbarPolicy="NEVER">
                <content>
                   <Text fx:id="textAuctionDescription" fill="#788599" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="341.99999821186066">
