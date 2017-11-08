@@ -22,7 +22,7 @@
     <children>
           <Pane fx:id="paneContent" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;">
          <children>
-            <ImageView fx:id="imgviewProfilePicture" fitHeight="196.0" fitWidth="275.0" layoutX="23.0" layoutY="24.0" onMouseClicked="#changeProfilePicture" pickOnBounds="true" preserveRatio="true" >
+            <ImageView fx:id="imgviewProfilePicture" fitHeight="206.0" fitWidth="275.0" layoutX="23.0" layoutY="24.0" onMouseClicked="#changeProfilePicture" pickOnBounds="true" preserveRatio="true" >
                 <cursor>
                     <Cursor fx:constant="HAND" />
                 </cursor>
