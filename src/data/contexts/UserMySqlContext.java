@@ -1,8 +1,10 @@
 package data.contexts;
 
 import data.interfaces.IUserContext;
+import logic.repositories.ProfileRepository;
 import models.User;
 import utilities.database.Database;
+import utilities.enums.ProfileLoadingType;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +13,12 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class UserMySqlContext implements IUserContext {
+
+    private final ProfileRepository profileRepository;
+
+    public UserMySqlContext() {
+        this.profileRepository = new ProfileRepository(new ProfileMySqlContext());
+    }
 
     @Override
     public boolean registerUser(final String username, final String password, final String salt, final String email, final String name) {
@@ -55,7 +63,8 @@ public class UserMySqlContext implements IUserContext {
                             resultSet.getInt("id"),
                             resultSet.getString("username"),
                             resultSet.getString("name"),
-                            resultSet.getString("email")
+                            resultSet.getString("email"),
+                            profileRepository.getProfileForId(resultSet.getInt("id"), ProfileLoadingType.FOR_AUCTION_PAGE)
                     );
         }
         return null;

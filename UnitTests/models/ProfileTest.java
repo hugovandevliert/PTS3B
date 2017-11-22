@@ -103,13 +103,13 @@ public class ProfileTest {
         assertEquals(1, p.getProfileId());
     }
 
-    @Test
+    /*@Test
     public void testGetAuctions() throws SQLException, IOException, ClassNotFoundException {
         Profile profile = new Profile(1, "user1", "Test User", LocalDateTime.now(), null, "test@gmail.com", new ArrayList<Auction>(), null);
         profile.addAuction(1, 1, 1, LocalDateTime.now().plusDays(3), LocalDateTime.now().plusDays(1), false, "AbCdE", "", null);
 
         assertEquals("AbCdE", profile.getAuctions().get(0).getTitle());
-    }
+    }*/
 
 //    @Test
 //    public void testGetVisitedAuctions() throws SQLException, IOException, ClassNotFoundException {

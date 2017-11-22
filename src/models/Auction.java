@@ -1,10 +1,8 @@
 package models;
 
-import data.contexts.AuctionMySqlContext;
-import data.interfaces.IAuctionContext;
 import javafx.scene.image.Image;
-import logic.repositories.AuctionRepository;
 import utilities.enums.Status;
+
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,8 +24,6 @@ public class Auction {
     private ArrayList<File> fileImages;
     private ArrayList<Bid> bids;
     private Profile creator;
-    private IAuctionContext iAuctionContext;
-    private AuctionRepository auctionRepository;
 
      /**
      * Constructor used for creating a new auction.
@@ -56,8 +52,6 @@ public class Auction {
         this.incrementation = incrementation;
 
         bids = new ArrayList<>();
-        this.iAuctionContext = new AuctionMySqlContext();
-        this.auctionRepository = new AuctionRepository(this.iAuctionContext);
     }
 
     /**
@@ -116,28 +110,8 @@ public class Auction {
      * Method to change the status of this Auction-object
      * @param status: This will be the new status of this Auction-object.
      */
-    //TODO: Shouldn't this return a boolean in case it was not possible to change the status on the database? Like when a SQLException occurs etc?
     public void setStatus(final Status status) {
         this.status = status;
-    }
-
-    /**
-     * Method to add a bid to an auction.
-     * @param amount: Amount that was bid.
-     * @param profile: profile that placed the bid.
-     **/
-    //TODO: Shouldn't this return a boolean in case it was not possible to add the bid on the database? Like when a SQLException occurs etc?
-    public void addBid(final double amount, final Profile profile) {
-        if (profile.getAuctions().contains(this)){throw new IllegalArgumentException("User can't bid on his own auctions");}
-        auctionRepository.addBid(amount, profile.getProfileId(), this.getId());
-    }
-
-    /**
-     * Method to end the auction
-     * @return: Return true if succeeded, false if failed to close.
-     **/
-    public boolean endAuction() {
-        return false;
     }
 
     public int getId() { return id; }

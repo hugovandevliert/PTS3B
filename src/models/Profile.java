@@ -1,12 +1,7 @@
 package models;
 
-import data.contexts.AuctionMySqlContext;
-import data.contexts.ProfileMySqlContext;
 import javafx.scene.image.Image;
-import logic.repositories.AuctionRepository;
-import logic.repositories.ProfileRepository;
 
-import java.io.File;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,13 +17,10 @@ public class Profile {
     private String username, name, email;
     private int profileId;
 
-    private ArrayList<Auction> auctions, visitedAuctions, favoriteAuctions;
+    private ArrayList<Auction> auctions;
     private ArrayList<Feedback> feedbacks;
 
     private LocalDateTime creationDate;
-
-    private AuctionRepository auctionRepository;
-    private ProfileRepository profileRepository;
 
     /**
      * Default Constructor.
@@ -42,15 +34,11 @@ public class Profile {
         this(profileId, username);
 
         auctions = new ArrayList<>();
-        visitedAuctions = new ArrayList<>();
-        favoriteAuctions = new ArrayList<>();
         feedbacks = new ArrayList<>();
 
         this.photo = photo;
         this.name = name;
         this.email = email;
-
-        profileRepository = new ProfileRepository(new ProfileMySqlContext());
     }
 
     /**
@@ -61,12 +49,7 @@ public class Profile {
      */
     public Profile(final int profileId, final String username) {
         auctions = new ArrayList<>();
-        visitedAuctions = new ArrayList<>();
-        favoriteAuctions = new ArrayList<>();
         feedbacks = new ArrayList<>();
-
-        auctionRepository = new AuctionRepository(new AuctionMySqlContext());
-        profileRepository = new ProfileRepository(new ProfileMySqlContext());
 
         this.username = username;
         this.profileId = profileId;
@@ -88,61 +71,6 @@ public class Profile {
         this.email = email;
         this.auctions = auctions;
         this.feedbacks = feedbacks;
-
-        visitedAuctions = new ArrayList<>();
-        favoriteAuctions = new ArrayList<>();
-
-        profileRepository = new ProfileRepository(new ProfileMySqlContext());
-    }
-
-    /**
-     * Method for creating a new auction.
-     * @param startBid:       Minimum value of the first bid. Must be >0.
-     * @param incrementation: Minimum difference a bid must have from the previous one. Must be >0.
-     * @param minimum:        Minimum bid the auction must have reached before the seller actually sells the item. Must be >0.
-     * @param expirationDate: Date/time when the auction is planned to close. Should be later then the current date.
-     * @param openingDate:    Date/time when the auction is planned to open. Should be earlier then the the expirationdate, and can't be earlier then today.
-     * @param isPremium:      Indicates if a user paid to boost his auction.
-     * @param title:          Title of the auction. Can't contain more then 64 characters.
-     * @param fileImages:     The file's which represent the images added to this auction.
-     */
-    public boolean addAuction(final double startBid, final double incrementation, final double minimum, final LocalDateTime expirationDate, final LocalDateTime openingDate,
-                              final boolean isPremium, final String title, final String description, final ArrayList<File> fileImages) throws SQLException {
-        if (startBid <= 0){
-            throw new IllegalArgumentException("Start bid should be higher than 0.");
-        }
-        else if (incrementation <= 0){
-            throw new IllegalArgumentException("incrementation bid should be higher than 0.");
-        }
-        else if (minimum <= 0){
-            throw new IllegalArgumentException("Minimum bid should be higher than 0.");
-        }
-        else if (expirationDate == null){
-            throw new IllegalArgumentException("Expiration date can not be empty.");
-        }
-        else if (expirationDate.compareTo(LocalDateTime.now()) < 0){
-            throw new IllegalArgumentException("Expiration date should be in the future");
-        }
-        else if (openingDate == null){
-            throw new IllegalArgumentException("Opening date can not be empty");
-        }
-        else if (openingDate.compareTo(LocalDateTime.now()) < 0){
-            throw new IllegalArgumentException("Opening date can not be before today");
-        }
-        else if (expirationDate.compareTo(openingDate) < 1){
-            throw new IllegalArgumentException("Opening date must be before the expiration date");
-        }
-        else if (title.length() > 64){
-            throw new IllegalArgumentException("Title can not be longer than 64 characters.");
-        }
-
-        final Auction auction = new Auction(title, description, startBid, minimum, openingDate, expirationDate, isPremium, this, fileImages, incrementation);
-
-        if (auctionRepository.addAuction(auction)) {
-            auctions.add(auction);
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -151,31 +79,6 @@ public class Profile {
      */
     public void addAuction(final Auction auction) throws SQLException {
         auctions.add(auction);
-        auctionRepository.addAuction(auction);
-    }
-
-    /**
-     * Method for adding an auction to a profile's visited auctions.
-     * @param auction: The auction to add.
-     */
-    public void addVisitedAuction(final Auction auction) {
-
-    }
-
-    /**
-     * Method for adding an auction to a profile's favorite auctions.
-     * @param auctionId: The auctionId to add.
-     */
-    public boolean addFavoriteAuction(final int auctionId) {
-        return profileRepository.addFavoriteAuction(this, auctionId);
-    }
-
-    /**
-     * Method for removing an auction to a profile's favorite auctions.
-     * @param auction: The auction to remove.
-     */
-    public void removeFavoriteAuction(final Auction auction) {
-
     }
 
     /**
@@ -229,14 +132,6 @@ public class Profile {
 
     public List<Auction> getAuctions() {
         return Collections.unmodifiableList(auctions);
-    }
-
-    public List<Auction> getVisitedAuctions() {
-        return Collections.unmodifiableList(visitedAuctions);
-    }
-
-    public List<Auction> getFavoriteAuctions() {
-        return Collections.unmodifiableList(favoriteAuctions);
     }
 
     public List<Feedback> getFeedbacks() {

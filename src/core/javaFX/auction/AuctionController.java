@@ -337,7 +337,7 @@ public class AuctionController extends MenuController {
     public void addToFavoriteAuctions() {
         final Profile profile = MenuController.applicationManager.getCurrentUser().getProfile();
 
-        if (profile.addFavoriteAuction(this.auctionId)) {
+        if (profileRepository.addFavoriteAuction(profile, this.auctionId)) {
             // We successfully added this auction to our favorites, we can now delete the button because we already added to our favorites
             MenuController.showAlertMessage("Successfully added auction to favorites!", AlertType.MESSAGE, 3000);
 
@@ -357,10 +357,6 @@ public class AuctionController extends MenuController {
 
     private boolean currentUserIsCreatorOfThisAuction(final Auction auction) {
         return applicationManager.getCurrentUser().getId() == auction.getCreator().getProfileId();
-    }
-
-    private long getMillisFromLocalDateTime(final LocalDateTime localDateTime) {
-        return localDateTime.toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli();
     }
 
     public static String convertToEuro(final double amount) {

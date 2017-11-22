@@ -2,6 +2,7 @@ package core.javaFX.profile;
 
 import core.javaFX.auctions.ListedAuctionController;
 import core.javaFX.menu.MenuController;
+import data.contexts.UserMySqlContext;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -12,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
+import logic.repositories.UserRepository;
 import models.Auction;
 import models.Feedback;
 import models.Profile;
@@ -36,8 +38,14 @@ public class ProfileController extends MenuController {
 
     private MenuController menuController;
 
+    private UserRepository userRepository;
+
     @Override
-    public void initialize(final URL location, final ResourceBundle resources) { setIcons(); }
+    public void initialize(final URL location, final ResourceBundle resources) {
+        this.userRepository = new UserRepository(new UserMySqlContext());
+
+        setIcons();
+    }
 
     private void setIcons() {
         final Image positiveFeedbackIcon = new Image( "/utilities/images/feedback/positive_feedback_icon.png");
@@ -141,8 +149,7 @@ public class ProfileController extends MenuController {
 
             if (selectedImage != null) {
                 final User currentUser = MenuController.applicationManager.getCurrentUser();
-
-                final boolean successful = currentUser.setPhoto(selectedImage);
+                final boolean successful = userRepository.setPhoto(currentUser, selectedImage);
 
                 if (successful){
                     MenuController.showAlertMessage("Your profile picture has successfully been changed!", AlertType.MESSAGE, 3000);
