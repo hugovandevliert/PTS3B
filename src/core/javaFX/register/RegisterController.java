@@ -1,5 +1,6 @@
 package core.javaFX.register;
 
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import core.javaFX.menu.MenuController;
@@ -15,24 +16,19 @@ import java.util.ResourceBundle;
 
 public class RegisterController extends MenuController {
 
+    @FXML private JFXCheckBox checkPass;
     @FXML private JFXTextField txtName;
     @FXML private JFXTextField txtEmail;
     @FXML private JFXTextField txtEmailValidate;
     @FXML private JFXTextField txtUsername;
     @FXML private JFXPasswordField txtPassword;
-    @FXML private JFXPasswordField txtPasswordValidate;
 
     @Override
-    public void initialize(final URL location, final ResourceBundle resources) { }
+    public void initialize(final URL location, final ResourceBundle resources) {
+        //Should not run the Super method again because fields will be NULL
+    }
 
     public void register() throws InterruptedException, IOException {
-        if (!txtPasswordValidate.getText().equals(txtPassword.getText())) {
-            MenuController.showAlertMessage("The passwords do not match", AlertType.WARNING, 3000);
-
-            txtPassword.setText("");
-            txtPasswordValidate.setText("");
-            return;
-        }
         if (!txtEmailValidate.getText().equals(txtEmail.getText())) {
             MenuController.showAlertMessage("The emails do not match", AlertType.WARNING, 3000);
             return;
@@ -62,5 +58,23 @@ public class RegisterController extends MenuController {
         paneContent.getChildren().clear();
         final Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/login/login.fxml"));
         paneContent.getChildren().add(newLoadedPane);
+    }
+
+    public void checkChanged() {
+        if(checkPass.isSelected()){
+            checkPass.setText(txtPassword.getText());
+        }
+        else{
+            checkPass.setText("View Password");
+        }
+    }
+
+    public void checkViewPass() {
+        if(checkPass.isSelected()){
+            checkPass.setText(txtPassword.getText());
+        }
+        else{
+            checkPass.setText("View Password");
+        }
     }
 }
