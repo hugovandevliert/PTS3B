@@ -1,32 +1,50 @@
-package core;
+package logic.managers;
 
 import data.contexts.UserMySqlContext;
+import logic.algorithms.Sha256HashCalculator;
+import logic.comparators.AuctionPriceHighToLowComparator;
+import logic.comparators.AuctionPriceLowToHighComparator;
 import logic.repositories.UserRepository;
 import models.Auction;
-import models.Profile;
 import models.User;
-import java.io.IOException;
-import logic.algorithms.Sha256HashCalculator;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class ApplicationManager {
 
     private Sha256HashCalculator sha256HashCalculator;
     private UserRepository userRepository;
-    public ArrayList<Auction> loadedAuctions;
-    public Profile loadedProfile;
+    private ArrayList<Auction> loadedAuctions;
     private User currentUser;
+    private Comparator<Auction> currentAuctionsComparator;
 
     public ApplicationManager() {
         loadedAuctions = new ArrayList<>();
         userRepository = new UserRepository(new UserMySqlContext());
         sha256HashCalculator = new Sha256HashCalculator();
+    }
+
+    public void setLoadedAuctions(final ArrayList<Auction> auctions) {
+        this.loadedAuctions = auctions;
+    }
+
+    public void sortAuctionsByPrice() {
+        if (currentAuctionsComparator == null || currentAuctionsComparator.getClass().getSimpleName().equals("AuctionPriceHighToLowComparator")){
+            currentAuctionsComparator = new AuctionPriceLowToHighComparator();
+        }else{
+            currentAuctionsComparator = new AuctionPriceHighToLowComparator();
+        }
+
+        Collections.sort(this.loadedAuctions, currentAuctionsComparator);
     }
 
     public boolean login(final String username, final String password) throws SQLException, IOException, ClassNotFoundException, NoSuchAlgorithmException {
@@ -83,6 +101,19 @@ public class ApplicationManager {
         return userRepository.registerUser(username, sha256HashCalculator.hashString(password, salt), salt, email, name);
     }
 
+    public void logout() {
+        this.currentUser = null;
+    }
+
+    public boolean isLoggedIn() {
+        return currentUser != null;
+    }
+
+    public List<Auction> getLoadedAuctions() {
+        if (loadedAuctions == null) return null;
+        return Collections.unmodifiableList(loadedAuctions);
+    }
+
     private String generateSalt(){
         final Character[] characters = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                 'Q', 'R', 'S', 'T', 'U', 'W', 'V', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
@@ -97,13 +128,5 @@ public class ApplicationManager {
         }
 
         return saltStringBuilder.toString();
-    }
-
-    public void logout() {
-        this.currentUser = null;
-    }
-
-    public boolean isLoggedIn() {
-        return currentUser != null;
     }
 }

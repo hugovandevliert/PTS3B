@@ -1,11 +1,9 @@
 package models;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-import core.ApplicationManager;
+import logic.managers.ApplicationManager;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import java.io.IOException;
-import java.sql.SQLException;
+
 import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;

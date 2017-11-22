@@ -1,6 +1,6 @@
 package models;
 
-import core.ApplicationManager;
+import logic.managers.ApplicationManager;
 import data.contexts.AuctionMySqlContext;
 import data.contexts.ProfileMySqlContext;
 import logic.repositories.AuctionRepository;
@@ -8,10 +8,6 @@ import logic.repositories.ProfileRepository;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**

@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
@@ -20,7 +21,7 @@
     <children>
           <Pane fx:id="paneContent" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;">
          <children>
-            <JFXTextField fx:id="txtSearchBar" focusColor="#4d4d4d" layoutX="14.0" layoutY="50.0" onAction="#searchAuction" prefHeight="25.0" prefWidth="976.0" promptText="Tell us what you're looking for" style="-fx-background-color: #747e8c;">
+            <JFXTextField fx:id="txtSearchBar" focusColor="#4d4d4d" layoutX="14.0" layoutY="50.0" onAction="#searchAuction" prefHeight="35.0" prefWidth="916.0" promptText="Tell us what you're looking for" style="-fx-background-color: #747e8c;">
                 <font>
                     <Font name="Segoe UI Light" size="18.0" />
                 </font>
@@ -34,6 +35,11 @@
                   <VBox fx:id="vboxListedAuctions" alignment="TOP_CENTER" prefHeight="611.0" prefWidth="971.0" spacing="30.0" />
                </content>
              </ScrollPane>
+            <ImageView fx:id="imgviewSortPrice" fitHeight="35.0" fitWidth="35.0" layoutX="942.0" layoutY="50.0" onMouseClicked="#sortAuctionsByPrice" pickOnBounds="true" preserveRatio="true">
+                <cursor>
+                    <Cursor fx:constant="HAND" />
+                </cursor>
+            </ImageView>
          </children>
       </Pane>
     </children>

@@ -1,6 +1,6 @@
 package core.javaFX.menu;
 
-import core.ApplicationManager;
+import logic.managers.ApplicationManager;
 import core.javaFX.favorites.FavoritesController;
 import core.javaFX.profile.ProfileController;
 import core.javaFX.useralert.UserAlertController;

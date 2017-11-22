@@ -1,7 +1,6 @@
 package models;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
-import core.ApplicationManager;
+import logic.managers.ApplicationManager;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
