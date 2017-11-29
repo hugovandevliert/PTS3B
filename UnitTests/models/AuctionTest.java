@@ -1,7 +1,6 @@
 package models;
 
 import javafx.scene.image.Image;
-import utilities.enums.Status;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -83,11 +82,11 @@ class AuctionTest {
         assertEquals(new ArrayList<Bid>(), auction2.getBids());
     }
 
-    @Test
+    /*@Test
     void getStatus() {
         assertEquals(Status.OPEN, auction1.getStatus());
         assertNull(auction2.getStatus());
-    }
+    }*/
 
     @Test
     void getCreator() {
@@ -95,13 +94,13 @@ class AuctionTest {
         assertEquals(profile1, auction2.getCreator());
     }
 
-    @Deprecated //Deprecated until AddBid is implemented (it. 2)
+   /* @Deprecated //Deprecated until AddBid is implemented (it. 2)
     void setStatus() {
         auction1.setStatus(Status.CLOSED);
         assertEquals(Status.CLOSED, auction1.getStatus());
         auction1.setStatus(Status.OPEN);
         assertEquals(Status.OPEN, auction1.getStatus());
-    }
+    }*/
 
 //    Not completely implemented yet.
 //    @Test

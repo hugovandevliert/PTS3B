@@ -112,7 +112,7 @@ public class AuctionMySqlContext implements IAuctionContext {
                 auction.getCreationDate().toString(),
                 auction.getOpeningDate().toString(),
                 auction.getExpirationDate().toString(),
-                auction.getStatus().toString(),
+                //auction.getStatus().toString(),
                 String.valueOf(auction.isPremium()),
                 String.valueOf(auction.getCreator().getProfileId()),
                 String.valueOf(auction.getIncrementation())

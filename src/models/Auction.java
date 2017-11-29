@@ -1,7 +1,6 @@
 package models;
 
 import javafx.scene.image.Image;
-import utilities.enums.Status;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -19,7 +18,6 @@ public class Auction {
     private boolean isPremium;
     private LocalDateTime expirationDate, openingDate, creationDate;
     private String title, description;
-    private Status status;
     private ArrayList<Image> images;
     private ArrayList<File> fileImages;
     private ArrayList<Bid> bids;
@@ -48,7 +46,6 @@ public class Auction {
         this.isPremium = isPremium;
         this.creator = creator;
         this.fileImages = fileImages;
-        this.status = Status.OPEN;
         this.incrementation = incrementation;
 
         bids = new ArrayList<>();
@@ -106,14 +103,6 @@ public class Auction {
         this.incrementation = incrementation;
     }
 
-    /**
-     * Method to change the status of this Auction-object
-     * @param status: This will be the new status of this Auction-object.
-     */
-    public void setStatus(final Status status) {
-        this.status = status;
-    }
-
     public int getId() { return id; }
 
     public double getStartBid() {
@@ -162,10 +151,6 @@ public class Auction {
         if (bids == null) return null;
         Collections.sort(bids);
         return Collections.unmodifiableList(bids);
-    }
-
-    public Status getStatus() {
-        return status;
     }
 
     public Profile getCreator() {
