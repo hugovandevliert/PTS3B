@@ -10,6 +10,7 @@ public class Bid implements Comparable<Bid> {
     private LocalDateTime date;
     private transient Profile profile;
     private double amount;
+    private int auctionId;
 
     /**
      * Constructor for Bid. This constructor is being used for auctions
@@ -20,6 +21,19 @@ public class Bid implements Comparable<Bid> {
         this.profile = profile;
         this.date = date;
         this.amount = amount;
+    }
+
+    /**
+     * Constructor for Bid. This constructor is being used when instantiating bids that will be sent to the RMIServer
+     * @param amount:   The amount of money.
+     * @param date: The date of when this bid has been created/added
+     * @param auctionId: this is the auctionId for the auction this bid applies for.
+     * */
+    public Bid(final double amount, final LocalDateTime date, final int auctionId) {
+        this.profile = profile;
+        this.date = date;
+        this.amount = amount;
+        this.auctionId = auctionId;
     }
 
     /**
