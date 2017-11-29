@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import logic.repositories.ProfileRepository;
-import models.Profile;
+import modelslibrary.Profile;
 import utilities.enums.AlertType;
 import utilities.enums.ProfileLoadingType;
 import java.io.IOException;

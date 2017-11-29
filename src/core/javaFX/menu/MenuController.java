@@ -14,7 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import logic.repositories.ProfileRepository;
-import models.Profile;
+import modelslibrary.Profile;
 import utilities.database.Database;
 import utilities.enums.AlertType;
 import utilities.enums.ProfileLoadingType;

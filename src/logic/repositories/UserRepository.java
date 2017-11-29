@@ -1,8 +1,8 @@
 package logic.repositories;
 
 import data.interfaces.IUserContext;
-import models.Profile;
-import models.User;
+import modelslibrary.User;
+
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;

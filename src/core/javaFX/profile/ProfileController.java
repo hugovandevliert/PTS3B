@@ -14,10 +14,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import logic.repositories.UserRepository;
-import models.Auction;
-import models.Feedback;
-import models.Profile;
-import models.User;
+import modelslibrary.Auction;
+import modelslibrary.Feedback;
+import modelslibrary.Profile;
+import modelslibrary.User;
 import utilities.enums.AlertType;
 
 import java.io.File;

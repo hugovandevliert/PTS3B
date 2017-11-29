@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import logic.repositories.AuctionRepository;
-import models.Auction;
+import modelslibrary.Auction;
 import utilities.enums.AlertType;
 
 import java.io.IOException;

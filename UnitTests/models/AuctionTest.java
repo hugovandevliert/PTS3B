@@ -5,6 +5,10 @@ import javafx.scene.image.Image;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+import modelslibrary.Auction;
+import modelslibrary.Bid;
+import modelslibrary.Profile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;

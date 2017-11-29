@@ -11,16 +11,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import logic.repositories.AuctionRepository;
-import models.Auction;
+import modelslibrary.Auction;
 import utilities.enums.AlertType;
 import utilities.enums.AuctionLoadingType;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ListedAuctionController extends MenuController {

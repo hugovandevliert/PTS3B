@@ -12,16 +12,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import logic.comparators.AuctionPriceHighToLowComparator;
 import logic.repositories.AuctionRepository;
-import models.Auction;
+import modelslibrary.Auction;
 import utilities.enums.AlertType;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 

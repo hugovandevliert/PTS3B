@@ -2,7 +2,7 @@ package data.contexts;
 
 import data.interfaces.IUserContext;
 import logic.repositories.ProfileRepository;
-import models.User;
+import modelslibrary.User;
 import utilities.database.Database;
 import utilities.enums.ProfileLoadingType;
 
@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 
 public class UserMySqlContext implements IUserContext {
 

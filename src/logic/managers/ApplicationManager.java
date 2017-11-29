@@ -5,8 +5,8 @@ import logic.algorithms.Sha256HashCalculator;
 import logic.comparators.AuctionPriceHighToLowComparator;
 import logic.comparators.AuctionPriceLowToHighComparator;
 import logic.repositories.UserRepository;
-import models.Auction;
-import models.User;
+import modelslibrary.Auction;
+import modelslibrary.User;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
