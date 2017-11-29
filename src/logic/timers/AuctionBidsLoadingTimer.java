@@ -17,18 +17,14 @@ import java.util.TimerTask;
 
 public class AuctionBidsLoadingTimer extends TimerTask {
 
+    private BidRepository bidRepository;
     private AuctionController auctionController;
-    private MenuController menuController;
-
     private List<Bid> bids;
     private int auctionId;
     private double startBid;
 
-    private BidRepository bidRepository;
-
     public AuctionBidsLoadingTimer(final AuctionController auctionController, final MenuController menuController, final List<Bid> bids, final int auctionId, final double startBid) {
         this.auctionController = auctionController;
-        this.menuController = menuController;
         this.bids = bids;
         this.auctionId = auctionId;
         this.startBid = startBid;
@@ -42,18 +38,14 @@ public class AuctionBidsLoadingTimer extends TimerTask {
         try {
             // There is no need to keep this TimerTask running as the auction has been ended or the user stopped looking at the auction
             // We will therefore cancel the TimerTask
-            if(userStoppedLookingAtThisAuction() || auctionHasEnded()) this.cancel();
+            if (userStoppedLookingAtThisAuction() || auctionHasEnded()) this.cancel();
             final ArrayList<Bid> newLoadedBids = bidRepository.getBids(this.auctionId);
 
             if (bidsHaveChanged(newLoadedBids)){
                 Collections.sort(newLoadedBids);
                 Platform.runLater(() -> auctionController.setBids(newLoadedBids, startBid));
             }
-        } catch (SQLException exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch (IOException exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch (ClassNotFoundException exception) {
+        } catch (SQLException | IOException | ClassNotFoundException exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }

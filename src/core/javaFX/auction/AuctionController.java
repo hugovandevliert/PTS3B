@@ -34,8 +34,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
+import java.text.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class AuctionController extends MenuController {
@@ -141,7 +142,9 @@ public class AuctionController extends MenuController {
 
         if (bids != null && bids.size() > 0){
             for (final Bid bid : bids){
-                final Label lblBid = new Label(convertToEuro(bid.getAmount()) + " - " + bid.getProfile().getUsername() + " - " + bid.getDate().toLocalDate() + " " + bid.getDate().toLocalTime());
+                final String time = String.format("%02d:%02d:%02d", bid.getDate().getHour(), bid.getDate().getMinute(), bid.getDate().getSecond());
+                final String date = bid.getDate().getDayOfMonth() + " " + bid.getDate().getMonth().toString().toLowerCase() + ", " + bid.getDate().getYear();
+                final Label lblBid = new Label(convertToEuro(bid.getAmount()) + " - " + bid.getProfile().getUsername() + " - (" + time + " - " + date + ")");
                 lblBid.setFont(Font.font("Segoe UI Semilight"));
                 lblBid.setTextFill(Color.web("#A6B5C9"));
                 lblBid.setStyle("-fx-font-size: 16");
