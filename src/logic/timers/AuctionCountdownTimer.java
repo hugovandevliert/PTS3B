@@ -51,9 +51,9 @@ public class AuctionCountdownTimer extends TimerTask {
                     if (differenceInMs > 0){
                         timerStringValue = getDurationFromMilliseconds(differenceInMs);
                     }else if (differenceInMs == -1){
-                        timerStringValue = "Still has to open!";
+                        timerStringValue = "Still has to open";
                     }else{
-                        timerStringValue = "This auction has ended!";
+                        timerStringValue = "This auction has ended";
                     }
 
                     final String finalTimerStringValue = timerStringValue;
@@ -62,7 +62,7 @@ public class AuctionCountdownTimer extends TimerTask {
             } else{
                 // There is no need to keep this TimerTask running as the auction has been ended
                 // We will therefore cancel the TimerTask
-                setTimerValue("This auction has ended!");
+                setTimerValue("This auction has ended");
                 this.cancel();
             }
         } catch (SQLException | IOException | ClassNotFoundException exception) {

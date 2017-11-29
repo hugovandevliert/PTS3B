@@ -59,11 +59,7 @@ public class ListedFeedbackController extends MenuController {
 
             this.menuController.paneContent.getChildren().removeAll();
             this.menuController.paneContent.getChildren().add(newLoadedPane);
-        } catch (SQLException exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch (ClassNotFoundException exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch (IOException exception) {
+        } catch (SQLException | ClassNotFoundException | IOException exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }

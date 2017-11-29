@@ -31,10 +31,8 @@ public class ProfileMySqlContext implements IProfileContext {
 
         final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(userId) });
 
-        if (resultSet != null){
-            if (resultSet.next()){
-                return getProfileFromResultSet(resultSet, loadingType);
-            }
+        if (resultSet != null && resultSet.next()){
+            return getProfileFromResultSet(resultSet, loadingType);
         }
         return null;
     }

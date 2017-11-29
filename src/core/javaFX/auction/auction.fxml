@@ -70,7 +70,7 @@
                   <VBox fx:id="vboxBids" alignment="TOP_CENTER" prefHeight="389.0" prefWidth="426.0" spacing="10.0" />
                </content>
             </ScrollPane>
-            <Label fx:id="lblTimer" alignment="CENTER" layoutX="640.0" layoutY="337.0" prefHeight="47.0" prefWidth="310.0" text="00 : 00 : 00 : 00" textAlignment="CENTER" textFill="#b4b481">
+            <Label fx:id="lblTimer" alignment="CENTER" layoutX="610.0" layoutY="337.0" prefHeight="47.0" prefWidth="365.0" text="00 : 00 : 00 : 00" textAlignment="CENTER" textFill="#b4b481">
                <font>
                   <Font name="System Bold" size="32.0" />
                </font>
@@ -104,22 +104,22 @@
                   </JFXButton>
                </children>
             </Pane>
-            <Label layoutX="690.0" layoutY="380.0" text="Days" textFill="#a6b5c9">
+            <Label fx:id="lblDays" layoutX="687.0" layoutY="380.0" text="Days" textFill="#a6b5c9">
                <font>
                   <Font size="10.0" />
                </font>
             </Label>
-            <Label layoutX="872.0" layoutY="380.0" text="Seconds" textFill="#a6b5c9">
+            <Label fx:id="lblSeconds" layoutX="870.0" layoutY="380.0" text="Seconds" textFill="#a6b5c9">
                <font>
                   <Font size="10.0" />
                </font>
             </Label>
-            <Label layoutX="810.0" layoutY="380.0" text="Minutes" textFill="#a6b5c9">
+            <Label fx:id="lblMinutes" layoutX="807.0" layoutY="380.0" text="Minutes" textFill="#a6b5c9">
                <font>
                   <Font size="10.0" />
                </font>
             </Label>
-            <Label layoutX="751.0" layoutY="380.0" text="Hours" textFill="#a6b5c9">
+            <Label fx:id="lblHours" layoutX="748.0" layoutY="380.0" text="Hours" textFill="#a6b5c9">
                <font>
                   <Font size="10.0" />
                </font>

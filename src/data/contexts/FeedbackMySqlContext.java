@@ -15,7 +15,7 @@ public class FeedbackMySqlContext implements IFeedbackContext {
 
     final private ProfileRepository profileRepository;
 
-    public FeedbackMySqlContext(){
+    FeedbackMySqlContext(){
         this.profileRepository = new ProfileRepository(new ProfileMySqlContext());
     }
 
@@ -34,17 +34,16 @@ public class FeedbackMySqlContext implements IFeedbackContext {
     }
 
     private Feedback getFeedbackFromResultSet(final ResultSet resultSet, final FeedbackLoadingType feedbackLoadingType) throws SQLException, IOException, ClassNotFoundException {
-        switch(feedbackLoadingType){
-            case FOR_PROFILE_PAGE:
-                return new Feedback
-                        (
-                                profileRepository.getProfileForId(resultSet.getInt("author_id"), ProfileLoadingType.FOR_AUCTION_PAGE),
-                                resultSet.getTimestamp("date").toLocalDateTime(),
-                                resultSet.getBoolean("ispositive"),
-                                resultSet.getString("message")
-                        );
-            default:
-                return null;
+        if (feedbackLoadingType == FeedbackLoadingType.FOR_PROFILE_PAGE) {
+            return new Feedback
+                    (
+                            profileRepository.getProfileForId(resultSet.getInt("author_id"), ProfileLoadingType.FOR_AUCTION_PAGE),
+                            resultSet.getTimestamp("date").toLocalDateTime(),
+                            resultSet.getBoolean("ispositive"),
+                            resultSet.getString("message")
+                    );
+        } else {
+            return null;
         }
     }
 }

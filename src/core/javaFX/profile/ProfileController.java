@@ -41,10 +41,10 @@ public class ProfileController extends MenuController {
     public void initialize(final URL location, final ResourceBundle resources) {
         this.userRepository = new UserRepository(new UserMySqlContext());
 
-        setIcons();
+        setFeedbackIcons();
     }
 
-    private void setIcons() {
+    private void setFeedbackIcons() {
         final Image positiveFeedbackIcon = new Image( "/utilities/images/feedback/positive_feedback_icon.png");
         final Image negativeFeedbackIcon = new Image( "/utilities/images/feedback/negative_feedback_icon.png");
 
@@ -90,7 +90,7 @@ public class ProfileController extends MenuController {
     }
 
     private void setAuctions(final List<Auction> auctions) throws IOException {
-        if (auctions.size() > 0) {
+        if (!auctions.isEmpty()) {
             for (final Auction auction : auctions) {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/auctions/listedAuction.fxml"));
                 final Pane listedAuctionPane = fxmlLoader.load();
@@ -112,7 +112,7 @@ public class ProfileController extends MenuController {
     }
 
     private void setFeedbacks(final List<Feedback> feedbacks) throws IOException {
-        if (feedbacks.size() > 0) {
+        if (!feedbacks.isEmpty()) {
             for (final Feedback feedback : feedbacks) {
                 fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/profile/listedFeedback.fxml"));
                 final Pane listedFeedbackPane = fxmlLoader.load();

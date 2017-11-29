@@ -37,10 +37,8 @@ public class BidMySqlContext implements IBidContext {
         final String query = "SELECT amount FROM MyAuctions.Bid WHERE auction_id = ? ORDER BY amount DESC LIMIT 1";
         final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
 
-        if (resultSet != null){
-            if (resultSet.next()){
-                return getBidFromResultSet(resultSet, BidLoadingType.FOR_MOST_RECENT_BID);
-            }
+        if (resultSet != null && resultSet.next()){
+            return getBidFromResultSet(resultSet, BidLoadingType.FOR_MOST_RECENT_BID);
         }
         return null;
     }

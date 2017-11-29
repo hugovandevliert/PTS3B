@@ -39,6 +39,7 @@ import java.util.*;
 
 public class AuctionController extends MenuController {
 
+    @FXML private Label lblDays, lblHours, lblMinutes, lblSeconds;
     @FXML private Label lblAuctionTitle, lblAuctionSeller, lblTimer;
     @FXML private Text textAuctionDescription;
     @FXML private ImageView imgviewSelectedPicture, imgviewPicture1, imgviewPicture2, imgviewPicture3;
@@ -165,8 +166,12 @@ public class AuctionController extends MenuController {
     public void setTimer(final String timer) {
         lblTimer.setText(timer);
 
-        if (timer.equals("This auction has ended!")){ // The auction ended - we should remove the addBid pane for clarity
+        if (timer.equals("This auction has ended")){ // The auction ended - we should remove the addBid pane for clarity
             paneContent.getChildren().remove(panePlaceBid);
+            lblDays.setVisible(false);
+            lblHours.setVisible(false);
+            lblMinutes.setVisible(false);
+            lblSeconds.setVisible(false);
         }
     }
 
