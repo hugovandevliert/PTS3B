@@ -58,5 +58,6 @@
     <orderEntry type="library" name="mysql-connector-java-5.1.44-bin" level="project" />
     <orderEntry type="library" name="IBidServer" level="project" />
     <orderEntry type="library" name="CustomPublisher" level="project" />
+    <orderEntry type="library" name="IBidClient" level="project" />
   </component>
 </module>

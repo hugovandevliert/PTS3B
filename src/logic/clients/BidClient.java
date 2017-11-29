@@ -2,8 +2,8 @@ package logic.clients;
 
 import core.javaFX.auction.AuctionController;
 import core.javaFX.menu.MenuController;
-import custompublisher.IRemotePropertyListener;
 import custompublisher.IRemotePublisherForListener;
+import ibidclient.IBidClient;
 import ibidserver.IBidServer;
 import javafx.application.Platform;
 import logic.managers.RMIClientsManager;
@@ -18,7 +18,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-public class BidClient extends UnicastRemoteObject implements IRemotePropertyListener {
+public class BidClient extends UnicastRemoteObject implements IBidClient {
 
     private IRemotePublisherForListener messageListener;
     private IBidServer server;
