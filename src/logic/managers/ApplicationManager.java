@@ -26,11 +26,13 @@ public class ApplicationManager {
     private ArrayList<Auction> loadedAuctions;
     private User currentUser;
     private Comparator<Auction> currentAuctionsComparator;
+    private RMIClientsManager rmiClientsManager;
 
     public ApplicationManager() {
         loadedAuctions = new ArrayList<>();
         userRepository = new UserRepository(new UserMySqlContext());
         sha256HashCalculator = new Sha256HashCalculator();
+        rmiClientsManager = new RMIClientsManager();
     }
 
     public void setLoadedAuctions(final ArrayList<Auction> auctions) {
@@ -102,11 +104,16 @@ public class ApplicationManager {
     }
 
     public void logout() {
+        rmiClientsManager.unsubscribeRemoteListeners();
         this.currentUser = null;
     }
 
     public boolean isLoggedIn() {
         return currentUser != null;
+    }
+
+    public RMIClientsManager getRmiClientsManager() {
+        return rmiClientsManager;
     }
 
     public List<Auction> getLoadedAuctions() {

@@ -100,6 +100,7 @@ public class MenuController implements Initializable {
 
     public void closeApplication() {
         Database.closeConnection();
+        applicationManager.getRmiClientsManager().unsubscribeRemoteListeners();
         System.exit(0);
     }
 
@@ -153,6 +154,10 @@ public class MenuController implements Initializable {
         }
 
         paneContent.getChildren().add(newLoadedPane);
+
+        /* Let's make sure that we're stopping all BidClients because when clicking at any MenuItem, it will result in the User not being able to
+           view an Auction page anymore, meaning having a BidClient running would be redundant and a waste of resources. */
+        applicationManager.getRmiClientsManager().unsubscribeRemoteListeners();
     }
 
     public void highlightIconColor(final MouseEvent mouseEvent) {

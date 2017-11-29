@@ -19,10 +19,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import logic.clients.BidClient;
 import logic.repositories.AuctionRepository;
 import logic.repositories.BidRepository;
 import logic.repositories.ProfileRepository;
-import logic.timers.AuctionBidsLoadingTimer;
 import logic.timers.AuctionCountdownTimer;
 import modelslibrary.Auction;
 import modelslibrary.Bid;
@@ -33,8 +33,10 @@ import utilities.enums.ProfileLoadingType;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.NotBoundException;
 import java.sql.SQLException;
 import java.text.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class AuctionController extends MenuController {
@@ -56,6 +58,8 @@ public class AuctionController extends MenuController {
     private int auctionId, currentUserId, creatorId;
     private double auctionMinimumBid, auctionMinimumIncrementation;
 
+    private ArrayList<Bid> bids;
+
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         /* Adding the AddFavorites Button with a star icon */
@@ -72,6 +76,8 @@ public class AuctionController extends MenuController {
         btnAddToFavorites.setCursor(Cursor.HAND);
 
         paneContent.getChildren().add(btnAddToFavorites);
+
+        bids = new ArrayList<>();
     }
 
     public void setAuction(final Auction auction, final MenuController menuController) {
@@ -88,7 +94,6 @@ public class AuctionController extends MenuController {
         setAuctionMinimumIncrementation(auction.getIncrementation());
         setMenuController(menuController);
         initializeCountdownTimer();
-        initializeBidsLoadingTimer(auction.getBids(), this.auctionId, auction.getStartBid());
         initializeRepositories();
         handleEndAuctionPaneRemoving();
         handleAddToFavoritesButtonRemoving(auction.getCreator().getProfileId());
@@ -97,6 +102,20 @@ public class AuctionController extends MenuController {
             disablePlaceBidPane();
         }else{
             disableEndAuctionPane();
+        }
+
+        /* Let's make sure we will add a BidClient to our RMIClientsManager for the auction that we're currently trying to view.
+           This will handle all the incoming bids through Server Push RMI Mechaics.
+         */
+        try {
+            final BidClient bidClient = new BidClient(applicationManager.getRmiClientsManager().getBidsRegistry(), this.auctionId, applicationManager.getRmiClientsManager(), this);
+            applicationManager.getRmiClientsManager().addBidClient(bidClient);
+        } catch (IOException e) {
+            e.printStackTrace();
+            MenuController.showAlertMessage(e.getMessage(), AlertType.ERROR, 3000);
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+            MenuController.showAlertMessage(e.getMessage(), AlertType.ERROR, 3000);
         }
     }
 
@@ -141,14 +160,10 @@ public class AuctionController extends MenuController {
 
         if (bids != null && !bids.isEmpty()){
             for (final Bid bid : bids){
-                final String time = String.format("%02d:%02d:%02d", bid.getDate().getHour(), bid.getDate().getMinute(), bid.getDate().getSecond());
-                final String date = bid.getDate().getDayOfMonth() + " " + bid.getDate().getMonth().toString().toLowerCase() + ", " + bid.getDate().getYear();
-                final Label lblBid = new Label(convertToEuro(bid.getAmount()) + " - " + bid.getProfile().getUsername() + " - (" + time + " - " + date + ")");
-                lblBid.setFont(Font.font("Segoe UI Semilight"));
-                lblBid.setTextFill(Color.web("#A6B5C9"));
-                lblBid.setStyle("-fx-font-size: 16");
-                vboxBids.getChildren().add(lblBid);
+                addBidToList(bid);
             }
+
+            addBidsToInterface(false);
         }else{
             final Label lblNoBids1 = new Label("Be the first one to place a bid!");
             final Label lblNoBids2 = new Label("The price to start bidding at is " + convertToEuro(startBid));
@@ -163,6 +178,27 @@ public class AuctionController extends MenuController {
         }
     }
 
+    public void addBidToList(final Bid bid) {
+        this.bids.add(bid);
+    }
+
+    public void addBidsToInterface(final boolean loadBackwards) {
+        vboxBids.getChildren().clear();
+
+        if (loadBackwards){
+            /* We need to iterate through all the bids with a backwards direction to assure the most recent bid is the first displayed */
+            for(int i = bids.size() - 1; i >= 0; i--){
+                final Bid bid = bids.get(i);
+
+                displayBid(bid);
+            }
+        }else{
+            for (final Bid bid : bids){
+                displayBid(bid);
+            }
+        }
+    }
+
     public void setTimer(final String timer) {
         lblTimer.setText(timer);
 
@@ -173,6 +209,16 @@ public class AuctionController extends MenuController {
             lblMinutes.setVisible(false);
             lblSeconds.setVisible(false);
         }
+    }
+
+    private void displayBid(final Bid bid) {
+        final String time = String.format("%02d:%02d:%02d", bid.getDate().getHour(), bid.getDate().getMinute(), bid.getDate().getSecond());
+        final String date = bid.getDate().getDayOfMonth() + " " + bid.getDate().getMonth().toString().toLowerCase() + ", " + bid.getDate().getYear();
+        final Label lblBid = new Label(convertToEuro(bid.getAmount()) + " - " + bid.getProfile().getUsername() + " - (" + time + " - " + date + ")");
+        lblBid.setFont(Font.font("Segoe UI Semilight"));
+        lblBid.setTextFill(Color.web("#A6B5C9"));
+        lblBid.setStyle("-fx-font-size: 16");
+        vboxBids.getChildren().add(lblBid);
     }
 
     private void setAuctionId(final int auctionId) {
@@ -206,11 +252,6 @@ public class AuctionController extends MenuController {
     private void initializeCountdownTimer() {
         Timer auctionCountdown = new Timer();
         auctionCountdown.schedule(new AuctionCountdownTimer(this, this.menuController, this.auctionId), 0, 1000);
-    }
-
-    private void initializeBidsLoadingTimer(final List<Bid> bids, final int auctionId, final double startBid) {
-        Timer bidsLoadingTimer = new Timer();
-        bidsLoadingTimer.schedule(new AuctionBidsLoadingTimer(this, this.menuController, bids, auctionId, startBid), 1000, 500);
     }
 
     private void handleEndAuctionPaneRemoving() {
@@ -274,6 +315,9 @@ public class AuctionController extends MenuController {
 
                     if (amountIsHighEnough(bidAmount, minimumNeededAmount)){
                         if (auctionRepository.addBid(bidAmount, currentUserId, auctionId)){
+                            final Bid bid = new Bid(applicationManager.getCurrentUser().getProfile(), bidAmount, LocalDateTime.now(), auctionId);
+                            applicationManager.getRmiClientsManager().getBidClient().sendBid(bid);
+
                             MenuController.showAlertMessage("Successfully placed bid!", AlertType.MESSAGE, 3000);
                         }else{
                             MenuController.showAlertMessage("Placing the bid wasn't successful!", AlertType.ERROR, 3000);
