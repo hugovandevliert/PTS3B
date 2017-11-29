@@ -1,13 +1,0 @@
-
-Ksquid:S2696"6Make the enclosing method "static" or remove this set.(Úè³ú
-Ksquid:S2696"6Make the enclosing method "static" or remove this set.(§äµ™
-S"squid:SwitchLastCaseIsDefaultCheck""Add a default case to this switch.(ƒåÑ¸ùÿÿÿÿ
-zsquid:S1450"`Remove the "profileController" field and declare it as a local variable in the relevant methods.(¥š¯Çýÿÿÿÿ
-_squid:S2147"ECombine this catch with the one at line 136, which has the same body.(ú¹ËÜøÿÿÿÿ
-8squid:S1148"#Use a logger to log this exception.(òçøì
-Psquid:S2696"6Make the enclosing method "static" or remove this set.(éÆŸ†ýÿÿÿÿ
-lsquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(ž™¹+
-hsquid:ModifiersOrderCheck"EReorder the modifiers to comply with the Java Language Specification.(åï•š
-Jsquid:S2209"5Change this instance-reference to a static reference.(Úè³ú
-S"squid:SwitchLastCaseIsDefaultCheck""Add a default case to this switch.(ƒåÑ¸ùÿÿÿÿ
-|squid:S1450"bRemove the "favoritesController" field and declare it as a local variable in the relevant methods.(ßâÌ§úÿÿÿÿ

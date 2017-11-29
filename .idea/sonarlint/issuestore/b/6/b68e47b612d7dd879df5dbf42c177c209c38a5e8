@@ -1,5 +1,0 @@
-
-Isquid:S1066"/Merge this if statement with the enclosing one.(±î¯«ùÿÿÿÿ
-Š"squid:ClassVariableVisibilityCheck"YMake loadedProfile a static final constant or non-public and provide accessors if needed.(¥éï»úÿÿÿÿ
-“squid:S1319"yThe type of the "loadedAuctions" object should be an interface such as "List" rather than the implementation "ArrayList".(²°üüÿÿÿÿ
-‹"squid:ClassVariableVisibilityCheck"ZMake loadedAuctions a static final constant or non-public and provide accessors if needed.(²°üüÿÿÿÿ

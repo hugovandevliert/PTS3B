@@ -1,35 +1,0 @@
-
-Nsquid:S2387"9"paneContent" is the name of a field in "MenuController".(à—Ï
-\squid:UselessImportCheck"5Remove this unused import 'javafx.event.ActionEvent'.(î•¯¼ıÿÿÿÿ
-_squid:S2147"ECombine this catch with the one at line 297, which has the same body.(ú¹ËÜøÿÿÿÿ
-Fsquid:S1659",Declare "currenteUserId" on a separate line.(Ş Öİıÿÿÿÿ
-Zsquid:S2147"ECombine this catch with the one at line 328, which has the same body.(ıàÑÎ
-gsquid:S3776"RRefactor this method to reduce its Cognitive Complexity from 22 to the 15 allowed.(ìææ¼
-bsquid:S1192"HDefine a constant instead of duplicating this literal "#A6B5C9" 3 times.(øÍğ»ûÿÿÿÿ
-Osquid:UselessImportCheck"-Remove this unused import 'java.time.ZoneId'.( Æ½“
-Asquid:S1659",Declare "paneEndAuction" on a separate line.(à—Ï
-rsquid:S00120"WRename this package name to match the regular expression '^[a-z]+(\.[a-z][a-z0-9]*)*$'.(öÛÏúÿÿÿÿ
-Xsquid:S1155">Use isEmpty() to check whether the collection is empty or not.(Çúóëşÿÿÿÿ
-Xsquid:S1155">Use isEmpty() to check whether the collection is empty or not.(‘ÆŞÒıÿÿÿÿ
-Zsquid:S2147"ECombine this catch with the one at line 297, which has the same body.(×¬œÓ
-R
-squid:S106"9Replace this use of System.out or System.err by a logger.(ĞÃ§úÿÿÿÿ
-Bsquid:S1659".Declare "lblAuctionSeller" on a separate line.(¤»ëK
-bsquid:UnusedPrivateMethod"?Remove this unused private "getMillisFromLocalDateTime" method.(ı€î½
-R
-squid:S106"9Replace this use of System.out or System.err by a logger.(…Õñıÿÿÿÿ
-Zsquid:S2147"ECombine this catch with the one at line 328, which has the same body.(ï­£Ä
-Tsquid:S1659":Declare "auctionMinimumIncrementation" on a separate line.(‚Ûá´üÿÿÿÿ
-tsquid:S1450"_Remove the "bidsLoadingTimer" field and declare it as a local variable in the relevant methods.(î€™¯
-Xsquid:UselessImportCheck"6Remove this unused import 'javafx.event.EventHandler'.(º»û˜
-Isquid:S1659"/Declare "btnAddToFavorites" on a separate line.(ûÃÍ…ıÿÿÿÿ
-Bsquid:S1659"-Declare "imgviewPicture3" on a separate line.(â²ĞŞ
-lsquid:S1192"RDefine a constant instead of duplicating this literal "-fx-font-size: 16" 3 times.(ß¶ğÜÿÿÿÿÿ
-tsquid:S1450"_Remove the "auctionCountdown" field and declare it as a local variable in the relevant methods.(óî¥º
-Bsquid:S1659"-Declare "imgviewPicture2" on a separate line.(â²ĞŞ
-Bsquid:S1659"-Declare "imgviewPicture1" on a separate line.(â²ĞŞ
->squid:S1659")Declare "paneContent" on a separate line.(à—Ï
-:squid:S1659"&Declare "lblTimer" on a separate line.(¤»ëK
-Asquid:S1659"'Declare "creatorId" on a separate line.(Ş Öİıÿÿÿÿ
-zsquid:S1450"`Remove the "profileController" field and declare it as a local variable in the relevant methods.(¥š¯Çıÿÿÿÿ
-hsquid:S1192"SDefine a constant instead of duplicating this literal "Segoe UI Semilight" 3 times.(Çöô´
