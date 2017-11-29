@@ -28,7 +28,6 @@ public class ListedAuctionController extends MenuController {
 
     private MenuController menuController;
     private AuctionRepository auctionRepository;
-
     private int auctionId;
 
     @Override
@@ -46,7 +45,7 @@ public class ListedAuctionController extends MenuController {
 
         Image image = new Image("file:" + new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath(), 200, 150, false, false);
 
-        if (auction.getImages().size() > 0) {
+        if (!auction.getImages().isEmpty()) {
             final Image img = auction.getImages().get(0);
 
             if (img != null) image = img;
@@ -86,11 +85,7 @@ public class ListedAuctionController extends MenuController {
             }else{
                 MenuController.showAlertMessage("Something went wrong - Couldn't load auction page", AlertType.ERROR, 3000);
             }
-        } catch (IOException exception){
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch (SQLException exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch (ClassNotFoundException exception) {
+        } catch (IOException | SQLException | ClassNotFoundException exception){
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }

@@ -138,7 +138,7 @@ public class AuctionController extends MenuController {
     public void setBids(final List<Bid> bids, final double startBid) {
         vboxBids.getChildren().clear();
 
-        if (bids != null && bids.size() > 0){
+        if (bids != null && !bids.isEmpty()){
             for (final Bid bid : bids){
                 final String time = String.format("%02d:%02d:%02d", bid.getDate().getHour(), bid.getDate().getMinute(), bid.getDate().getSecond());
                 final String date = bid.getDate().getDayOfMonth() + " " + bid.getDate().getMonth().toString().toLowerCase() + ", " + bid.getDate().getYear();
@@ -267,9 +267,6 @@ public class AuctionController extends MenuController {
                         minimumNeededAmount = this.auctionMinimumBid;
                     }
 
-                    System.out.println("minimum" + minimumNeededAmount);
-                    System.out.println("start+ " + auctionMinimumBid);
-
                     if (amountIsHighEnough(bidAmount, minimumNeededAmount)){
                         if (auctionRepository.addBid(bidAmount, currentUserId, auctionId)){
                             MenuController.showAlertMessage("Successfully placed bid!", AlertType.MESSAGE, 3000);
@@ -285,11 +282,7 @@ public class AuctionController extends MenuController {
             }else{
                 MenuController.showAlertMessage("This auction has been closed - you are not able to bid anymore.", AlertType.WARNING, 3000);
             }
-        } catch (SQLException exception){
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch (IOException exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch (ClassNotFoundException exception) {
+        } catch (SQLException | ClassNotFoundException | IOException exception){
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }

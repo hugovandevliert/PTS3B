@@ -39,6 +39,7 @@ public class MenuController implements Initializable {
     @FXML private Pane paneAlert;
 
     protected final static ApplicationManager applicationManager = new ApplicationManager();
+    private static UserAlertController userAlertController;
     private ImageView selectedMenu;
 
     private Image profileIcon;
@@ -52,12 +53,7 @@ public class MenuController implements Initializable {
     private Image addAuctionIconHovered;
 
     private static String lastCalledClass;
-
     private FXMLLoader fxmlLoader;
-    private ProfileController profileController;
-    private FavoritesController favoritesController;
-    private static UserAlertController userAlertController;
-
     private ProfileRepository profileRepository;
 
     @Override
@@ -126,16 +122,14 @@ public class MenuController implements Initializable {
         if (source == imgviewProfile){
             fxmlLoader = new FXMLLoader(getClass().getResource("/core/javafx/profile/profile.fxml"));
             newLoadedPane = fxmlLoader.load();
-            profileController = fxmlLoader.getController();
+            ProfileController profileController = fxmlLoader.getController();
 
             try {
                 final Profile profile = profileRepository.getProfileForId(applicationManager.getCurrentUser().getId(), ProfileLoadingType.FOR_PROFILE_PAGE);
 
                 profileController.setMenuController(this);
                 profileController.loadProfile(profile);
-            } catch (SQLException exception) {
-                MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-            } catch (ClassNotFoundException exception) {
+            } catch (SQLException | ClassNotFoundException exception) {
                 MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
             }
         }
@@ -148,7 +142,7 @@ public class MenuController implements Initializable {
         else if(source == imgviewFavorites){
             fxmlLoader = new FXMLLoader(getClass().getResource("/core/javafx/favorites/favorites.fxml"));
             newLoadedPane = fxmlLoader.load();
-            favoritesController = fxmlLoader.getController();
+            FavoritesController favoritesController = fxmlLoader.getController();
 
             final int profileId = applicationManager.getCurrentUser().getId();
 
@@ -202,7 +196,7 @@ public class MenuController implements Initializable {
     }
 
     public void setLastCalledClass(final Class classname) {
-        this.lastCalledClass = classname.getSimpleName();
+        lastCalledClass = classname.getSimpleName();
     }
 
     public static String getLastCalledClass() {

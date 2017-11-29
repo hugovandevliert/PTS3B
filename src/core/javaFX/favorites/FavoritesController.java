@@ -37,7 +37,7 @@ public class FavoritesController extends MenuController {
         try {
             final ArrayList<Auction> auctions = auctionRepository.getFavoriteAuctionsForProfile(profileId);
 
-            if (auctions.size() > 0){
+            if (!auctions.isEmpty()){
                 for (final Auction auction : auctions){
                     final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/auctions/listedAuction.fxml"));
                     final Pane listedAuctionPane = fxmlLoader.load();
@@ -56,11 +56,7 @@ public class FavoritesController extends MenuController {
 
                 vboxListedAuctions.getChildren().add(lblNoItemsForSearch);
             }
-        } catch (SQLException exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch (ClassNotFoundException exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch (IOException exception) {
+        } catch (SQLException | IOException | ClassNotFoundException exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }

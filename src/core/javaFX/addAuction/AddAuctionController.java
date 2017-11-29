@@ -17,7 +17,6 @@ import modelslibrary.Auction;
 import modelslibrary.Profile;
 import utilities.enums.AlertType;
 import utilities.enums.AuctionLoadingType;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -43,7 +42,6 @@ public class AddAuctionController extends MenuController {
     @FXML private JFXTextField txtIncrementation;
 
     private File[] images;
-
     private AuctionRepository auctionRepository;
 
     @Override
@@ -112,13 +110,7 @@ public class AddAuctionController extends MenuController {
             }else{
                 MenuController.showAlertMessage("Your auction could not be added - Please try again.", AlertType.ERROR, 3000);
             }
-        } catch (IllegalArgumentException exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch (SQLException exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch (IOException exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch (ClassNotFoundException exception) {
+        } catch (IllegalArgumentException | IOException | SQLException | ClassNotFoundException exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }
@@ -184,12 +176,12 @@ public class AddAuctionController extends MenuController {
     }
 
     private ArrayList<File> getImages(final File... files) {
-        ArrayList<File> images = new ArrayList<>();
+        ArrayList<File> imagesFromFile = new ArrayList<>();
 
         for (final File file : files){
-            if (file != null) images.add(file);
+            if (file != null) imagesFromFile.add(file);
         }
-        return images;
+        return imagesFromFile;
     }
 
     private LocalTime convertToTime(final String time) {

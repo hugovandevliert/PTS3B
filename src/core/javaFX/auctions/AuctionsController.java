@@ -44,9 +44,7 @@ public class AuctionsController extends MenuController {
                 applicationManager.setLoadedAuctions(auctionRepository.getAuctionsForSearchTerm(searchTerm));
                 applicationManager.sortAuctionsByPrice();
                 displayAuctionsInInterface();
-            } catch (SQLException exception) {
-                MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-            } catch (ClassNotFoundException exception) {
+            } catch (SQLException | ClassNotFoundException exception) {
                 MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
             }
         }else{
@@ -64,7 +62,7 @@ public class AuctionsController extends MenuController {
             vboxListedAuctions.getChildren().clear();
             final List<Auction> auctions = applicationManager.getLoadedAuctions();
 
-            if (auctions.size() > 0){
+            if (!auctions.isEmpty()){
                 for (final Auction auction : auctions){
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/auctions/listedAuction.fxml"));
                     Pane listedAuctionPane = fxmlLoader.load();
