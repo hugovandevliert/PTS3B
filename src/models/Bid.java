@@ -52,6 +52,8 @@ public class Bid implements Comparable<Bid> {
 
     public double getAmount() { return amount; }
 
+    public int getAuctionId() { return this.auctionId; }
+
     @Override
     public int compareTo(final Bid otherBid) {
         if (this.amount > otherBid.getAmount()) return -1;
