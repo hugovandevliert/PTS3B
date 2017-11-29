@@ -7,8 +7,6 @@ import core.javaFX.profile.ProfileController;
 import data.contexts.AuctionMySqlContext;
 import data.contexts.BidMySqlContext;
 import data.contexts.ProfileMySqlContext;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -38,9 +36,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.*;
 
 public class AuctionController extends MenuController {
@@ -53,17 +48,12 @@ public class AuctionController extends MenuController {
     @FXML private JFXTextField txtBid;
     @FXML private JFXButton btnEndAuction, btnAddToFavorites;
 
-    private Timer auctionCountdown;
-    private Timer bidsLoadingTimer;
-
     private AuctionRepository auctionRepository;
     private BidRepository bidRepository;
     private ProfileRepository profileRepository;
-
     private MenuController menuController;
-    private ProfileController profileController;
 
-    private int auctionId, currenteUserId, creatorId;
+    private int auctionId, currentUserId, creatorId;
     private double auctionMinimumBid, auctionMinimumIncrementation;
 
     @Override
@@ -92,7 +82,7 @@ public class AuctionController extends MenuController {
         setBids(auction.getBids(), auction.getStartBid());
         setAuctionId(auction.getId());
         setCreatorId(auction.getCreator().getProfileId());
-        setCurrenteUserId(applicationManager.getCurrentUser().getId());
+        setCurrentUserId(applicationManager.getCurrentUser().getId());
         setBidTextfieldPromptText("Your bid: (at least + " + convertToEuro(auction.getIncrementation()) + ")");
         setAuctionMinimumBid(auction.getStartBid());
         setAuctionMinimumIncrementation(auction.getIncrementation());
@@ -101,7 +91,7 @@ public class AuctionController extends MenuController {
         initializeBidsLoadingTimer(auction.getBids(), this.auctionId, auction.getStartBid());
         initializeRepositories();
         handleEndAuctionPaneRemoving();
-        handleAddtoFavoritesButtonRemoving(auction.getCreator().getProfileId());
+        handleAddToFavoritesButtonRemoving(auction.getCreator().getProfileId());
 
         if (currentUserIsCreatorOfThisAuction(auction)){
             disablePlaceBidPane();
@@ -174,7 +164,7 @@ public class AuctionController extends MenuController {
     public void setTimer(final String timer) {
         lblTimer.setText(timer);
 
-        if (timer.equals("This auction has ended!")){ // The auction ended - we should remove the addBid pane for clearity
+        if (timer.equals("This auction has ended!")){ // The auction ended - we should remove the addBid pane for clarity
             paneContent.getChildren().remove(panePlaceBid);
         }
     }
@@ -185,7 +175,7 @@ public class AuctionController extends MenuController {
 
     private void setCreatorId(final int creatorId) { this.creatorId = creatorId; }
 
-    private void setCurrenteUserId(final int currenteUserId) { this.currenteUserId = currenteUserId; }
+    private void setCurrentUserId(final int currentUserId) { this.currentUserId = currentUserId; }
 
     private void setBidTextfieldPromptText(final String value) {
         txtBid.setPromptText(value);
@@ -208,12 +198,12 @@ public class AuctionController extends MenuController {
     }
 
     private void initializeCountdownTimer() {
-        auctionCountdown = new Timer();
+        Timer auctionCountdown = new Timer();
         auctionCountdown.schedule(new AuctionCountdownTimer(this, this.menuController, this.auctionId), 0, 1000);
     }
 
     private void initializeBidsLoadingTimer(final List<Bid> bids, final int auctionId, final double startBid) {
-        bidsLoadingTimer = new Timer();
+        Timer bidsLoadingTimer = new Timer();
         bidsLoadingTimer.schedule(new AuctionBidsLoadingTimer(this, this.menuController, bids, auctionId, startBid), 1000, 500);
     }
 
@@ -228,11 +218,11 @@ public class AuctionController extends MenuController {
         }
     }
 
-    private void handleAddtoFavoritesButtonRemoving(final int auctionCreatorProfileId) {
+    private void handleAddToFavoritesButtonRemoving(final int auctionCreatorProfileId) {
         try {
             // If we have already marked the auction as our favorite, there is no need to display the user an option to mark it once more
             // Neither do we want the creator of an auction to mark his/her own auction as favorite
-            if (auctionRepository.auctionIsFavoriteForUser(this.auctionId, this.currenteUserId) || auctionCreatorProfileId == this.currenteUserId){
+            if (auctionRepository.auctionIsFavoriteForUser(this.auctionId, this.currentUserId) || auctionCreatorProfileId == this.currentUserId){
                 paneContent.getChildren().remove(btnAddToFavorites);
             }
         } catch (SQLException exception) {
@@ -280,7 +270,7 @@ public class AuctionController extends MenuController {
                     System.out.println("start+ " + auctionMinimumBid);
 
                     if (amountIsHighEnough(bidAmount, minimumNeededAmount)){
-                        if (auctionRepository.addBid(bidAmount, currenteUserId, auctionId)){
+                        if (auctionRepository.addBid(bidAmount, currentUserId, auctionId)){
                             MenuController.showAlertMessage("Successfully placed bid!", AlertType.MESSAGE, 3000);
                         }else{
                             MenuController.showAlertMessage("Placing the bid wasn't successful!", AlertType.ERROR, 3000);
@@ -315,7 +305,7 @@ public class AuctionController extends MenuController {
         try {
             final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/core/javafx/profile/profile.fxml"));
             final Pane newLoadedPane = fxmlLoader.load();
-            profileController = fxmlLoader.getController();
+            ProfileController profileController = fxmlLoader.getController();
             profileRepository = new ProfileRepository(new ProfileMySqlContext());
 
             final Profile profile = profileRepository.getProfileForId(this.creatorId, ProfileLoadingType.FOR_PROFILE_PAGE);
@@ -325,11 +315,7 @@ public class AuctionController extends MenuController {
 
             this.menuController.paneContent.getChildren().removeAll();
             this.menuController.paneContent.getChildren().add(newLoadedPane);
-        } catch (SQLException e) {
-            MenuController.showAlertMessage(e.getMessage(), AlertType.ERROR, 3000);
-        } catch (ClassNotFoundException e) {
-            MenuController.showAlertMessage(e.getMessage(), AlertType.ERROR, 3000);
-        } catch (IOException e) {
+        } catch (SQLException | ClassNotFoundException | IOException e) {
             MenuController.showAlertMessage(e.getMessage(), AlertType.ERROR, 3000);
         }
     }

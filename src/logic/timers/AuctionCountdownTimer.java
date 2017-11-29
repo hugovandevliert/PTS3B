@@ -19,16 +19,11 @@ import java.util.concurrent.TimeUnit;
 public class AuctionCountdownTimer extends TimerTask {
 
     private AuctionController auctionController;
-    private MenuController menuController;
-
-    private LocalDateTime expirationDate;
-    private int auctionId;
-
     private AuctionRepository auctionRepository;
+    private int auctionId;
 
     public AuctionCountdownTimer(final AuctionController auctionController, final MenuController menuController, final int auctionId) {
         this.auctionController = auctionController;
-        this.menuController = menuController;
         this.auctionId = auctionId;
 
         menuController.setLastCalledClass(this.getClass());
@@ -56,8 +51,7 @@ public class AuctionCountdownTimer extends TimerTask {
 
                     if (differenceInMs > 0){
                         timerStringValue = getDurationFromMilliseconds(differenceInMs);
-                    }
-                    else if (differenceInMs == -1){
+                    }else if (differenceInMs == -1){
                         timerStringValue = "Still has to open!";
                     }else{
                         timerStringValue = "This auction has ended!";
@@ -72,11 +66,7 @@ public class AuctionCountdownTimer extends TimerTask {
                 setTimerValue("This auction has ended!");
                 this.cancel();
             }
-        } catch (SQLException exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch (IOException exception) {
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch (ClassNotFoundException exception) {
+        } catch (SQLException | IOException | ClassNotFoundException exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }
@@ -87,7 +77,7 @@ public class AuctionCountdownTimer extends TimerTask {
 
     private String getDurationFromMilliseconds(final long milliSeconds) {
         if (milliSeconds < 0) {
-            throw new IllegalArgumentException("milliSeconds duration should be bigger then 0");
+            throw new IllegalArgumentException("Milliseconds duration should be bigger than 0.");
         }
 
         final long days = TimeUnit.MILLISECONDS.toDays(milliSeconds);
@@ -95,7 +85,7 @@ public class AuctionCountdownTimer extends TimerTask {
         final long minutes = TimeUnit.MILLISECONDS.toMinutes(milliSeconds) % 60;
         final long seconds = TimeUnit.MILLISECONDS.toSeconds(milliSeconds) % 60;
 
-        return String.format("%d D %d H %d M %d S", days, hours, minutes, seconds);
+        return String.format("%02d : %02d : %02d : %02d", days, hours, minutes, seconds);
     }
 
     private long getMillisFromLocalDateTime(final LocalDateTime localDateTime) {
