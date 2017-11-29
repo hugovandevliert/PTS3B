@@ -1,11 +1,12 @@
 package models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * Class used for keeping information about a bid on an auction.
  * */
-public class Bid implements Comparable<Bid> {
+public class Bid implements Comparable<Bid>, Serializable {
 
     private LocalDateTime date;
     private transient Profile profile;
