@@ -1,7 +1,8 @@
 package logic.repositories;
 
 import data.interfaces.IBidContext;
-import models.Bid;
+import modelslibrary.Bid;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;

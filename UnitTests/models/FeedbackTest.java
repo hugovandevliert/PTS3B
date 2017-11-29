@@ -1,6 +1,8 @@
 package models;
 
 import logic.managers.ApplicationManager;
+import modelslibrary.Feedback;
+import modelslibrary.Profile;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

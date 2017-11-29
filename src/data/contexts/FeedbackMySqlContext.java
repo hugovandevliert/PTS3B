@@ -2,7 +2,7 @@ package data.contexts;
 
 import data.interfaces.IFeedbackContext;
 import logic.repositories.ProfileRepository;
-import models.Feedback;
+import modelslibrary.Feedback;
 import utilities.database.Database;
 import utilities.enums.FeedbackLoadingType;
 import utilities.enums.ProfileLoadingType;

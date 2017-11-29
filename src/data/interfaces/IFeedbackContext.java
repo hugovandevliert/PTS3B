@@ -1,6 +1,7 @@
 package data.interfaces;
 
-import models.Feedback;
+import modelslibrary.Feedback;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;

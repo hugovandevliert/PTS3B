@@ -5,6 +5,7 @@ import data.contexts.AuctionMySqlContext;
 import data.contexts.ProfileMySqlContext;
 import logic.repositories.AuctionRepository;
 import logic.repositories.ProfileRepository;
+import modelslibrary.Profile;
 import org.junit.Before;
 import org.junit.Test;
 

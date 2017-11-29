@@ -5,7 +5,7 @@ import core.javaFX.menu.MenuController;
 import data.contexts.BidMySqlContext;
 import javafx.application.Platform;
 import logic.repositories.BidRepository;
-import models.Bid;
+import modelslibrary.Bid;
 import utilities.enums.AlertType;
 
 import java.io.IOException;

@@ -5,14 +5,13 @@ import core.javaFX.menu.MenuController;
 import data.contexts.AuctionMySqlContext;
 import javafx.application.Platform;
 import logic.repositories.AuctionRepository;
-import models.Auction;
+import modelslibrary.Auction;
 import utilities.enums.AlertType;
 import utilities.enums.AuctionLoadingType;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Date;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 

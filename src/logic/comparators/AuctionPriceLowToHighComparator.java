@@ -1,6 +1,6 @@
 package logic.comparators;
 
-import models.Auction;
+import modelslibrary.Auction;
 
 import java.util.Comparator;
 

@@ -1,6 +1,6 @@
 package data.interfaces;
 
-import models.User;
+import modelslibrary.User;
 
 import java.io.File;
 import java.io.IOException;

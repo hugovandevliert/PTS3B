@@ -1,7 +1,8 @@
 package logic.repositories;
 
 import data.interfaces.IFeedbackContext;
-import models.Feedback;
+import modelslibrary.Feedback;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
