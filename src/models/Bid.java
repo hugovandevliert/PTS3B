@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class Bid implements Comparable<Bid> {
 
     private LocalDateTime date;
-    private Profile profile;
+    private transient Profile profile;
     private double amount;
 
     /**
