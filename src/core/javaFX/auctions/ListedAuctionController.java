@@ -27,11 +27,6 @@ public class ListedAuctionController extends MenuController {
     @FXML private ImageView imgviewImage;
 
     private MenuController menuController;
-    private AuctionController auctionController;
-
-    private FXMLLoader fxmlLoader;
-    private Pane auctionPane;
-
     private AuctionRepository auctionRepository;
 
     private int auctionId;
@@ -78,9 +73,9 @@ public class ListedAuctionController extends MenuController {
         try {
             menuController.paneContent.getChildren().clear();
 
-            fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/auction/auction.fxml"));
-            auctionPane = fxmlLoader.load();
-            auctionController = fxmlLoader.getController();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/auction/auction.fxml"));
+            Pane auctionPane = fxmlLoader.load();
+            AuctionController auctionController = fxmlLoader.getController();
 
             final Auction auction = auctionRepository.getAuctionForId(this.auctionId, AuctionLoadingType.FOR_AUCTION_PAGE);
 

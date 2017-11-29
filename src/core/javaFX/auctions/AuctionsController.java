@@ -15,7 +15,6 @@ import javafx.scene.text.Font;
 import logic.repositories.AuctionRepository;
 import modelslibrary.Auction;
 import utilities.enums.AlertType;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -29,9 +28,6 @@ public class AuctionsController extends MenuController {
     @FXML private ImageView imgviewSortPrice;
 
     private AuctionRepository auctionRepository;
-    private FXMLLoader fxmlLoader;
-    private Pane listedAuctionPane;
-    private ListedAuctionController listedAuctionController;
 
     public AuctionsController() { auctionRepository = new AuctionRepository(new AuctionMySqlContext()); }
 
@@ -70,9 +66,9 @@ public class AuctionsController extends MenuController {
 
             if (auctions.size() > 0){
                 for (final Auction auction : auctions){
-                    fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/auctions/listedAuction.fxml"));
-                    listedAuctionPane = fxmlLoader.load();
-                    listedAuctionController = fxmlLoader.getController();
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/auctions/listedAuction.fxml"));
+                    Pane listedAuctionPane = fxmlLoader.load();
+                    ListedAuctionController listedAuctionController = fxmlLoader.getController();
 
                     listedAuctionController.setMenuController(this);
                     listedAuctionController.setListedAuction(auction);

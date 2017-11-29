@@ -39,7 +39,7 @@ public class MenuController implements Initializable {
     @FXML private Pane paneAlert;
 
     protected final static ApplicationManager applicationManager = new ApplicationManager();
-    protected ImageView selectedMenu;
+    private ImageView selectedMenu;
 
     private Image profileIcon;
     private Image auctionsIcon;

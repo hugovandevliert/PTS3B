@@ -1,17 +1,14 @@
 package core.javaFX.useralert;
 
 import core.javaFX.menu.MenuController;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import logic.timers.HideAlertTimer;
 import utilities.enums.AlertType;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class UserAlertController extends MenuController {
 

@@ -19,7 +19,6 @@ import modelslibrary.Feedback;
 import modelslibrary.Profile;
 import modelslibrary.User;
 import utilities.enums.AlertType;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -35,9 +34,7 @@ public class ProfileController extends MenuController {
 
     private FXMLLoader fxmlLoader;
     private Profile profile;
-
     private MenuController menuController;
-
     private UserRepository userRepository;
 
     @Override

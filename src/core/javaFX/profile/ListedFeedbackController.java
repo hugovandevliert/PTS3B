@@ -23,27 +23,26 @@ public class ListedFeedbackController extends MenuController {
     @FXML private Text textAuctionDescription;
 
     private int authorId;
-
     private MenuController menuController;
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) { }
 
-    public void setMenuController(final MenuController menuController) { this.menuController = menuController; }
+    void setMenuController(final MenuController menuController) { this.menuController = menuController; }
 
-    public void setAuthorId(final int authorId) {
+    void setAuthorId(final int authorId) {
         this.authorId = authorId;
     }
 
-    public void setAuthor(final String author) {
+    void setAuthor(final String author) {
         lblAuthorName.setText(author);
     }
 
-    public void setDate(final LocalDateTime date) {
+    void setDate(final LocalDateTime date) {
         lblDateValue.setText(date.toLocalDate().toString());
     }
 
-    public void setDescription(final String description) {
+    void setDescription(final String description) {
         textAuctionDescription.setText(description);
     }
 
