@@ -21,9 +21,9 @@ import java.util.List;
 
 public class AuctionMySqlContext implements IAuctionContext {
 
-    final private ImageConverter imageConverter;
-    final private ProfileRepository profileRepository;
-    final private BidRepository bidRepository;
+    private final ImageConverter imageConverter;
+    private final ProfileRepository profileRepository;
+    private final BidRepository bidRepository;
 
     public AuctionMySqlContext() {
         imageConverter = new ImageConverter();

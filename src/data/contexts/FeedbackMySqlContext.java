@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class FeedbackMySqlContext implements IFeedbackContext {
 
-    final private ProfileRepository profileRepository;
+    private final ProfileRepository profileRepository;
 
     FeedbackMySqlContext(){
         this.profileRepository = new ProfileRepository(new ProfileMySqlContext());

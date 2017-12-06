@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class AuctionRepository {
 
-    final private IAuctionContext context;
+    private final IAuctionContext context;
 
     public AuctionRepository(final IAuctionContext context) {
         this.context = context;

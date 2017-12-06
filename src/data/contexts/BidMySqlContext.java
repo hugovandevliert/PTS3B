@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class BidMySqlContext implements IBidContext {
 
-    final private ProfileRepository profileRepository;
+    private final ProfileRepository profileRepository;
 
     public BidMySqlContext() { profileRepository = new ProfileRepository(new ProfileMySqlContext()); }
 

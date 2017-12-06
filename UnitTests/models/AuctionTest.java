@@ -65,8 +65,6 @@ class AuctionTest {
         assertEquals(LocalDateTime.of(2016, 9, 10, 12, 33), auction1.getOpeningDate(), "This should've been 10-9-2016 12:33");
     }
 
-
-
     @Test
     void testGetCreationDate() {
         //Can't test this :@

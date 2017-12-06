@@ -36,7 +36,7 @@ public class UserMySqlContext implements IUserContext {
             return new String[]{resultSet.getString(1), resultSet.getString(2)};
         }
         //There is no user with this username
-        return null;
+        return new String[]{};
     }
 
     @Override

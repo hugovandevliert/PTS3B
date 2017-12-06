@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class FeedbackRepository {
 
-    final private IFeedbackContext context;
+    private final IFeedbackContext context;
 
     public FeedbackRepository(final IFeedbackContext context) {
         this.context = context;

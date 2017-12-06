@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class BidRepository {
 
-    final private IBidContext context;
+    private final IBidContext context;
 
     public BidRepository(final IBidContext context) {
         this.context = context;

@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class ProfileRepository {
 
-    final private IProfileContext context;
+    private final IProfileContext context;
 
     public ProfileRepository(final IProfileContext context) {
         this.context = context;
