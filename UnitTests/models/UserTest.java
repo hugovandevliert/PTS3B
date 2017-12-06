@@ -6,9 +6,11 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -21,35 +23,10 @@ class UserTest {
     private static User user;
 
     @BeforeAll
-    static void setUp() throws Exception {
+    static void setUp() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException, IOException {
         ApplicationManager applicationManager = new ApplicationManager();
         applicationManager.login("user1", "User1!");
         user = applicationManager.getCurrentUser();
-    }
-
-    /*@Test
-    void testChangePassword() throws SQLException, UnsupportedEncodingException, NoSuchAlgorithmException {
-        assertThrows(IllegalArgumentException.class, () -> user.changePassword("User1!", "12345"), "Passwords should not be able to be less then 6 chars. (Currently: 5) ");
-        assertThrows(IllegalArgumentException.class, () -> user.changePassword("User1!", "12345678"), "Passwords should not be able to contain only numbers");
-        assertThrows(IllegalArgumentException.class, () -> user.changePassword( "User1!",""), "Passwords should never be able to be empty.");
-        assertThrows(IllegalArgumentException.class, () -> user.changePassword("User1!","A&cdefg"), "Passwords should contain at least 1 number");
-        assertThrows(IllegalArgumentException.class, () -> user.changePassword("User1!","Abcdef3"), "Passwords should contain at least 1 special char");
-        assertThrows(IllegalArgumentException.class, () -> user.changePassword("User1!","ab*cdef3"), "Passwords should contain at least 1 uppercase letter.");
-        assertThrows(IllegalArgumentException.class, () -> user.changePassword("User1!","AB*CDEF3"), "Passwords should contain at least 1 lowercase letter.");
-        assertThrows(IllegalArgumentException.class, () -> user.changePassword("User1!","ab*cdEf3Wolfeschlegelsteinhausenb"), "Passwords should not exceed 32 chars");
-
-        assertTrue(user.changePassword("User1!","User2!"), "Tried to change to a correct password (User1!), but got false in return.");
-    }*/
-
-    @Test
-    void testGetUsername() {
-        assertEquals("User1", user.getUsername(), "Username getter is not working properly.");
-        assertEquals(user.getUsername(), user.getProfile().getUsername(), "Username in profile does not match the one in user.");
-    }
-
-    @Test
-    void testGetName() {
-        assertEquals("Mohamed Ali", user.getName(), "Full name getter is not working properly");
     }
 
     @Test
@@ -60,11 +37,6 @@ class UserTest {
         assertThrows(IllegalArgumentException.class, () -> user.setName("T3st User"), "Full name should not be able to contain numbers");
         assertThrows(IllegalArgumentException.class, () -> user.setName("T&st User"), "Full name should not be able to contain special characters");
         assertThrows(IllegalArgumentException.class, () -> user.setName("T*st User"), "Full name should not be able to contain special characters");
-    }
-
-    @Test
-    void testGetEmail() {
-        assertEquals("User1@gmail.com", user.getEmail(), "Email getter is not working properly");
     }
 
     @Test
@@ -80,10 +52,38 @@ class UserTest {
         assertThrows(IllegalArgumentException.class, () -> user.setEmail("testuserwith@bladieduiaaf.aiusdhfuias"), "Email should always end with a valid domain name.");
     }
 
+    @Test
+    void testGetProfile() {
+        assertEquals("User1",user.getProfile().getUsername(), "getProfile does not work properly");
+    }
+
+
+    @Test
+    void testGetId() {
+        assertEquals(1, user.getProfile().getProfileId(), "getId does not work properly");
+    }
+
+    @Test
+    void testGetEmail() {
+        assertEquals("User1@gmail.com", user.getEmail(), "Email getter is not working properly");
+    }
+
+
+    @Test
+    void testGetUsername() {
+        assertEquals("User1", user.getUsername(), "Username getter is not working properly.");
+        assertEquals(user.getUsername(), user.getProfile().getUsername(), "Username in profile does not match the one in user.");
+    }
+
+    @Test
+    void testGetName() {
+        assertEquals("Mohamed Ali", user.getName(), "Full name getter is not working properly");
+    }
+
+
     @AfterAll
     static void cleanUp() throws SQLException, UnsupportedEncodingException, NoSuchAlgorithmException {
         user.setName("Mohamed Ali");
         user.setEmail("User1@gmail.com");
-        //user.changePassword("User2!", "User1!");
     }
 }
