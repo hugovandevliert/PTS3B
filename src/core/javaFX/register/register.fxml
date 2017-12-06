@@ -70,12 +70,12 @@
                     <Font name="Segoe UI Light" size="32.0" />
                 </font>
             </Label>
-            <JFXPasswordField fx:id="txtPassword" alignment="CENTER" focusColor="#747e8c" layoutX="600.0" layoutY="275.0" onAction="#register" prefHeight="25.0" prefWidth="300.0" promptText="password" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599;" unFocusColor="#242e3b">
+            <JFXPasswordField fx:id="txtPassword" alignment="CENTER" focusColor="#747e8c" layoutX="600.0" layoutY="275.0" onAction="#register" onKeyReleased="#synchronizePasswordfields" prefHeight="25.0" prefWidth="300.0" promptText="password" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599;" unFocusColor="#242e3b">
                <font>
                   <Font name="Segoe UI Light" size="18.0" />
                </font>
             </JFXPasswordField>
-            <JFXTextField fx:id="txtPasswordVisible" alignment="CENTER" focusColor="#747e8c" layoutX="600.0" layoutY="275.0" onAction="#register" prefHeight="25.0" prefWidth="300.0" promptText="password" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: #3d4857;" unFocusColor="#242e3b" visible="false">
+            <JFXTextField fx:id="txtPasswordVisible" alignment="CENTER" focusColor="#747e8c" layoutX="600.0" layoutY="275.0" onAction="#register" onKeyReleased="#synchronizePasswordfields" prefHeight="25.0" prefWidth="300.0" promptText="password" style="-fx-text-fill: #a6b5c9; -fx-prompt-text-fill: #788599; -fx-background-color: #3d4857;" unFocusColor="#242e3b" visible="false">
                <font>
                   <Font name="Segoe UI Light" size="18.0" />
                </font>

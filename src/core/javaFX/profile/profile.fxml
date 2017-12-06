@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.profile.ProfileController">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.profile.ProfileController">
     <columnConstraints>
         <ColumnConstraints />
     </columnConstraints>
@@ -22,7 +22,7 @@
     <children>
           <Pane fx:id="paneContent" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;">
          <children>
-            <ImageView fx:id="imgviewProfilePicture" fitHeight="206.0" fitWidth="275.0" layoutX="23.0" layoutY="24.0" onMouseClicked="#changeProfilePicture" pickOnBounds="true" preserveRatio="true" >
+            <ImageView fx:id="imgviewProfilePicture" fitHeight="206.0" fitWidth="275.0" layoutX="23.0" layoutY="24.0" onMouseClicked="#changeProfilePicture" pickOnBounds="true" preserveRatio="true">
                 <cursor>
                     <Cursor fx:constant="HAND" />
                 </cursor>
@@ -66,6 +66,14 @@
             </Label>
             <ImageView fx:id="imgviewNegativeIcon" fitHeight="53.0" fitWidth="60.0" layoutX="736.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
             <JFXButton fx:id="btnLogout" layoutX="874.0" layoutY="7.0" onAction="#logout" prefHeight="33.0" prefWidth="84.0" style="-fx-background-color: f2aa78;" text="Logout" textFill="#824923">
+               <font>
+                  <Font name="Segoe UI Light" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="btnLogin" layoutX="351.0" layoutY="184.0" onAction="#addFeedback" prefHeight="45.0" prefWidth="205.0" style="-fx-background-color: f2aa78;" text="Add feedback" textFill="#824923">
                <font>
                   <Font name="Segoe UI Light" size="14.0" />
                </font>

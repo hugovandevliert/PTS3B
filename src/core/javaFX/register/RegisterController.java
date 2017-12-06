@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import utilities.enums.AlertType;
 import java.io.IOException;
@@ -77,6 +78,14 @@ public class RegisterController extends MenuController {
             txtPassword.requestFocus();
             txtPassword.deselect();
             txtPassword.positionCaret(txtPassword.getLength());
+        }
+    }
+
+    public void synchronizePasswordfields(KeyEvent keyEvent) {
+        if (keyEvent.getSource().equals(txtPassword)) {
+            txtPasswordVisible.setText(txtPassword.getText());
+        } else {
+            txtPassword.setText(txtPasswordVisible.getText());
         }
     }
 }
