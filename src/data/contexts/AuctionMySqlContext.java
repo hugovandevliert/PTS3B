@@ -76,6 +76,23 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     @Override
+    public ArrayList<Auction> getWonAuctionsWithoutFeedbackForProfile(final int profileId) throws SQLException, IOException, ClassNotFoundException {
+        final String query = "SELECT DISTINCT au.id, au.title, au.description, au.startingBid " +
+                "FROM Account a INNER JOIN Auction au  ON a.id = au.creator_id INNER JOIN Bid b ON au.id = b.auction_id " +
+                "LEFT JOIN Feedback f ON au.id = f.auction_id " +
+                "WHERE (au.endDate <= curdate() OR au.status = 'CLOSED') AND f.auction_id IS NULL AND a.id = ?";
+        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(profileId) });
+        final ArrayList<Auction> auctions = new ArrayList<>();
+
+        if (resultSet != null) {
+            while (resultSet.next()) {
+                auctions.add(getAuctionFromResultSet(resultSet, AuctionLoadingType.FOR_FEEDBACK_ADDING));
+            }
+        }
+        return auctions;
+    }
+
+    @Override
     public Auction getAuctionForId(final int auctionId, final AuctionLoadingType auctionLoadingType) throws SQLException, IOException, ClassNotFoundException {
         String query = "";
 
@@ -215,6 +232,15 @@ public class AuctionMySqlContext implements IAuctionContext {
                                 resultSet.getInt("id"),
                                 resultSet.getTimestamp("openingDate").toLocalDateTime(),
                                 resultSet.getTimestamp("endDate").toLocalDateTime()
+                        );
+            case FOR_FEEDBACK_ADDING:
+                return new Auction
+                        (
+                                resultSet.getInt("id"),
+                                resultSet.getString("title"),
+                                resultSet.getString("description"),
+                                resultSet.getDouble("startingBid"),
+                                null
                         );
             default:
                 return null;

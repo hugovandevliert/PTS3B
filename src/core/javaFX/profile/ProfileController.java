@@ -4,6 +4,7 @@ import core.javaFX.auctions.ListedAuctionController;
 import core.javaFX.feedback.FeedbackController;
 import core.javaFX.feedback.ListedFeedbackController;
 import core.javaFX.menu.MenuController;
+import data.contexts.AuctionMySqlContext;
 import data.contexts.UserMySqlContext;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
+import logic.repositories.AuctionRepository;
 import logic.repositories.UserRepository;
 import modelslibrary.Auction;
 import modelslibrary.Feedback;
@@ -25,6 +27,7 @@ import utilities.enums.AlertType;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -39,10 +42,12 @@ public class ProfileController extends MenuController {
     private Profile profile;
     private MenuController menuController;
     private UserRepository userRepository;
+    private AuctionRepository auctionRepository;
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         this.userRepository = new UserRepository(new UserMySqlContext());
+        auctionRepository = new AuctionRepository(new AuctionMySqlContext());
 
         setFeedbackIcons();
     }
@@ -204,14 +209,22 @@ public class ProfileController extends MenuController {
     }
 
     public void addFeedback() throws IOException {
-        fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/feedback/feedback.fxml"));
-        final Pane feedbackPane = fxmlLoader.load();
-        final FeedbackController feedbackController = fxmlLoader.getController();
+        try {
+            fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/feedback/feedback.fxml"));
+            final Pane feedbackPane = fxmlLoader.load();
+            final FeedbackController feedbackController = fxmlLoader.getController();
 
-        feedbackController.setUserName("Kees Kroket");
-        feedbackController.addAuctionNames(new String[] {"Krokketje", "help" });
-
-        paneContent.getChildren().clear();
-        paneContent.getChildren().add(feedbackPane);
+            feedbackController.setFeedbackIcons();
+            feedbackController.setUserName(profile.getUsername());
+            feedbackController.addAuctionNames(auctionRepository.getWonAuctionsWithoutFeedbackForProfile(profile.getProfileId()));
+            paneContent.getChildren().clear();
+            paneContent.getChildren().add(feedbackPane);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
+        } catch (ClassNotFoundException exception) {
+            exception.printStackTrace();
+            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
+        }
     }
 }
