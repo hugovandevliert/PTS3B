@@ -1,7 +1,6 @@
 package logic.repositories;
 
 import data.interfaces.IFeedbackContext;
-import modelslibrary.Auction;
 import modelslibrary.Feedback;
 
 import java.io.IOException;

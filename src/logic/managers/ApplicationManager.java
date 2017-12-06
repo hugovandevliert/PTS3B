@@ -52,11 +52,9 @@ public class ApplicationManager {
     public boolean login(final String username, final String password) throws SQLException, IOException, ClassNotFoundException, NoSuchAlgorithmException {
         final String[] saltAndHash = userRepository.getSaltAndHash(username);
 
-        if (saltAndHash != null){
-            if (sha256HashCalculator.hashString(password, saltAndHash[0]).equals(saltAndHash[1])){
-                currentUser = userRepository.getUserByUsername(username);
-                return true;
-            }
+        if (saltAndHash != null && sha256HashCalculator.hashString(password, saltAndHash[0]).equals(saltAndHash[1])){
+            currentUser = userRepository.getUserByUsername(username);
+            return true;
         }
         return false;
     }

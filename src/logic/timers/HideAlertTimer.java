@@ -7,8 +7,8 @@ import java.util.TimerTask;
 
 public class HideAlertTimer extends TimerTask {
 
-    final private UserAlertController userAlertController;
-    final private String alertMessage;
+    private final UserAlertController userAlertController;
+    private final String alertMessage;
 
     public HideAlertTimer(final UserAlertController userAlertController, final String alertMessage) {
         this.userAlertController = userAlertController;
@@ -16,7 +16,7 @@ public class HideAlertTimer extends TimerTask {
     }
 
     public void run() {
-        if (alertMessageHasNotChanged()) Platform.runLater(() -> userAlertController.hideAlert());
+        if (alertMessageHasNotChanged()) Platform.runLater(userAlertController::hideAlert);
         else cancel();
     }
 
