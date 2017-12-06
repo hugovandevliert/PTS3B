@@ -62,5 +62,11 @@
     <orderEntry type="library" name="CustomPublisher" level="project" />
     <orderEntry type="library" name="mysql-connector-java-5.1.44-bin" level="project" />
     <orderEntry type="library" name="jfoenix" level="project" />
+    <orderEntry type="library" name="jfoenix (3)" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-5.1.44-bin (3)" level="project" />
+  </component>
+  <component name="sonarModuleSettings">
+    <option name="localAnalysisScripName" value="&lt;PROJECT&gt;" />
+    <option name="serverName" value="&lt;PROJECT&gt;" />
   </component>
 </module>
