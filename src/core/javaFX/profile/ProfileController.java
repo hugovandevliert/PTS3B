@@ -1,9 +1,11 @@
 package core.javaFX.profile;
 
 import core.javaFX.auctions.ListedAuctionController;
+import core.javaFX.feedback.FeedbackController;
 import core.javaFX.feedback.ListedFeedbackController;
 import core.javaFX.menu.MenuController;
 import data.contexts.UserMySqlContext;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -199,5 +201,17 @@ public class ProfileController extends MenuController {
             if (feedback.isPositive()) counter++;
         }
         return counter;
+    }
+
+    public void addFeedback() throws IOException {
+        fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/feedback/feedback.fxml"));
+        final Pane feedbackPane = fxmlLoader.load();
+        final FeedbackController feedbackController = fxmlLoader.getController();
+
+        feedbackController.setUserName("Kees Kroket");
+        feedbackController.addAuctionNames(new String[] {"Krokketje", "help" });
+
+        paneContent.getChildren().clear();
+        paneContent.getChildren().add(feedbackPane);
     }
 }
