@@ -1,14 +1,20 @@
 package models;
 
 import logic.managers.ApplicationManager;
-import data.contexts.AuctionMySqlContext;
-import data.contexts.ProfileMySqlContext;
-import logic.repositories.AuctionRepository;
-import logic.repositories.ProfileRepository;
+import modelslibrary.Auction;
+import modelslibrary.Feedback;
 import modelslibrary.Profile;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -18,9 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * ASSUMPTION: There is an auction in the database with id="1"
  * If these are not true, all tests will fail.*/
 public class ProfileTest {
-    final ProfileRepository profileRepository = new ProfileRepository(new ProfileMySqlContext());
-    final AuctionRepository auctionRepository = new AuctionRepository(new AuctionMySqlContext());
-    static private ApplicationManager applicationManager;
+    private ApplicationManager applicationManager;
 
     @Before
     public void setUp()
@@ -29,50 +33,29 @@ public class ProfileTest {
     }
 
     @Test
-    public void testAddAuction() { }
+    public void testAddAuction() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException, IOException {
+        applicationManager.login("user1", "User1!");
+        Profile profile = applicationManager.getCurrentUser().getProfile();
+        profile.addAuction(new Auction("testAuction123", "testdescription", 0, 1, LocalDateTime.now().plusDays(1), LocalDateTime.now().plusDays(2), false, null, null, 1));
 
-//    @Test
-//    public void testAddVisitedAuction() throws SQLException, IOException, ClassNotFoundException {
-//        Profile profile = applicationManager.login("user1", "User1!").getProfile();
-//        Auction auction = auctionRepository.getAuctionForId(1, AuctionLoadingType.FOR_AUCTION_PAGE);
-//
-//        profileRepository.addVisitedAuction(profile, auction);
-//
-//        assertTrue(profile.getVisitedAuctions().contains(auction));
-//    }
+        assertEquals(profile.getAuctions().get(0).getTitle(), "testAuction123", "Problem adding auction..");
+    }
 
-//    @Test
-//    public void testAddFavoriteAuction() throws SQLException, IOException, ClassNotFoundException {
-//        Profile profile = applicationManager.login("user1", "User1!").getProfile();
-//        Auction auction = auctionRepository.getAuctionForId(1, AuctionLoadingType.FOR_AUCTION_PAGE);
-//
-//        profileRepository.addFavoriteAuction(profile, auction.getId());
-//
-//        assertTrue(profile.getFavoriteAuctions().contains(auction));
-//    }
-//
-//    @Test
-//    public void testRemoveFavoriteAuction() throws SQLException, IOException, ClassNotFoundException {
-//        Profile profile = applicationManager.login("user1", "User1!").getProfile();
-//        Auction auction = auctionRepository.getAuctionForId(1, AuctionLoadingType.FOR_AUCTION_PAGE);
-//
-//        assertTrue(profile.getFavoriteAuctions().contains(auction));
-//
-//        profileRepository.removeFavoriteAuction(profile, auction);
-//
-//        assertFalse(profile.getFavoriteAuctions().contains(auction));
-//    }
+    @Test
+    public void testAddFeedback() throws SQLException, IOException, ClassNotFoundException, NoSuchAlgorithmException {
+        applicationManager.login("user1", "User1!");
+        Profile profile = applicationManager.getCurrentUser().getProfile();
 
-//    @Test
-//    public void testAddFeedback() throws SQLException, IOException, ClassNotFoundException {
-//        Profile profile = applicationManager.login("user1", "User1!").getProfile();
-//        Profile author = applicationManager.login("user2", "User2!").getProfile();
-//        Feedback feedback = new Feedback(author, LocalDateTime.now(), true, "Product goed ontvangen, snelle service.");
-//
-//        profile.addFeedback(feedback);
-//
-//        assertTrue(profile.getFeedbacks().contains(feedback));
-//    }
+        ApplicationManager applicationManager2 = new ApplicationManager();
+        applicationManager2.login("user2", "User2!");
+        Profile author = applicationManager2.getCurrentUser().getProfile();
+
+        Feedback feedback = new Feedback(author, LocalDateTime.now(), true, "Product goed ontvangen, snelle service.");
+
+        profile.addFeedback(feedback);
+
+        assertTrue(profile.getFeedbacks().contains(feedback));
+    }
 
     @Test
     public void testGetUsername() throws Exception {
@@ -100,42 +83,35 @@ public class ProfileTest {
         assertEquals(1, p.getProfileId());
     }
 
-    /*@Test
+    @Test
+    void testGetCreationDate() {
+        LocalDateTime ldt = LocalDateTime.now();
+        Profile p = new Profile(1, "testuser", "test", ldt, null, "testuser@email.com", null, null);
+
+        assertSame(ldt, p.getCreationDate());
+    }
+
+    @Test
     public void testGetAuctions() throws SQLException, IOException, ClassNotFoundException {
         Profile profile = new Profile(1, "user1", "Test User", LocalDateTime.now(), null, "test@gmail.com", new ArrayList<Auction>(), null);
-        profile.addAuction(1, 1, 1, LocalDateTime.now().plusDays(3), LocalDateTime.now().plusDays(1), false, "AbCdE", "", null);
+        profile.addAuction(new Auction("AbCdE", "beschrijving", 0, 0, LocalDateTime.now().plusDays(1), LocalDateTime.now().plusDays(1), false, profile, null, 1));
 
         assertEquals("AbCdE", profile.getAuctions().get(0).getTitle());
-    }*/
+    }
 
-//    @Test
-//    public void testGetVisitedAuctions() throws SQLException, IOException, ClassNotFoundException {
-//        Profile profile = applicationManager.login("user1", "User1!").getProfile();
-//        Auction auction = auctionRepository.getAuctionForId(2, AuctionLoadingType.FOR_AUCTION_PAGE);
-//
-//        profile.addVisitedAuction(auction);
-//
-//        assertTrue(profile.getVisitedAuctions().contains(auction));
-//    }
+    @Test
+    public void testGetFeedbacks() throws SQLException, IOException, ClassNotFoundException, NoSuchAlgorithmException {
+        applicationManager.login("user1", "User1!");
+        Profile profile = applicationManager.getCurrentUser().getProfile();
 
-//    @Test
-//    public void testGetFavoriteAuctions() throws SQLException, IOException, ClassNotFoundException {
-//        Profile profile = applicationManager.login("user1", "User1!").getProfile();
-//        Auction auction = auctionRepository.getAuctionForId(2, AuctionLoadingType.FOR_AUCTION_PAGE);
-//
-//        profile.addFavoriteAuction(auction.getId());
-//
-//        assertTrue(profile.getFavoriteAuctions().contains(auction));
-//    }
+        ApplicationManager applicationManager2 = new ApplicationManager();
+        applicationManager2.login("user3", "User3!");
+        Profile author = applicationManager2.getCurrentUser().getProfile();
 
-//    @Test
-//    public void testGetFeedbacks() throws SQLException, IOException, ClassNotFoundException {
-//        Profile profile = applicationManager.login("user1", "User1!").getProfile();
-//        Profile author = applicationManager.login("user3", "User3!").getProfile();
-//        Feedback feedback = new Feedback(author, LocalDateTime.now(), false, "Slechte service, duurde 3 weken voor ontvangst!");
-//
-//        profile.addFeedback(feedback);
-//
-//        assertTrue(profile.getFeedbacks().contains(feedback));
-//    }
+        Feedback feedback = new Feedback(author, LocalDateTime.now(), false, "Slechte service, duurde 3 weken voor ontvangst!");
+
+        profile.addFeedback(feedback);
+
+        assertTrue(profile.getFeedbacks().contains(feedback));
+    }
 }

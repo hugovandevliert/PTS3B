@@ -25,6 +25,11 @@ class FeedbackTest {
     }
 
     @Test
+    void testGetDate() {
+        //todo
+    }
+
+    @Test
     void testGetAuthor() throws Exception {
         applicationManager.login("user2", "User2!");
         final Profile author = applicationManager.getCurrentUser().getProfile();
@@ -52,5 +57,4 @@ class FeedbackTest {
         feedback = new Feedback(author2, LocalDateTime.now(), true, "Testfeedback");
         assertTrue(feedback.isPositive(), "Positivity getter is not working properly for positive value.");
     }
-
 }

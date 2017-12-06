@@ -11,9 +11,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public class BidTest {
-    Profile profile;
-    LocalDateTime time;
-    Bid bid;
+    private Profile profile;
+    private LocalDateTime time;
+    private Bid bid;
 
     @Before
     public void setUp() {
@@ -35,6 +35,12 @@ public class BidTest {
     @Test
     public void testGetAmount() {
         assertEquals(300, bid.getAmount());
+    }
+
+    @Test
+    public void testGetAuctionById()
+    {
+        //todo
     }
 
     @Test
