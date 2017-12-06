@@ -1,5 +1,6 @@
 package core.javaFX.login;
 
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import core.javaFX.menu.MenuController;
@@ -16,6 +17,9 @@ public class LoginController extends MenuController {
 
     @FXML private JFXTextField txtUsername;
     @FXML private JFXPasswordField txtPassword;
+    @FXML private JFXTextField txtPasswordVisible;
+
+    @FXML private JFXCheckBox checkPass;
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) { }
@@ -50,5 +54,23 @@ public class LoginController extends MenuController {
         paneContent.getChildren().clear();
         final Pane newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/register/register.fxml"));
         paneContent.getChildren().add(newLoadedPane);
+    }
+
+    public void checkChanged() {
+        if(checkPass.isSelected()){
+            txtPassword.setVisible(false);
+            txtPasswordVisible.setVisible(true);
+            txtPasswordVisible.setText(txtPassword.getText());
+            txtPasswordVisible.requestFocus();
+            txtPasswordVisible.deselect();
+            txtPasswordVisible.positionCaret(txtPasswordVisible.getLength());
+        }else{
+            txtPassword.setVisible(true);
+            txtPasswordVisible.setVisible(false);
+            txtPassword.setText(txtPasswordVisible.getText());
+            txtPassword.requestFocus();
+            txtPassword.deselect();
+            txtPassword.positionCaret(txtPassword.getLength());
+        }
     }
 }
