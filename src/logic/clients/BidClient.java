@@ -63,7 +63,7 @@ public class BidClient extends UnicastRemoteObject implements IBidClient {
         final Bid bid = (Bid) propertyChangeEvent.getNewValue();
         Platform.runLater(() -> {
             auctionController.addBidToList(bid);
-            auctionController.addBidsToInterface(true);
+            auctionController.addBidsToInterface();
         });
     }
 }
