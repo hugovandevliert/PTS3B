@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -32,8 +33,12 @@ public class ProfileTest {
     }
 
     @Test
-    public void testAddAuction() {
-        //todo
+    public void testAddAuction() throws ClassNotFoundException, SQLException, NoSuchAlgorithmException, IOException {
+        applicationManager.login("user1", "User1!");
+        Profile profile = applicationManager.getCurrentUser().getProfile();
+        profile.addAuction(new Auction("testAuction123", "testdescription", 0, 1, LocalDateTime.now().plusDays(1), LocalDateTime.now().plusDays(2), false, null, null, 1));
+
+        assertEquals(profile.getAuctions().get(0).getTitle(), "testAuction123", "Problem adding auction..");
     }
 
     @Test
@@ -80,7 +85,10 @@ public class ProfileTest {
 
     @Test
     void testGetCreationDate() {
-        //todo
+        LocalDateTime ldt = LocalDateTime.now();
+        Profile p = new Profile(1, "testuser", "test", ldt, null, "testuser@email.com", null, null);
+
+        assertSame(ldt, p.getCreationDate());
     }
 
     @Test
