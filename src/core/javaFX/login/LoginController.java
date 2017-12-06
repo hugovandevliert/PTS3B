@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXTextField;
 import core.javaFX.menu.MenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import utilities.enums.AlertType;
 import java.io.IOException;
@@ -60,17 +61,23 @@ public class LoginController extends MenuController {
         if(checkPass.isSelected()){
             txtPassword.setVisible(false);
             txtPasswordVisible.setVisible(true);
-            txtPasswordVisible.setText(txtPassword.getText());
             txtPasswordVisible.requestFocus();
             txtPasswordVisible.deselect();
             txtPasswordVisible.positionCaret(txtPasswordVisible.getLength());
         }else{
             txtPassword.setVisible(true);
             txtPasswordVisible.setVisible(false);
-            txtPassword.setText(txtPasswordVisible.getText());
             txtPassword.requestFocus();
             txtPassword.deselect();
             txtPassword.positionCaret(txtPassword.getLength());
+        }
+    }
+
+    public void synchronizePasswordfields(KeyEvent keyEvent) {
+        if (keyEvent.getSource().equals(txtPassword)) {
+            txtPasswordVisible.setText(txtPassword.getText());
+        } else {
+            txtPassword.setText(txtPasswordVisible.getText());
         }
     }
 }

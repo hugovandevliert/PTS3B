@@ -1,6 +1,7 @@
-package core.javaFX.profile;
+package core.javaFX.feedback;
 
 import core.javaFX.menu.MenuController;
+import core.javaFX.profile.ProfileController;
 import data.contexts.ProfileMySqlContext;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,21 +29,21 @@ public class ListedFeedbackController extends MenuController {
     @Override
     public void initialize(final URL location, final ResourceBundle resources) { }
 
-    void setMenuController(final MenuController menuController) { this.menuController = menuController; }
+    public void setMenuController(final MenuController menuController) { this.menuController = menuController; }
 
-    void setAuthorId(final int authorId) {
+    public void setAuthorId(final int authorId) {
         this.authorId = authorId;
     }
 
-    void setAuthor(final String author) {
+    public void setAuthor(final String author) {
         lblAuthorName.setText(author);
     }
 
-    void setDate(final LocalDateTime date) {
+    public void setDate(final LocalDateTime date) {
         lblDateValue.setText(date.toLocalDate().toString());
     }
 
-    void setDescription(final String description) {
+    public void setDescription(final String description) {
         textAuctionDescription.setText(description);
     }
 

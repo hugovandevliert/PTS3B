@@ -1,6 +1,7 @@
 package core.javaFX.profile;
 
 import core.javaFX.auctions.ListedAuctionController;
+import core.javaFX.feedback.ListedFeedbackController;
 import core.javaFX.menu.MenuController;
 import data.contexts.UserMySqlContext;
 import javafx.fxml.FXML;
@@ -114,7 +115,7 @@ public class ProfileController extends MenuController {
     private void setFeedbacks(final List<Feedback> feedbacks) throws IOException {
         if (!feedbacks.isEmpty()) {
             for (final Feedback feedback : feedbacks) {
-                fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/profile/listedFeedback.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/feedback/listedFeedback.fxml"));
                 final Pane listedFeedbackPane = fxmlLoader.load();
                 final ListedFeedbackController listedFeedbackController = fxmlLoader.getController();
 
