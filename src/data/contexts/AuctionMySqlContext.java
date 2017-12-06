@@ -76,12 +76,12 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     @Override
-    public ArrayList<Auction> getWonAuctionsWithoutFeedbackForProfile(final int profileId) throws SQLException, IOException, ClassNotFoundException {
+    public ArrayList<Auction> getWonAuctionsWithoutFeedbackForProfile(final int auctionCreatorId, final int feedbackAuthorId) throws SQLException, IOException, ClassNotFoundException {
         final String query = "SELECT DISTINCT au.id, au.title, au.description, au.startingBid " +
                 "FROM Account a INNER JOIN Auction au  ON a.id = au.creator_id INNER JOIN Bid b ON au.id = b.auction_id " +
                 "LEFT JOIN Feedback f ON au.id = f.auction_id " +
-                "WHERE (au.endDate <= curdate() OR au.status = 'CLOSED') AND f.auction_id IS NULL AND a.id = ?";
-        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(profileId) });
+                "WHERE (au.endDate <= curdate() OR au.status = 'CLOSED') AND f.auction_id IS NULL AND a.id = ? AND ((SELECT b.account_id FROM Bid b WHERE b.auction_id = au.id ORDER BY b.amount DESC LIMIT 1) = ?)";
+        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionCreatorId), String.valueOf(feedbackAuthorId) });
         final ArrayList<Auction> auctions = new ArrayList<>();
 
         if (resultSet != null) {

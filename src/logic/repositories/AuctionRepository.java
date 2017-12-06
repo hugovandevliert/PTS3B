@@ -27,8 +27,8 @@ public class AuctionRepository {
         return context.getFavoriteAuctionsForProfile(profileId);
     }
 
-    public ArrayList<Auction> getWonAuctionsWithoutFeedbackForProfile(final int profileId) throws SQLException, IOException, ClassNotFoundException {
-        return context.getWonAuctionsWithoutFeedbackForProfile(profileId);
+    public ArrayList<Auction> getWonAuctionsWithoutFeedbackForProfile(final int auctionCreatorId, final int feedbackAuthorId) throws SQLException, IOException, ClassNotFoundException {
+        return context.getWonAuctionsWithoutFeedbackForProfile(auctionCreatorId, feedbackAuthorId);
     }
 
     public Auction getAuctionForId(final int auctionId, final AuctionLoadingType auctionLoadingType) throws SQLException, IOException, ClassNotFoundException {

@@ -2,6 +2,7 @@ package data.contexts;
 
 import data.interfaces.IFeedbackContext;
 import logic.repositories.ProfileRepository;
+import modelslibrary.Auction;
 import modelslibrary.Feedback;
 import utilities.database.Database;
 import utilities.enums.FeedbackLoadingType;
@@ -9,13 +10,14 @@ import utilities.enums.ProfileLoadingType;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class FeedbackMySqlContext implements IFeedbackContext {
 
     private final ProfileRepository profileRepository;
 
-    FeedbackMySqlContext(){
+    public FeedbackMySqlContext(){
         this.profileRepository = new ProfileRepository(new ProfileMySqlContext());
     }
 
@@ -31,6 +33,13 @@ public class FeedbackMySqlContext implements IFeedbackContext {
             }
         }
         return feedbacks;
+    }
+
+    @Override
+    public boolean addFeedback(final boolean isPositive, final String message, final int accountId, final int authorId, final Auction auction) {
+        final String query = "INSERT INTO MyAuctions.Feedback (ispositive, date, message, account_id, author_id, auction_id) values (?, ?, ?, ?, ?, ?)";
+
+        return 1 == Database.setData(query, new String[]{ String.valueOf(isPositive), String.valueOf(LocalDateTime.now()), message, String.valueOf(accountId), String.valueOf(authorId), String.valueOf(auction.getId()) }, true);
     }
 
     private Feedback getFeedbackFromResultSet(final ResultSet resultSet, final FeedbackLoadingType feedbackLoadingType) throws SQLException, IOException, ClassNotFoundException {

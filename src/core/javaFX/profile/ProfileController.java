@@ -215,8 +215,11 @@ public class ProfileController extends MenuController {
             final FeedbackController feedbackController = fxmlLoader.getController();
 
             feedbackController.setFeedbackIcons();
+            feedbackController.setMenuController(this.menuController);
+            feedbackController.setProfile(profile);
+            feedbackController.setAuthor(applicationManager.getCurrentUser().getId());
             feedbackController.setUserName(profile.getUsername());
-            feedbackController.addAuctionNames(auctionRepository.getWonAuctionsWithoutFeedbackForProfile(profile.getProfileId()));
+            feedbackController.addAuctionNames(auctionRepository.getWonAuctionsWithoutFeedbackForProfile(profile.getProfileId(), applicationManager.getCurrentUser().getId()));
             paneContent.getChildren().clear();
             paneContent.getChildren().add(feedbackPane);
         } catch (SQLException exception) {

@@ -1,6 +1,7 @@
 package logic.repositories;
 
 import data.interfaces.IFeedbackContext;
+import modelslibrary.Auction;
 import modelslibrary.Feedback;
 
 import java.io.IOException;
@@ -17,5 +18,9 @@ public class FeedbackRepository {
 
     public ArrayList<Feedback> getFeedbacks(final int profileId) throws SQLException, IOException, ClassNotFoundException {
         return context.getFeedbacks(profileId);
+    }
+
+    public boolean addFeedback(final boolean isPositive, final String message, final int accountId, final int authorId, final Auction auction) {
+        return context.addFeedback(isPositive, message, accountId, authorId, auction);
     }
 }
