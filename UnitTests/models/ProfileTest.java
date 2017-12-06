@@ -84,7 +84,7 @@ public class ProfileTest {
     }
 
     @Test
-    void testGetCreationDate() {
+    public void testGetCreationDate() {
         LocalDateTime ldt = LocalDateTime.now();
         Profile p = new Profile(1, "testuser", "test", ldt, null, "testuser@email.com", null, null);
 
