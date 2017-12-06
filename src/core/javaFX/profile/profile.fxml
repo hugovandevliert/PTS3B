@@ -36,6 +36,7 @@
                   <Font name="Segoe UI Semilight" size="14.0" />
                </font></Label>
             <ImageView fx:id="imgviewPositiveIcon" fitHeight="53.0" fitWidth="60.0" layoutX="590.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgviewNegativeIcon" fitHeight="53.0" fitWidth="60.0" layoutX="736.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="lblPositiveFeedbacksCount" alignment="CENTER" layoutX="590.0" layoutY="193.0" prefHeight="21.0" prefWidth="60.0" text="0" textAlignment="CENTER" textFill="#a6b5c9">
                <font>
                   <Font name="Segoe UI Light" size="18.0" />
@@ -64,7 +65,6 @@
                   <Font name="Segoe UI" size="18.0" />
                </font>
             </Label>
-            <ImageView fx:id="imgviewNegativeIcon" fitHeight="53.0" fitWidth="60.0" layoutX="736.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
             <JFXButton fx:id="btnLogout" layoutX="874.0" layoutY="7.0" onAction="#logout" prefHeight="33.0" prefWidth="84.0" style="-fx-background-color: f2aa78;" text="Logout" textFill="#824923">
                <font>
                   <Font name="Segoe UI Light" size="14.0" />
