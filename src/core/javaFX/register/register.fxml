@@ -84,6 +84,31 @@
                <font>
                   <Font name="Segoe UI Semilight" size="12.0" />
                </font></JFXCheckBox>
+            <Label layoutX="99.0" layoutY="159.0" text="name:" textFill="#788599">
+               <font>
+                  <Font name="Segoe UI Semilight" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="600.0" layoutY="159.0" text="username:" textFill="#788599">
+               <font>
+                  <Font name="Segoe UI Semilight" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="100.0" layoutY="267.0" text="email:" textFill="#788599">
+               <font>
+                  <Font name="Segoe UI Semilight" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="104.0" layoutY="359.0" text="validate email:" textFill="#788599">
+               <font>
+                  <Font name="Segoe UI Semilight" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="604.0" layoutY="258.0" text="password:" textFill="#788599">
+               <font>
+                  <Font name="Segoe UI Semilight" size="12.0" />
+               </font>
+            </Label>
             </children>
         </Pane>
     </children>
