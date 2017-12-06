@@ -4,8 +4,10 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import core.javaFX.menu.MenuController;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.layout.Pane;
 import utilities.enums.AlertType;
 import java.io.IOException;
@@ -21,6 +23,7 @@ public class RegisterController extends MenuController {
     @FXML private JFXTextField txtEmailValidate;
     @FXML private JFXTextField txtUsername;
     @FXML private JFXPasswordField txtPassword;
+    @FXML private JFXTextField txtPasswordVisible;
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
@@ -61,19 +64,19 @@ public class RegisterController extends MenuController {
 
     public void checkChanged() {
         if(checkPass.isSelected()){
-            checkPass.setText(txtPassword.getText());
-        }
-        else{
-            checkPass.setText("View Password");
-        }
-    }
-
-    public void checkViewPass() {
-        if(checkPass.isSelected()){
-            checkPass.setText(txtPassword.getText());
-        }
-        else{
-            checkPass.setText("View Password");
+            txtPassword.setVisible(false);
+            txtPasswordVisible.setVisible(true);
+            txtPasswordVisible.setText(txtPassword.getText());
+            txtPasswordVisible.requestFocus();
+            txtPasswordVisible.deselect();
+            txtPasswordVisible.positionCaret(txtPasswordVisible.getLength());
+        }else{
+            txtPassword.setVisible(true);
+            txtPasswordVisible.setVisible(false);
+            txtPassword.setText(txtPasswordVisible.getText());
+            txtPassword.requestFocus();
+            txtPassword.deselect();
+            txtPassword.positionCaret(txtPassword.getLength());
         }
     }
 }

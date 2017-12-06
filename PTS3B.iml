@@ -41,7 +41,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="jfoenix" level="project" />
     <orderEntry type="library" name="com.jfoenix:jfoenix:1.8.0" level="project" />
     <orderEntry type="module-library" scope="TEST">
       <library name="JUnit5">
@@ -55,9 +54,13 @@
     </orderEntry>
     <orderEntry type="library" name="ModelsLibrary" level="project" />
     <orderEntry type="library" name="ModelsLibrary" level="project" />
-    <orderEntry type="library" name="mysql-connector-java-5.1.44-bin" level="project" />
     <orderEntry type="library" name="IBidServer" level="project" />
     <orderEntry type="library" name="CustomPublisher" level="project" />
     <orderEntry type="library" name="IBidClient" level="project" />
+    <orderEntry type="library" name="IBidClient" level="project" />
+    <orderEntry type="library" name="IBidServer" level="project" />
+    <orderEntry type="library" name="CustomPublisher" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-5.1.44-bin" level="project" />
+    <orderEntry type="library" name="jfoenix" level="project" />
   </component>
 </module>

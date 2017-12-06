@@ -163,7 +163,7 @@ public class AuctionController extends MenuController {
                 addBidToList(bid);
             }
 
-            addBidsToInterface(false);
+            addBidsToInterface();
         }else{
             final Label lblNoBids1 = new Label("Be the first one to place a bid!");
             final Label lblNoBids2 = new Label("The price to start bidding at is " + convertToEuro(startBid));
@@ -182,20 +182,13 @@ public class AuctionController extends MenuController {
         this.bids.add(bid);
     }
 
-    public void addBidsToInterface(final boolean loadBackwards) {
+    public void addBidsToInterface() {
         vboxBids.getChildren().clear();
 
-        if (loadBackwards){
-            /* We need to iterate through all the bids with a backwards direction to assure the most recent bid is the first displayed */
-            for(int i = bids.size() - 1; i >= 0; i--){
-                final Bid bid = bids.get(i);
+        Collections.sort(this.bids);
 
-                displayBid(bid);
-            }
-        }else{
-            for (final Bid bid : bids){
-                displayBid(bid);
-            }
+        for (final Bid bid : bids){
+            displayBid(bid);
         }
     }
 
