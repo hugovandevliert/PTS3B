@@ -105,13 +105,14 @@ public class AddAuctionController extends MenuController {
                     auctionController.setAuction(auction, this);
                     paneContent.getChildren().add(auctionPane);
                 }else{
-                    MenuController.showAlertMessage("Something went wrong - Couldn't load auction page", AlertType.ERROR, 3000);
+                    MenuController.showAlertMessage("Something went wrong - Couldn't load auction page", AlertType.ERROR, 5000);
                 }
             }else{
-                MenuController.showAlertMessage("Your auction could not be added - Please try again.", AlertType.ERROR, 3000);
+                MenuController.showAlertMessage("Your auction could not be added - Please try again.", AlertType.ERROR, 5000);
             }
         } catch (IllegalArgumentException | IOException | SQLException | ClassNotFoundException exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
+            exception.printStackTrace();
         }
     }
 
@@ -123,7 +124,8 @@ public class AddAuctionController extends MenuController {
      * @param expirationDate: Date/time when the auction is planned to close. Should be later then the current date.
      * @param openingDate:    Date/time when the auction is planned to open. Should be earlier then the the expirationdate, and can't be earlier then today.
      * @param isPremium:      Indicates if a user paid to boost his auction.
-     * @param title:          Title of the auction. Can't contain more then 64 characters.
+     * @param title:          Title of the auction. Can't contain more then 64 or less than 5 characters.
+     * @param description:    Description of the auction. Can't contain more than 1000 or less than 20 characters.
      * @param fileImages:     The file's which represent the images added to this auction.
      */
     private boolean addAuction(final double startBid, final double incrementation, final double minimum, final LocalDateTime expirationDate, final LocalDateTime openingDate,
@@ -154,6 +156,15 @@ public class AddAuctionController extends MenuController {
         }
         else if (title.length() > 64){
             throw new IllegalArgumentException("Title can not be longer than 64 characters.");
+        }
+        else if (title.length() < 5){
+            throw new IllegalArgumentException("Title can not be less than 5 characters.");
+        }
+        else if (description.length() > 1000){
+            throw new IllegalArgumentException("Description can not be longer than 1000 characters.");
+        }
+        else if (description.length() < 20){
+            throw new IllegalArgumentException("Description can not be less than 20 characters.");
         }
 
         final Profile currentUser = applicationManager.getCurrentUser().getProfile();
@@ -188,7 +199,7 @@ public class AddAuctionController extends MenuController {
         if (time.matches( "([01]?[0-9]|2[0-3]):[0-5][0-9]")) {
             return LocalTime.parse(time);
         } else {
-            throw new IllegalArgumentException("Please enter a valid time");
+            throw new IllegalArgumentException("Please enter a valid time.");
         }
     }
 
@@ -199,16 +210,16 @@ public class AddAuctionController extends MenuController {
              DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
              return LocalDate.parse(date, formatter);
         } else {
-            throw new IllegalArgumentException("Please enter a valid date");
+            throw new IllegalArgumentException("Please enter a valid date.");
         }
     }
 
     private double convertToDouble(final String text) {
         text.replaceAll(",", ".");
-        if (text.matches("[0-9]*")) {
+        if (!text.isEmpty() && text.matches("[0-9]*")) {
             return Double.parseDouble(text);
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Please enter a valid amount.");
         }
     }
 }
