@@ -159,7 +159,7 @@ public class ProfileController extends MenuController {
                 if (successful){
                     MenuController.showAlertMessage("Your profile picture has successfully been changed!", AlertType.MESSAGE, 3000);
 
-                    final Image image = new Image("file:" +  selectedImage.getAbsolutePath(), 275, 196, false, false);
+                    final Image image = new Image("file:" +  selectedImage.getAbsolutePath(), 275, 196, true, false);
                     setProfilePicture(image);
                 }else{
                     MenuController.showAlertMessage("Uploading the selected image failed - please try again!", AlertType.ERROR, 3000);

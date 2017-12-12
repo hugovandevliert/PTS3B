@@ -63,16 +63,16 @@ public class AddAuctionController extends MenuController {
             ImageView source = (ImageView) mouseEvent.getSource();
             if (source == imgviewPicture1) {
                 images[0] = selectedImage;
-                imgviewPicture1.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 225, 156, false, false));
+                imgviewPicture1.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 225, 156, true, false));
             } else if (source == imgviewPicture2) {
                 images[1] = selectedImage;
-                imgviewPicture2.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 225, 156, false, false));
+                imgviewPicture2.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 225, 156, true, false));
             } else if (source == imgviewPicture3) {
                 images[2] = selectedImage;
-                imgviewPicture3.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 225, 156, false, false));
+                imgviewPicture3.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 225, 156, true, false));
             } else if (source == imgviewPicture4) {
                 images[3] = selectedImage;
-                imgviewPicture4.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 225, 156, false, false));
+                imgviewPicture4.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 225, 156, true, false));
             }
         }
     }
