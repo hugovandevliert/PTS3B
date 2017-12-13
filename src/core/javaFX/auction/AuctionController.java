@@ -108,7 +108,7 @@ public class AuctionController extends MenuController {
            This will handle all the incoming bids through Server Push RMI Mechaics.
          */
         try {
-            final BidClient bidClient = new BidClient(applicationManager.getRmiClientsManager().getBidsRegistry(), this.auctionId, applicationManager.getRmiClientsManager(), this);
+            final BidClient bidClient = new BidClient(applicationManager.getRmiClientsManager().getBidsRegistry(), this.auctionId, applicationManager.getCurrentUser().getId(), applicationManager.getRmiClientsManager(), this);
             applicationManager.getRmiClientsManager().addBidClient(bidClient);
         } catch (IOException e) {
             e.printStackTrace();

@@ -24,11 +24,13 @@ public class BidClient extends UnicastRemoteObject implements IBidClient {
     private IBidServer server;
 
     private final int auctionId;
+    private final int currentUserId;
     private final AuctionController auctionController;
 
-    public BidClient(final Registry registry, final int auctionId, final RMIClientsManager rmiClientsManager, final AuctionController auctionController) throws IOException, NotBoundException {
+    public BidClient(final Registry registry, final int auctionId, final int currentUserId, final RMIClientsManager rmiClientsManager, final AuctionController auctionController) throws IOException, NotBoundException {
         super();
         this.auctionId = auctionId;
+        this.currentUserId = currentUserId;
         this.auctionController = auctionController;
 
         /* This is needed to assure we will not get a connection refused. The server also has this line of code. When the IP changes it should be edited in the server as well */
@@ -61,9 +63,19 @@ public class BidClient extends UnicastRemoteObject implements IBidClient {
     public void propertyChange(PropertyChangeEvent propertyChangeEvent) throws RemoteException {
         // The server sent us a new bid. We should display it.
         final Bid bid = (Bid) propertyChangeEvent.getNewValue();
+
+        /* We do want to display that a new bid has been added to the user, if the user did not just place this bid himself. */
+        if (!isCurrentUser(bid.getProfile().getProfileId())){
+            Platform.runLater(() -> MenuController.showAlertMessage("A new bid has been added!", AlertType.MESSAGE, 5000));
+        }
+
         Platform.runLater(() -> {
             auctionController.addBidToList(bid);
             auctionController.addBidsToInterface();
         });
+    }
+
+    private boolean isCurrentUser(final int userId) {
+        return userId == this.currentUserId;
     }
 }
