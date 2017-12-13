@@ -27,6 +27,7 @@ public class UserAlertController extends MenuController {
         this.isClickable = true;
         initializeAlertMessage(message, alertType, -1);
         paneBackgroundColor.setCursor(Cursor.HAND);
+        lblMessage.setCursor(Cursor.HAND);
     }
 
     public void setMessage(final String message, final AlertType alertType, final int delay) {
