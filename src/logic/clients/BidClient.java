@@ -66,7 +66,7 @@ public class BidClient extends UnicastRemoteObject implements IBidClient {
 
         /* We do want to display that a new bid has been added to the user, if the user did not just place this bid himself. */
         if (!isCurrentUser(bid.getProfile().getProfileId())){
-            Platform.runLater(() -> MenuController.showAlertMessage("A new bid has been added!", AlertType.MESSAGE, 5000));
+            Platform.runLater(() -> MenuController.showAlertMessage("A new bid has been added!", AlertType.MESSAGE));
         }
 
         Platform.runLater(() -> {

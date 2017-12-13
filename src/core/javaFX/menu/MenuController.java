@@ -211,5 +211,9 @@ public class MenuController implements Initializable {
     public static void showAlertMessage(final String message, final AlertType alertType, final int delay) {
         userAlertController.setMessage(message, alertType, delay);
     }
+
+    public static void showAlertMessage(final String message, final AlertType alertType) {
+        userAlertController.setMessage(message, alertType);
+    }
 }
 

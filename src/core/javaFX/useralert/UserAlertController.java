@@ -15,10 +15,23 @@ public class UserAlertController extends MenuController {
     @FXML private Label lblMessage;
     @FXML private Pane paneBackgroundColor;
 
+    private Timer timer;
+    private HideAlertTimer hideAlertTimer;
+    private boolean isClickable;
+
     @Override
     public void initialize(final URL location, final ResourceBundle resources) { }
 
+    public void setMessage(final String message, final AlertType alertType) {
+        this.isClickable = true;
+        initializeAlertMessage(message, alertType, -1);
+    }
+
     public void setMessage(final String message, final AlertType alertType, final int delay) {
+        initializeAlertMessage(message, alertType, delay);
+    }
+
+    private void initializeAlertMessage(final String message, final AlertType alertType, final int delay) {
         switch (alertType){
             case MESSAGE:
                 paneBackgroundColor.setStyle("-fx-background-color: rgba(93, 116, 78, 1); -fx-background-radius: 2;");
@@ -33,14 +46,23 @@ public class UserAlertController extends MenuController {
 
         lblMessage.setText(message);
 
-        final Timer timer = new Timer();
-        final HideAlertTimer hideAlertTimer = new HideAlertTimer(this, message);
-        timer.schedule(hideAlertTimer, delay);
+        if (!this.isClickable){
+            timer = new Timer();
+            hideAlertTimer = new HideAlertTimer(this, message);
+            timer.schedule(hideAlertTimer, delay);
+        }
     }
 
     public void hideAlert() {
+        timer.cancel();
+        hideAlertTimer.cancel();
+
         paneBackgroundColor.setStyle("-fx-background-color: #3d4857; -fx-background-radius: 2;");
         lblMessage.setText("");
+    }
+
+    public void clickedOnAlert() {
+        if (this.isClickable) hideAlert();
     }
 
     public String getCurrentAlertMessage() {
