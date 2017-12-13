@@ -79,7 +79,7 @@ public class ProfileController extends MenuController {
             imgviewProfilePicture.setImage(image);
         }else{
             final Image placeholderImage = new Image("file:" +  new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath(),
-                    275, 206, false, false);
+                    275, 206, true, false);
             imgviewProfilePicture.setImage(placeholderImage);
         }
     }

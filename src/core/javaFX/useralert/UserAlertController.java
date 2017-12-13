@@ -2,6 +2,7 @@ package core.javaFX.useralert;
 
 import core.javaFX.menu.MenuController;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import logic.timers.HideAlertTimer;
@@ -25,6 +26,7 @@ public class UserAlertController extends MenuController {
     public void setMessage(final String message, final AlertType alertType) {
         this.isClickable = true;
         initializeAlertMessage(message, alertType, -1);
+        paneBackgroundColor.setCursor(Cursor.HAND);
     }
 
     public void setMessage(final String message, final AlertType alertType, final int delay) {
