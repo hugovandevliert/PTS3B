@@ -9,6 +9,7 @@ import data.contexts.UserMySqlContext;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -37,6 +38,7 @@ public class ProfileController extends MenuController {
     @FXML private ImageView imgviewProfilePicture, imgviewPositiveIcon, imgviewNegativeIcon;
     @FXML private Label lblName, lblUserSince, lblPositiveFeedbacksCount, lblNegativeFeedbacksCount;
     @FXML private VBox vboxListedAuctions, vboxListedFeedbacks;
+    @FXML private Button btnAddFeedback;
 
     private FXMLLoader fxmlLoader;
     private Profile profile;
@@ -70,6 +72,10 @@ public class ProfileController extends MenuController {
         setFeedbackCounts(profile.getFeedbacks());
         setAuctions(profile.getAuctions());
         setFeedbacks(profile.getFeedbacks());
+
+        if (profileIsFromLoggedInUser()){
+            btnAddFeedback.setVisible(false);
+        }
     }
 
     private void setProfileVariable(final Profile profile) { this.profile = profile; }

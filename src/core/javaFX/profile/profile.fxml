@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.profile.ProfileController">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.profile.ProfileController">
     <columnConstraints>
         <ColumnConstraints />
     </columnConstraints>
@@ -73,7 +73,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton fx:id="btnLogin" layoutX="351.0" layoutY="184.0" onAction="#addFeedback" prefHeight="45.0" prefWidth="205.0" style="-fx-background-color: f2aa78;" text="Add feedback" textFill="#824923">
+            <JFXButton fx:id="btnAddFeedback" layoutX="351.0" layoutY="184.0" onAction="#addFeedback" prefHeight="45.0" prefWidth="205.0" style="-fx-background-color: f2aa78;" text="Add feedback" textFill="#824923">
                <font>
                   <Font name="Segoe UI Light" size="14.0" />
                </font>
