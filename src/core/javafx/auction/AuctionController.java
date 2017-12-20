@@ -93,7 +93,8 @@ public class AuctionController extends MenuController {
         bids = new ArrayList<>();
     }
 
-    public void setAuction(final Auction auction, final MenuController menuController) {
+    public void setAuction(final Auction auction, final MenuController menuController) throws SQLException, IOException, ClassNotFoundException {
+        initializeRepositories();
         setTitle(auction.getTitle());
         setDescription(auction.getDescription());
         setSeller(auction.getCreator().getUsername());
@@ -102,12 +103,18 @@ public class AuctionController extends MenuController {
         setAuctionId(auction.getId());
         setCreatorId(auction.getCreator().getProfileId());
         setCurrentUserId(applicationManager.getCurrentUser().getId());
-        setBidTextfieldPromptText("Your bid: (at least + " + convertToEuro(auction.getIncrementation()) + ")");
+        final Bid mostRecentBid = bidRepository.getMostRecentBidForAuctionWithId(auction.getId(), BidLoadingType.FOR_MOST_RECENT_BID);
+        double minimalBid;
+        if (mostRecentBid != null) {
+            minimalBid = mostRecentBid.getAmount() + auction.getIncrementation();
+        } else {
+            minimalBid = auction.getStartBid();
+        }
+        setBidTextfieldPromptText("Your bid: (at least " + convertToEuro(minimalBid) + ")");
         setAuctionMinimumBid(auction.getStartBid());
         setAuctionMinimumIncrementation(auction.getIncrementation());
         setMenuController(menuController);
         initializeCountdownTimer();
-        initializeRepositories();
         handleEndAuctionPaneRemoving();
         handleAddToFavoritesButtonRemoving(auction.getCreator().getProfileId());
 
@@ -118,7 +125,7 @@ public class AuctionController extends MenuController {
         }
 
         /* Let's make sure we will add a BidClient to our RMIClientsManager for the auction that we're currently trying to view.
-           This will handle all the incoming bids through Server Push RMI Mechaics.
+           This will handle all the incoming bids through Server Push RMI Mechanics.
          */
         try {
             final BidClient bidClient = new BidClient(applicationManager.getRmiClientsManager().getBidsRegistry(), this.auctionId, applicationManager.getCurrentUser().getId(), applicationManager.getRmiClientsManager(), this);
