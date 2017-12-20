@@ -228,11 +228,7 @@ public class ProfileController extends MenuController {
             feedbackController.addAuctionNames(auctionRepository.getWonAuctionsWithoutFeedbackForProfile(profile.getProfileId(), applicationManager.getCurrentUser().getId()));
             paneContent.getChildren().clear();
             paneContent.getChildren().add(feedbackPane);
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-        } catch (ClassNotFoundException exception) {
-            exception.printStackTrace();
+        } catch (SQLException | ClassNotFoundException exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }

@@ -110,11 +110,7 @@ public class AuctionController extends MenuController {
         try {
             final BidClient bidClient = new BidClient(applicationManager.getRmiClientsManager().getBidsRegistry(), this.auctionId, applicationManager.getCurrentUser().getId(), applicationManager.getRmiClientsManager(), this);
             applicationManager.getRmiClientsManager().addBidClient(bidClient);
-        } catch (IOException e) {
-            e.printStackTrace();
-            MenuController.showAlertMessage(e.getMessage(), AlertType.ERROR, 3000);
-        } catch (NotBoundException e) {
-            e.printStackTrace();
+        } catch (IOException | NotBoundException e) {
             MenuController.showAlertMessage(e.getMessage(), AlertType.ERROR, 3000);
         }
     }
@@ -295,7 +291,7 @@ public class AuctionController extends MenuController {
                 final String bidPriceString = txtBid.getText().replaceAll(",", ".");
                 txtBid.setText("");
 
-                if (bidPriceString != null && bidPriceString.length() > 0 && !bidPriceString.isEmpty() && Database.isDouble(bidPriceString)){
+                if (bidPriceString != null && bidPriceString.length() > 0 && Database.isDouble(bidPriceString)){
                     final double bidAmount = Double.parseDouble(bidPriceString);
                     double minimumNeededAmount = 0;
                     final Bid mostRecentBid = bidRepository.getMostRecentBidForAuctionWithId(this.auctionId);

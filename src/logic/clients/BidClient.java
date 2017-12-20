@@ -20,7 +20,6 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class BidClient extends UnicastRemoteObject implements IBidClient {
 
-    private IRemotePublisherForListener messageListener;
     private IBidServer server;
 
     private final int auctionId;
@@ -36,7 +35,7 @@ public class BidClient extends UnicastRemoteObject implements IBidClient {
         /* This is needed to assure we will not get a connection refused. The server also has this line of code. When the IP changes it should be edited in the server as well */
         System.setProperty("java.rmi.server.hostname", Constants.SERVER_IP);
 
-        messageListener = (IRemotePublisherForListener) registry.lookup(Constants.SERVER_NAME_THAT_PUSHES_TO_CLIENTS);
+        IRemotePublisherForListener messageListener = (IRemotePublisherForListener) registry.lookup(Constants.SERVER_NAME_THAT_PUSHES_TO_CLIENTS);
         messageListener.subscribeRemoteListener(this, Constants.CHANGED_PROPERTY);
         rmiClientsManager.addBidServerMessageListener(messageListener, this);
         System.out.println("Subscribed message listener for receiving bids from server");
@@ -49,18 +48,17 @@ public class BidClient extends UnicastRemoteObject implements IBidClient {
         try {
             server.sendBid(bid);
         } catch (RemoteException e) {
-            e.printStackTrace();
             MenuController.showAlertMessage(e.getMessage(), AlertType.ERROR, 3000);
         }
     }
 
     @Override
-    public int getAuctionId() throws RemoteException {
+    public int getAuctionId() {
         return this.auctionId;
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent propertyChangeEvent) throws RemoteException {
+    public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
         // The server sent us a new bid. We should display it.
         final Bid bid = (Bid) propertyChangeEvent.getNewValue();
 

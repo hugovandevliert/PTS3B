@@ -31,7 +31,9 @@ public class ListedAuctionController extends MenuController {
     private int auctionId;
 
     @Override
-    public void initialize(final URL location, final ResourceBundle resources) { }
+    public void initialize(final URL location, final ResourceBundle resources) {
+        //Should not run the Super method again because fields will be NULL
+    }
 
     public ListedAuctionController() { auctionRepository = new AuctionRepository(new AuctionMySqlContext()); }
 

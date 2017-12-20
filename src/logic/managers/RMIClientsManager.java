@@ -19,12 +19,10 @@ public class RMIClientsManager {
     private IRemotePublisherForListener bidServerMessageListener;
     private IRemotePropertyListener bidRemotePropertyListener;
 
-    public RMIClientsManager() {
+    RMIClientsManager() {
         try {
             bidsRegistry = LocateRegistry.getRegistry("localhost", Constants.PORT_NUMBER);
-            System.out.println("Bids Registry Located");
         } catch (RemoteException e) {
-            e.printStackTrace();
             MenuController.showAlertMessage(e.getMessage(), AlertType.ERROR, 3000);
         }
     }
@@ -51,7 +49,6 @@ public class RMIClientsManager {
             this.bidRemotePropertyListener = null;
             this.bidClient = null;
         } catch (RemoteException e) {
-            e.printStackTrace();
             MenuController.showAlertMessage(e.getMessage(), AlertType.ERROR, 3000);
         }
     }

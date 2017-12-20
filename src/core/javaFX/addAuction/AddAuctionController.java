@@ -112,7 +112,6 @@ public class AddAuctionController extends MenuController {
             }
         } catch (IllegalArgumentException | IOException | SQLException | ClassNotFoundException exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-            exception.printStackTrace();
         }
     }
 

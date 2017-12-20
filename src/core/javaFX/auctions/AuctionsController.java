@@ -39,7 +39,7 @@ public class AuctionsController extends MenuController {
     public void searchAuction() throws IOException {
         final String searchTerm = txtSearchBar.getText().trim();
 
-        if (searchTerm != null && searchTerm.length() > 0 && !searchTerm.isEmpty()){
+        if (!searchTerm.isEmpty()){
             try {
                 applicationManager.setLoadedAuctions(auctionRepository.getAuctionsForSearchTerm(searchTerm));
                 applicationManager.sortAuctionsByPrice();
@@ -82,7 +82,6 @@ public class AuctionsController extends MenuController {
                 vboxListedAuctions.getChildren().add(lblNoItemsForSearch);
             }
         } catch (IOException exception) {
-            exception.printStackTrace();
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }

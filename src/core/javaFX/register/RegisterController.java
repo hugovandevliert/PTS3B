@@ -31,7 +31,7 @@ public class RegisterController extends MenuController {
         //Should not run the Super method again because fields will be NULL
     }
 
-    public void register() throws InterruptedException, IOException {
+    public void register() {
         if (!txtEmailValidate.getText().equals(txtEmail.getText())) {
             MenuController.showAlertMessage("The emails do not match", AlertType.WARNING, 3000);
             return;

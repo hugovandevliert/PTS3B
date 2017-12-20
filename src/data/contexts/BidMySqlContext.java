@@ -48,14 +48,14 @@ public class BidMySqlContext implements IBidContext {
             case FOR_AUCTION:
                 return new Bid
                         (
-                                profileRepository.getProfileForId(resultSet.getInt("account_id"), ProfileLoadingType.FOR_AUCTION_PAGE),
-                                resultSet.getDouble("amount"),
-                                resultSet.getTimestamp("date").toLocalDateTime()
+                            profileRepository.getProfileForId(resultSet.getInt("account_id"), ProfileLoadingType.FOR_AUCTION_PAGE),
+                            resultSet.getDouble("amount"),
+                            resultSet.getTimestamp("date").toLocalDateTime()
                         );
             case FOR_MOST_RECENT_BID:
                 return new Bid
                         (
-                          resultSet.getDouble("amount")
+                            resultSet.getDouble("amount")
                         );
                 default:
                     return null;

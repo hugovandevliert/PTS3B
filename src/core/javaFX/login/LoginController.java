@@ -23,7 +23,9 @@ public class LoginController extends MenuController {
     @FXML private JFXCheckBox checkPass;
 
     @Override
-    public void initialize(final URL location, final ResourceBundle resources) { }
+    public void initialize(final URL location, final ResourceBundle resources) {
+        //Should not run the Super method again because fields will be NULL
+    }
 
     public void login() throws IOException {
         if (txtUsername.getText().isEmpty() || txtPassword.getText().isEmpty()) {

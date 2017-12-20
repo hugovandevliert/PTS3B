@@ -40,7 +40,7 @@ public class ApplicationManager {
     }
 
     public void sortAuctionsByPrice() {
-        if (currentAuctionsComparator == null || currentAuctionsComparator.getClass().getSimpleName().equals("AuctionPriceHighToLowComparator")){
+        if (currentAuctionsComparator == null || currentAuctionsComparator instanceof AuctionPriceHighToLowComparator){
             currentAuctionsComparator = new AuctionPriceLowToHighComparator();
         }else{
             currentAuctionsComparator = new AuctionPriceHighToLowComparator();
@@ -115,7 +115,7 @@ public class ApplicationManager {
     }
 
     public List<Auction> getLoadedAuctions() {
-        if (loadedAuctions == null) return null;
+        if (loadedAuctions == null) return new ArrayList<>();
         return Collections.unmodifiableList(loadedAuctions);
     }
 

@@ -73,14 +73,7 @@ public class FeedbackController {
                             this.menuController.paneContent.getChildren().add(newLoadedPane);
 
                             MenuController.showAlertMessage("Your feedback has successfully been added!", AlertType.MESSAGE, 3000);
-                        } catch (IOException exception) {
-                            exception.printStackTrace();
-                            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-                        } catch (SQLException exception) {
-                            exception.printStackTrace();
-                            MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
-                        } catch (ClassNotFoundException exception) {
-                            exception.printStackTrace();
+                        } catch (IOException | SQLException | ClassNotFoundException exception) {
                             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
                         }
                     }else{
