@@ -203,23 +203,27 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     public Auction getAuctionFromResultSet(final ResultSet resultSet, final AuctionLoadingType auctionLoadingType) throws SQLException, IOException, ClassNotFoundException {
+        final String id = "id";
+        final String title = "title";
+        final String description = "description";
+        final String startingBid = "startingBid";
         switch (auctionLoadingType) {
             case FOR_LISTED_AUCTIONS:
                 return new Auction
                         (
-                                resultSet.getInt("id"),
-                                resultSet.getString("title"),
-                                resultSet.getString("description"),
-                                resultSet.getDouble("startingBid"),
+                                resultSet.getInt(id),
+                                resultSet.getString(title),
+                                resultSet.getString(description),
+                                resultSet.getDouble(startingBid),
                                 getImagesForAuctionWithId(auctionLoadingType, resultSet.getInt("id"))
                         );
             case FOR_AUCTION_PAGE:
                 return new Auction
                         (
-                                resultSet.getInt("id"),
-                                resultSet.getString("title"),
-                                resultSet.getString("description"),
-                                resultSet.getDouble("startingBid"),
+                                resultSet.getInt(id),
+                                resultSet.getString(title),
+                                resultSet.getString(description),
+                                resultSet.getDouble(startingBid),
                                 resultSet.getTimestamp("endDate").toLocalDateTime(),
                                 profileRepository.getProfileForId(resultSet.getInt("creator_id"), ProfileLoadingType.FOR_AUCTION_PAGE),
                                 getImagesForAuctionWithId(auctionLoadingType, resultSet.getInt("id")),
