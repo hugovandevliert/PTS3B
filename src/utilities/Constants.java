@@ -8,4 +8,6 @@ public class Constants {
     public static final String SERVER_IP = "localhost";
 
     public static final int PORT_NUMBER = 1098;
+
+    private Constants(){}
 }

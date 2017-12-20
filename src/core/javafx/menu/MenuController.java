@@ -52,6 +52,7 @@ public class MenuController implements Initializable {
     private Image favoritesIconHovered;
     private Image addAuctionIconHovered;
 
+    //Has to be static. Won't work otherwise.
     private static String lastCalledClass;
     private FXMLLoader fxmlLoader;
     private ProfileRepository profileRepository;
@@ -176,6 +177,8 @@ public class MenuController implements Initializable {
             case "imgviewAddAuction":
                 imgviewAddAuction.setImage(addAuctionIconHovered);
                 break;
+            default:
+                break;
         }
     }
 
@@ -196,6 +199,8 @@ public class MenuController implements Initializable {
                 break;
             case "imgviewAddAuction":
                 imgviewAddAuction.setImage(addAuctionIcon);
+                break;
+            default:
                 break;
         }
     }

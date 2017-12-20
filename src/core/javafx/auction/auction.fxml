@@ -22,7 +22,7 @@
         <RowConstraints />
     </rowConstraints>
     <children>
-          <Pane fx:id="paneContent" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;">
+          <Pane fx:id="paneAuctionContent" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;">
          <children>
             <ImageView fx:id="imgviewSelectedPicture" fitHeight="277.0" fitWidth="429.0" layoutX="21.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
             <VBox fx:id="vboxPictures" layoutX="467.0" layoutY="23.0" prefHeight="270.0" prefWidth="149.0" spacing="5.0">

@@ -23,11 +23,11 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class BidClient extends UnicastRemoteObject implements IBidClient {
 
-    private IBidServer server;
+    private transient IBidServer server;
 
     private final int auctionId;
     private final int currentUserId;
-    private final AuctionController auctionController;
+    private transient final AuctionController auctionController;
 
     public BidClient(final Registry registry, final int auctionId, final int currentUserId, final RMIClientsManager rmiClientsManager, final AuctionController auctionController) throws IOException, NotBoundException {
         super();
@@ -41,10 +41,8 @@ public class BidClient extends UnicastRemoteObject implements IBidClient {
         IRemotePublisherForListener messageListener = (IRemotePublisherForListener) registry.lookup(Constants.SERVER_NAME_THAT_PUSHES_TO_CLIENTS);
         messageListener.subscribeRemoteListener(this, Constants.CHANGED_PROPERTY);
         rmiClientsManager.addBidServerMessageListener(messageListener, this);
-        System.out.println("Subscribed message listener for receiving bids from server");
 
         server = (IBidServer) registry.lookup(Constants.SERVER_NAME_THAT_RECEIVES_FROM_CLIENTS);
-        System.out.println("Connected to server for sending bids towards server");
     }
 
     public void sendBid(final Bid bid) {

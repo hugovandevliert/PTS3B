@@ -47,6 +47,9 @@ public class UserAlertController extends MenuController {
             case WARNING:
                 paneBackgroundColor.setStyle("-fx-background-color: #F4A257; -fx-background-radius: 2;");
                 break;
+            default:
+                paneBackgroundColor.setStyle("-fx-background-color: #F4A257; -fx-background-radius: 2;");
+                break;
         }
 
         lblMessage.setText(message);

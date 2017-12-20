@@ -46,7 +46,7 @@ public class AuctionController extends MenuController {
     @FXML private Text textAuctionDescription;
     @FXML private ImageView imgviewSelectedPicture, imgviewPicture1, imgviewPicture2, imgviewPicture3;
     @FXML private VBox vboxBids;
-    @FXML private Pane panePlaceBid, paneEndAuction, paneContent;
+    @FXML private Pane panePlaceBid, paneEndAuction, paneAuctionContent;
     @FXML private JFXTextField txtBid;
     @FXML private JFXButton btnEndAuction, btnAddToFavorites;
 
@@ -75,7 +75,7 @@ public class AuctionController extends MenuController {
         btnAddToFavorites.setOnAction(event -> addToFavoriteAuctions());
         btnAddToFavorites.setCursor(Cursor.HAND);
 
-        paneContent.getChildren().add(btnAddToFavorites);
+        paneAuctionContent.getChildren().add(btnAddToFavorites);
 
         bids = new ArrayList<>();
     }
@@ -125,25 +125,25 @@ public class AuctionController extends MenuController {
         if (images != null){
             final Image placeholderImage = new Image("file:" +  new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath(), 429, 277, false, false);
 
-            if (images.size() >= 1){
+            if (!images.isEmpty()){
                 imgviewSelectedPicture.setImage(images.get(0));
             }else{
                 imgviewSelectedPicture.setImage(placeholderImage);
             }
 
-            if (images.size() >= 2){
+            if (!images.isEmpty()){
                 imgviewPicture1.setImage(images.get(1));
             }else{
                 imgviewPicture1.setImage(placeholderImage);
             }
 
-            if (images.size() >= 3){
+            if (!images.isEmpty()){
                 imgviewPicture2.setImage(images.get(2));
             }else{
                 imgviewPicture2.setImage(placeholderImage);
             }
 
-            if (images.size() >= 4){
+            if (!images.isEmpty()){
                 imgviewPicture3.setImage(images.get(3));
             }else{
                 imgviewPicture3.setImage(placeholderImage);
@@ -163,12 +163,15 @@ public class AuctionController extends MenuController {
         }else{
             final Label lblNoBids1 = new Label("Be the first one to place a bid!");
             final Label lblNoBids2 = new Label("The price to start bidding at is " + convertToEuro(startBid));
-            lblNoBids1.setFont(Font.font("Segoe UI Semilight"));
-            lblNoBids1.setTextFill(Color.web("#A6B5C9"));
-            lblNoBids1.setStyle("-fx-font-size: 16");
-            lblNoBids2.setFont(Font.font("Segoe UI Semilight"));
-            lblNoBids2.setTextFill(Color.web("#A6B5C9"));
-            lblNoBids2.setStyle("-fx-font-size: 16");
+            final String fontSegoe = "Segoe UI Semilight";
+            final String fontWeb = "#A6B5C9";
+            final String style = "-fx-font-size: 16";
+            lblNoBids1.setFont(Font.font(fontSegoe));
+            lblNoBids1.setTextFill(Color.web(fontWeb));
+            lblNoBids1.setStyle(style);
+            lblNoBids2.setFont(Font.font(fontSegoe));
+            lblNoBids2.setTextFill(Color.web(fontWeb));
+            lblNoBids2.setStyle(style);
             vboxBids.getChildren().add(lblNoBids1);
             vboxBids.getChildren().add(lblNoBids2);
         }
@@ -192,7 +195,7 @@ public class AuctionController extends MenuController {
         lblTimer.setText(timer);
 
         if (timer.equals("This auction has ended")){ // The auction ended - we should remove the addBid pane for clarity
-            paneContent.getChildren().remove(panePlaceBid);
+            paneAuctionContent.getChildren().remove(panePlaceBid);
             lblDays.setVisible(false);
             lblHours.setVisible(false);
             lblMinutes.setVisible(false);
@@ -259,7 +262,7 @@ public class AuctionController extends MenuController {
             // If we have already marked the auction as our favorite, there is no need to display the user an option to mark it once more
             // Neither do we want the creator of an auction to mark his/her own auction as favorite
             if (auctionRepository.auctionIsFavoriteForUser(this.auctionId, this.currentUserId) || auctionCreatorProfileId == this.currentUserId){
-                paneContent.getChildren().remove(btnAddToFavorites);
+                paneAuctionContent.getChildren().remove(btnAddToFavorites);
             }
         } catch (SQLException exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
@@ -267,11 +270,11 @@ public class AuctionController extends MenuController {
     }
 
     private void disablePlaceBidPane() {
-        paneContent.getChildren().remove(panePlaceBid);
+        paneAuctionContent.getChildren().remove(panePlaceBid);
     }
 
     private void disableEndAuctionPane() {
-        paneContent.getChildren().remove(paneEndAuction);
+        paneAuctionContent.getChildren().remove(paneEndAuction);
     }
 
     public void manuallyEndAuction() {
@@ -359,7 +362,7 @@ public class AuctionController extends MenuController {
             // We successfully added this auction to our favorites, we can now delete the button because we already added to our favorites
             MenuController.showAlertMessage("Successfully added auction to favorites!", AlertType.MESSAGE, 3000);
 
-            paneContent.getChildren().remove(btnAddToFavorites);
+            paneAuctionContent.getChildren().remove(btnAddToFavorites);
         } else {
             MenuController.showAlertMessage("Could not add the auction to favorites!", AlertType.ERROR, 3000);
         }
