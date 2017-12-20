@@ -146,19 +146,19 @@ public class AuctionController extends MenuController {
                 imgviewSelectedPicture.setImage(placeholderImage);
             }
 
-            if (!images.isEmpty()) {
+            if (images.size() >= 2) {
                 imgviewPicture1.setImage(images.get(1));
             } else {
                 imgviewPicture1.setImage(placeholderImage);
             }
 
-            if (!images.isEmpty()) {
+            if (images.size() >= 3) {
                 imgviewPicture2.setImage(images.get(2));
             } else {
                 imgviewPicture2.setImage(placeholderImage);
             }
 
-            if (!images.isEmpty()) {
+            if (images.size() >= 4) {
                 imgviewPicture3.setImage(images.get(3));
             } else {
                 imgviewPicture3.setImage(placeholderImage);
