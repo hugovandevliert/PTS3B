@@ -33,12 +33,17 @@ public class BidMySqlContext implements IBidContext {
     }
 
     @Override
-    public Bid getMostRecentBidForAuctionWithId(final int auctionId) throws SQLException, IOException, ClassNotFoundException {
-        final String query = "SELECT amount FROM MyAuctions.Bid WHERE auction_id = ? ORDER BY amount DESC LIMIT 1";
+    public Bid getMostRecentBidForAuctionWithId(final int auctionId, final BidLoadingType loadingType) throws SQLException, IOException, ClassNotFoundException {
+        String query = "SELECT amount FROM MyAuctions.Bid WHERE auction_id = ? ORDER BY amount DESC LIMIT 1";
+
+        if (loadingType.equals(BidLoadingType.FOR_AUCTION_WINNER_LAST_BID)){
+            query = "SELECT b.* FROM MyAuctions.Bid b " +
+                    "INNER JOIN MyAuctions.Account a ON a.id = b.account_id WHERE Auction_ID = ?";
+        }
         final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
 
         if (resultSet != null && resultSet.next()){
-            return getBidFromResultSet(resultSet, BidLoadingType.FOR_MOST_RECENT_BID);
+            return getBidFromResultSet(resultSet, loadingType);
         }
         return null;
     }
@@ -51,6 +56,13 @@ public class BidMySqlContext implements IBidContext {
                             profileRepository.getProfileForId(resultSet.getInt("account_id"), ProfileLoadingType.FOR_AUCTION_PAGE),
                             resultSet.getDouble("amount"),
                             resultSet.getTimestamp("date").toLocalDateTime()
+                        );
+            case FOR_AUCTION_WINNER_LAST_BID:
+                return new Bid
+                        (
+                                profileRepository.getProfileForId(resultSet.getInt("account_id"), ProfileLoadingType.FOR_AUCTION_PAGE),
+                                resultSet.getDouble("amount"),
+                                resultSet.getTimestamp("date").toLocalDateTime()
                         );
             case FOR_MOST_RECENT_BID:
                 return new Bid

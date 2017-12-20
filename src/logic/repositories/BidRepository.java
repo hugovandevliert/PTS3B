@@ -2,6 +2,7 @@ package logic.repositories;
 
 import data.interfaces.IBidContext;
 import modelslibrary.Bid;
+import utilities.enums.BidLoadingType;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ public class BidRepository {
         return context.getBids(auctionId);
     }
 
-    public Bid getMostRecentBidForAuctionWithId(final int auctionId) throws SQLException, IOException, ClassNotFoundException {
-        return context.getMostRecentBidForAuctionWithId(auctionId);
+    public Bid getMostRecentBidForAuctionWithId(final int auctionId, final BidLoadingType loadingType) throws SQLException, IOException, ClassNotFoundException {
+        return context.getMostRecentBidForAuctionWithId(auctionId, loadingType);
     }
 }

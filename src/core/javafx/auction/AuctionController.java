@@ -29,6 +29,7 @@ import modelslibrary.Bid;
 import modelslibrary.Profile;
 import utilities.database.Database;
 import utilities.enums.AlertType;
+import utilities.enums.BidLoadingType;
 import utilities.enums.ProfileLoadingType;
 
 import java.io.File;
@@ -66,6 +67,7 @@ public class AuctionController extends MenuController {
 
     private int auctionId, currentUserId, creatorId;
     private double auctionMinimumBid, auctionMinimumIncrementation;
+    private boolean hasShownAuctionEndingMessage;
 
     private ArrayList<Bid> bids;
 
@@ -209,12 +211,34 @@ public class AuctionController extends MenuController {
     public void setTimer(final String timer) {
         lblTimer.setText(timer);
 
-        if (timer.equals("This auction has ended")) { // The auction ended - we should remove the addBid pane for clarity
+        if (timer.equals("This auction has ended")) {
+            /* The auction ended - we should remove the addBid pane for clarity */
             paneAuctionContent.getChildren().remove(panePlaceBid);
             lblDays.setVisible(false);
             lblHours.setVisible(false);
             lblMinutes.setVisible(false);
             lblSeconds.setVisible(false);
+
+            if (!hasShownAuctionEndingMessage){
+             /* Let's also check whether this current user has won the auction. If this is indeed true, we'll have to make the current user aware of this. */
+                try {
+                    final Bid lastBid = bidRepository.getMostRecentBidForAuctionWithId(this.auctionId, BidLoadingType.FOR_AUCTION_WINNER_LAST_BID);
+
+                /* The current user is the author of the last bid, meaning the current user won this auction. */
+                    if (lastBid.getProfile().getProfileId() == this.currentUserId){
+                        final Profile auctionOwnerProfile = profileRepository.getProfileForId(lastBid.getProfile().getProfileId(), ProfileLoadingType.FOR_AUCTION_WON_OWNER_DISPLAYING);
+                        String email = "[Error] - Could not find owner's email!";
+
+                        if (auctionOwnerProfile != null) email = auctionOwnerProfile.getEmail();
+
+                        MenuController.showAlertMessage("Congratulations, you have won this auction! You can contact the owner on this email: " + email, AlertType.MESSAGE);
+                        hasShownAuctionEndingMessage = true;
+                    }
+                } catch (SQLException | IOException | ClassNotFoundException exception) {
+                    exception.printStackTrace();
+                    MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 5000);
+                }
+            }
         }
     }
 
@@ -324,7 +348,7 @@ public class AuctionController extends MenuController {
             }
             final double bidAmount = Double.parseDouble(bidPriceString);
             double minimumNeededAmount = 0;
-            final Bid mostRecentBid = bidRepository.getMostRecentBidForAuctionWithId(this.auctionId);
+            final Bid mostRecentBid = bidRepository.getMostRecentBidForAuctionWithId(this.auctionId, BidLoadingType.FOR_MOST_RECENT_BID);
 
             if (mostRecentBid != null) {
                 minimumNeededAmount = mostRecentBid.getAmount() + this.auctionMinimumIncrementation;
@@ -385,10 +409,6 @@ public class AuctionController extends MenuController {
         } else {
             MenuController.showAlertMessage("Could not add the auction to favorites!", AlertType.ERROR, 3000);
         }
-    }
-
-    public String getTimerString() {
-        return lblTimer.getText();
     }
 
     private boolean amountIsHighEnough(final double bidAmount, final double minimumNeededAmount) {

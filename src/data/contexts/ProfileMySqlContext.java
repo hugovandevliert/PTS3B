@@ -1,6 +1,7 @@
 package data.contexts;
 
 import data.interfaces.IProfileContext;
+import javafx.scene.image.Image;
 import logic.algorithms.ImageConverter;
 import logic.repositories.AuctionRepository;
 import logic.repositories.FeedbackRepository;
@@ -27,6 +28,7 @@ public class ProfileMySqlContext implements IProfileContext {
 
         if (loadingType.equals(ProfileLoadingType.FOR_AUCTION_PAGE)) query = "SELECT id, username FROM Account WHERE id = ?";
         else if (loadingType.equals(ProfileLoadingType.FOR_PROFILE_PAGE)) query = "SElECT id, username, name, creationDate, Image, Email FROM Account WHERE id = ?";
+        else if (loadingType.equals(ProfileLoadingType.FOR_AUCTION_WON_OWNER_DISPLAYING)) query = "SELECT id, username, name, email FROM Account WHERE id = ?";
         else return null;
 
         final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(userId) });
@@ -81,6 +83,15 @@ public class ProfileMySqlContext implements IProfileContext {
                                 auctionRepository.getAuctionsForProfile(resultSet.getInt("id")),
                                 feedbackRepository.getFeedbacks(resultSet.getInt("id"))
                         );
+            case FOR_AUCTION_WON_OWNER_DISPLAYING:
+                    return new Profile
+                            (
+                                    null,
+                                    resultSet.getString("username"),
+                                    resultSet.getString("name"),
+                                    resultSet.getString("email"),
+                                    resultSet.getInt("id")
+                            );
             default:
                 return null;
         }
