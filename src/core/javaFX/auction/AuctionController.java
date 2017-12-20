@@ -163,12 +163,15 @@ public class AuctionController extends MenuController {
         }else{
             final Label lblNoBids1 = new Label("Be the first one to place a bid!");
             final Label lblNoBids2 = new Label("The price to start bidding at is " + convertToEuro(startBid));
-            lblNoBids1.setFont(Font.font("Segoe UI Semilight"));
-            lblNoBids1.setTextFill(Color.web("#A6B5C9"));
-            lblNoBids1.setStyle("-fx-font-size: 16");
-            lblNoBids2.setFont(Font.font("Segoe UI Semilight"));
-            lblNoBids2.setTextFill(Color.web("#A6B5C9"));
-            lblNoBids2.setStyle("-fx-font-size: 16");
+            final String fontSegoe = "Segoe UI Semilight";
+            final String fontWeb = "#A6B5C9";
+            final String style = "-fx-font-size: 16";
+            lblNoBids1.setFont(Font.font(fontSegoe));
+            lblNoBids1.setTextFill(Color.web(fontWeb));
+            lblNoBids1.setStyle(style);
+            lblNoBids2.setFont(Font.font(fontSegoe));
+            lblNoBids2.setTextFill(Color.web(fontWeb));
+            lblNoBids2.setStyle(style);
             vboxBids.getChildren().add(lblNoBids1);
             vboxBids.getChildren().add(lblNoBids2);
         }
