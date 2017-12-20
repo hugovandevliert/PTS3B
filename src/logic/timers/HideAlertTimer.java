@@ -1,6 +1,6 @@
 package logic.timers;
 
-import core.javaFX.useralert.UserAlertController;
+import core.javafx.useralert.UserAlertController;
 import javafx.application.Platform;
 
 import java.util.TimerTask;

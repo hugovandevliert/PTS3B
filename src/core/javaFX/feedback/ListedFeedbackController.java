@@ -1,7 +1,7 @@
-package core.javaFX.feedback;
+package core.javafx.feedback;
 
-import core.javaFX.menu.MenuController;
-import core.javaFX.profile.ProfileController;
+import core.javafx.menu.MenuController;
+import core.javafx.profile.ProfileController;
 import data.contexts.ProfileMySqlContext;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

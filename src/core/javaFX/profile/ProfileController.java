@@ -1,12 +1,11 @@
-package core.javaFX.profile;
+package core.javafx.profile;
 
-import core.javaFX.auctions.ListedAuctionController;
-import core.javaFX.feedback.FeedbackController;
-import core.javaFX.feedback.ListedFeedbackController;
-import core.javaFX.menu.MenuController;
+import core.javafx.auctions.ListedAuctionController;
+import core.javafx.feedback.FeedbackController;
+import core.javafx.feedback.ListedFeedbackController;
+import core.javafx.menu.MenuController;
 import data.contexts.AuctionMySqlContext;
 import data.contexts.UserMySqlContext;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -106,7 +105,7 @@ public class ProfileController extends MenuController {
     private void setAuctions(final List<Auction> auctions) throws IOException {
         if (!auctions.isEmpty()) {
             for (final Auction auction : auctions) {
-                fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/auctions/listedAuction.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/core/javafx/auctions/listedAuction.fxml"));
                 final Pane listedAuctionPane = fxmlLoader.load();
                 final ListedAuctionController listedAuctionController = fxmlLoader.getController();
 
@@ -128,7 +127,7 @@ public class ProfileController extends MenuController {
     private void setFeedbacks(final List<Feedback> feedbacks) throws IOException {
         if (!feedbacks.isEmpty()) {
             for (final Feedback feedback : feedbacks) {
-                fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/feedback/listedFeedback.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/core/javafx/feedback/listedFeedback.fxml"));
                 final Pane listedFeedbackPane = fxmlLoader.load();
                 final ListedFeedbackController listedFeedbackController = fxmlLoader.getController();
 
@@ -216,7 +215,7 @@ public class ProfileController extends MenuController {
 
     public void addFeedback() throws IOException {
         try {
-            fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/feedback/feedback.fxml"));
+            fxmlLoader = new FXMLLoader(getClass().getResource("/core/javafx/feedback/feedback.fxml"));
             final Pane feedbackPane = fxmlLoader.load();
             final FeedbackController feedbackController = fxmlLoader.getController();
 

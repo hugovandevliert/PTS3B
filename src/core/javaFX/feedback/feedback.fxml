@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.feedback.FeedbackController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javafx.feedback.FeedbackController">
     <Pane fx:id="paneContent" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: #3d4857;" GridPane.valignment="TOP">
       <children>
          <Label fx:id="lblUsername" alignment="CENTER" layoutX="150.0" layoutY="75.0" prefHeight="47.0" prefWidth="700.0" style="-fx-text-fill: #a6b5c9" text="Add feedback on: %user%">

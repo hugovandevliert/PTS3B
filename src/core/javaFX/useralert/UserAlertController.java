@@ -1,6 +1,6 @@
-package core.javaFX.useralert;
+package core.javafx.useralert;
 
-import core.javaFX.menu.MenuController;
+import core.javafx.menu.MenuController;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;

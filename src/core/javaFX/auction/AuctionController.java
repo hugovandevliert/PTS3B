@@ -1,9 +1,9 @@
-package core.javaFX.auction;
+package core.javafx.auction;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import core.javaFX.menu.MenuController;
-import core.javaFX.profile.ProfileController;
+import core.javafx.menu.MenuController;
+import core.javafx.profile.ProfileController;
 import data.contexts.AuctionMySqlContext;
 import data.contexts.BidMySqlContext;
 import data.contexts.ProfileMySqlContext;

@@ -1,9 +1,9 @@
-package core.javaFX.addAuction;
+package core.javafx.addauction;
 
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-import core.javaFX.auction.AuctionController;
-import core.javaFX.menu.MenuController;
+import core.javafx.auction.AuctionController;
+import core.javafx.menu.MenuController;
 import data.contexts.AuctionMySqlContext;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -98,7 +98,7 @@ public class AddAuctionController extends MenuController {
                 if (auction != null){
                     paneContent.getChildren().clear();
 
-                    final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/auction/auction.fxml"));
+                    final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/core/javafx/auction/auction.fxml"));
                     final Pane auctionPane = fxmlLoader.load();
                     final AuctionController auctionController = fxmlLoader.getController();
 

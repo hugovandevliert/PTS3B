@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Text?>
 
 <?import javafx.scene.Cursor?>
-<Pane fx:id="paneListedFeedbackContent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="169.0" prefWidth="970.0" style="-fx-background-color: #242e3b;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javaFX.feedback.ListedFeedbackController">
+<Pane fx:id="paneListedFeedbackContent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="169.0" prefWidth="970.0" style="-fx-background-color: #242e3b;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javafx.feedback.ListedFeedbackController">
    <children>
       <VBox fx:id="vboxTextArea" alignment="TOP_CENTER" layoutX="307.0" layoutY="25.0" prefHeight="123.0" prefWidth="642.0" spacing="30.0">
          <children>

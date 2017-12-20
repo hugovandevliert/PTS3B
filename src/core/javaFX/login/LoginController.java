@@ -1,9 +1,9 @@
-package core.javaFX.login;
+package core.javafx.login;
 
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import core.javaFX.menu.MenuController;
+import core.javafx.menu.MenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.input.KeyEvent;

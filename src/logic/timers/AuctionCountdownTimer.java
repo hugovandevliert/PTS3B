@@ -1,7 +1,7 @@
 package logic.timers;
 
-import core.javaFX.auction.AuctionController;
-import core.javaFX.menu.MenuController;
+import core.javafx.auction.AuctionController;
+import core.javafx.menu.MenuController;
 import data.contexts.AuctionMySqlContext;
 import javafx.application.Platform;
 import logic.repositories.AuctionRepository;

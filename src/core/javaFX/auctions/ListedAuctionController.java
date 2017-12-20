@@ -1,7 +1,7 @@
-package core.javaFX.auctions;
+package core.javafx.auctions;
 
-import core.javaFX.auction.AuctionController;
-import core.javaFX.menu.MenuController;
+import core.javafx.auction.AuctionController;
+import core.javafx.menu.MenuController;
 import data.contexts.AuctionMySqlContext;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -74,7 +74,7 @@ public class ListedAuctionController extends MenuController {
         try {
             menuController.paneContent.getChildren().clear();
 
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/auction/auction.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/core/javafx/auction/auction.fxml"));
             Pane auctionPane = fxmlLoader.load();
             AuctionController auctionController = fxmlLoader.getController();
 

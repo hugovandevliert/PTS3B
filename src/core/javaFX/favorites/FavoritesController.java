@@ -1,7 +1,7 @@
-package core.javaFX.favorites;
+package core.javafx.favorites;
 
-import core.javaFX.auctions.ListedAuctionController;
-import core.javaFX.menu.MenuController;
+import core.javafx.auctions.ListedAuctionController;
+import core.javafx.menu.MenuController;
 import data.contexts.AuctionMySqlContext;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,7 +41,7 @@ public class FavoritesController extends MenuController {
 
             if (!auctions.isEmpty()){
                 for (final Auction auction : auctions){
-                    final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/core/javaFX/auctions/listedAuction.fxml"));
+                    final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/core/javafx/auctions/listedAuction.fxml"));
                     final Pane listedAuctionPane = fxmlLoader.load();
                     final ListedAuctionController listedAuctionController = fxmlLoader.getController();
 

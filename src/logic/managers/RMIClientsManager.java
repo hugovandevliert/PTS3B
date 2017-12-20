@@ -1,6 +1,6 @@
 package logic.managers;
 
-import core.javaFX.menu.MenuController;
+import core.javafx.menu.MenuController;
 import custompublisher.IRemotePropertyListener;
 import custompublisher.IRemotePublisherForListener;
 import logic.clients.BidClient;

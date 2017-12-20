@@ -1,7 +1,7 @@
 package logic.clients;
 
-import core.javaFX.auction.AuctionController;
-import core.javaFX.menu.MenuController;
+import core.javafx.auction.AuctionController;
+import core.javafx.menu.MenuController;
 import custompublisher.IRemotePublisherForListener;
 import ibidclient.IBidClient;
 import ibidserver.IBidServer;

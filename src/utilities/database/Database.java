@@ -1,6 +1,6 @@
 package utilities.database;
 
-import core.javaFX.menu.MenuController;
+import core.javafx.menu.MenuController;
 import utilities.enums.AlertType;
 
 import java.io.File;

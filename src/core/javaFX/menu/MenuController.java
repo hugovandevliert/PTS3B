@@ -1,9 +1,9 @@
-package core.javaFX.menu;
+package core.javafx.menu;
 
 import logic.managers.ApplicationManager;
-import core.javaFX.favorites.FavoritesController;
-import core.javaFX.profile.ProfileController;
-import core.javaFX.useralert.UserAlertController;
+import core.javafx.favorites.FavoritesController;
+import core.javafx.profile.ProfileController;
+import core.javafx.useralert.UserAlertController;
 import data.contexts.ProfileMySqlContext;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -138,7 +138,7 @@ public class MenuController implements Initializable {
             newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/auctions/auctions.fxml"));
         }
         else if(source == imgviewAddAuction){
-            newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/addAuction/addauction.fxml"));
+            newLoadedPane = FXMLLoader.load(getClass().getResource("/core/javafx/addauction/addauction.fxml"));
         }
         else if(source == imgviewFavorites){
             fxmlLoader = new FXMLLoader(getClass().getResource("/core/javafx/favorites/favorites.fxml"));

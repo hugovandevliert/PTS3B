@@ -1,13 +1,11 @@
-package core.javaFX.register;
+package core.javafx.register;
 
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import core.javaFX.menu.MenuController;
-import javafx.application.Platform;
+import core.javafx.menu.MenuController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Cursor;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import utilities.enums.AlertType;
