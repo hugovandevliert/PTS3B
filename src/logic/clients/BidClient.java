@@ -20,11 +20,11 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class BidClient extends UnicastRemoteObject implements IBidClient {
 
-    private IBidServer server;
+    private transient IBidServer server;
 
     private final int auctionId;
     private final int currentUserId;
-    private final AuctionController auctionController;
+    private transient final AuctionController auctionController;
 
     public BidClient(final Registry registry, final int auctionId, final int currentUserId, final RMIClientsManager rmiClientsManager, final AuctionController auctionController) throws IOException, NotBoundException {
         super();
