@@ -34,7 +34,7 @@ public class AuctionMySqlContext implements IAuctionContext {
     @Override
     public ArrayList<Auction> getAuctionsForSearchTerm(final String searchTerm) throws SQLException, IOException, ClassNotFoundException {
         final String query = "SELECT * FROM MyAuctions.Auction WHERE Auction.status = 'OPEN' " +
-                "AND Auction.endDate > curdate() AND Auction.title LIKE ?;";
+                "AND Auction.endDate > NOW() AND Auction.title LIKE ?;";
         final ResultSet resultSet = Database.getDataForSearchTerm(query, searchTerm);
         final ArrayList<Auction> auctions = new ArrayList<>();
 
