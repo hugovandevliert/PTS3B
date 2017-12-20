@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import logic.algorithms.MusicPlayer;
 import logic.clients.BidClient;
 import logic.repositories.AuctionRepository;
 import logic.repositories.BidRepository;
@@ -27,6 +28,7 @@ import logic.timers.AuctionCountdownTimer;
 import modelslibrary.Auction;
 import modelslibrary.Bid;
 import modelslibrary.Profile;
+import utilities.Constants;
 import utilities.database.Database;
 import utilities.enums.AlertType;
 import utilities.enums.BidLoadingType;
@@ -225,7 +227,7 @@ public class AuctionController extends MenuController {
                 try {
                     final Bid lastBid = bidRepository.getMostRecentBidForAuctionWithId(this.auctionId, BidLoadingType.FOR_AUCTION_WINNER_LAST_BID);
 
-                /* The current user is the author of the last bid, meaning the current user won this auction. */
+                    /* The current user is the author of the last bid, meaning the current user won this auction. */
                     if (lastBid.getProfile().getProfileId() == this.currentUserId){
                         final Profile auctionOwnerProfile = profileRepository.getProfileForId(lastBid.getProfile().getProfileId(), ProfileLoadingType.FOR_AUCTION_WON_OWNER_DISPLAYING);
                         String email = "[Error] - Could not find owner's email!";
@@ -233,8 +235,12 @@ public class AuctionController extends MenuController {
                         if (auctionOwnerProfile != null) email = auctionOwnerProfile.getEmail();
 
                         MenuController.showAlertMessage("Congratulations, you have won this auction! You can contact the owner on this email: " + email, AlertType.MESSAGE);
+                        final MusicPlayer musicPlayer = new MusicPlayer(Constants.SOUND_AUCTION_WON_MP3);
+                        musicPlayer.playSound();
                     }else{
                         MenuController.showAlertMessage("Unfortunately, somebody else has won this auction. Better luck next time!", AlertType.WARNING);
+                        final MusicPlayer musicPlayer = new MusicPlayer(Constants.SOUND_AUCTION_LOST_MP3);
+                        musicPlayer.playSound();
                     }
                 } catch (SQLException | IOException | ClassNotFoundException exception) {
                     exception.printStackTrace();
