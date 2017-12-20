@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import logic.algorithms.MusicPlayer;
 import logic.clients.BidClient;
 import logic.repositories.AuctionRepository;
 import logic.repositories.BidRepository;
@@ -27,6 +28,7 @@ import logic.timers.AuctionCountdownTimer;
 import modelslibrary.Auction;
 import modelslibrary.Bid;
 import modelslibrary.Profile;
+import utilities.Constants;
 import utilities.database.Database;
 import utilities.enums.AlertType;
 import utilities.enums.BidLoadingType;
@@ -91,7 +93,8 @@ public class AuctionController extends MenuController {
         bids = new ArrayList<>();
     }
 
-    public void setAuction(final Auction auction, final MenuController menuController) {
+    public void setAuction(final Auction auction, final MenuController menuController) throws SQLException, IOException, ClassNotFoundException {
+        initializeRepositories();
         setTitle(auction.getTitle());
         setDescription(auction.getDescription());
         setSeller(auction.getCreator().getUsername());
@@ -100,12 +103,18 @@ public class AuctionController extends MenuController {
         setAuctionId(auction.getId());
         setCreatorId(auction.getCreator().getProfileId());
         setCurrentUserId(applicationManager.getCurrentUser().getId());
-        setBidTextfieldPromptText("Your bid: (at least + " + convertToEuro(auction.getIncrementation()) + ")");
+        final Bid mostRecentBid = bidRepository.getMostRecentBidForAuctionWithId(auction.getId(), BidLoadingType.FOR_MOST_RECENT_BID);
+        double minimalBid;
+        if (mostRecentBid != null) {
+            minimalBid = mostRecentBid.getAmount() + auction.getIncrementation();
+        } else {
+            minimalBid = auction.getStartBid();
+        }
+        setBidTextfieldPromptText("Your bid: (at least " + convertToEuro(minimalBid) + ")");
         setAuctionMinimumBid(auction.getStartBid());
         setAuctionMinimumIncrementation(auction.getIncrementation());
         setMenuController(menuController);
         initializeCountdownTimer();
-        initializeRepositories();
         handleEndAuctionPaneRemoving();
         handleAddToFavoritesButtonRemoving(auction.getCreator().getProfileId());
 
@@ -116,7 +125,7 @@ public class AuctionController extends MenuController {
         }
 
         /* Let's make sure we will add a BidClient to our RMIClientsManager for the auction that we're currently trying to view.
-           This will handle all the incoming bids through Server Push RMI Mechaics.
+           This will handle all the incoming bids through Server Push RMI Mechanics.
          */
         try {
             final BidClient bidClient = new BidClient(applicationManager.getRmiClientsManager().getBidsRegistry(), this.auctionId, applicationManager.getCurrentUser().getId(), applicationManager.getRmiClientsManager(), this);
@@ -225,7 +234,7 @@ public class AuctionController extends MenuController {
                 try {
                     final Bid lastBid = bidRepository.getMostRecentBidForAuctionWithId(this.auctionId, BidLoadingType.FOR_AUCTION_WINNER_LAST_BID);
 
-                /* The current user is the author of the last bid, meaning the current user won this auction. */
+                    /* The current user is the author of the last bid, meaning the current user won this auction. */
                     if (lastBid.getProfile().getProfileId() == this.currentUserId){
                         final Profile auctionOwnerProfile = profileRepository.getProfileForId(lastBid.getProfile().getProfileId(), ProfileLoadingType.FOR_AUCTION_WON_OWNER_DISPLAYING);
                         String email = "[Error] - Could not find owner's email!";
@@ -233,8 +242,12 @@ public class AuctionController extends MenuController {
                         if (auctionOwnerProfile != null) email = auctionOwnerProfile.getEmail();
 
                         MenuController.showAlertMessage("Congratulations, you have won this auction! You can contact the owner on this email: " + email, AlertType.MESSAGE);
+                        final MusicPlayer musicPlayer = new MusicPlayer(Constants.SOUND_AUCTION_WON_MP3);
+                        musicPlayer.playSound();
                     }else{
                         MenuController.showAlertMessage("Unfortunately, somebody else has won this auction. Better luck next time!", AlertType.WARNING);
+                        final MusicPlayer musicPlayer = new MusicPlayer(Constants.SOUND_AUCTION_LOST_MP3);
+                        musicPlayer.playSound();
                     }
                 } catch (SQLException | IOException | ClassNotFoundException exception) {
                     exception.printStackTrace();
