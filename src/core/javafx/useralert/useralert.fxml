@@ -3,20 +3,20 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" hgap="10" onMouseClicked="#clickedOnAlert" vgap="10" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javafx.useralert.UserAlertController">
+<GridPane alignment="center" hgap="10" onMouseClicked="#clickedOnAlert" vgap="10" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="core.javafx.useralert.UserAlertController">
     <Pane fx:id="paneContent" prefHeight="50.0" prefWidth="1250.0" style="-fx-background-color: #3d4857;" GridPane.valignment="TOP">
       <children>
-         <Pane fx:id="paneBackgroundColor" layoutX="250.0" prefHeight="50.0" prefWidth="1000.0" />
-         <Label fx:id="lblMessage" layoutX="262.0" layoutY="15.0" prefHeight="21.0" prefWidth="974.0" textFill="WHITE">
+         <Pane fx:id="paneMessageBackground" layoutX="250.0" prefHeight="50.0" prefWidth="1000.0">
+         <Label fx:id="lblMessage" layoutX="13.0" layoutY="13.0" prefHeight="21.0" prefWidth="974.0" textFill="WHITE">
             <font>
                <Font name="Segoe UI Semilight" size="16.0" />
-            </font></Label>
+            </font>
+         </Label>
+         </Pane>
          <Pane fx:id="paneMenu" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #242e3b;">
             <children>
                <ImageView fx:id="imgviewProfile" fitHeight="32.0" fitWidth="32.0" layoutX="109.0" layoutY="200.0" onMouseClicked="#selectMenuItem" onMouseEntered="#highlightIconColor" onMouseExited="#revertIconColor" pickOnBounds="true" preserveRatio="true">
@@ -41,12 +41,6 @@
                </ImageView>
             </children>
          </Pane>
-      </children></Pane>
-   <columnConstraints>
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-      <RowConstraints />
-   </rowConstraints>
+      </children>
+    </Pane>
 </GridPane>
