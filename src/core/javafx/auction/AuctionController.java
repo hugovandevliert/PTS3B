@@ -220,7 +220,8 @@ public class AuctionController extends MenuController {
             lblSeconds.setVisible(false);
 
             if (!hasShownAuctionEndingMessage){
-             /* Let's also check whether this current user has won the auction. If this is indeed true, we'll have to make the current user aware of this. */
+                hasShownAuctionEndingMessage = true;
+                /* Let's also check whether this current user has won the auction or not. We'll have to make the current user aware of this. */
                 try {
                     final Bid lastBid = bidRepository.getMostRecentBidForAuctionWithId(this.auctionId, BidLoadingType.FOR_AUCTION_WINNER_LAST_BID);
 
@@ -232,7 +233,8 @@ public class AuctionController extends MenuController {
                         if (auctionOwnerProfile != null) email = auctionOwnerProfile.getEmail();
 
                         MenuController.showAlertMessage("Congratulations, you have won this auction! You can contact the owner on this email: " + email, AlertType.MESSAGE);
-                        hasShownAuctionEndingMessage = true;
+                    }else{
+                        MenuController.showAlertMessage("Unfortunately, somebody else has won this auction. Better luck next time!", AlertType.WARNING);
                     }
                 } catch (SQLException | IOException | ClassNotFoundException exception) {
                     exception.printStackTrace();
