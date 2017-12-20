@@ -46,7 +46,7 @@ public class AuctionController extends MenuController {
     @FXML private Text textAuctionDescription;
     @FXML private ImageView imgviewSelectedPicture, imgviewPicture1, imgviewPicture2, imgviewPicture3;
     @FXML private VBox vboxBids;
-    @FXML private Pane panePlaceBid, paneEndAuction, paneContent;
+    @FXML private Pane panePlaceBid, paneEndAuction, paneAuctionContent;
     @FXML private JFXTextField txtBid;
     @FXML private JFXButton btnEndAuction, btnAddToFavorites;
 
@@ -75,7 +75,7 @@ public class AuctionController extends MenuController {
         btnAddToFavorites.setOnAction(event -> addToFavoriteAuctions());
         btnAddToFavorites.setCursor(Cursor.HAND);
 
-        paneContent.getChildren().add(btnAddToFavorites);
+        paneAuctionContent.getChildren().add(btnAddToFavorites);
 
         bids = new ArrayList<>();
     }
@@ -195,7 +195,7 @@ public class AuctionController extends MenuController {
         lblTimer.setText(timer);
 
         if (timer.equals("This auction has ended")){ // The auction ended - we should remove the addBid pane for clarity
-            paneContent.getChildren().remove(panePlaceBid);
+            paneAuctionContent.getChildren().remove(panePlaceBid);
             lblDays.setVisible(false);
             lblHours.setVisible(false);
             lblMinutes.setVisible(false);
@@ -262,7 +262,7 @@ public class AuctionController extends MenuController {
             // If we have already marked the auction as our favorite, there is no need to display the user an option to mark it once more
             // Neither do we want the creator of an auction to mark his/her own auction as favorite
             if (auctionRepository.auctionIsFavoriteForUser(this.auctionId, this.currentUserId) || auctionCreatorProfileId == this.currentUserId){
-                paneContent.getChildren().remove(btnAddToFavorites);
+                paneAuctionContent.getChildren().remove(btnAddToFavorites);
             }
         } catch (SQLException exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
@@ -270,11 +270,11 @@ public class AuctionController extends MenuController {
     }
 
     private void disablePlaceBidPane() {
-        paneContent.getChildren().remove(panePlaceBid);
+        paneAuctionContent.getChildren().remove(panePlaceBid);
     }
 
     private void disableEndAuctionPane() {
-        paneContent.getChildren().remove(paneEndAuction);
+        paneAuctionContent.getChildren().remove(paneEndAuction);
     }
 
     public void manuallyEndAuction() {
@@ -362,7 +362,7 @@ public class AuctionController extends MenuController {
             // We successfully added this auction to our favorites, we can now delete the button because we already added to our favorites
             MenuController.showAlertMessage("Successfully added auction to favorites!", AlertType.MESSAGE, 3000);
 
-            paneContent.getChildren().remove(btnAddToFavorites);
+            paneAuctionContent.getChildren().remove(btnAddToFavorites);
         } else {
             MenuController.showAlertMessage("Could not add the auction to favorites!", AlertType.ERROR, 3000);
         }

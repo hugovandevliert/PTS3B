@@ -38,10 +38,8 @@ public class BidClient extends UnicastRemoteObject implements IBidClient {
         IRemotePublisherForListener messageListener = (IRemotePublisherForListener) registry.lookup(Constants.SERVER_NAME_THAT_PUSHES_TO_CLIENTS);
         messageListener.subscribeRemoteListener(this, Constants.CHANGED_PROPERTY);
         rmiClientsManager.addBidServerMessageListener(messageListener, this);
-        System.out.println("Subscribed message listener for receiving bids from server");
 
         server = (IBidServer) registry.lookup(Constants.SERVER_NAME_THAT_RECEIVES_FROM_CLIENTS);
-        System.out.println("Connected to server for sending bids towards server");
     }
 
     public void sendBid(final Bid bid) {
