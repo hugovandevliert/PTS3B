@@ -27,6 +27,8 @@ import java.util.ResourceBundle;
 @SuppressWarnings("Duplicates")
 public class MenuController implements Initializable {
 
+
+
     @FXML public Pane paneMenu;
     @FXML public Pane paneContent;
     @FXML public Label lblClose;
@@ -38,8 +40,8 @@ public class MenuController implements Initializable {
 
     @FXML private Pane paneAlert;
 
-    protected final static ApplicationManager applicationManager = new ApplicationManager();
-    private static UserAlertController userAlertController;
+
+
     private ImageView selectedMenu;
 
     private Image profileIcon;
@@ -52,10 +54,16 @@ public class MenuController implements Initializable {
     private Image favoritesIconHovered;
     private Image addAuctionIconHovered;
 
-    //Has to be static. Won't work otherwise.
-    private static String lastCalledClass;
     private FXMLLoader fxmlLoader;
     private ProfileRepository profileRepository;
+
+    protected static final  ApplicationManager applicationManager = new ApplicationManager();
+
+    //Has to be static. Won't work otherwise.
+    private static String lastCalledClass;
+
+    private static UserAlertController userAlertController;
+
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
@@ -74,6 +82,7 @@ public class MenuController implements Initializable {
             userAlertController = fxmlLoader.getController();
             paneAlert.getChildren().add(newAlertPane);
         } catch (IOException exception) {
+            //Cannot use the alertPanel yet because it isn't initialized yet.
             exception.printStackTrace();
         }
     }

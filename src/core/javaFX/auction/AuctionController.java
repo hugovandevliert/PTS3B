@@ -30,6 +30,7 @@ import modelslibrary.Profile;
 import utilities.database.Database;
 import utilities.enums.AlertType;
 import utilities.enums.ProfileLoadingType;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -41,14 +42,22 @@ import java.util.*;
 
 public class AuctionController extends MenuController {
 
-    @FXML private Label lblDays, lblHours, lblMinutes, lblSeconds;
-    @FXML private Label lblAuctionTitle, lblAuctionSeller, lblTimer;
-    @FXML private Text textAuctionDescription;
-    @FXML private ImageView imgviewSelectedPicture, imgviewPicture1, imgviewPicture2, imgviewPicture3;
-    @FXML private VBox vboxBids;
-    @FXML private Pane panePlaceBid, paneEndAuction, paneAuctionContent;
-    @FXML private JFXTextField txtBid;
-    @FXML private JFXButton btnEndAuction, btnAddToFavorites;
+    @FXML
+    private Label lblDays, lblHours, lblMinutes, lblSeconds;
+    @FXML
+    private Label lblAuctionTitle, lblAuctionSeller, lblTimer;
+    @FXML
+    private Text textAuctionDescription;
+    @FXML
+    private ImageView imgviewSelectedPicture, imgviewPicture1, imgviewPicture2, imgviewPicture3;
+    @FXML
+    private VBox vboxBids;
+    @FXML
+    private Pane panePlaceBid, paneEndAuction, paneAuctionContent;
+    @FXML
+    private JFXTextField txtBid;
+    @FXML
+    private JFXButton btnEndAuction, btnAddToFavorites;
 
     private AuctionRepository auctionRepository;
     private BidRepository bidRepository;
@@ -63,7 +72,7 @@ public class AuctionController extends MenuController {
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         /* Adding the AddFavorites Button with a star icon */
-        final Image starIcon = new Image( "/utilities/images/button/button_star_image.png");
+        final Image starIcon = new Image("/utilities/images/button/button_star_image.png");
 
         btnAddToFavorites = new JFXButton("Add to favorites", new ImageView(starIcon));
         btnAddToFavorites.setPrefSize(346, 48);
@@ -98,9 +107,9 @@ public class AuctionController extends MenuController {
         handleEndAuctionPaneRemoving();
         handleAddToFavoritesButtonRemoving(auction.getCreator().getProfileId());
 
-        if (currentUserIsCreatorOfThisAuction(auction)){
+        if (currentUserIsCreatorOfThisAuction(auction)) {
             disablePlaceBidPane();
-        }else{
+        } else {
             disableEndAuctionPane();
         }
 
@@ -115,37 +124,43 @@ public class AuctionController extends MenuController {
         }
     }
 
-    private void setTitle(final String title) { lblAuctionTitle.setText(title); }
+    private void setTitle(final String title) {
+        lblAuctionTitle.setText(title);
+    }
 
-    private void setDescription(final String description) { textAuctionDescription.setText(description); }
+    private void setDescription(final String description) {
+        textAuctionDescription.setText(description);
+    }
 
-    private void setSeller(final String seller) { lblAuctionSeller.setText(seller); }
+    private void setSeller(final String seller) {
+        lblAuctionSeller.setText(seller);
+    }
 
     private void setImages(final List<Image> images) {
-        if (images != null){
-            final Image placeholderImage = new Image("file:" +  new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath(), 429, 277, false, false);
+        if (images != null) {
+            final Image placeholderImage = new Image("file:" + new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath(), 429, 277, false, false);
 
-            if (!images.isEmpty()){
+            if (!images.isEmpty()) {
                 imgviewSelectedPicture.setImage(images.get(0));
-            }else{
+            } else {
                 imgviewSelectedPicture.setImage(placeholderImage);
             }
 
-            if (!images.isEmpty()){
+            if (!images.isEmpty()) {
                 imgviewPicture1.setImage(images.get(1));
-            }else{
+            } else {
                 imgviewPicture1.setImage(placeholderImage);
             }
 
-            if (!images.isEmpty()){
+            if (!images.isEmpty()) {
                 imgviewPicture2.setImage(images.get(2));
-            }else{
+            } else {
                 imgviewPicture2.setImage(placeholderImage);
             }
 
-            if (!images.isEmpty()){
+            if (!images.isEmpty()) {
                 imgviewPicture3.setImage(images.get(3));
-            }else{
+            } else {
                 imgviewPicture3.setImage(placeholderImage);
             }
         }
@@ -154,13 +169,13 @@ public class AuctionController extends MenuController {
     public void setBids(final List<Bid> bids, final double startBid) {
         vboxBids.getChildren().clear();
 
-        if (bids != null && !bids.isEmpty()){
-            for (final Bid bid : bids){
+        if (bids != null && !bids.isEmpty()) {
+            for (final Bid bid : bids) {
                 addBidToList(bid);
             }
 
             addBidsToInterface();
-        }else{
+        } else {
             final Label lblNoBids1 = new Label("Be the first one to place a bid!");
             final Label lblNoBids2 = new Label("The price to start bidding at is " + convertToEuro(startBid));
             final String fontSegoe = "Segoe UI Semilight";
@@ -186,7 +201,7 @@ public class AuctionController extends MenuController {
 
         Collections.sort(this.bids);
 
-        for (final Bid bid : bids){
+        for (final Bid bid : bids) {
             displayBid(bid);
         }
     }
@@ -194,7 +209,7 @@ public class AuctionController extends MenuController {
     public void setTimer(final String timer) {
         lblTimer.setText(timer);
 
-        if (timer.equals("This auction has ended")){ // The auction ended - we should remove the addBid pane for clarity
+        if (timer.equals("This auction has ended")) { // The auction ended - we should remove the addBid pane for clarity
             paneAuctionContent.getChildren().remove(panePlaceBid);
             lblDays.setVisible(false);
             lblHours.setVisible(false);
@@ -217,9 +232,13 @@ public class AuctionController extends MenuController {
         this.auctionId = auctionId;
     }
 
-    private void setCreatorId(final int creatorId) { this.creatorId = creatorId; }
+    private void setCreatorId(final int creatorId) {
+        this.creatorId = creatorId;
+    }
 
-    private void setCurrentUserId(final int currentUserId) { this.currentUserId = currentUserId; }
+    private void setCurrentUserId(final int currentUserId) {
+        this.currentUserId = currentUserId;
+    }
 
     private void setBidTextfieldPromptText(final String value) {
         txtBid.setPromptText(value);
@@ -233,7 +252,9 @@ public class AuctionController extends MenuController {
         this.auctionMinimumIncrementation = auctionMinimumIncrementation;
     }
 
-    private void setMenuController(final MenuController menuController) { this.menuController = menuController; }
+    private void setMenuController(final MenuController menuController) {
+        this.menuController = menuController;
+    }
 
     private void initializeRepositories() {
         auctionRepository = new AuctionRepository(new AuctionMySqlContext());
@@ -261,7 +282,7 @@ public class AuctionController extends MenuController {
         try {
             // If we have already marked the auction as our favorite, there is no need to display the user an option to mark it once more
             // Neither do we want the creator of an auction to mark his/her own auction as favorite
-            if (auctionRepository.auctionIsFavoriteForUser(this.auctionId, this.currentUserId) || auctionCreatorProfileId == this.currentUserId){
+            if (auctionRepository.auctionIsFavoriteForUser(this.auctionId, this.currentUserId) || auctionCreatorProfileId == this.currentUserId) {
                 paneAuctionContent.getChildren().remove(btnAddToFavorites);
             }
         } catch (SQLException exception) {
@@ -278,58 +299,56 @@ public class AuctionController extends MenuController {
     }
 
     public void manuallyEndAuction() {
-        if (auctionRepository.manuallyEndAuction(this.auctionId)){
+        if (auctionRepository.manuallyEndAuction(this.auctionId)) {
             MenuController.showAlertMessage("Auction successfully ended!", AlertType.MESSAGE, 3000);
 
             // We just ended the auction - we should therefore remove the option to keep ending it!
             paneEndAuction.getChildren().remove(btnEndAuction);
-        }else{
+        } else {
             MenuController.showAlertMessage("Auction has not successfully been ended!", AlertType.ERROR, 3000);
         }
     }
 
     public void placeNewBid() {
         try {
-            if (!auctionRepository.auctionIsClosed(this.auctionId)){
-                final String bidPriceString = txtBid.getText().replaceAll(",", ".");
-                txtBid.setText("");
-
-                if (bidPriceString != null && bidPriceString.length() > 0 && Database.isDouble(bidPriceString)){
-                    final double bidAmount = Double.parseDouble(bidPriceString);
-                    double minimumNeededAmount = 0;
-                    final Bid mostRecentBid = bidRepository.getMostRecentBidForAuctionWithId(this.auctionId);
-
-                    if (mostRecentBid != null){
-                        minimumNeededAmount = mostRecentBid.getAmount() + this.auctionMinimumIncrementation;
-                    }else{
-                        minimumNeededAmount = this.auctionMinimumBid;
-                    }
-
-                    if (amountIsHighEnough(bidAmount, minimumNeededAmount)){
-                        if (auctionRepository.addBid(bidAmount, currentUserId, auctionId)){
-                            final Bid bid = new Bid(applicationManager.getCurrentUser().getProfile(), bidAmount, LocalDateTime.now(), auctionId);
-                            applicationManager.getRmiClientsManager().getBidClient().sendBid(bid);
-
-                            MenuController.showAlertMessage("Successfully placed bid!", AlertType.MESSAGE, 3000);
-                        }else{
-                            MenuController.showAlertMessage("Placing the bid wasn't successful!", AlertType.ERROR, 3000);
-                        }
-                    }else{
-                        MenuController.showAlertMessage("Your bid is not high enough, it should at least be " + convertToEuro(minimumNeededAmount), AlertType.WARNING, 3000);
-                    }
-                }else{
-                    MenuController.showAlertMessage("Please fill in a valid bid!", AlertType.WARNING, 3000);
-                }
-            }else{
+            if (auctionRepository.auctionIsClosed(this.auctionId)) {
                 MenuController.showAlertMessage("This auction has been closed - you are not able to bid anymore.", AlertType.WARNING, 3000);
+                return;
             }
-        } catch (SQLException | ClassNotFoundException | IOException exception){
+            final String bidPriceString = txtBid.getText().replaceAll(",", ".");
+            txtBid.setText("");
+
+            if (bidPriceString == null || bidPriceString.length() == 0 || !Database.isDouble(bidPriceString)) {
+                MenuController.showAlertMessage("Please fill in a valid bid!", AlertType.WARNING, 3000);
+                return;
+            }
+            final double bidAmount = Double.parseDouble(bidPriceString);
+            double minimumNeededAmount = 0;
+            final Bid mostRecentBid = bidRepository.getMostRecentBidForAuctionWithId(this.auctionId);
+
+            if (mostRecentBid != null) {
+                minimumNeededAmount = mostRecentBid.getAmount() + this.auctionMinimumIncrementation;
+            } else {
+                minimumNeededAmount = this.auctionMinimumBid;
+            }
+            if (!amountIsHighEnough(bidAmount, minimumNeededAmount)) {
+                MenuController.showAlertMessage("Your bid is not high enough, it should at least be " + convertToEuro(minimumNeededAmount), AlertType.WARNING, 3000);
+                return;
+            }
+            if (auctionRepository.addBid(bidAmount, currentUserId, auctionId)) {
+                final Bid bid = new Bid(applicationManager.getCurrentUser().getProfile(), bidAmount, LocalDateTime.now(), auctionId);
+                applicationManager.getRmiClientsManager().getBidClient().sendBid(bid);
+                MenuController.showAlertMessage("Successfully placed bid!", AlertType.MESSAGE, 3000);
+            } else {
+                MenuController.showAlertMessage("Placing the bid wasn't successful!", AlertType.ERROR, 3000);
+            }
+        } catch (SQLException | ClassNotFoundException | IOException exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }
 
     public void changeSelectedImage(final MouseEvent event) {
-        final ImageView clickedImageView = (ImageView)event.getSource();
+        final ImageView clickedImageView = (ImageView) event.getSource();
         final Image previousSelectedPicture = imgviewSelectedPicture.getImage();
 
         imgviewSelectedPicture.setImage(clickedImageView.getImage());
