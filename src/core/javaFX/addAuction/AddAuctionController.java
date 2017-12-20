@@ -61,18 +61,19 @@ public class AddAuctionController extends MenuController {
 
         if (selectedImage != null) {
             ImageView source = (ImageView) mouseEvent.getSource();
+            final String file = "file:";
             if (source == imgviewPicture1) {
                 images[0] = selectedImage;
-                imgviewPicture1.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 225, 156, true, false));
+                imgviewPicture1.setImage(new Image(file +  selectedImage.getAbsolutePath(), 225, 156, true, false));
             } else if (source == imgviewPicture2) {
                 images[1] = selectedImage;
-                imgviewPicture2.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 225, 156, true, false));
+                imgviewPicture2.setImage(new Image(file +  selectedImage.getAbsolutePath(), 225, 156, true, false));
             } else if (source == imgviewPicture3) {
                 images[2] = selectedImage;
-                imgviewPicture3.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 225, 156, true, false));
+                imgviewPicture3.setImage(new Image(file +  selectedImage.getAbsolutePath(), 225, 156, true, false));
             } else if (source == imgviewPicture4) {
                 images[3] = selectedImage;
-                imgviewPicture4.setImage(new Image("file:" +  selectedImage.getAbsolutePath(), 225, 156, true, false));
+                imgviewPicture4.setImage(new Image(file +  selectedImage.getAbsolutePath(), 225, 156, true, false));
             }
         }
     }
@@ -213,8 +214,8 @@ public class AddAuctionController extends MenuController {
         }
     }
 
-    private double convertToDouble(final String text) {
-        text.replaceAll(",", ".");
+    private double convertToDouble(String text) {
+        text = text.replaceAll(",", ".");
         if (!text.isEmpty() && text.matches("[0-9]*")) {
             return Double.parseDouble(text);
         } else {
