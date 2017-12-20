@@ -215,7 +215,8 @@ public class AuctionMySqlContext implements IAuctionContext {
                                 resultSet.getString(title),
                                 resultSet.getString(description),
                                 resultSet.getDouble(startingBid),
-                                getImagesForAuctionWithId(auctionLoadingType, resultSet.getInt("id"))
+                                getImagesForAuctionWithId(auctionLoadingType, resultSet.getInt("id")),
+                                bidRepository.getBids(resultSet.getInt("id"))
                         );
             case FOR_AUCTION_PAGE:
                 return new Auction
@@ -245,6 +246,7 @@ public class AuctionMySqlContext implements IAuctionContext {
                                 resultSet.getString("title"),
                                 resultSet.getString("description"),
                                 resultSet.getDouble("startingBid"),
+                                null,
                                 null
                         );
             default:

@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import logic.repositories.AuctionRepository;
 import modelslibrary.Auction;
+import modelslibrary.Bid;
 import utilities.enums.AlertType;
 import utilities.enums.AuctionLoadingType;
 import java.io.File;
@@ -42,7 +43,11 @@ public class ListedAuctionController extends MenuController {
     public void setListedAuction(final Auction auction) {
         setTitle(auction.getTitle());
         setDescription(auction.getDescription());
-        setCurrentOffer(auction.getStartBid());
+        if (!auction.getBids().isEmpty()) {
+            setCurrentOffer(auction.getBids().get(0).getAmount());
+        } else {
+            setCurrentOffer(auction.getStartBid());
+        }
         setAuctionId(auction.getId());
 
         Image image = new Image("file:" + new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath(), 200, 150, false, false);
