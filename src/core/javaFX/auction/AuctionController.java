@@ -125,25 +125,25 @@ public class AuctionController extends MenuController {
         if (images != null){
             final Image placeholderImage = new Image("file:" +  new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath(), 429, 277, false, false);
 
-            if (images.size() >= 1){
+            if (!images.isEmpty()){
                 imgviewSelectedPicture.setImage(images.get(0));
             }else{
                 imgviewSelectedPicture.setImage(placeholderImage);
             }
 
-            if (images.size() >= 2){
+            if (!images.isEmpty()){
                 imgviewPicture1.setImage(images.get(1));
             }else{
                 imgviewPicture1.setImage(placeholderImage);
             }
 
-            if (images.size() >= 3){
+            if (!images.isEmpty()){
                 imgviewPicture2.setImage(images.get(2));
             }else{
                 imgviewPicture2.setImage(placeholderImage);
             }
 
-            if (images.size() >= 4){
+            if (!images.isEmpty()){
                 imgviewPicture3.setImage(images.get(3));
             }else{
                 imgviewPicture3.setImage(placeholderImage);
