@@ -26,10 +26,6 @@ public class Database {
     
     private static String connectionError = "Connection is null";
 
-    private Database(){
-
-    }
-
     public static Connection getConnection() {
         FileInputStream fileInput = null;
         try {
