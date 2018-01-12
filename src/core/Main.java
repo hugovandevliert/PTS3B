@@ -37,8 +37,10 @@ public class Main extends Application {
 
         // Change the actual offset of the scene with the changed variables
         parent.setOnMouseDragged(event -> {
-            stage.setX(event.getScreenX() - xOffset);
-            stage.setY(event.getScreenY() - yOffset);
+            if (yOffset < 50) {
+                stage.setX(event.getScreenX() - xOffset);
+                stage.setY(event.getScreenY() - yOffset);
+            }
         });
     }
 }
