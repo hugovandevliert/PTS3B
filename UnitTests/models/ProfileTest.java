@@ -22,13 +22,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * ASSUMPTION: There is a user in the database with username="user2" and password="User2!"
  * ASSUMPTION: There is a user in the database with username="user3" and password="User3!"
  * ASSUMPTION: There is an auction in the database with id="1"
- * If these are not true, all tests will fail.*/
+ * If these are not true, all tests will fail.
+ */
 public class ProfileTest {
     private ApplicationManager applicationManager;
 
     @Before
-    public void setUp()
-    {
+    public void setUp() {
         applicationManager = new ApplicationManager();
     }
 
@@ -67,7 +67,7 @@ public class ProfileTest {
 
     @Test
     public void testGetName() throws Exception {
-        Profile profile = new Profile(null, null,  "Mohamed Ali", null, 1);
+        Profile profile = new Profile(null, null, "Mohamed Ali", null, 1);
         assertEquals("Mohamed Ali", profile.getName());
     }
 

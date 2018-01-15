@@ -10,11 +10,12 @@ import utilities.database.Database;
 import utilities.enums.AuctionLoadingType;
 import utilities.enums.ImageLoadingType;
 import utilities.enums.ProfileLoadingType;
+
 import java.io.File;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,7 @@ public class AuctionMySqlContext implements IAuctionContext {
     public ArrayList<Auction> getAuctionsForProfile(final int profileId) throws SQLException, IOException, ClassNotFoundException {
         final String query = "SELECT * FROM MyAuctions.Auction WHERE Auction.status = 'OPEN' " +
                 "AND Auction.endDate > curdate() AND creator_id = ?;";
-        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(profileId) });
+        final ResultSet resultSet = Database.getData(query, new String[]{String.valueOf(profileId)});
         final ArrayList<Auction> auctions = new ArrayList<>();
 
         if (resultSet != null) {
@@ -64,7 +65,7 @@ public class AuctionMySqlContext implements IAuctionContext {
     @Override
     public ArrayList<Auction> getFavoriteAuctionsForProfile(final int profileId) throws SQLException, IOException, ClassNotFoundException {
         final String query = "SELECT auction_id FROM FavoriteAuction WHERE account_id = ?;";
-        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(profileId) });
+        final ResultSet resultSet = Database.getData(query, new String[]{String.valueOf(profileId)});
         final ArrayList<Auction> auctions = new ArrayList<>();
 
         if (resultSet != null) {
@@ -81,7 +82,7 @@ public class AuctionMySqlContext implements IAuctionContext {
                 "FROM Account a INNER JOIN Auction au  ON a.id = au.creator_id INNER JOIN Bid b ON au.id = b.auction_id " +
                 "LEFT JOIN Feedback f ON au.id = f.auction_id " +
                 "WHERE (au.endDate <= curdate() OR au.status = 'CLOSED') AND f.auction_id IS NULL AND a.id = ? AND ((SELECT b.account_id FROM Bid b WHERE b.auction_id = au.id ORDER BY b.amount DESC LIMIT 1) = ?)";
-        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionCreatorId), String.valueOf(feedbackAuthorId) });
+        final ResultSet resultSet = Database.getData(query, new String[]{String.valueOf(auctionCreatorId), String.valueOf(feedbackAuthorId)});
         final ArrayList<Auction> auctions = new ArrayList<>();
 
         if (resultSet != null) {
@@ -96,16 +97,13 @@ public class AuctionMySqlContext implements IAuctionContext {
     public Auction getAuctionForId(final int auctionId, final AuctionLoadingType auctionLoadingType) throws SQLException, IOException, ClassNotFoundException {
         String query = "";
 
-        if (auctionLoadingType.equals(AuctionLoadingType.FOR_AUCTION_PAGE)){
+        if (auctionLoadingType.equals(AuctionLoadingType.FOR_AUCTION_PAGE)) {
             query = "SELECT * FROM MyAuctions.Auction WHERE id = ?;";
-        }
-        else if (auctionLoadingType.equals(AuctionLoadingType.FOR_LISTED_AUCTIONS)){
+        } else if (auctionLoadingType.equals(AuctionLoadingType.FOR_LISTED_AUCTIONS)) {
             query = "SELECT * FROM MyAuctions.Auction WHERE id = ?;";
-        }
-        else if (auctionLoadingType.equals(AuctionLoadingType.FOR_COUNTDOWN_TIMER)){
+        } else if (auctionLoadingType.equals(AuctionLoadingType.FOR_COUNTDOWN_TIMER)) {
             query = "SELECT id, OpeningDate, EndDate FROM MyAuctions.Auction WHERE id = ?;";
-        }
-        else return null;
+        } else return null;
 
         final ResultSet resultSet = Database.getData(query, new String[]{String.valueOf(auctionId)});
 
@@ -140,13 +138,13 @@ public class AuctionMySqlContext implements IAuctionContext {
     @Override
     public boolean addBid(double amount, int accountId, int auctionId) {
         final String query = "INSERT INTO MyAuctions.Bid (amount, date, account_id, auction_id) " +
-                             "VALUES (?, ?, ?, ?);";
+                "VALUES (?, ?, ?, ?);";
 
         return 1 == Database.setData(query, new String[]
                 {
-                    String.valueOf(amount),
-                    String.valueOf(LocalDateTime.now().toLocalDate() + " " + LocalDateTime.now().toLocalTime()),
-                    String.valueOf(accountId), String.valueOf(auctionId)
+                        String.valueOf(amount),
+                        String.valueOf(LocalDateTime.now().toLocalDate() + " " + LocalDateTime.now().toLocalTime()),
+                        String.valueOf(accountId), String.valueOf(auctionId)
                 }, true);
     }
 
@@ -158,8 +156,8 @@ public class AuctionMySqlContext implements IAuctionContext {
         for (File image : images) {
             resultCorrect += Database.setDataWithImages(
                     query,
-                    new String[]{ String.valueOf(auctionId) },
-                    new File[]{ image },
+                    new String[]{String.valueOf(auctionId)},
+                    new File[]{image},
                     true
             );
         }
@@ -170,15 +168,15 @@ public class AuctionMySqlContext implements IAuctionContext {
     public boolean manuallyEndAuction(final int auctionId) {
         final String query = "UPDATE Auction SET `status` = 'CLOSED' WHERE `ID` = ?";
 
-        return 1 == Database.setData(query, new String[] { Integer.toString(auctionId) }, true);
+        return 1 == Database.setData(query, new String[]{Integer.toString(auctionId)}, true);
     }
 
     @Override
     public boolean auctionIsClosed(final int auctionId) throws SQLException {
         final String query = "SELECT status FROM MyAuctions.Auction WHERE id = ?;";
-        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
+        final ResultSet resultSet = Database.getData(query, new String[]{String.valueOf(auctionId)});
 
-        if (resultSet != null && resultSet.next()){
+        if (resultSet != null && resultSet.next()) {
             return resultSet.getString("status").trim().equals("CLOSED");
         }
         return false;
@@ -187,7 +185,7 @@ public class AuctionMySqlContext implements IAuctionContext {
     @Override
     public boolean auctionIsFavoriteForUser(final int auctionId, final int userId) throws SQLException {
         final String query = "SELECT auction_id FROM MyAuctions.FavoriteAuction WHERE auction_id = ? AND account_id = ?;";
-        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId), String.valueOf(userId) });
+        final ResultSet resultSet = Database.getData(query, new String[]{String.valueOf(auctionId), String.valueOf(userId)});
 
         return resultSet.next();
     }

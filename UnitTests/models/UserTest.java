@@ -11,9 +11,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * ASSUMPTION: There is a user in the database with username="user1", password="User1!", name="Mohamed Ali" and email="User1@gmail.com".
@@ -27,6 +26,12 @@ class UserTest {
         ApplicationManager applicationManager = new ApplicationManager();
         applicationManager.login("user1", "User1!");
         user = applicationManager.getCurrentUser();
+    }
+
+    @AfterAll
+    static void cleanUp() throws SQLException, UnsupportedEncodingException, NoSuchAlgorithmException {
+        user.setName("Mohamed Ali");
+        user.setEmail("User1@gmail.com");
     }
 
     @Test
@@ -54,9 +59,8 @@ class UserTest {
 
     @Test
     void testGetProfile() {
-        assertEquals("User1",user.getProfile().getUsername(), "getProfile does not work properly");
+        assertEquals("User1", user.getProfile().getUsername(), "getProfile does not work properly");
     }
-
 
     @Test
     void testGetId() {
@@ -68,7 +72,6 @@ class UserTest {
         assertEquals("User1@gmail.com", user.getEmail(), "Email getter is not working properly");
     }
 
-
     @Test
     void testGetUsername() {
         assertEquals("User1", user.getUsername(), "Username getter is not working properly.");
@@ -78,12 +81,5 @@ class UserTest {
     @Test
     void testGetName() {
         assertEquals("Mohamed Ali", user.getName(), "Full name getter is not working properly");
-    }
-
-
-    @AfterAll
-    static void cleanUp() throws SQLException, UnsupportedEncodingException, NoSuchAlgorithmException {
-        user.setName("Mohamed Ali");
-        user.setEmail("User1@gmail.com");
     }
 }

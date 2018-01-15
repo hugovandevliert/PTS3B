@@ -15,5 +15,6 @@ public class Constants {
     public static final String SOUND_AUCTION_WON_MP3 = "src/utilities/sounds/Sound_Auction_Won.mp3";
     public static final String SOUND_AUCTION_LOST_MP3 = "src/utilities/sounds/Sound_Auction_Lost.mp3";
 
-    private Constants(){}
+    private Constants() {
+    }
 }

@@ -1,7 +1,6 @@
 package data.contexts;
 
 import data.interfaces.IProfileContext;
-import javafx.scene.image.Image;
 import logic.algorithms.ImageConverter;
 import logic.repositories.AuctionRepository;
 import logic.repositories.FeedbackRepository;
@@ -10,6 +9,7 @@ import modelslibrary.Profile;
 import utilities.database.Database;
 import utilities.enums.ImageLoadingType;
 import utilities.enums.ProfileLoadingType;
+
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,14 +26,17 @@ public class ProfileMySqlContext implements IProfileContext {
     public Profile getProfileForId(final int userId, final ProfileLoadingType loadingType) throws SQLException, IOException, ClassNotFoundException {
         String query;
 
-        if (loadingType.equals(ProfileLoadingType.FOR_AUCTION_PAGE)) query = "SELECT id, username FROM Account WHERE id = ?";
-        else if (loadingType.equals(ProfileLoadingType.FOR_PROFILE_PAGE)) query = "SElECT id, username, name, creationDate, Image, Email FROM Account WHERE id = ?";
-        else if (loadingType.equals(ProfileLoadingType.FOR_AUCTION_WON_OWNER_DISPLAYING)) query = "SELECT id, username, name, email FROM Account WHERE id = ?";
+        if (loadingType.equals(ProfileLoadingType.FOR_AUCTION_PAGE))
+            query = "SELECT id, username FROM Account WHERE id = ?";
+        else if (loadingType.equals(ProfileLoadingType.FOR_PROFILE_PAGE))
+            query = "SElECT id, username, name, creationDate, Image, Email FROM Account WHERE id = ?";
+        else if (loadingType.equals(ProfileLoadingType.FOR_AUCTION_WON_OWNER_DISPLAYING))
+            query = "SELECT id, username, name, email FROM Account WHERE id = ?";
         else return null;
 
-        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(userId) });
+        final ResultSet resultSet = Database.getData(query, new String[]{String.valueOf(userId)});
 
-        if (resultSet != null && resultSet.next()){
+        if (resultSet != null && resultSet.next()) {
             return getProfileFromResultSet(resultSet, loadingType);
         }
         return null;
@@ -43,25 +46,25 @@ public class ProfileMySqlContext implements IProfileContext {
     public boolean addVisitedAuction(final Profile profile, final Auction auction) {
         final String query = "INSERT INTO VisitedAuction (`account_id`, `auction_id`) VALUES (?, ?)";
 
-        return 1 == Database.setData(query, new String[] { Integer.toString(profile.getProfileId()), Integer.toString(auction.getId()) }, false);
+        return 1 == Database.setData(query, new String[]{Integer.toString(profile.getProfileId()), Integer.toString(auction.getId())}, false);
     }
 
     @Override
     public boolean addFavoriteAuction(final Profile profile, final int auctionId) {
         final String query = "INSERT INTO FavoriteAuction (`account_id`, `auction_id`) VALUES (?, ?)";
 
-        return 1 == Database.setData(query, new String[] { Integer.toString(profile.getProfileId()), Integer.toString(auctionId) }, true);
+        return 1 == Database.setData(query, new String[]{Integer.toString(profile.getProfileId()), Integer.toString(auctionId)}, true);
     }
 
     @Override
     public boolean removeFavoriteAuction(final Profile profile, final Auction auction) {
         final String query = "DELETE FROM FavoriteAuction WHERE `account_id` = ? AND `auction_id` = ?";
 
-        return 1 == Database.setData(query, new String[] { Integer.toString(profile.getProfileId()), Integer.toString(auction.getId()) }, false);
+        return 1 == Database.setData(query, new String[]{Integer.toString(profile.getProfileId()), Integer.toString(auction.getId())}, false);
     }
 
     private Profile getProfileFromResultSet(final ResultSet resultSet, final ProfileLoadingType profileLoadingType) throws SQLException, IOException, ClassNotFoundException {
-        switch(profileLoadingType){
+        switch (profileLoadingType) {
             case FOR_AUCTION_PAGE:
                 return new Profile
                         (
@@ -84,14 +87,14 @@ public class ProfileMySqlContext implements IProfileContext {
                                 feedbackRepository.getFeedbacks(resultSet.getInt("id"))
                         );
             case FOR_AUCTION_WON_OWNER_DISPLAYING:
-                    return new Profile
-                            (
-                                    null,
-                                    resultSet.getString("username"),
-                                    resultSet.getString("name"),
-                                    resultSet.getString("email"),
-                                    resultSet.getInt("id")
-                            );
+                return new Profile
+                        (
+                                null,
+                                resultSet.getString("username"),
+                                resultSet.getString("name"),
+                                resultSet.getString("email"),
+                                resultSet.getInt("id")
+                        );
             default:
                 return null;
         }

@@ -6,6 +6,7 @@ import modelslibrary.Bid;
 import utilities.database.Database;
 import utilities.enums.BidLoadingType;
 import utilities.enums.ProfileLoadingType;
+
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,17 +16,19 @@ public class BidMySqlContext implements IBidContext {
 
     private final ProfileRepository profileRepository;
 
-    public BidMySqlContext() { profileRepository = new ProfileRepository(new ProfileMySqlContext()); }
+    public BidMySqlContext() {
+        profileRepository = new ProfileRepository(new ProfileMySqlContext());
+    }
 
     @Override
     public ArrayList<Bid> getBids(final int auctionId) throws SQLException, IOException, ClassNotFoundException {
         final String query = "SELECT b.* FROM MyAuctions.Bid b " +
                 "INNER JOIN MyAuctions.Account a ON a.id = b.account_id WHERE Auction_ID = ?";
         final ArrayList<Bid> bids = new ArrayList<>();
-        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
+        final ResultSet resultSet = Database.getData(query, new String[]{String.valueOf(auctionId)});
 
-        if (resultSet != null){
-            while (resultSet.next()){
+        if (resultSet != null) {
+            while (resultSet.next()) {
                 bids.add(getBidFromResultSet(resultSet, BidLoadingType.FOR_AUCTION));
             }
         }
@@ -36,26 +39,26 @@ public class BidMySqlContext implements IBidContext {
     public Bid getMostRecentBidForAuctionWithId(final int auctionId, final BidLoadingType loadingType) throws SQLException, IOException, ClassNotFoundException {
         String query = "SELECT amount FROM MyAuctions.Bid WHERE auction_id = ? ORDER BY amount DESC LIMIT 1";
 
-        if (loadingType.equals(BidLoadingType.FOR_AUCTION_WINNER_LAST_BID)){
+        if (loadingType.equals(BidLoadingType.FOR_AUCTION_WINNER_LAST_BID)) {
             query = "SELECT b.* FROM MyAuctions.Bid b " +
                     "INNER JOIN MyAuctions.Account a ON a.id = b.account_id WHERE Auction_ID = ?";
         }
-        final ResultSet resultSet = Database.getData(query, new String[]{ String.valueOf(auctionId) });
+        final ResultSet resultSet = Database.getData(query, new String[]{String.valueOf(auctionId)});
 
-        if (resultSet != null && resultSet.next()){
+        if (resultSet != null && resultSet.next()) {
             return getBidFromResultSet(resultSet, loadingType);
         }
         return null;
     }
 
     private Bid getBidFromResultSet(final ResultSet resultSet, final BidLoadingType bidLoadingType) throws SQLException, IOException, ClassNotFoundException {
-        switch(bidLoadingType){
+        switch (bidLoadingType) {
             case FOR_AUCTION:
                 return new Bid
                         (
-                            profileRepository.getProfileForId(resultSet.getInt("account_id"), ProfileLoadingType.FOR_AUCTION_PAGE),
-                            resultSet.getDouble("amount"),
-                            resultSet.getTimestamp("date").toLocalDateTime()
+                                profileRepository.getProfileForId(resultSet.getInt("account_id"), ProfileLoadingType.FOR_AUCTION_PAGE),
+                                resultSet.getDouble("amount"),
+                                resultSet.getTimestamp("date").toLocalDateTime()
                         );
             case FOR_AUCTION_WINNER_LAST_BID:
                 return new Bid
@@ -67,10 +70,10 @@ public class BidMySqlContext implements IBidContext {
             case FOR_MOST_RECENT_BID:
                 return new Bid
                         (
-                            resultSet.getDouble("amount")
+                                resultSet.getDouble("amount")
                         );
-                default:
-                    return null;
+            default:
+                return null;
         }
     }
 }

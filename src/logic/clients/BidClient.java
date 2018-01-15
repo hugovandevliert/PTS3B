@@ -6,8 +6,6 @@ import custompublisher.IRemotePublisherForListener;
 import ibidclient.IBidClient;
 import ibidserver.IBidServer;
 import javafx.application.Platform;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import logic.algorithms.MusicPlayer;
 import logic.managers.RMIClientsManager;
 import modelslibrary.Bid;
@@ -15,7 +13,6 @@ import utilities.Constants;
 import utilities.enums.AlertType;
 
 import java.beans.PropertyChangeEvent;
-import java.io.File;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -24,12 +21,11 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class BidClient extends UnicastRemoteObject implements IBidClient {
 
-    private transient IBidServer server;
-
     private final int auctionId;
     private final int currentUserId;
     private transient final AuctionController auctionController;
     private final MusicPlayer musicPlayer;
+    private transient IBidServer server;
 
     public BidClient(final Registry registry, final int auctionId, final int currentUserId, final RMIClientsManager rmiClientsManager, final AuctionController auctionController) throws IOException, NotBoundException {
         super();
@@ -67,7 +63,7 @@ public class BidClient extends UnicastRemoteObject implements IBidClient {
         final Bid bid = (Bid) propertyChangeEvent.getNewValue();
 
         /* We do want to display that a new bid has been added to the user, if the user did not just place this bid himself. */
-        if (!isCurrentUser(bid.getProfile().getProfileId())){
+        if (!isCurrentUser(bid.getProfile().getProfileId())) {
             Platform.runLater(() -> MenuController.showAlertMessage("A new bid has been added!", AlertType.MESSAGE));
             musicPlayer.playSound();
         }

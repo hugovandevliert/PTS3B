@@ -19,9 +19,11 @@ public class UserRepository {
         return context.setPhoto(profile, photo);
     }
 
-    public boolean setPassword(final String newPassword, final String username) { return context.setPassword(newPassword, username); }
+    public boolean setPassword(final String newPassword, final String username) {
+        return context.setPassword(newPassword, username);
+    }
 
-    public String[] getSaltAndHash(final String username) throws SQLException{
+    public String[] getSaltAndHash(final String username) throws SQLException {
         return context.getSaltAndHash(username);
     }
 

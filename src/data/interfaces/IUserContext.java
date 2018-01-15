@@ -9,8 +9,12 @@ import java.sql.SQLException;
 public interface IUserContext {
 
     boolean registerUser(final String username, final String password, final String salt, final String email, final String name);
+
     String[] getSaltAndHash(final String username) throws SQLException;
+
     boolean setPhoto(final User profile, final File photo);
+
     boolean setPassword(final String newPassword, final String username);
+
     User getUserByUsername(final String username) throws SQLException, IOException, ClassNotFoundException;
 }

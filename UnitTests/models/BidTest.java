@@ -38,8 +38,7 @@ public class BidTest {
     }
 
     @Test
-    public void testGetAuctionId()
-    {
+    public void testGetAuctionId() {
         Bid bid = new Bid(null, 1, null, 5);
         assertSame(5, bid.getAuctionId());
     }

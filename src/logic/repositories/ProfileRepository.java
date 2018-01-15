@@ -4,6 +4,7 @@ import data.interfaces.IProfileContext;
 import modelslibrary.Auction;
 import modelslibrary.Profile;
 import utilities.enums.ProfileLoadingType;
+
 import java.io.IOException;
 import java.sql.SQLException;
 

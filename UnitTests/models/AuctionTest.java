@@ -1,17 +1,15 @@
 package models;
 
 import javafx.scene.image.Image;
-
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-
-
 import modelslibrary.Auction;
 import modelslibrary.Bid;
 import modelslibrary.Profile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -36,7 +34,7 @@ class AuctionTest {
 
     @Test
     void testGetStartBid() {
-       assertEquals(10, auction2.getStartBid());
+        assertEquals(10, auction2.getStartBid());
     }
 
     @Test

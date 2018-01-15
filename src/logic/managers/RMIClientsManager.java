@@ -28,7 +28,7 @@ public class RMIClientsManager {
     }
 
     public void addBidClient(final BidClient bidClient) {
-        if (bidClient != null){
+        if (bidClient != null) {
             this.bidClient = bidClient;
         }
     }
@@ -41,7 +41,7 @@ public class RMIClientsManager {
     public void unsubscribeRemoteListeners() {
         /* This is needed to assure we can re-subscribe ourselves without getting connection refused from the server */
         try {
-            if (bidServerMessageListener != null){
+            if (bidServerMessageListener != null) {
                 bidServerMessageListener.unsubscribeRemoteListener(bidRemotePropertyListener, Constants.CHANGED_PROPERTY);
             }
 

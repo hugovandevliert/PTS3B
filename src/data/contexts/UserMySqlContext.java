@@ -23,7 +23,7 @@ public class UserMySqlContext implements IUserContext {
     public boolean registerUser(final String username, final String password, final String salt, final String email, final String name) {
         final String query = "INSERT INTO Account (`Username`, `Password`, `Salt`, `Email`, `Name`, `CreationDate`) VALUES (?, ?, ?, ?, ?, curDate())";
 
-        return 1 == Database.setData(query, new String[]{ username, password, salt, email, name }, true);
+        return 1 == Database.setData(query, new String[]{username, password, salt, email, name}, true);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class UserMySqlContext implements IUserContext {
     public boolean setPassword(final String newPassword, final String username) {
         final String query = "UPDATE Account SET `Password` = ? WHERE username = ?";
 
-        return 1 == Database.setData(query, new String[] { newPassword, username }, true);
+        return 1 == Database.setData(query, new String[]{newPassword, username}, true);
     }
 
     @Override

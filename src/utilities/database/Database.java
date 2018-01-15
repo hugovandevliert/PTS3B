@@ -4,18 +4,12 @@ import core.javafx.menu.MenuController;
 import utilities.enums.AlertType;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.net.ConnectException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
-import java.sql.CallableStatement;
-import java.sql.DriverManager;
-import java.sql.Timestamp;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.Properties;
-import java.io.FileInputStream;
 
 public class Database {
 
@@ -23,13 +17,13 @@ public class Database {
     private static String username;
     private static String password;
     private static Connection connection;
-    
+
     private static String connectionError = "Connection is null";
 
     public static Connection getConnection() {
         FileInputStream fileInput = null;
         try {
-            if (server == null || username == null || password == null){
+            if (server == null || username == null || password == null) {
                 fileInput = new FileInputStream("src/utilities/database/DatabaseCredentials.properties");
 
                 Properties properties = new Properties();
@@ -42,7 +36,7 @@ public class Database {
             }
 
 
-            if (connection == null){
+            if (connection == null) {
                 connection = DriverManager.getConnection("jdbc:mysql://" + server + ":3306/MyAuctions", username, password);
             }
             return connection;
@@ -56,24 +50,22 @@ public class Database {
         PreparedStatement preparedStatement;
         try {
             final Connection connection = Database.getConnection();
-            if(connection != null){
+            if (connection != null) {
                 preparedStatement = connection.prepareStatement(query);
-            }
-            else{
+            } else {
                 throw new ConnectException(connectionError);
             }
 
 
-            if (values != null && values.length > 0){
-                for (int i = 0; i < values.length; i++){
+            if (values != null && values.length > 0) {
+                for (int i = 0; i < values.length; i++) {
                     final int index = i + 1;
 
                     fillPreparedStatementRowWithValue(preparedStatement, values[i], index);
                 }
             }
             return preparedStatement.executeQuery();
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
         return null;
@@ -83,10 +75,9 @@ public class Database {
         PreparedStatement preparedStatement;
         try {
             final Connection connection = Database.getConnection();
-            if(connection != null){
+            if (connection != null) {
                 preparedStatement = connection.prepareStatement(query);
-            }
-            else{
+            } else {
                 throw new ConnectException(connectionError);
             }
 
@@ -94,8 +85,7 @@ public class Database {
             preparedStatement.setString(1, "%" + searchTerm + "%");
 
             return preparedStatement.executeQuery();
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
         return null;
@@ -107,15 +97,14 @@ public class Database {
 
         try {
             final Connection connection = Database.getConnection();
-            if(connection != null){
+            if (connection != null) {
                 preparedStatement = connection.prepareStatement(query);
-            }
-            else{
+            } else {
                 throw new ConnectException(connectionError);
             }
 
-            if (values != null && values.length > 0){
-                for (int i = 0; i < values.length; i++){
+            if (values != null && values.length > 0) {
+                for (int i = 0; i < values.length; i++) {
                     final int index = i + 1;
 
                     fillPreparedStatementRowWithValue(preparedStatement, values[i], index);
@@ -126,19 +115,18 @@ public class Database {
             else preparedStatement.executeQuery();
 
             updateCount = preparedStatement.getUpdateCount();
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
         return updateCount;
     }
 
     /**
-     * @param query:             This is the query to execute. Make sure to write it in such a way that all the normal values can be parsed first, then afterwards the
-     *                          images will be parsed, all happening in the order that the arrays are in.
-     * @param values:            This is the array of normal values, like the the getData() method
-     * @param images:            This is an array of images
-     * @param isUpdateQuery:    This indicates if the query is an update query
+     * @param query:         This is the query to execute. Make sure to write it in such a way that all the normal values can be parsed first, then afterwards the
+     *                       images will be parsed, all happening in the order that the arrays are in.
+     * @param values:        This is the array of normal values, like the the getData() method
+     * @param images:        This is an array of images
+     * @param isUpdateQuery: This indicates if the query is an update query
      */
     public static int setDataWithImages(final String query, final String[] values, final File[] images, final boolean isUpdateQuery) {
         int updateCount = -1;
@@ -146,28 +134,27 @@ public class Database {
 
         try {
             final Connection connection = Database.getConnection();
-            if(connection != null){
+            if (connection != null) {
                 preparedStatement = connection.prepareStatement(query);
-            }
-            else{
+            } else {
                 throw new ConnectException(connectionError);
             }
 
             int index = 0;
 
-            if (values != null && values.length > 0){
-                for (int i = 0; i < values.length; i++){
+            if (values != null && values.length > 0) {
+                for (int i = 0; i < values.length; i++) {
                     index += 1;
 
                     fillPreparedStatementRowWithValue(preparedStatement, values[i], index);
                 }
             }
-            if (images != null && images.length > 0){
-                for (int i = 0; i < images.length; i++){
+            if (images != null && images.length > 0) {
+                for (int i = 0; i < images.length; i++) {
                     index += 1;
                     final FileInputStream fileInputStream = new FileInputStream(images[i]);
 
-                    preparedStatement.setBinaryStream(index, fileInputStream, (int)images[i].length());
+                    preparedStatement.setBinaryStream(index, fileInputStream, (int) images[i].length());
                 }
             }
 
@@ -175,8 +162,7 @@ public class Database {
             else preparedStatement.executeQuery();
 
             updateCount = preparedStatement.getUpdateCount();
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
         return updateCount;
@@ -186,6 +172,7 @@ public class Database {
      * This method is used to set the Profile Picture of a user.
      * It is needed to have this as a seperate method because the structure of this query is different;
      * The value of the image has to be set before the userId, the other setData methods do this in the opposite sequence.
+     *
      * @param userId
      * @param image
      * @return
@@ -196,32 +183,30 @@ public class Database {
 
         try {
             final Connection connection = Database.getConnection();
-            if(connection != null){
+            if (connection != null) {
                 preparedStatement = connection.prepareStatement("UPDATE Account SET image = ? WHERE id = ?");
-            }
-            else{
+            } else {
                 throw new ConnectException(connectionError);
             }
 
             // Add the image to the PreparedStatement
             final FileInputStream fileInputStream = new FileInputStream(image);
-            preparedStatement.setBinaryStream(1, fileInputStream, (int)image.length());
+            preparedStatement.setBinaryStream(1, fileInputStream, (int) image.length());
 
             // Add the userId to the PreparedStatement
             fillPreparedStatementRowWithValue(preparedStatement, String.valueOf(userId), 2);
 
             preparedStatement.executeUpdate();
             updateCount = preparedStatement.getUpdateCount();
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
         return updateCount;
     }
 
     /**
-     * @param query:    Usage for query --> {call increase_salaries_for_department(?, ?)}
-     *                  increase_salaries_for_department being the name of the stored procedure
+     * @param query: Usage for query --> {call increase_salaries_for_department(?, ?)}
+     *               increase_salaries_for_department being the name of the stored procedure
      */
     public static int executeStoredProcedure(final String query, final String[] values) {
         int updateCount = -1;
@@ -229,30 +214,25 @@ public class Database {
 
         try {
             connection = Database.getConnection();
-            if(connection != null){
+            if (connection != null) {
                 callableStatement = connection.prepareCall(query);
-            }
-            else{
+            } else {
                 throw new ConnectException(connectionError);
             }
 
-            if (values != null && values.length > 0){
-                for (int i = 0; i < values.length; i++){
+            if (values != null && values.length > 0) {
+                for (int i = 0; i < values.length; i++) {
                     final int index = i + 1;
 
-                    if (isDouble(values[i])){
+                    if (isDouble(values[i])) {
                         callableStatement.setDouble(index, Double.parseDouble(values[i]));
-                    }
-                    else if (isInteger(values[i])){
+                    } else if (isInteger(values[i])) {
                         callableStatement.setInt(index, Integer.parseInt(values[i]));
-                    }
-                    else if (isDate(values[i])){
+                    } else if (isDate(values[i])) {
                         callableStatement.setTimestamp(index, Timestamp.valueOf(LocalDateTime.parse(values[i])));
-                    }
-                    else if (isBoolean(values[i])){
+                    } else if (isBoolean(values[i])) {
                         callableStatement.setBoolean(index, Boolean.parseBoolean(values[i]));
-                    }
-                    else{
+                    } else {
                         callableStatement.setString(index, values[i]);
                     }
                 }
@@ -260,14 +240,14 @@ public class Database {
 
             callableStatement.execute();
             updateCount = callableStatement.getUpdateCount();
-        } catch (Exception exception){
+        } catch (Exception exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
         return updateCount;
     }
 
     public static void closeConnection() {
-        if (connection != null){
+        if (connection != null) {
             try {
                 connection.close();
             } catch (SQLException exception) {
@@ -286,19 +266,15 @@ public class Database {
     }
 
     private static void fillPreparedStatementRowWithValue(final PreparedStatement preparedStatement, final String value, final int index) throws SQLException {
-        if (isDouble(value)){
+        if (isDouble(value)) {
             preparedStatement.setDouble(index, Double.parseDouble(value));
-        }
-        else if (isInteger(value)){
+        } else if (isInteger(value)) {
             preparedStatement.setInt(index, Integer.parseInt(value));
-        }
-        else if (isDate(value)){
+        } else if (isDate(value)) {
             preparedStatement.setTimestamp(index, Timestamp.valueOf(LocalDateTime.parse(value)));
-        }
-        else if (isBoolean(value)){
+        } else if (isBoolean(value)) {
             preparedStatement.setBoolean(index, Boolean.parseBoolean(value));
-        }
-        else {
+        } else {
             preparedStatement.setString(index, value);
         }
     }

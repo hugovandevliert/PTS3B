@@ -3,6 +3,7 @@ package logic.repositories;
 import data.interfaces.IAuctionContext;
 import modelslibrary.Auction;
 import utilities.enums.AuctionLoadingType;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -51,7 +52,11 @@ public class AuctionRepository {
         return context.manuallyEndAuction(auctionId);
     }
 
-    public boolean auctionIsClosed(final int auctionId) throws SQLException { return context.auctionIsClosed(auctionId); }
+    public boolean auctionIsClosed(final int auctionId) throws SQLException {
+        return context.auctionIsClosed(auctionId);
+    }
 
-    public boolean auctionIsFavoriteForUser(final int auctionId, final int userId) throws SQLException { return context.auctionIsFavoriteForUser(auctionId, userId); }
+    public boolean auctionIsFavoriteForUser(final int auctionId, final int userId) throws SQLException {
+        return context.auctionIsFavoriteForUser(auctionId, userId);
+    }
 }

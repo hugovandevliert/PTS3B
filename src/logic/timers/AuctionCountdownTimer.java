@@ -8,6 +8,7 @@ import logic.repositories.AuctionRepository;
 import modelslibrary.Auction;
 import utilities.enums.AlertType;
 import utilities.enums.AuctionLoadingType;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -34,32 +35,32 @@ public class AuctionCountdownTimer extends TimerTask {
         try {
             if (userStoppedLookingAtThisAuction()) this.cancel();
 
-            if (!auctionRepository.auctionIsClosed(this.auctionId)){
+            if (!auctionRepository.auctionIsClosed(this.auctionId)) {
                 final Auction auction = auctionRepository.getAuctionForId(this.auctionId, AuctionLoadingType.FOR_COUNTDOWN_TIMER);
 
-                if (auction != null){
+                if (auction != null) {
                     final long currentDateInMillis = getMillisFromLocalDateTime(LocalDateTime.now());
                     final long openingDateInMillis = getMillisFromLocalDateTime(auction.getOpeningDate());
                     final long expirationDateInMillis = getMillisFromLocalDateTime(auction.getExpirationDate());
                     long differenceInMs = -1;
                     String timerStringValue;
 
-                    if (currentDateInMillis >= openingDateInMillis){
+                    if (currentDateInMillis >= openingDateInMillis) {
                         differenceInMs = expirationDateInMillis - currentDateInMillis;
                     }
 
-                    if (differenceInMs > 0){
+                    if (differenceInMs > 0) {
                         timerStringValue = getDurationFromMilliseconds(differenceInMs);
-                    }else if (differenceInMs == -1){
+                    } else if (differenceInMs == -1) {
                         timerStringValue = "Still has to open";
-                    }else{
+                    } else {
                         timerStringValue = "This auction has ended";
                     }
 
                     final String finalTimerStringValue = timerStringValue;
                     setTimerValue(finalTimerStringValue);
                 }
-            } else{
+            } else {
                 // There is no need to keep this TimerTask running as the auction has been ended
                 // We will therefore cancel the TimerTask
                 setTimerValue("This auction has ended");

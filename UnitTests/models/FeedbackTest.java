@@ -7,15 +7,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * ASSUMPTION: There is a user in the database with username="user1", password="User1!", name="Test User" and email="testuser@gmail.com".
  * ASSUMPTION: There is a user in the database with username="user2" and password="User2!"
- * If these are not true, all tests will fail.*/
+ * If these are not true, all tests will fail.
+ */
 class FeedbackTest {
     static private ApplicationManager applicationManager;
 
