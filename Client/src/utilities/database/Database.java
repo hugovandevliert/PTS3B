@@ -24,7 +24,7 @@ public class Database {
         FileInputStream fileInput = null;
         try {
             if (server == null || username == null || password == null) {
-                fileInput = new FileInputStream("src/utilities/database/DatabaseCredentials.properties");
+                fileInput = new FileInputStream("Client/src/utilities/database/DatabaseCredentials.properties");
 
                 Properties properties = new Properties();
                 properties.load(fileInput);
