@@ -2,7 +2,6 @@ package logic.clients;
 
 import core.javafx.auction.AuctionController;
 import core.javafx.menu.MenuController;
-import custompublisher.IRemotePublisherForListener;
 import javafx.application.Platform;
 import logic.algorithms.MusicPlayer;
 import logic.managers.RMIClientsManager;
@@ -11,6 +10,7 @@ import utilities.Constants;
 import utilities.enums.AlertType;
 import utilities.interfaces.IBidClient;
 import utilities.interfaces.IBidServer;
+import utilities.publisher.IRemotePublisherForListener;
 
 import java.beans.PropertyChangeEvent;
 import java.io.IOException;

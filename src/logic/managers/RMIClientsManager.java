@@ -1,11 +1,11 @@
 package logic.managers;
 
 import core.javafx.menu.MenuController;
-import custompublisher.IRemotePropertyListener;
-import custompublisher.IRemotePublisherForListener;
 import logic.clients.BidClient;
 import utilities.Constants;
 import utilities.enums.AlertType;
+import utilities.publisher.IRemotePropertyListener;
+import utilities.publisher.IRemotePublisherForListener;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;

@@ -1,6 +1,7 @@
 package utilities.interfaces;
 
-import custompublisher.IRemotePropertyListener;
+
+import utilities.publisher.IRemotePropertyListener;
 
 import java.rmi.RemoteException;
 

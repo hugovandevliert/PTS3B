@@ -52,7 +52,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="CustomPublisher" level="project" />
     <orderEntry type="library" name="IBidClient" level="project" />
     <orderEntry type="library" name="IBidServer" level="project" />
     <orderEntry type="library" name="CustomPublisher" level="project" />
@@ -84,6 +83,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="RMIServer" />
   </component>
   <component name="sonarModuleSettings">
     <option name="localAnalysisScripName" value="&lt;PROJECT&gt;" />
