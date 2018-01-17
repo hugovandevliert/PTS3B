@@ -15,7 +15,5 @@ public interface IUserContext {
 
     boolean setPhoto(final User profile, final File photo);
 
-    boolean setPassword(final String newPassword, final String username);
-
     User getUserByUsername(final String username) throws SQLException, IOException, ClassNotFoundException;
 }

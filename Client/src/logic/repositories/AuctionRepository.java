@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AuctionRepository {
 
@@ -17,19 +18,19 @@ public class AuctionRepository {
         this.context = context;
     }
 
-    public ArrayList<Auction> getAuctionsForSearchTerm(final String searchTerm) throws SQLException, IOException, ClassNotFoundException {
+    public List<Auction> getAuctionsForSearchTerm(final String searchTerm) throws SQLException, IOException, ClassNotFoundException {
         return context.getAuctionsForSearchTerm(searchTerm);
     }
 
-    public ArrayList<Auction> getAuctionsForProfile(final int profileId) throws SQLException, IOException, ClassNotFoundException {
+    public List<Auction> getAuctionsForProfile(final int profileId) throws SQLException, IOException, ClassNotFoundException {
         return context.getAuctionsForProfile(profileId);
     }
 
-    public ArrayList<Auction> getFavoriteAuctionsForProfile(final int profileId) throws SQLException, IOException, ClassNotFoundException {
+    public List<Auction> getFavoriteAuctionsForProfile(final int profileId) throws SQLException, IOException, ClassNotFoundException {
         return context.getFavoriteAuctionsForProfile(profileId);
     }
 
-    public ArrayList<Auction> getWonAuctionsWithoutFeedbackForProfile(final int auctionCreatorId, final int feedbackAuthorId) throws SQLException, IOException, ClassNotFoundException {
+    public List<Auction> getWonAuctionsWithoutFeedbackForProfile(final int auctionCreatorId, final int feedbackAuthorId) throws SQLException, IOException, ClassNotFoundException {
         return context.getWonAuctionsWithoutFeedbackForProfile(auctionCreatorId, feedbackAuthorId);
     }
 
