@@ -19,11 +19,12 @@ import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import logic.repositories.AuctionRepository;
 import logic.repositories.UserRepository;
-import modelslibrary.Auction;
-import modelslibrary.Feedback;
-import modelslibrary.Profile;
-import modelslibrary.User;
+import models.Auction;
+import models.Feedback;
+import models.Profile;
+import models.User;
 import utilities.enums.AlertType;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;

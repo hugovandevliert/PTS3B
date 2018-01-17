@@ -1,8 +1,8 @@
 package logic.repositories;
 
 import data.interfaces.IProfileContext;
-import modelslibrary.Auction;
-import modelslibrary.Profile;
+import models.Auction;
+import models.Profile;
 import utilities.enums.ProfileLoadingType;
 
 import java.io.IOException;

@@ -5,7 +5,7 @@ import core.javafx.menu.MenuController;
 import data.contexts.AuctionMySqlContext;
 import javafx.application.Platform;
 import logic.repositories.AuctionRepository;
-import modelslibrary.Auction;
+import models.Auction;
 import utilities.enums.AlertType;
 import utilities.enums.AuctionLoadingType;
 

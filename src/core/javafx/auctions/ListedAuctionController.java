@@ -11,10 +11,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import logic.repositories.AuctionRepository;
-import modelslibrary.Auction;
-import modelslibrary.Bid;
+import models.Auction;
 import utilities.enums.AlertType;
 import utilities.enums.AuctionLoadingType;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;

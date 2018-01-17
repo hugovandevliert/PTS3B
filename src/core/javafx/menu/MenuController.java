@@ -1,6 +1,5 @@
 package core.javafx.menu;
 
-import logic.managers.ApplicationManager;
 import core.javafx.favorites.FavoritesController;
 import core.javafx.profile.ProfileController;
 import core.javafx.useralert.UserAlertController;
@@ -13,11 +12,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import logic.managers.ApplicationManager;
 import logic.repositories.ProfileRepository;
-import modelslibrary.Profile;
+import models.Profile;
 import utilities.database.Database;
 import utilities.enums.AlertType;
 import utilities.enums.ProfileLoadingType;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;

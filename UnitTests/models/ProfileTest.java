@@ -1,9 +1,6 @@
 package models;
 
 import logic.managers.ApplicationManager;
-import modelslibrary.Auction;
-import modelslibrary.Feedback;
-import modelslibrary.Profile;
 import org.junit.Before;
 import org.junit.Test;
 

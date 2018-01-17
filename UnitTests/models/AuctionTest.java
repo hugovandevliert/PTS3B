@@ -1,9 +1,6 @@
 package models;
 
 import javafx.scene.image.Image;
-import modelslibrary.Auction;
-import modelslibrary.Bid;
-import modelslibrary.Profile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

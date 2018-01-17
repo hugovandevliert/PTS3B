@@ -1,6 +1,6 @@
 package data.interfaces;
 
-import modelslibrary.Bid;
+import models.Bid;
 import utilities.enums.BidLoadingType;
 
 import java.io.IOException;

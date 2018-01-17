@@ -1,7 +1,5 @@
 package models;
 
-import modelslibrary.Bid;
-import modelslibrary.Profile;
 import org.junit.Before;
 import org.junit.Test;
 

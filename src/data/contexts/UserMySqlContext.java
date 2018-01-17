@@ -2,7 +2,7 @@ package data.contexts;
 
 import data.interfaces.IUserContext;
 import logic.repositories.ProfileRepository;
-import modelslibrary.User;
+import models.User;
 import utilities.database.Database;
 import utilities.enums.ProfileLoadingType;
 

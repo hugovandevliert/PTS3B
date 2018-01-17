@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import logic.algorithms.ImageConverter;
 import logic.repositories.BidRepository;
 import logic.repositories.ProfileRepository;
-import modelslibrary.Auction;
+import models.Auction;
 import utilities.database.Database;
 import utilities.enums.AuctionLoadingType;
 import utilities.enums.ImageLoadingType;

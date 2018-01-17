@@ -2,8 +2,8 @@ package data.contexts;
 
 import data.interfaces.IFeedbackContext;
 import logic.repositories.ProfileRepository;
-import modelslibrary.Auction;
-import modelslibrary.Feedback;
+import models.Auction;
+import models.Feedback;
 import utilities.database.Database;
 import utilities.enums.FeedbackLoadingType;
 import utilities.enums.ProfileLoadingType;

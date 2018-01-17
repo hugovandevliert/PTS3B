@@ -1,24 +1,24 @@
 package core.javafx.feedback;
 
+import com.jfoenix.controls.JFXTextArea;
 import core.javafx.menu.MenuController;
 import core.javafx.profile.ProfileController;
 import data.contexts.FeedbackMySqlContext;
 import data.contexts.ProfileMySqlContext;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import logic.repositories.FeedbackRepository;
 import logic.repositories.ProfileRepository;
-import modelslibrary.Auction;
-import com.jfoenix.controls.JFXTextArea;
-import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import modelslibrary.Profile;
+import models.Auction;
+import models.Profile;
 import utilities.enums.AlertType;
 import utilities.enums.ProfileLoadingType;
 

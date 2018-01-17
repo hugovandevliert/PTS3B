@@ -1,7 +1,7 @@
 package data.interfaces;
 
-import modelslibrary.Auction;
-import modelslibrary.Feedback;
+import models.Auction;
+import models.Feedback;
 
 import java.io.IOException;
 import java.sql.SQLException;

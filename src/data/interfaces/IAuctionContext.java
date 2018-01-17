@@ -1,6 +1,6 @@
 package data.interfaces;
 
-import modelslibrary.Auction;
+import models.Auction;
 import utilities.enums.AuctionLoadingType;
 
 import java.io.IOException;

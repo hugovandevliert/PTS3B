@@ -13,10 +13,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import logic.repositories.AuctionRepository;
-import modelslibrary.Auction;
-import modelslibrary.Profile;
+import models.Auction;
+import models.Profile;
 import utilities.enums.AlertType;
 import utilities.enums.AuctionLoadingType;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;

@@ -2,7 +2,7 @@ package data.contexts;
 
 import data.interfaces.IBidContext;
 import logic.repositories.ProfileRepository;
-import modelslibrary.Bid;
+import models.Bid;
 import utilities.database.Database;
 import utilities.enums.BidLoadingType;
 import utilities.enums.ProfileLoadingType;

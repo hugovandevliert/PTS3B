@@ -1,7 +1,7 @@
 package logic.repositories;
 
 import data.interfaces.IAuctionContext;
-import modelslibrary.Auction;
+import models.Auction;
 import utilities.enums.AuctionLoadingType;
 
 import java.io.IOException;

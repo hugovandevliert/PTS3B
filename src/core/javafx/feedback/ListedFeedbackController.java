@@ -9,9 +9,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import logic.repositories.ProfileRepository;
-import modelslibrary.Profile;
+import models.Profile;
 import utilities.enums.AlertType;
 import utilities.enums.ProfileLoadingType;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;

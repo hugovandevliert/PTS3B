@@ -3,14 +3,14 @@ package logic.clients;
 import core.javafx.auction.AuctionController;
 import core.javafx.menu.MenuController;
 import custompublisher.IRemotePublisherForListener;
-import ibidclient.IBidClient;
-import ibidserver.IBidServer;
 import javafx.application.Platform;
 import logic.algorithms.MusicPlayer;
 import logic.managers.RMIClientsManager;
-import modelslibrary.Bid;
+import models.Bid;
 import utilities.Constants;
 import utilities.enums.AlertType;
+import utilities.interfaces.IBidClient;
+import utilities.interfaces.IBidServer;
 
 import java.beans.PropertyChangeEvent;
 import java.io.IOException;
