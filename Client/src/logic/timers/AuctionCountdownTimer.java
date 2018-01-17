@@ -4,6 +4,7 @@ import core.javafx.auction.AuctionController;
 import core.javafx.menu.MenuController;
 import data.contexts.AuctionMySqlContext;
 import javafx.application.Platform;
+import logic.clients.TimeClient;
 import logic.repositories.AuctionRepository;
 import models.Auction;
 import utilities.enums.AlertType;
@@ -18,13 +19,15 @@ import java.util.concurrent.TimeUnit;
 
 public class AuctionCountdownTimer extends TimerTask {
 
-    private AuctionController auctionController;
-    private AuctionRepository auctionRepository;
-    private int auctionId;
+    private final AuctionController auctionController;
+    private final AuctionRepository auctionRepository;
+    private final int auctionId;
+    private final TimeClient timeClient;
 
-    public AuctionCountdownTimer(final AuctionController auctionController, final MenuController menuController, final int auctionId) {
+    public AuctionCountdownTimer(final AuctionController auctionController, final MenuController menuController, final int auctionId, final TimeClient timeClient) {
         this.auctionController = auctionController;
         this.auctionId = auctionId;
+        this.timeClient = timeClient;
 
         menuController.setLastCalledClass(this.getClass());
         auctionRepository = new AuctionRepository(new AuctionMySqlContext());
@@ -38,8 +41,8 @@ public class AuctionCountdownTimer extends TimerTask {
             if (!auctionRepository.auctionIsClosed(this.auctionId)) {
                 final Auction auction = auctionRepository.getAuctionForId(this.auctionId, AuctionLoadingType.FOR_COUNTDOWN_TIMER);
 
-                if (auction != null) {
-                    final long currentDateInMillis = getMillisFromLocalDateTime(LocalDateTime.now());
+                if (auction != null && timeClient != null) {
+                    final long currentDateInMillis = getMillisFromLocalDateTime(timeClient.getTime());
                     final long openingDateInMillis = getMillisFromLocalDateTime(auction.getOpeningDate());
                     final long expirationDateInMillis = getMillisFromLocalDateTime(auction.getExpirationDate());
                     long differenceInMs = -1;
@@ -59,6 +62,8 @@ public class AuctionCountdownTimer extends TimerTask {
 
                     final String finalTimerStringValue = timerStringValue;
                     setTimerValue(finalTimerStringValue);
+                }else{
+                    MenuController.showAlertMessage("AuctionCountdownTimer - Could not connect to TimerServer", AlertType.ERROR, 3000);
                 }
             } else {
                 // There is no need to keep this TimerTask running as the auction has been ended

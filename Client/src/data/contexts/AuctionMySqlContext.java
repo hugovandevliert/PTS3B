@@ -137,14 +137,14 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     @Override
-    public boolean addBid(double amount, int accountId, int auctionId) {
+    public boolean addBid(double amount, int accountId, int auctionId, final LocalDateTime localDateTime) {
         final String query = "INSERT INTO MyAuctions.Bid (amount, date, account_id, auction_id) " +
                 "VALUES (?, ?, ?, ?);";
 
         return 1 == Database.setData(query, new String[]
                 {
                         String.valueOf(amount),
-                        String.valueOf(LocalDateTime.now().toLocalDate() + " " + LocalDateTime.now().toLocalTime()),
+                        String.valueOf(localDateTime.toLocalDate() + " " + localDateTime.toLocalTime()),
                         String.valueOf(accountId), String.valueOf(auctionId)
                 }, true);
     }

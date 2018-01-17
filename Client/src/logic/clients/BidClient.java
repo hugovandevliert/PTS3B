@@ -38,7 +38,7 @@ public class BidClient extends UnicastRemoteObject implements IBidClient {
         System.setProperty("java.rmi.server.hostname", Constants.SERVER_IP);
 
         IRemotePublisherForListener messageListener = (IRemotePublisherForListener) registry.lookup(Constants.SERVER_NAME_THAT_PUSHES_TO_CLIENTS);
-        messageListener.subscribeRemoteListener(this, Constants.CHANGED_PROPERTY);
+        messageListener.subscribeRemoteListener(this, Constants.CHANGED_PROPERTY_BID_SERVER);
         rmiClientsManager.addBidServerMessageListener(messageListener, this);
 
         server = (IBidServer) registry.lookup(Constants.SERVER_NAME_THAT_RECEIVES_FROM_CLIENTS);

@@ -7,8 +7,8 @@ import utilities.enums.AuctionLoadingType;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 public class AuctionRepository {
 
@@ -18,19 +18,19 @@ public class AuctionRepository {
         this.context = context;
     }
 
-    public List<Auction> getAuctionsForSearchTerm(final String searchTerm) throws SQLException, IOException, ClassNotFoundException {
+    public ArrayList<Auction> getAuctionsForSearchTerm(final String searchTerm) throws SQLException, IOException, ClassNotFoundException {
         return context.getAuctionsForSearchTerm(searchTerm);
     }
 
-    public List<Auction> getAuctionsForProfile(final int profileId) throws SQLException, IOException, ClassNotFoundException {
+    public ArrayList<Auction> getAuctionsForProfile(final int profileId) throws SQLException, IOException, ClassNotFoundException {
         return context.getAuctionsForProfile(profileId);
     }
 
-    public List<Auction> getFavoriteAuctionsForProfile(final int profileId) throws SQLException, IOException, ClassNotFoundException {
+    public ArrayList<Auction> getFavoriteAuctionsForProfile(final int profileId) throws SQLException, IOException, ClassNotFoundException {
         return context.getFavoriteAuctionsForProfile(profileId);
     }
 
-    public List<Auction> getWonAuctionsWithoutFeedbackForProfile(final int auctionCreatorId, final int feedbackAuthorId) throws SQLException, IOException, ClassNotFoundException {
+    public ArrayList<Auction> getWonAuctionsWithoutFeedbackForProfile(final int auctionCreatorId, final int feedbackAuthorId) throws SQLException, IOException, ClassNotFoundException {
         return context.getWonAuctionsWithoutFeedbackForProfile(auctionCreatorId, feedbackAuthorId);
     }
 
@@ -42,8 +42,8 @@ public class AuctionRepository {
         return context.addAuction(auction);
     }
 
-    public boolean addBid(final double amount, final int accountId, final int auctionId) {
-        return context.addBid(amount, accountId, auctionId);
+    public boolean addBid(final double amount, final int accountId, final int auctionId, final LocalDateTime localDateTime) {
+        return context.addBid(amount, accountId, auctionId, localDateTime);
     }
 
     public int getLastInsertedAuctionId() throws SQLException, ConnectException {

@@ -311,7 +311,7 @@ public class AuctionController extends MenuController {
 
     private void initializeCountdownTimer() {
         Timer auctionCountdown = new Timer();
-        auctionCountdown.schedule(new AuctionCountdownTimer(this, this.menuController, this.auctionId), 0, 1000);
+        auctionCountdown.schedule(new AuctionCountdownTimer(this, this.menuController, this.auctionId, applicationManager.getRmiClientsManager().getTimeClient()), 0, 1000);
     }
 
     private void handleEndAuctionPaneRemoving() {
@@ -382,7 +382,18 @@ public class AuctionController extends MenuController {
                 MenuController.showAlertMessage("Your bid is not high enough, it should at least be " + convertToEuro(minimumNeededAmount), AlertType.WARNING, 3000);
                 return;
             }
-            if (auctionRepository.addBid(bidAmount, currentUserId, auctionId)) {
+
+            final LocalDateTime currentTime = applicationManager.getRmiClientsManager().getTimeClient().getTime();
+
+            if (currentTime == null){
+                MenuController.showAlertMessage("Could not grab the time from the server", AlertType.ERROR, 5000);
+            }
+
+            if (currentTime.isAfter(auction.getExpirationDate())){
+                MenuController.showAlertMessage("The expiration date has been exceeded. You are no longer able to place a bet on this auction!", AlertType.ERROR, 5000);
+            }
+
+            if (auctionRepository.addBid(bidAmount, currentUserId, auctionId, currentTime)) {
                 final Bid bid = new Bid(applicationManager.getCurrentUser().getProfile(), bidAmount, LocalDateTime.now(), auctionId);
                 applicationManager.getRmiClientsManager().getBidClient().sendBid(bid);
                 MenuController.showAlertMessage("Successfully placed bid!", AlertType.MESSAGE, 3000);

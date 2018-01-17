@@ -6,6 +6,7 @@ import utilities.enums.AuctionLoadingType;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public interface IAuctionContext {
@@ -22,7 +23,7 @@ public interface IAuctionContext {
 
     boolean addAuction(final Auction auction) throws SQLException, ConnectException;
 
-    boolean addBid(final double amount, final int accountId, final int auctionId);
+    boolean addBid(final double amount, final int accountId, final int auctionId, final LocalDateTime localDateTime);
 
     boolean manuallyEndAuction(final int auctionId);
 
