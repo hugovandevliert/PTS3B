@@ -31,7 +31,7 @@ public class UserMySqlContext implements IUserContext {
         final String query = "SELECT salt, password FROM Account WHERE username = ?";
         final ResultSet resultSet = Database.getData(query, new String[]{username});
 
-        if (resultSet.next()) {
+        if (resultSet != null && resultSet.next()) {
             //Return the username's saltAndHash
             return new String[]{resultSet.getString(1), resultSet.getString(2)};
         }

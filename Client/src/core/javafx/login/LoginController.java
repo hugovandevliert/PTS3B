@@ -43,6 +43,7 @@ public class LoginController extends MenuController {
             return;
         } catch (Exception exception) {
             MenuController.showAlertMessage("Something went wrong. Error: " + exception.getMessage(), AlertType.ERROR, 3000);
+            exception.printStackTrace();
             return;
         }
 
