@@ -69,6 +69,7 @@ public class AuctionController extends MenuController {
     private MenuController menuController;
 
     private int auctionId, currentUserId, creatorId;
+    private Auction auction;
     private double auctionMinimumBid, auctionMinimumIncrementation;
     private boolean hasShownAuctionEndingMessage;
 
@@ -95,6 +96,8 @@ public class AuctionController extends MenuController {
     }
 
     public void setAuction(final Auction auction, final MenuController menuController) throws SQLException, IOException, ClassNotFoundException {
+        this.auction = auction;
+
         initializeRepositories();
         setTitle(auction.getTitle());
         setDescription(auction.getDescription());
@@ -282,6 +285,10 @@ public class AuctionController extends MenuController {
 
     private void setBidTextfieldPromptText(final String value) {
         txtBid.setPromptText(value);
+    }
+
+    public void setBidTextfieldPromptText(final Bid bid) {
+        txtBid.setPromptText("Your bid: (at least " + convertToEuro(bid.getAmount() + auction.getIncrementation()) + ")");
     }
 
     private void setAuctionMinimumBid(final double auctionMinimumBid) {
