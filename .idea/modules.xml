@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PTS3B.iml" filepath="$PROJECT_DIR$/PTS3B.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../RMIServer/RMIServer.iml" filepath="$PROJECT_DIR$/../RMIServer/RMIServer.iml" />
     </modules>
   </component>
 </project>
