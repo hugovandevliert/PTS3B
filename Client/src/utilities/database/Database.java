@@ -18,10 +18,10 @@ public class Database {
     private static String password;
     private static Connection connection;
 
-    private static String connectionError = "Connection is null";
+    private static String connectionError = "Could not connect to database.";
 
     public static Connection getConnection() {
-        FileInputStream fileInput = null;
+        FileInputStream fileInput;
         try {
             if (server == null || username == null || password == null) {
                 fileInput = new FileInputStream("Client/src/utilities/database/DatabaseCredentials.properties");
@@ -46,17 +46,16 @@ public class Database {
         }
     }
 
-    public static ResultSet getData(final String query, final String[] values) {
+    public static ResultSet getData(final String query, final String[] values) throws ConnectException, SQLException {
         PreparedStatement preparedStatement;
+        final Connection connection = Database.getConnection();
+        if (connection != null) {
+            preparedStatement = connection.prepareStatement(query);
+        } else {
+            throw new ConnectException(connectionError);
+        }
+
         try {
-            final Connection connection = Database.getConnection();
-            if (connection != null) {
-                preparedStatement = connection.prepareStatement(query);
-            } else {
-                throw new ConnectException(connectionError);
-            }
-
-
             if (values != null && values.length > 0) {
                 for (int i = 0; i < values.length; i++) {
                     final int index = i + 1;
@@ -65,7 +64,7 @@ public class Database {
                 }
             }
             return preparedStatement.executeQuery();
-        } catch (Exception exception) {
+        } catch (SQLException exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
         return null;

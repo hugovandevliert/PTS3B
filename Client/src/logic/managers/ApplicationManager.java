@@ -10,6 +10,7 @@ import models.User;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.ConnectException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.sql.SQLException;
@@ -45,13 +46,15 @@ public class ApplicationManager {
         Collections.sort(this.loadedAuctions, currentAuctionsComparator);
     }
 
-    public boolean login(final String username, final String password) throws SQLException, IOException, ClassNotFoundException, NoSuchAlgorithmException {
+    public boolean login(final String username, final String password) throws SQLException, ConnectException {
         final String[] saltAndHash = userRepository.getSaltAndHash(username);
 
-        if (saltAndHash.length > 0 && sha256HashCalculator.hashString(password, saltAndHash[0]).equals(saltAndHash[1])) {
-            currentUser = userRepository.getUserByUsername(username);
-            return true;
-        }
+        try {
+            if (saltAndHash.length > 0 && sha256HashCalculator.hashString(password, saltAndHash[0]).equals(saltAndHash[1])) {
+                currentUser = userRepository.getUserByUsername(username);
+                return true;
+            }
+        } catch (NoSuchAlgorithmException | IOException | ClassNotFoundException ignored) { }
         return false;
     }
 

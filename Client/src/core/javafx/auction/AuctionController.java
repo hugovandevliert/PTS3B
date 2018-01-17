@@ -320,7 +320,7 @@ public class AuctionController extends MenuController {
             if (auctionRepository.auctionIsClosed(this.auctionId)) {
                 paneEndAuction.getChildren().remove(btnEndAuction);
             }
-        } catch (SQLException exception) {
+        } catch (Exception exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }
@@ -332,7 +332,7 @@ public class AuctionController extends MenuController {
             if (auctionRepository.auctionIsFavoriteForUser(this.auctionId, this.currentUserId) || auctionCreatorProfileId == this.currentUserId) {
                 paneAuctionContent.getChildren().remove(btnAddToFavorites);
             }
-        } catch (SQLException exception) {
+        } catch (Exception exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
         }
     }

@@ -4,13 +4,14 @@ import models.User;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.sql.SQLException;
 
 public interface IUserContext {
 
     boolean registerUser(final String username, final String password, final String salt, final String email, final String name);
 
-    String[] getSaltAndHash(final String username) throws SQLException;
+    String[] getSaltAndHash(final String username) throws SQLException, ConnectException;
 
     boolean setPhoto(final User profile, final File photo);
 

@@ -4,6 +4,7 @@ import models.Auction;
 import utilities.enums.AuctionLoadingType;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -19,15 +20,15 @@ public interface IAuctionContext {
 
     Auction getAuctionForId(final int auctionId, final AuctionLoadingType auctionLoadingType) throws SQLException, IOException, ClassNotFoundException;
 
-    boolean addAuction(final Auction auction) throws SQLException;
+    boolean addAuction(final Auction auction) throws SQLException, ConnectException;
 
     boolean addBid(final double amount, final int accountId, final int auctionId);
 
     boolean manuallyEndAuction(final int auctionId);
 
-    boolean auctionIsClosed(final int auctionId) throws SQLException;
+    boolean auctionIsClosed(final int auctionId) throws SQLException, ConnectException;
 
-    boolean auctionIsFavoriteForUser(final int auctionId, final int userId) throws SQLException;
+    boolean auctionIsFavoriteForUser(final int auctionId, final int userId) throws SQLException, ConnectException;
 
-    int getLastInsertedAuctionId() throws SQLException;
+    int getLastInsertedAuctionId() throws SQLException, ConnectException;
 }

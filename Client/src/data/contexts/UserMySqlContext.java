@@ -8,6 +8,7 @@ import utilities.enums.ProfileLoadingType;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -27,7 +28,7 @@ public class UserMySqlContext implements IUserContext {
     }
 
     @Override
-    public String[] getSaltAndHash(final String username) throws SQLException {
+    public String[] getSaltAndHash(final String username) throws SQLException, ConnectException {
         final String query = "SELECT salt, password FROM Account WHERE username = ?";
         final ResultSet resultSet = Database.getData(query, new String[]{username});
 

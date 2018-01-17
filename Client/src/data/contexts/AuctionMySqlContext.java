@@ -14,6 +14,7 @@ import utilities.enums.ProfileLoadingType;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.ConnectException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -114,7 +115,7 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     @Override
-    public boolean addAuction(final Auction auction) throws SQLException {
+    public boolean addAuction(final Auction auction) throws SQLException, ConnectException {
         final String query = "INSERT INTO Auction (Title, Description, StartingBid, Minimum, CreationDate, OpeningDate, " +
                 "EndDate, `Status`, isPremium, Creator_ID, minimumincrement) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -172,7 +173,7 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     @Override
-    public boolean auctionIsClosed(final int auctionId) throws SQLException {
+    public boolean auctionIsClosed(final int auctionId) throws SQLException, ConnectException {
         final String query = "SELECT status FROM MyAuctions.Auction WHERE id = ?;";
         final ResultSet resultSet = Database.getData(query, new String[]{String.valueOf(auctionId)});
 
@@ -183,14 +184,14 @@ public class AuctionMySqlContext implements IAuctionContext {
     }
 
     @Override
-    public boolean auctionIsFavoriteForUser(final int auctionId, final int userId) throws SQLException {
+    public boolean auctionIsFavoriteForUser(final int auctionId, final int userId) throws SQLException, ConnectException {
         final String query = "SELECT auction_id FROM MyAuctions.FavoriteAuction WHERE auction_id = ? AND account_id = ?;";
         final ResultSet resultSet = Database.getData(query, new String[]{String.valueOf(auctionId), String.valueOf(userId)});
 
         return resultSet.next();
     }
 
-    public int getLastInsertedAuctionId() throws SQLException {
+    public int getLastInsertedAuctionId() throws SQLException, ConnectException {
         final ResultSet resultSet = Database.getData(
                 "SELECT MAX(id) FROM Auction",
                 null

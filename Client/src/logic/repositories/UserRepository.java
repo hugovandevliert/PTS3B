@@ -5,6 +5,7 @@ import models.User;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.sql.SQLException;
 
 public class UserRepository {
@@ -23,7 +24,7 @@ public class UserRepository {
         return context.setPassword(newPassword, username);
     }
 
-    public String[] getSaltAndHash(final String username) throws SQLException {
+    public String[] getSaltAndHash(final String username) throws SQLException, ConnectException {
         return context.getSaltAndHash(username);
     }
 

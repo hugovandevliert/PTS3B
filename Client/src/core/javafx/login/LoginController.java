@@ -10,6 +10,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import utilities.enums.AlertType;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -38,12 +39,11 @@ public class LoginController extends MenuController {
                 MenuController.showAlertMessage("Username or password incorrect. Please try again.", AlertType.WARNING, 3000);
                 return;
             }
-        } catch (SQLException exception) {
-            MenuController.showAlertMessage("Could not connect to our server. Error: " + exception.getMessage(), AlertType.ERROR, 3000);
+        } catch (ConnectException exception) {
+            MenuController.showAlertMessage("Connection error: " + exception.getMessage(), AlertType.ERROR, 3000);
             return;
         } catch (Exception exception) {
             MenuController.showAlertMessage("Something went wrong. Error: " + exception.getMessage(), AlertType.ERROR, 3000);
-            exception.printStackTrace();
             return;
         }
 

@@ -5,6 +5,7 @@ import models.Auction;
 import utilities.enums.AuctionLoadingType;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -36,7 +37,7 @@ public class AuctionRepository {
         return context.getAuctionForId(auctionId, auctionLoadingType);
     }
 
-    public boolean addAuction(final Auction auction) throws SQLException {
+    public boolean addAuction(final Auction auction) throws SQLException, ConnectException {
         return context.addAuction(auction);
     }
 
@@ -44,7 +45,7 @@ public class AuctionRepository {
         return context.addBid(amount, accountId, auctionId);
     }
 
-    public int getLastInsertedAuctionId() throws SQLException {
+    public int getLastInsertedAuctionId() throws SQLException, ConnectException {
         return context.getLastInsertedAuctionId();
     }
 
@@ -52,11 +53,11 @@ public class AuctionRepository {
         return context.manuallyEndAuction(auctionId);
     }
 
-    public boolean auctionIsClosed(final int auctionId) throws SQLException {
+    public boolean auctionIsClosed(final int auctionId) throws SQLException, ConnectException {
         return context.auctionIsClosed(auctionId);
     }
 
-    public boolean auctionIsFavoriteForUser(final int auctionId, final int userId) throws SQLException {
+    public boolean auctionIsFavoriteForUser(final int auctionId, final int userId) throws SQLException, ConnectException {
         return context.auctionIsFavoriteForUser(auctionId, userId);
     }
 }

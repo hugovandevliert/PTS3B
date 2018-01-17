@@ -20,6 +20,7 @@ import utilities.enums.AuctionLoadingType;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -171,9 +172,13 @@ public class AddAuctionController extends MenuController {
         final Profile currentUser = applicationManager.getCurrentUser().getProfile();
         final Auction auction = new Auction(title, description, startBid, minimum, openingDate, expirationDate, isPremium, currentUser, fileImages, incrementation);
 
-        if (auctionRepository.addAuction(auction)) {
-            applicationManager.getCurrentUser().getProfile().addAuction(auction);
-            return true;
+        try {
+            if (auctionRepository.addAuction(auction)) {
+                applicationManager.getCurrentUser().getProfile().addAuction(auction);
+                return true;
+            }
+        } catch (ConnectException e) {
+            MenuController.showAlertMessage("Connection error: " + e.getMessage(), AlertType.ERROR, 3000);
         }
         return false;
     }
