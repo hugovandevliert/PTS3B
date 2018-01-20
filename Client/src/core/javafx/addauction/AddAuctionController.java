@@ -187,7 +187,7 @@ public class AddAuctionController extends MenuController {
     }
 
     private void setImages() {
-        final Image placeholderImage = new Image("file:" +  new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath(),
+        final Image placeholderImage = new Image("file:" +  new File("Client/src/utilities/images/auction/no_image_available.png").getAbsolutePath(),
                 225, 156, false, true);
         imgviewPicture1.setImage(placeholderImage);
         imgviewPicture2.setImage(placeholderImage);

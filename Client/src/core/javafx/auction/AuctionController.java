@@ -63,16 +63,20 @@ public class AuctionController extends MenuController {
     @FXML private Pane paneEndAuction;
     @FXML private Pane paneAuctionContent;
     @FXML private JFXTextField txtBid;
-    @FXML private JFXButton btnEndAuction, btnAddToFavorites;
+    @FXML private JFXButton btnEndAuction;
+    @FXML private JFXButton btnAddToFavorites;
 
     private AuctionRepository auctionRepository;
     private BidRepository bidRepository;
     private ProfileRepository profileRepository;
     private MenuController menuController;
 
-    private int auctionId, currentUserId, creatorId;
+    private int auctionId;
+    private int currentUserId;
+    private int creatorId;
     private Auction auction;
-    private double auctionMinimumBid, auctionMinimumIncrementation;
+    private double auctionMinimumBid;
+    private double auctionMinimumIncrementation;
     private boolean hasShownAuctionEndingMessage;
 
     private ArrayList<Bid> bids;
@@ -155,7 +159,7 @@ public class AuctionController extends MenuController {
 
     private void setImages(final List<Image> images) {
         if (images != null) {
-            final Image placeholderImage = new Image("file:" + new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath(), 429, 277, false, false);
+            final Image placeholderImage = new Image("file:" + new File("src/utilities/images/auction/no_image_available.png").getAbsolutePath(), 429, 277, true, false);
 
             if (!images.isEmpty()) {
                 imgviewSelectedPicture.setImage(images.get(0));
