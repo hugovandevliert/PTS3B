@@ -32,7 +32,6 @@ public class User {
      * Method for changing the Name of this User-object, this requires a String parameter Name that consist of the new Name it should be changed to
      * @param name: String value of the new Name this User-object should hold
      */
-    //TODO: Shouldn't this return a boolean as well? So we can check if it was actually updated on the database without any SQLExceptions etc?
     public void setName(final String name) {
         if(name.length() > 64){throw new IllegalArgumentException("Name can't be longer then 64 characters"); }
         if(name.matches(".*[0-9].*")){throw new IllegalArgumentException("Full name can't contain numbers");}

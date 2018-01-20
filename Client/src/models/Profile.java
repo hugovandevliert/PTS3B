@@ -102,13 +102,6 @@ public class Profile implements Serializable {
 
     }
 
-    /**
-     * Method for notifying the user. //Todo: How does this method know what to notify the user of?
-     */
-    public void notifyUser() {
-
-    }
-
     public Image getPhoto() {
         return photo;
     }
