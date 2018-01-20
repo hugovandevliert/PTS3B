@@ -21,7 +21,8 @@ import java.util.ResourceBundle;
 
 public class ListedFeedbackController extends MenuController {
 
-    @FXML private Label lblAuthorName, lblDateValue;
+    @FXML private Label lblAuthorName;
+    @FXML private Label lblDateValue;
     @FXML private Text textAuctionDescription;
 
     private int authorId;

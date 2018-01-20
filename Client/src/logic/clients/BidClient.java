@@ -24,7 +24,7 @@ public class BidClient extends UnicastRemoteObject implements IBidClient {
     private final int auctionId;
     private final int currentUserId;
     private transient final AuctionController auctionController;
-    private final MusicPlayer musicPlayer;
+    private transient final MusicPlayer musicPlayer;
     private transient IBidServer server;
 
     public BidClient(final Registry registry, final int auctionId, final int currentUserId, final RMIClientsManager rmiClientsManager, final AuctionController auctionController) throws IOException, NotBoundException {

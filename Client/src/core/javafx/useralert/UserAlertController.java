@@ -11,13 +11,12 @@ import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
-import javafx.scene.effect.BoxBlur;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import logic.timers.HideAlertTimer;
 import utilities.enums.AlertType;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;

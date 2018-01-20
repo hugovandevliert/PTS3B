@@ -15,9 +15,9 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class RMIServer extends UnicastRemoteObject implements IBidServer {
 
-    private Registry registry = null;
-    private IRemotePublisherForDomain publisher;
-    private ITimeServer timeServer;
+    private transient Registry registry;
+    private transient IRemotePublisherForDomain publisher;
+    private transient ITimeServer timeServer;
 
     protected RMIServer() throws RemoteException {
         super();
@@ -46,10 +46,8 @@ public class RMIServer extends UnicastRemoteObject implements IBidServer {
 
     public static void main(String[] args) {
         try {
-            final RMIServer rmiServer = new RMIServer();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+            new RMIServer();
+        } catch (RemoteException ignored) { }
     }
 
     @Override

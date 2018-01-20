@@ -15,7 +15,9 @@ import java.util.List;
 public class Profile implements Serializable {
 
     private transient Image photo;
-    private String username, name, email;
+    private String username;
+    private String name;
+    private String email;
     private int profileId;
 
     private transient ArrayList<Auction> auctions;

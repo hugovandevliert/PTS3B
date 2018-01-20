@@ -48,7 +48,7 @@ public class Publisher {
 
     private void subscribePropertyListener(IPropertyListener listener, String property) {
         this.checkInBehalfOfProgrammer(property);
-        ((List)this.propertyListeners.get(property)).add(listener);
+        this.propertyListeners.get(property).add(listener);
     }
 
     public void unsubscribeLocalListener(ILocalPropertyListener listener, String property) {
@@ -61,10 +61,10 @@ public class Publisher {
 
     private void unsubscribeListener(IPropertyListener listener, String property) {
         if (property != null) {
-            List<IPropertyListener> listeners = (List)this.propertyListeners.get(property);
+            List listeners = this.propertyListeners.get(property);
             if (listeners != null) {
                 listeners.remove(listener);
-                ((List)this.propertyListeners.get((Object)null)).remove(listener);
+                this.propertyListeners.get(null).remove(listener);
             }
         } else {
             List<String> keyset = new ArrayList(this.propertyListeners.keySet());
@@ -72,7 +72,7 @@ public class Publisher {
 
             while(var4.hasNext()) {
                 String key = (String)var4.next();
-                ((List)this.propertyListeners.get(key)).remove(listener);
+                this.propertyListeners.get(key).remove(listener);
             }
         }
 
@@ -160,7 +160,7 @@ public class Publisher {
         this.propertiesString = sb.toString();
     }
 
-    private void checkInBehalfOfProgrammer(String property) throws RuntimeException {
+    private void checkInBehalfOfProgrammer(String property) {
         if (!this.propertyListeners.containsKey(property)) {
             throw new RuntimeException("property " + property + " is not a published property, please make a choice out of: " + this.propertiesString);
         }

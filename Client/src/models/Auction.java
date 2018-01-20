@@ -14,7 +14,9 @@ import java.util.List;
 public class Auction {
 
     private int id;
-    private double startBid, minimum, incrementation;
+    private double startBid;
+    private double minimum;
+    private double incrementation;
     private boolean isPremium;
     private LocalDateTime expirationDate, openingDate, creationDate;
     private String title, description;

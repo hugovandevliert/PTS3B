@@ -35,9 +35,15 @@ import java.util.ResourceBundle;
 
 public class ProfileController extends MenuController {
 
-    @FXML private ImageView imgviewProfilePicture, imgviewPositiveIcon, imgviewNegativeIcon;
-    @FXML private Label lblName, lblUserSince, lblPositiveFeedbacksCount, lblNegativeFeedbacksCount;
-    @FXML private VBox vboxListedAuctions, vboxListedFeedbacks;
+    @FXML private ImageView imgviewProfilePicture;
+    @FXML private ImageView imgviewPositiveIcon;
+    @FXML private ImageView imgviewNegativeIcon;
+    @FXML private Label lblName;
+    @FXML private Label lblUserSince;
+    @FXML private Label lblPositiveFeedbacksCount;
+    @FXML private Label lblNegativeFeedbacksCount;
+    @FXML private VBox vboxListedAuctions;
+    @FXML private VBox vboxListedFeedbacks;
     @FXML private Button btnAddFeedback;
 
     private FXMLLoader fxmlLoader;

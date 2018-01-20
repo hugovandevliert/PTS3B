@@ -29,10 +29,7 @@ public class RMIClientsManager {
             bidsRegistry = LocateRegistry.getRegistry("localhost", Constants.PORT_NUMBER);
 
             addTimeClient(new TimeClient(bidsRegistry));
-        } catch (RemoteException e) {
-            Logger.getLogger(RMIClientsManager.class.getName()).log(Level.SEVERE, e.toString());
-            MenuController.showAlertMessage(e.getMessage(), AlertType.ERROR, 3000);
-        } catch (ConnectException e) {
+        } catch (RemoteException | ConnectException e) {
             Logger.getLogger(RMIClientsManager.class.getName()).log(Level.SEVERE, e.toString());
             MenuController.showAlertMessage(e.getMessage(), AlertType.ERROR, 3000);
         }

@@ -84,7 +84,6 @@ public class MenuController implements Initializable {
             paneAlert.getChildren().add(newAlertPane);
         } catch (IOException exception) {
             //Cannot use the alertPanel yet because it isn't initialized yet.
-            exception.printStackTrace();
         }
     }
 

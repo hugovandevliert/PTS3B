@@ -46,22 +46,24 @@ import java.util.*;
 
 public class AuctionController extends MenuController {
 
-    @FXML
-    private Label lblDays, lblHours, lblMinutes, lblSeconds;
-    @FXML
-    private Label lblAuctionTitle, lblAuctionSeller, lblTimer;
-    @FXML
-    private Text textAuctionDescription;
-    @FXML
-    private ImageView imgviewSelectedPicture, imgviewPicture1, imgviewPicture2, imgviewPicture3;
-    @FXML
-    private VBox vboxBids;
-    @FXML
-    private Pane panePlaceBid, paneEndAuction, paneAuctionContent;
-    @FXML
-    private JFXTextField txtBid;
-    @FXML
-    private JFXButton btnEndAuction, btnAddToFavorites;
+    @FXML private Label lblDays;
+    @FXML private Label lblHours;
+    @FXML private Label lblMinutes;
+    @FXML private Label lblSeconds;
+    @FXML private Label lblAuctionTitle;
+    @FXML private Label lblAuctionSeller;
+    @FXML private Label lblTimer;
+    @FXML private Text textAuctionDescription;
+    @FXML private ImageView imgviewSelectedPicture;
+    @FXML private ImageView imgviewPicture1;
+    @FXML private ImageView imgviewPicture2;
+    @FXML private ImageView imgviewPicture3;
+    @FXML private VBox vboxBids;
+    @FXML private Pane panePlaceBid;
+    @FXML private Pane paneEndAuction;
+    @FXML private Pane paneAuctionContent;
+    @FXML private JFXTextField txtBid;
+    @FXML private JFXButton btnEndAuction, btnAddToFavorites;
 
     private AuctionRepository auctionRepository;
     private BidRepository bidRepository;
@@ -254,7 +256,6 @@ public class AuctionController extends MenuController {
                         musicPlayer.playSound();
                     }
                 } catch (SQLException | IOException | ClassNotFoundException exception) {
-                    exception.printStackTrace();
                     MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 5000);
                 }
             }

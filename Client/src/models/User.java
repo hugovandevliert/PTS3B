@@ -8,7 +8,9 @@ import java.sql.SQLException;
  * */
 public class User {
 
-    private String username, name, email;
+    private String username;
+    private String name;
+    private String email;
     private int id;
     private Profile profile;
 

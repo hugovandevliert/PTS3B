@@ -21,10 +21,7 @@ public class TimeClient {
         if (registry != null){
             try {
                 timeServer = (ITimeServer) registry.lookup(Constants.CHANGED_PROPERTY_TIME_SERVER);
-            } catch (RemoteException e) {
-                MenuController.showAlertMessage("ConnectException: Could not connect to Time Server!", AlertType.ERROR, 5000);
-                Logger.getLogger(TimeClient.class.getName()).log(Level.SEVERE, e.toString());
-            } catch (NotBoundException e) {
+            } catch (RemoteException | NotBoundException e) {
                 MenuController.showAlertMessage("ConnectException: Could not connect to Time Server!", AlertType.ERROR, 5000);
                 Logger.getLogger(TimeClient.class.getName()).log(Level.SEVERE, e.toString());
             }

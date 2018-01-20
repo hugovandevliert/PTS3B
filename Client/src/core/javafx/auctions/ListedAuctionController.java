@@ -23,7 +23,8 @@ import java.util.ResourceBundle;
 
 public class ListedAuctionController extends MenuController {
 
-    @FXML private Label lblAuctionTitle, lblCurrentOffer;
+    @FXML private Label lblAuctionTitle;
+    @FXML private Label lblCurrentOffer;
     @FXML private Text textAuctionDescription;
     @FXML private ImageView imgviewImage;
 

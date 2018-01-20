@@ -32,7 +32,10 @@ import java.util.ResourceBundle;
 
 public class AddAuctionController extends MenuController {
 
-    @FXML private ImageView imgviewPicture1,imgviewPicture2, imgviewPicture3, imgviewPicture4;
+    @FXML private ImageView imgviewPicture1;
+    @FXML private ImageView imgviewPicture2;
+    @FXML private ImageView imgviewPicture3;
+    @FXML private ImageView imgviewPicture4;
     @FXML private JFXTextField txtTitle;
     @FXML private JFXTextArea txtDescription;
     @FXML private JFXTextField txtMinimumPrice;
