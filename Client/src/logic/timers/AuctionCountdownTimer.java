@@ -77,7 +77,9 @@ public class AuctionCountdownTimer extends TimerTask {
     }
 
     private void setTimerValue(final String value) {
-        Platform.runLater(() -> auctionController.setTimer(value));
+        if (value != null){
+            Platform.runLater(() -> auctionController.setTimer(value));
+        }
     }
 
     private String getDurationFromMilliseconds(final long milliSeconds) {
