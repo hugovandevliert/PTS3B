@@ -187,7 +187,7 @@ public class AuctionController extends MenuController {
         }
     }
 
-    public void setBids(final List<Bid> bids, final double startBid) {
+    private void setBids(final List<Bid> bids, final double startBid) {
         vboxBids.getChildren().clear();
 
         if (bids != null && !bids.isEmpty()) {
@@ -438,7 +438,7 @@ public class AuctionController extends MenuController {
         }
     }
 
-    public void addToFavoriteAuctions() {
+    private void addToFavoriteAuctions() {
         final Profile profile = MenuController.applicationManager.getCurrentUser().getProfile();
 
         if (profileRepository.addFavoriteAuction(profile, this.auctionId)) {

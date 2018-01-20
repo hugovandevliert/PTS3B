@@ -6,7 +6,7 @@ import java.util.List;
 
 public class RemotePublisher extends UnicastRemoteObject implements IRemotePublisherForListener, IRemotePublisherForDomain {
 
-    transient Publisher publisher;
+    Publisher publisher;
 
     public RemotePublisher() throws RemoteException {
         this.publisher = new Publisher();

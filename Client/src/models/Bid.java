@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
  * */
 public class Bid implements Comparable<Bid>, Serializable {
 
-    private transient LocalDateTime date;
+    private LocalDateTime date;
     private Profile profile;
     private double amount;
     private int auctionId;
