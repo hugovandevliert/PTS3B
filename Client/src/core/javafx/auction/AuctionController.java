@@ -250,7 +250,8 @@ public class AuctionController extends MenuController {
                         MenuController.showAlertMessage("Congratulations, you have won this auction! You can contact the owner on this email: " + email, AlertType.MESSAGE);
                         final MusicPlayer musicPlayer = new MusicPlayer(Constants.SOUND_AUCTION_WON_MP3);
                         musicPlayer.playSound();
-                    }else{
+                    }
+                    else if (!currentUserIsCreatorOfThisAuction(this.auction)){
                         MenuController.showAlertMessage("Unfortunately, somebody else has won this auction. Better luck next time!", AlertType.WARNING);
                         final MusicPlayer musicPlayer = new MusicPlayer(Constants.SOUND_AUCTION_LOST_MP3);
                         musicPlayer.playSound();
