@@ -84,11 +84,6 @@ class AuctionTest {
     }
 
     @Test
-    void testGetFileImages() {
-        assertEquals(0, auction1.getFileImages().size());
-    }
-
-    @Test
     void testGetBids() {
         assertEquals(new ArrayList<Bid>(), auction2.getBids());
     }

@@ -5,6 +5,7 @@ import utilities.enums.AlertType;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.ConnectException;
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -25,7 +26,11 @@ public class Database {
         FileInputStream fileInput;
         try {
             if (server == null || username == null || password == null) {
-                fileInput = new FileInputStream("Client/src/utilities/database/DatabaseCredentials.properties");
+                if (new File("Client/src/utilities/database/DatabaseCredentials.properties").exists()) {
+                    fileInput = new FileInputStream("Client/src/utilities/database/DatabaseCredentials.properties");
+                } else {
+                    fileInput = new FileInputStream("src/utilities/database/DatabaseCredentials.properties");
+                }
 
                 Properties properties = new Properties();
                 properties.load(fileInput);
@@ -41,6 +46,9 @@ public class Database {
                 connection = DriverManager.getConnection("jdbc:mysql://" + server + ":3306/MyAuctions", username, password);
             }
             return connection;
+        } catch (IOException exception) {
+            MenuController.showAlertMessage("Could not read database credentials", AlertType.ERROR, 3000);
+            return null;
         } catch (Exception exception) {
             MenuController.showAlertMessage(exception.getMessage(), AlertType.ERROR, 3000);
             return null;
