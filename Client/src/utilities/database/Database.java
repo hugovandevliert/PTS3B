@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.Properties;
 
+@SuppressWarnings("all")
 public class Database {
 
     private static String server;

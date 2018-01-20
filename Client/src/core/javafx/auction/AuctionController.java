@@ -389,7 +389,7 @@ public class AuctionController extends MenuController {
                 MenuController.showAlertMessage("Could not grab the time from the server", AlertType.ERROR, 5000);
             }
 
-            if (currentTime.isAfter(auction.getExpirationDate())){
+            if (currentTime != null && currentTime.isAfter(auction.getExpirationDate())){
                 MenuController.showAlertMessage("The expiration date has been exceeded. You are no longer able to place a bet on this auction!", AlertType.ERROR, 5000);
             }
 
